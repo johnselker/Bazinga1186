@@ -1,0 +1,7 @@
+To upload changes:
+	git add <filename>
+	git commit -a
+	git push origin master
+
+To download changes:
+	git pull origin master
