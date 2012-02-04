@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrainControlLib", "TrainCon
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrainLib", "TrainLib\TrainLib.csproj", "{69FA46C5-B2BD-45DA-A60A-022932F30C1E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommonLib", "CommonLib\CommonLib.csproj", "{F84DC4AD-4D0C-4F6F-9576-AF656EB63D77}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -71,6 +73,16 @@ Global
 		{69FA46C5-B2BD-45DA-A60A-022932F30C1E}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{69FA46C5-B2BD-45DA-A60A-022932F30C1E}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{69FA46C5-B2BD-45DA-A60A-022932F30C1E}.Release|x86.ActiveCfg = Release|Any CPU
+		{F84DC4AD-4D0C-4F6F-9576-AF656EB63D77}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F84DC4AD-4D0C-4F6F-9576-AF656EB63D77}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F84DC4AD-4D0C-4F6F-9576-AF656EB63D77}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{F84DC4AD-4D0C-4F6F-9576-AF656EB63D77}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{F84DC4AD-4D0C-4F6F-9576-AF656EB63D77}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{F84DC4AD-4D0C-4F6F-9576-AF656EB63D77}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F84DC4AD-4D0C-4F6F-9576-AF656EB63D77}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F84DC4AD-4D0C-4F6F-9576-AF656EB63D77}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{F84DC4AD-4D0C-4F6F-9576-AF656EB63D77}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{F84DC4AD-4D0C-4F6F-9576-AF656EB63D77}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
