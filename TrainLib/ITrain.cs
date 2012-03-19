@@ -27,7 +27,7 @@ namespace Train
 		public bool SetEmergencyBrake(bool brake);
 		public bool SetDoors(TrainState.door doors);
 		public bool SetLights(TrainState.light lights);
-		public bool SetAnonouncement(string announcement);
+		public bool SetAnnouncement(string announcement);
 		public bool SetSlope(double slope);
 		public bool SetFriction(double friction);
 	}
