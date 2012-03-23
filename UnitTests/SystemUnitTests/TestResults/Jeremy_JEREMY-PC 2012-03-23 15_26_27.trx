@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<TestRun id="958d1b8d-9c07-40a7-9456-904a11250df4" name="Jeremy@JEREMY-PC 2012-03-23 15:26:27" runUser="Jeremy-PC\Jeremy" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <TestSettings name="Local" id="0b99273c-595e-4207-8ff6-ca5172d865fb">
+    <Description>These are default test settings for a local test run.</Description>
+    <Deployment enabled="false" runDeploymentRoot="Jeremy_JEREMY-PC 2012-03-23 15_26_27">
+      <DeploymentItem filename="C:\Users\Jeremy\Documents\SoftwareEngineering\B2\Bin\CommonLib.dll" />
+      <DeploymentItem filename="C:\Users\Jeremy\Documents\SoftwareEngineering\B2\Bin\log4net.dll" />
+    </Deployment>
+    <Execution>
+      <TestTypeSpecific />
+      <AgentRule name="Execution Agents">
+      </AgentRule>
+    </Execution>
+  </TestSettings>
+  <Times creation="2012-03-23T15:26:27.6757273-04:00" queuing="2012-03-23T15:26:27.6877279-04:00" start="2012-03-23T15:26:27.7247301-04:00" finish="2012-03-23T15:26:28.0167468-04:00" />
+  <ResultSummary outcome="Failed">
+    <Counters total="1" executed="1" error="0" failed="1" timeout="0" aborted="0" inconclusive="0" passedButRunAborted="0" notRunnable="0" notExecuted="0" disconnected="0" warning="0" passed="0" completed="0" inProgress="0" pending="0" />
+  </ResultSummary>
+  <TestDefinitions>
+    <UnitTest name="TrackBlockConstructorTest" storage="c:\users\jeremy\documents\softwareengineering\b2\unittests\systemunittests\commonlibtests\bin\debug\commonlibtests.dll" id="c1053fe3-71d4-7277-6093-8d34b51b88a3">
+      <Execution id="cb7076ab-2048-4b3f-a7f3-d581a585a29b" />
+      <TestMethod codeBase="C:/Users/Jeremy/Documents/SoftwareEngineering/B2/UnitTests/SystemUnitTests/CommonLibTests/bin/Debug/CommonLibTests.DLL" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="CommonLibTests.TrackBlockTest, CommonLibTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="TrackBlockConstructorTest" />
+    </UnitTest>
+  </TestDefinitions>
+  <TestLists>
+    <TestList name="Results Not in a List" id="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestList name="All Loaded Results" id="19431567-8539-422a-85d7-44ee4e166bda" />
+  </TestLists>
+  <TestEntries>
+    <TestEntry testId="c1053fe3-71d4-7277-6093-8d34b51b88a3" executionId="cb7076ab-2048-4b3f-a7f3-d581a585a29b" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+  </TestEntries>
+  <Results>
+    <UnitTestResult executionId="cb7076ab-2048-4b3f-a7f3-d581a585a29b" testId="c1053fe3-71d4-7277-6093-8d34b51b88a3" testName="TrackBlockConstructorTest" computerName="JEREMY-PC" duration="00:00:00.0332720" startTime="2012-03-23T15:26:27.7347306-04:00" endTime="2012-03-23T15:26:27.9727443-04:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="cb7076ab-2048-4b3f-a7f3-d581a585a29b">
+      <Output>
+        <ErrorInfo>
+          <Message>Assert.Fail failed. Assert.Equals should not be used for Assertions. Please use Assert.AreEqual &amp; overloads instead.</Message>
+          <StackTrace>   at CommonLibTests.TrackBlockTest.TrackBlockConstructorTest() in C:\Users\Jeremy\Documents\SoftwareEngineering\B2\UnitTests\SystemUnitTests\CommonLibTests\TrackBlockTest.cs:line 78
+</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+  </Results>
+</TestRun>
