@@ -50,14 +50,48 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Form1.cs">
+    <Compile Include="CommandPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CommandPanel.Designer.cs">
+      <DependentUpon>CommandPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DrawingUtils.cs" />
+    <Compile Include="InfoPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="InfoPanel.Designer.cs">
+      <DependentUpon>InfoPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MainScreen.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="MainScreen.Designer.cs">
+      <DependentUpon>MainScreen.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TrackBlockGraphic.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="TrackBlockGraphic.Designer.cs">
+      <DependentUpon>TrackBlockGraphic.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TrackDisplayPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="TrackDisplayPanel.Designer.cs">
+      <DependentUpon>TrackDisplayPanel.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="CommandPanel.resx">
+      <DependentUpon>CommandPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="InfoPanel.resx">
+      <DependentUpon>InfoPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainScreen.resx">
+      <DependentUpon>MainScreen.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -68,6 +102,12 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="TrackBlockGraphic.resx">
+      <DependentUpon>TrackBlockGraphic.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TrackDisplayPanel.resx">
+      <DependentUpon>TrackDisplayPanel.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="app.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

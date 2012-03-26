@@ -33,7 +33,7 @@ namespace CommonLib
     {
         NorthSouth,
         EastWest,
-        NorthEastSouthWest,
+        SouthWestNorthEast,
         NorthWestSouthEast
     }
 
