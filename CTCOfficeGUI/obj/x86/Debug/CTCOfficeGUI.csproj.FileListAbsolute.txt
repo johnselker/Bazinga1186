@@ -1,1 +1,9 @@
 C:\Users\HunterNA1\Documents\Schoolwork\Tertiary Education\Pitt Senior\Semester 2\COE 1186\Bazinga1186\Bin\CTCOfficeGUI.exe.config
+C:\Users\HunterNA1\Documents\Schoolwork\Tertiary Education\Pitt Senior\Semester 2\COE 1186\Bazinga1186\Bin\CTCOfficeGUI.exe
+C:\Users\HunterNA1\Documents\Schoolwork\Tertiary Education\Pitt Senior\Semester 2\COE 1186\Bazinga1186\Bin\CTCOfficeGUI.pdb
+C:\Users\HunterNA1\Documents\Schoolwork\Tertiary Education\Pitt Senior\Semester 2\COE 1186\Bazinga1186\CTCOfficeGUI\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Users\HunterNA1\Documents\Schoolwork\Tertiary Education\Pitt Senior\Semester 2\COE 1186\Bazinga1186\CTCOfficeGUI\obj\x86\Debug\CTCOfficeGUI.Properties.Resources.resources
+C:\Users\HunterNA1\Documents\Schoolwork\Tertiary Education\Pitt Senior\Semester 2\COE 1186\Bazinga1186\CTCOfficeGUI\obj\x86\Debug\GenerateResource.read.1.tlog
+C:\Users\HunterNA1\Documents\Schoolwork\Tertiary Education\Pitt Senior\Semester 2\COE 1186\Bazinga1186\CTCOfficeGUI\obj\x86\Debug\GenerateResource.write.1.tlog
+C:\Users\HunterNA1\Documents\Schoolwork\Tertiary Education\Pitt Senior\Semester 2\COE 1186\Bazinga1186\CTCOfficeGUI\obj\x86\Debug\CTCOfficeGUI.exe
+C:\Users\HunterNA1\Documents\Schoolwork\Tertiary Education\Pitt Senior\Semester 2\COE 1186\Bazinga1186\CTCOfficeGUI\obj\x86\Debug\CTCOfficeGUI.pdb
