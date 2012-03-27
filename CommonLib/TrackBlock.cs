@@ -24,6 +24,7 @@ namespace CommonLib
         private int m_speedLimitKph = 0;
         private bool m_hasTunnel = false;
         private bool m_trainPresent = false;
+        private bool m_isOpen = true;
         private double m_length = 0;
         private TrackOrientation m_orientation;
         private TrackSignalState m_signalState;
@@ -102,6 +103,25 @@ namespace CommonLib
             set { m_signalState = value; }
         }
 
+        // PROPERTY: IsOpen
+        //--------------------------------------------------------------------------------------
+        /// <summary>
+        /// Flag indicating the block is open or closed
+        /// </summary>
+        //--------------------------------------------------------------------------------------
+        public bool IsOpen
+        {
+            get { return m_isOpen; }
+            set
+            {
+                m_isOpen = value;
+                if (!m_isOpen)
+                {
+                    SignalState = TrackSignalState.Red;
+                    Authority = 0;
+                }
+            }
+        }
         #endregion
 
         #region Accessors

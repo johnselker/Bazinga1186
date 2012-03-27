@@ -13,13 +13,24 @@ namespace CTCOfficeGUI
 {
     public partial class MainScreen : Form
     {
+        #region Constructor
+
+        /// <summary>
+        /// Constructor for the main screen
+        /// </summary>
         public MainScreen()
         {
             InitializeComponent();
             Initialize();
-            PlayWithButtons();
         }
 
+        #endregion
+
+        #region Helper Methods
+
+        /// <summary>
+        /// Initializes the screen
+        /// </summary>
         private void Initialize()
         {
             List<TrackBlock> blocks = new List<TrackBlock>();
@@ -52,14 +63,7 @@ namespace CTCOfficeGUI
             trackDisplayPanel.Invalidate();
         }
 
-        private void PlayWithButtons()
-        {
-            Dictionary<object, string> commands = new Dictionary<object, string>();
-            commands.Add("Set Speed Limit", "Set Speed Limit");
-            commands.Add("Set Authority", "Set Authority");
-            commands.Add("Close Block", "Close Block");
-            commandPanel.SetCommands(commands);
-        }
+        #endregion
 
         #region Event Handlers
 
@@ -71,6 +75,17 @@ namespace CTCOfficeGUI
         {
             m_log.LogInfo("Track block was clicked");
             infoPanel.SetTrackBlockInfo(b);
+            commandPanel.ShowTrackBlockCommands(b);
+        }
+
+        /// <summary>
+        /// Event handler for the train clicked event
+        /// </summary>
+        /// <param name="train">Train that was clicked</param>
+        private void OnTrainClicked(TrackBlock b)
+        {
+            m_log.LogInfo("Train was clicked");
+            commandPanel.ShowTrainCommands();
         }
 
         /// <summary>

@@ -13,7 +13,7 @@ namespace CTCOfficeGUI
 {
     public partial class CommandPanel : UserControl
     {
-        #region
+        #region Events
 
         public event OnCommandClicked CommandClicked;
 
@@ -38,7 +38,7 @@ namespace CTCOfficeGUI
         /// <summary>
         /// Sets the list of commands to display
         /// </summary>
-        /// <param name="commands"></param>
+        /// <param name="commands">Command strings and tags for identification</param>
         public void SetCommands(Dictionary<object, string> commands)
         {
             if (commands != null)
@@ -50,6 +50,40 @@ namespace CTCOfficeGUI
                     AddButton(pair.Key, pair.Value);
                 }
             }
+        }
+
+        /// <summary>
+        /// Displays commands for track blocks
+        /// </summary>
+        /// <param name="block">Track block</param>
+        public void ShowTrackBlockCommands(TrackBlock block)
+        {
+            Dictionary<object, string> commands = new Dictionary<object, string>();
+            commands.Add(TrackBlockCommands.SuggestSpeedLimit, "Suggest Speed Limit");
+            commands.Add(TrackBlockCommands.SuggestAuthority, "Suggest Speed Limit");
+
+            if (block.IsOpen)
+            {
+                commands.Add(TrackBlockCommands.CloseBlock, "Close Block");
+            }
+            else
+            {
+                commands.Add(TrackBlockCommands.OpenBlock, "Open Block");
+            }
+
+            SetCommands(commands);
+        }
+
+        /// <summary>
+        /// Displays commands for trains
+        /// </summary>
+        public void ShowTrainCommands()
+        {
+            Dictionary<object, string> commands = new Dictionary<object, string>();
+            commands.Add(TrainCommands.SuggestRoute, "Suggest Route");
+            commands.Add(TrainCommands.SetSchedule, "Set Schedule");
+
+            SetCommands(commands);
         }
 
         /// <summary>
