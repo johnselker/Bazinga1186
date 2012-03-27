@@ -1,0 +1,5 @@
+C:\Users\HunterNA1\Documents\Schoolwork\Tertiary Education\Pitt Senior\Semester 2\COE 1186\Bazinga1186\Bin\CommonLib.dll
+C:\Users\HunterNA1\Documents\Schoolwork\Tertiary Education\Pitt Senior\Semester 2\COE 1186\Bazinga1186\Bin\CommonLib.pdb
+C:\Users\HunterNA1\Documents\Schoolwork\Tertiary Education\Pitt Senior\Semester 2\COE 1186\Bazinga1186\CommonLib\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\HunterNA1\Documents\Schoolwork\Tertiary Education\Pitt Senior\Semester 2\COE 1186\Bazinga1186\CommonLib\obj\Debug\CommonLib.dll
+C:\Users\HunterNA1\Documents\Schoolwork\Tertiary Education\Pitt Senior\Semester 2\COE 1186\Bazinga1186\CommonLib\obj\Debug\CommonLib.pdb

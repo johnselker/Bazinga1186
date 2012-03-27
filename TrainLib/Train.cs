@@ -52,6 +52,12 @@ namespace Train
 			return state.direction;
 		}
 
+		public int GetPosition()
+		{
+			throw new NotImplementedException("TODO: Implement GetPosition()");
+			return 0;
+		}
+
 		public bool SetEmergencyBrake(bool brake) {
 			emergencyBrake = brake;
 			return true;
