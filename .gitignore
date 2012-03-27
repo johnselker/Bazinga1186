@@ -6,6 +6,7 @@
 *.exe
 *.o
 *.so
+*.suo
 
 # Packages #
 ############
@@ -31,3 +32,8 @@
 ehthumbs.db
 Icon?
 Thumbs.db
+
+# Other random files #
+######################
+*.FileListAbsolute.txt
+*.pdb
