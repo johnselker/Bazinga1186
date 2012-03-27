@@ -83,6 +83,7 @@
     <Compile Include="TrackDisplayPanel.Designer.cs">
       <DependentUpon>TrackDisplayPanel.cs</DependentUpon>
     </Compile>
+    <Compile Include="UICommonTypes.cs" />
     <EmbeddedResource Include="CommandPanel.resx">
       <DependentUpon>CommandPanel.cs</DependentUpon>
     </EmbeddedResource>
