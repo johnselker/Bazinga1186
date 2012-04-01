@@ -17,5 +17,6 @@ namespace Train
 		bool SetAnnouncement(string announcement);
 		bool SetSlope(double slope);
 		bool SetFriction(double friction);
+		TrainState GetState();
 	}
 }

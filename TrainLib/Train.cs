@@ -8,42 +8,59 @@ namespace Train
 {
 	public class Train : ITrain
 	{
-		private const double G = 9.8;
-		private double speed;
-		private int cars;
-		private double carLength;
-		private double carWeight;
-		private double passengerWeight;
-		private double maxAcceleration;
-		private double maxSpeed;
-		private double acceleration;
-		private bool emergencyBrake;
-		private string announcement;
-		private double slope;
-		private double friction;
-		private TrainState state;
-		private Timer clock;
+		private const double g = 9.8;
+		private const double carLength = 32.2;
+		private const double maxSlope = 0.540419500; // arctan(0.60)
+		private const double medAcceleration = 0.5;
+		private const double brakeDeceleration = 1.2;
+		private const double eBrakeDeceleration = 2.73;
+		private const double maxSpeed = 19.444444444;
 
-		public Train(int cars, double carLength, double carWeight, double maxAcceleration, double maxSpeed) {
+		private int cars = 1;
+		private double speed = 0.0;
+		private double acceleration = 0.0;
+		private bool emergencyBrake = false;
+		private string announcement = "";
+		private double slope = 0.0;
+		private double friction = 0.01; // arbitrary selection
+		private TrainState state = new TrainState();
+		private Timer clock = new Timer();
+
+		public Train(int cars=1, double acceleration=0)
+		{
 			this.cars = cars;
-			this.carLength = carLength;
-			this.carWeight = carWeight;
-			this.maxAcceleration = maxAcceleration;
-			this.maxSpeed = maxSpeed;
-			// Adds the event and the event handler for the method that will process the timer event to the timer.
-			clock = new Timer();
-			clock.Elapsed += new ElapsedEventHandler(UpdateSpeed);
-			// Sets the timer interval to 10 ms.
-			clock.Interval = 10;
+			this.acceleration = acceleration;
+			// Add the event and the event handler for the method that will process the timer event to the timer.
+			clock.Elapsed += new ElapsedEventHandler(UpdateState);
+			// Set the timer interval to 1 ms.
+			clock.Interval = 1;
 			clock.Start();
 		}
 
-		private void UpdateSpeed(Object sender, ElapsedEventArgs arguments) {
-			speed += (acceleration - state.mass * G * Math.Cos(slope)) * clock.Interval;
-			speed -= speed * friction;
+		private void UpdateState(Object sender, ElapsedEventArgs arguments)
+		{
+			UpdateSpeed();
+//			UpdateLocation();
 		}
 
-		public double GetSpeed() {
+		private void UpdateSpeed()
+		{
+			double normalForce = state.mass * g * Math.Cos(slope); // Should always be positive
+			double engineForce = state.mass * acceleration;
+			double gravityForce = state.mass * g * Math.Sin(slope); // Negative means downward slope
+			double frictionalForce = friction * normalForce;
+			double timestep = clock.Interval * 1000;
+
+			// Increase speed based on acceleration
+			speed += (engineForce / state.mass) * timestep;
+			// Adjust speed according to slope
+			speed -= (gravityForce / state.mass) * timestep;
+			// Decrease speed based on friction
+			speed -= (frictionalForce / state.mass) * timestep;
+		}
+
+		public double GetSpeed()
+		{
 			return speed;
 		}
 
@@ -54,31 +71,41 @@ namespace Train
 
 		public int GetPosition()
 		{
-			throw new NotImplementedException("TODO: Implement GetPosition()");
+			throw new NotImplementedException("TODO: Figure out what this method is intended to do.");
 			return 0;
 		}
 
-		public bool SetEmergencyBrake(bool brake) {
-			emergencyBrake = brake;
-			return true;
+		public TrainState GetState()
+		{
+			return state;
 		}
 
-		public bool SetDoors(TrainState.door doors) {
+		public bool SetEmergencyBrake(bool brake)
+		{
+			emergencyBrake = brake;
+			return emergencyBrake;
+		}
+
+		public bool SetDoors(TrainState.door doors)
+		{
 			state.doors = doors;
 			return true;
 		}
 
-		public bool SetLights(TrainState.light lights) {
+		public bool SetLights(TrainState.light lights)
+		{
 			state.lights = lights;
 			return true;
 		}
 
-		public bool SetAnnouncement(string announcement) {
+		public bool SetAnnouncement(string announcement)
+		{
 			this.announcement = announcement;
 			return true;
 		}
 
-		public bool SetSlope(double slope) {
+		public bool SetSlope(double slope)
+		{
 			if (slope > Math.PI / 2 || slope < -Math.PI / 2)
 			{
 				return false;
@@ -90,7 +117,8 @@ namespace Train
 			}
 		}
 
-		public bool SetFriction(double friction) {
+		public bool SetFriction(double friction)
+		{
 			if (friction > 1 || friction < 0)
 			{
 				return false;
