@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.Reflection;
 using CommonLib;
+using Train;
 
 namespace CTCOfficeGUI
 {
@@ -16,9 +17,11 @@ namespace CTCOfficeGUI
         #region Private Data
 
         private Dictionary<TrackBlock, TrackBlockGraphic> m_blockTable = new Dictionary<TrackBlock, TrackBlockGraphic>();
+        private Dictionary<ITrain, TrainGraphic> m_trainTable = new Dictionary<ITrain, TrainGraphic>();
         private double m_scale = 1;
         private LoggingTool m_log = new LoggingTool(MethodBase.GetCurrentMethod());
-        private TrackBlockGraphic m_selectedGraphic = null;
+        private TrackBlockGraphic m_selectedTrackBlock = null;
+        private TrainGraphic m_selectedTrain = null;
 
         #endregion
 
@@ -28,6 +31,11 @@ namespace CTCOfficeGUI
         /// Track block clicked event
         /// </summary>
         public event OnTrackBlockClicked TrackBlockClicked;
+
+        /// <summary>
+        /// Train clicked event
+        /// </summary>
+        public event OnTrainClicked TrainClicked;
        
         #endregion
 
@@ -38,6 +46,12 @@ namespace CTCOfficeGUI
         /// </summary>
         /// <param name="block"></param>
         public delegate void OnTrackBlockClicked(TrackBlock block);
+
+        /// <summary>
+        /// Delegate method for handling the train click event
+        /// </summary>
+        /// <param name="train"></param>
+        public delegate void OnTrainClicked(ITrain train);
 
         #endregion
 
@@ -92,7 +106,7 @@ namespace CTCOfficeGUI
         /// <summary>
         /// Draws the track layout
         /// </summary>
-        /// <param name="blocks"></param>
+        /// <param name="blocks">List of track blocks in the layout</param>
         public void SetTrackLayout(List<TrackBlock> blocks)
         {
             if (blocks != null)
@@ -111,7 +125,7 @@ namespace CTCOfficeGUI
                     TrackBlockGraphic graphic = new TrackBlockGraphic(b, m_scale);
                     graphic.Margin = new Padding(3);
 
-                    graphic.Location = CalculateGraphicPosition(b);
+                    graphic.Location = CalculateBlockPosition(b);
 
                     graphic.Click += OnBlockClicked;
 
@@ -122,20 +136,60 @@ namespace CTCOfficeGUI
         }
 
         /// <summary>
+        /// Adds a train to the layout
+        /// </summary>
+        /// <param name="train"></param>
+        public bool AddTrain(ITrain train)
+        {
+            bool result = false;
+            if (train != null)
+            {
+                if (!m_trainTable.ContainsKey(train))
+                {
+                    TrainGraphic graphic = new TrainGraphic(train);
+
+                    graphic.Margin = new Padding(3);
+
+                    graphic.Click += OnTrainGraphicClicked;
+
+                    Controls.Add(graphic);
+                    m_trainTable[train] = graphic;
+                    result = true;
+                }
+            }
+
+            return result;
+        }
+
+        /// <summary>
         /// Redraws the track layout with the new state
         /// </summary>
         /// <param name="updatedBlocks">List of blocks that have changed state</param>
-        public void UpdateTrackLayout(List<TrackBlock> updatedBlocks)
+        public void UpdateDisplay(List<TrackBlock> updatedBlocks, List<ITrain> trains)
         {
+            //Update the block layout
             if (updatedBlocks != null)
             {
                 foreach (TrackBlock b in updatedBlocks)
                 {
                     if (m_blockTable.ContainsKey(b))
                     {
-                        m_blockTable[b].Location = CalculateGraphicPosition(b);
-                        m_blockTable[b].Block = b;
+                        m_blockTable[b].Location = CalculateBlockPosition(b);
                         m_blockTable[b].Invalidate();
+                    }
+                }
+            }
+
+            //Update the train locations
+            if (trains != null)
+            {
+                foreach (ITrain t in trains)
+                {
+                    if (m_trainTable.ContainsKey(t))
+                    {
+                        TrainGraphic g = m_trainTable[t];
+                        //m_trainTable[t].Left = t.Position.x - g.Width / 2;
+                        //m_trainTable[t].Top = t.Position.y - g.Height / 2;
                     }
                 }
             }
@@ -145,11 +199,12 @@ namespace CTCOfficeGUI
         /// Unselects the selected graphic, if there is one
         /// </summary>
         public void UnselectAll()
+
         {
-            if (m_selectedGraphic != null)
+            if (m_selectedTrackBlock != null)
             {
-                m_selectedGraphic.StopBlinking();
-                m_selectedGraphic = null;
+                m_selectedTrackBlock.StopBlinking();
+                m_selectedTrackBlock = null;
                 blinkTimer.Stop();
             }
         }
@@ -163,7 +218,7 @@ namespace CTCOfficeGUI
         /// </summary>
         /// <param name="block">Track block to display</param>
         /// <returns>Point of the graphic on the display panel</returns>
-        private Point CalculateGraphicPosition(TrackBlock block)
+        private Point CalculateBlockPosition(TrackBlock block)
         {
             if (block != null)
             {
@@ -200,12 +255,17 @@ namespace CTCOfficeGUI
             {
                 TrackBlockGraphic graphic = (TrackBlockGraphic)sender;
 
-                if (m_selectedGraphic != null)
+                if (m_selectedTrackBlock != null && m_selectedTrackBlock != graphic)
                 {
-                    m_selectedGraphic.StopBlinking();
+                    m_selectedTrackBlock.StopBlinking();
+                }
+                if (m_selectedTrain != null)
+                {
+                    m_selectedTrain.StopBlinking();
                 }
 
-                m_selectedGraphic = graphic;
+                m_selectedTrain = null;
+                m_selectedTrackBlock = graphic;
 
                 blinkTimer.Start();
 
@@ -222,15 +282,52 @@ namespace CTCOfficeGUI
         }
 
         /// <summary>
+        /// Event handler for the train graphic clicked event
+        /// </summary>
+        /// <param name="sender">Sender of the event</param>
+        /// <param name="e">Event arguments</param>
+        private void OnTrainGraphicClicked(object sender, EventArgs e)
+        {
+            try
+            {
+                TrainGraphic graphic = (TrainGraphic)sender;
+
+                if (m_selectedTrackBlock != null)
+                {
+                    m_selectedTrackBlock.StopBlinking();
+                }
+                if (m_selectedTrain != null && m_selectedTrain != graphic)
+                {
+                    m_selectedTrain.StopBlinking();
+                }
+
+                m_selectedTrackBlock = null;
+                m_selectedTrain = graphic;
+
+                blinkTimer.Start();
+
+                if (TrackBlockClicked != null)
+                {
+                    TrainClicked(graphic.Train);
+                }
+            }
+            catch (InvalidCastException ex)
+            {
+                m_log.LogError(ex);
+                throw ex;
+            }
+        }
+
+        /// <summary>
         /// Event handler for the blink event
         /// </summary>
         /// <param name="sender">Sender of the event</param>
         /// <param name="e">Event Arguments</param>
         private void OnBlinkTimerTick(object sender, EventArgs e)
         {
-            if (m_selectedGraphic != null)
+            if (m_selectedTrackBlock != null)
             {
-                m_selectedGraphic.Blink();
+                m_selectedTrackBlock.Blink();
             }
         }
 
