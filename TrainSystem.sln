@@ -5,7 +5,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CTCOfficeGUI", "CTCOfficeGU
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrackLib", "TrackLib\TrackLib.csproj", "{9FD33000-B6F5-4F4E-9D70-C7F95569AF33}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrackControlLib", "TrackControlLib\TrackControlLib.csproj", "{3F3F705C-5298-4DF6-AC70-AD493D314D04}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrackControlLib-Sean", "TrackControlLib\TrackControlLib-Sean.csproj", "{3F3F705C-5298-4DF6-AC70-AD493D314D04}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrainControlLib", "TrainControlLib\TrainControlLib.csproj", "{A22B83AF-C52B-4CBB-AB3B-4DDF897905FA}"
 EndProject

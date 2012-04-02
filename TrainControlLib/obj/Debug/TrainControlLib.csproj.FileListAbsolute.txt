@@ -3,3 +3,8 @@ C:\Users\HunterNA1\Documents\Schoolwork\Tertiary Education\Pitt Senior\Semester 
 C:\Users\HunterNA1\Documents\Schoolwork\Tertiary Education\Pitt Senior\Semester 2\COE 1186\Bazinga1186\TrainControlLib\obj\Debug\ResolveAssemblyReference.cache
 C:\Users\HunterNA1\Documents\Schoolwork\Tertiary Education\Pitt Senior\Semester 2\COE 1186\Bazinga1186\TrainControlLib\obj\Debug\TrainControllerLib.dll
 C:\Users\HunterNA1\Documents\Schoolwork\Tertiary Education\Pitt Senior\Semester 2\COE 1186\Bazinga1186\TrainControlLib\obj\Debug\TrainControllerLib.pdb
+C:\Users\Owner\Documents\Visual Studio 2010\Projects\Bazinga1186\Bin\TrainControllerLib.dll
+C:\Users\Owner\Documents\Visual Studio 2010\Projects\Bazinga1186\Bin\TrainControllerLib.pdb
+C:\Users\Owner\Documents\Visual Studio 2010\Projects\Bazinga1186\TrainControlLib\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\Owner\Documents\Visual Studio 2010\Projects\Bazinga1186\TrainControlLib\obj\Debug\TrainControllerLib.dll
+C:\Users\Owner\Documents\Visual Studio 2010\Projects\Bazinga1186\TrainControlLib\obj\Debug\TrainControllerLib.pdb

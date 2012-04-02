@@ -12,8 +12,8 @@ namespace Train
 		private const double carLength = 32.2;
 		private const double maxSlope = 0.540419500; // arctan(0.60)
 		private const double medAcceleration = 0.5;
-		private const double brakeDeceleration = 1.2;
-		private const double eBrakeDeceleration = 2.73;
+		private const double brakeDeceleration = 7.6;
+		private const double eBrakeDeceleration = 10.0;
 		private const double maxSpeed = 19.444444444;
 
 		private int cars = 1;

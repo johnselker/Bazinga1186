@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace TrackControlLib
+namespace CommonLib
 {
-    public class Class1
-    {
-    }
+	public class Authority
+	{
+		int speedLimit;
+		int authority;
+	}
 }

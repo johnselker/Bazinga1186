@@ -50,4 +50,16 @@ namespace CommonLib
         Green,
         SuperGreen
     }
+
+	// ENUM: TrackSwitchState
+	//--------------------------------------------------------------------------------------
+	/// <summary>
+	/// The state of a switch track block.
+	/// </summary>
+	//-------------------------------------------------------------------------------------- 
+	public enum TrackSwitchState
+	{
+		Throwing,
+		Closed
+	}
 }
