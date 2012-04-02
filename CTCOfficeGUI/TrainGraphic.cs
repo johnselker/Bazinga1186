@@ -77,14 +77,7 @@ namespace CTCOfficeGUI
         /// </summary>
         public void Blink()
         {
-            if (this.Visible)
-            {
-                this.Visible = false;
-            }
-            else
-            {
-                this.Visible = true;
-            }
+            this.Visible = !this.Visible; //Toggle visibility
         }
 
         #endregion

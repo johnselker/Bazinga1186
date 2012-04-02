@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using CommonLib;
+using Train;
 
 namespace CTCOfficeGUI
 {
@@ -201,6 +202,34 @@ namespace CTCOfficeGUI
             }
 
             SetInfo(block.Name, info);
+        }
+
+        /// <summary>
+        /// Sets the text information for a train
+        /// </summary>
+        /// <param name="train">Train</param>
+        public void SetTrainInfo(ITrain train)
+        {
+            if (train == null) return;
+            
+            TrainState state = train.GetState();
+
+            if (state == null) return;
+
+            Dictionary<string, string> info = new Dictionary<string, string>();
+
+            info.Add("Number of cars:", state.cars.ToString());
+            info.Add("Crew members:", state.crew.ToString());
+            info.Add("Direction:", state.direction.ToString());
+            info.Add("Door Status:", state.doors.ToString());
+            info.Add("Light Status:", state.lights.ToString());
+            info.Add("Mass:", state.mass.ToString());
+            info.Add("Passengers:", state.passengers.ToString());
+            info.Add("Speed:", state.speed.ToString() + " " + KPH);
+            info.Add("Temperature:", state.temperature.ToString());
+            info.Add("Position:", state.x.ToString() + ", " + state.y.ToString());
+
+            SetInfo(state.trainID.ToString(), info);
         }
 
         #endregion

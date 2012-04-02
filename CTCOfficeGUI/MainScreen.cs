@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.Reflection;
 using CommonLib;
+using Train;
 
 namespace CTCOfficeGUI
 {
@@ -63,6 +64,72 @@ namespace CTCOfficeGUI
             trackDisplayPanel.Invalidate();
         }
 
+        private void GetCommandInput(object tag)
+        {
+            if (tag.GetType() == typeof(TrainCommands))
+            {
+                switch ((TrainCommands)tag)
+                {
+                    case TrainCommands.SetSchedule:
+                        //Launch scheduler
+                        break;
+                    case TrainCommands.SuggestRoute:
+                        //Enter routing mode
+                        break;
+                    default:
+                        //Unreachable
+                        break;
+                }
+            }
+            else if (tag.GetType() == typeof(TrackBlockCommands))
+            {
+                switch ((TrackBlockCommands)tag)
+                {
+                    case TrackBlockCommands.CloseBlock:
+                        //Send close block command
+                        break;
+                    case TrackBlockCommands.OpenBlock:
+                        //Send open block command
+                        break;
+                    case TrackBlockCommands.SuggestAuthority:
+                        //Show popup to enter authority
+                        ShowTextInputPopup("Enter Authority", string.Empty, OnAuthorityEntered);
+                        break;
+                    case TrackBlockCommands.SuggestSpeedLimit:
+                        //Show popup to enter speed limit
+                        ShowTextInputPopup("Enter Speed Limit", string.Empty, OnSpeedLimitEntered);
+                        break;
+                    default:
+                        //Unreachable
+                        break;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Displays a popup to get text input from the user
+        /// </summary>
+        /// <param name="prompt">Prompt message</param>
+        /// <param name="initialValue">Initial value of the text input box</param>
+        /// <param name="OnValueEnteredHandler">Event handler for the value entered event</param>
+        private void ShowTextInputPopup(string prompt, string initialValue, TextInputDialog.OnValueEntered OnValueEnteredHandler)
+        {
+            TextInputDialog popup = new TextInputDialog(prompt);
+            popup.TextValue = initialValue;
+            popup.ValueEntered += OnValueEnteredHandler;
+            m_openPopups.Add(popup);
+            popup.Show();
+        }
+
+        /// <summary>
+        /// Displays a popup with an OK button 
+        /// </summary>
+        /// <param name="text">Message text</param>
+        /// <param name="title">Title Text</param>
+        private void ShowOKPopup(string text)
+        {
+        }
+
         #endregion
 
         #region Event Handlers
@@ -74,18 +141,33 @@ namespace CTCOfficeGUI
         private void OnTrackBlockClicked(TrackBlock b)
         {
             m_log.LogInfo("Track block was clicked");
+            m_selectedTrain = null;
+            m_selectedTrackBlock = b;
             infoPanel.SetTrackBlockInfo(b);
             commandPanel.ShowTrackBlockCommands(b);
+
+            foreach (Form f in m_openPopups) //Close any open popups 
+            {
+                f.Close();
+            }
         }
 
         /// <summary>
         /// Event handler for the train clicked event
         /// </summary>
         /// <param name="train">Train that was clicked</param>
-        private void OnTrainClicked(TrackBlock b)
+        private void OnTrainClicked(ITrain train)
         {
             m_log.LogInfo("Train was clicked");
+            m_selectedTrackBlock = null;
+            m_selectedTrain = train;
+            infoPanel.SetTrainInfo(train);
             commandPanel.ShowTrainCommands();
+
+            foreach (Form f in m_openPopups) //Close any open popups 
+            {
+                f.Close();
+            }
         }
 
         /// <summary>
@@ -95,6 +177,47 @@ namespace CTCOfficeGUI
         private void OnCommandClicked(object tag)
         {
             m_log.LogInfoFormat("Command was clicked: {0}", tag);
+            GetCommandInput(tag);
+        }
+
+        /// <summary>
+        /// User entered a speed limit
+        /// </summary>
+        /// <param name="value">Speed limit entered</param>
+        private void OnSpeedLimitEntered(string value)
+        {
+            //Send speed limit and track block to CTC controller
+            if (!m_ctcController.SetSpeedLimit(m_selectedTrackBlock, value))
+            {
+                //Show invalid popup
+            }
+            else
+            {
+                foreach (Form f in m_openPopups) //Close any open popups 
+                {
+                    f.Close();
+                }
+            }
+        }
+
+        /// <summary>
+        /// User entered an authority
+        /// </summary>
+        /// <param name="value">Authority entered</param>
+        private void OnAuthorityEntered(string value)
+        {
+            //Send authority and track block to CTC controller
+            if (!m_ctcController.SetAuthority(m_selectedTrackBlock, value))
+            {
+                //Show invalid popup
+            }
+            else
+            {
+                foreach (Form f in m_openPopups) //Close any open popups 
+                {
+                    f.Close();
+                }
+            }
         }
 
         #endregion
@@ -102,6 +225,10 @@ namespace CTCOfficeGUI
         #region Private Data
 
         private LoggingTool m_log = new LoggingTool(MethodBase.GetCurrentMethod());
+        private TrackBlock m_selectedTrackBlock = null;
+        private ITrain m_selectedTrain = null;
+        private List<Form> m_openPopups = new List<Form>();
+        private CTCController m_ctcController = CTCController.GetCTCController();
 
         #endregion
     }
