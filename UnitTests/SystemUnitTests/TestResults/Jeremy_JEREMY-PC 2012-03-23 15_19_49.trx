@@ -1,0 +1,365 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<TestRun id="ff60ae01-ab73-4ed8-85a3-67b26ad613dd" name="Jeremy@JEREMY-PC 2012-03-23 15:19:49" runUser="Jeremy-PC\Jeremy" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <TestSettings name="Local" id="0b99273c-595e-4207-8ff6-ca5172d865fb">
+    <Description>These are default test settings for a local test run.</Description>
+    <Deployment enabled="false" runDeploymentRoot="Jeremy_JEREMY-PC 2012-03-23 15_19_49">
+      <DeploymentItem filename="C:\Users\Jeremy\Documents\SoftwareEngineering\B2\Bin\CommonLib.dll" />
+      <DeploymentItem filename="C:\Users\Jeremy\Documents\SoftwareEngineering\B2\Bin\log4net.dll" />
+    </Deployment>
+    <Execution>
+      <TestTypeSpecific />
+      <AgentRule name="Execution Agents">
+      </AgentRule>
+    </Execution>
+  </TestSettings>
+  <Times creation="2012-03-23T15:19:49.1259315-04:00" queuing="2012-03-23T15:19:51.1010445-04:00" start="2012-03-23T15:19:51.3370580-04:00" finish="2012-03-23T15:19:53.0121538-04:00" />
+  <ResultSummary outcome="Failed">
+    <Counters total="23" executed="23" error="0" failed="7" timeout="0" aborted="0" inconclusive="16" passedButRunAborted="0" notRunnable="0" notExecuted="0" disconnected="0" warning="0" passed="0" completed="0" inProgress="0" pending="0" />
+  </ResultSummary>
+  <TestDefinitions>
+    <UnitTest name="LogErrorTest1" storage="c:\users\jeremy\documents\softwareengineering\b2\unittests\systemunittests\commonlibtests\bin\debug\commonlibtests.dll" id="633e3d83-ae6b-b07e-3ef4-a8a7b1ee23c8">
+      <Execution id="111ea71e-a746-4eb5-8b14-a9b6c72ff862" />
+      <TestMethod codeBase="C:/Users/Jeremy/Documents/SoftwareEngineering/B2/UnitTests/SystemUnitTests/CommonLibTests/bin/Debug/CommonLibTests.DLL" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="CommonLibTests.LoggingToolTest, CommonLibTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="LogErrorTest1" />
+    </UnitTest>
+    <UnitTest name="OrientationTest" storage="c:\users\jeremy\documents\softwareengineering\b2\unittests\systemunittests\commonlibtests\bin\debug\commonlibtests.dll" id="5cb5dafc-f1c6-16dd-3320-d102a07b5db5">
+      <Execution id="dacc6b18-4935-40ee-9665-6b0dbad85ad0" />
+      <TestMethod codeBase="C:/Users/Jeremy/Documents/SoftwareEngineering/B2/UnitTests/SystemUnitTests/CommonLibTests/bin/Debug/CommonLibTests.DLL" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="CommonLibTests.TrackBlockTest, CommonLibTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="OrientationTest" />
+    </UnitTest>
+    <UnitTest name="LogDebugTest" storage="c:\users\jeremy\documents\softwareengineering\b2\unittests\systemunittests\commonlibtests\bin\debug\commonlibtests.dll" id="3585da2e-cab7-43e0-f777-d4f5ce33894d">
+      <Execution id="cc461421-e535-4bd9-82ee-a51b806cbccc" />
+      <TestMethod codeBase="C:/Users/Jeremy/Documents/SoftwareEngineering/B2/UnitTests/SystemUnitTests/CommonLibTests/bin/Debug/CommonLibTests.DLL" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="CommonLibTests.LoggingToolTest, CommonLibTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="LogDebugTest" />
+    </UnitTest>
+    <UnitTest name="DistanceToStationTest" storage="c:\users\jeremy\documents\softwareengineering\b2\unittests\systemunittests\commonlibtests\bin\debug\commonlibtests.dll" id="60a074b7-adcd-3f61-a0b5-619c0920c518">
+      <Execution id="3e287ca4-5bc7-4b57-a917-68955dfe6ae8" />
+      <TestMethod codeBase="C:/Users/Jeremy/Documents/SoftwareEngineering/B2/UnitTests/SystemUnitTests/CommonLibTests/bin/Debug/CommonLibTests.DLL" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="CommonLibTests.TransponderTest, CommonLibTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="DistanceToStationTest" />
+    </UnitTest>
+    <UnitTest name="TrainPresentTest" storage="c:\users\jeremy\documents\softwareengineering\b2\unittests\systemunittests\commonlibtests\bin\debug\commonlibtests.dll" id="2b2f2855-ff23-ef7c-93ef-50acfad14f46">
+      <Execution id="6033bcb8-55d3-4290-a2dc-65d91c380816" />
+      <TestMethod codeBase="C:/Users/Jeremy/Documents/SoftwareEngineering/B2/UnitTests/SystemUnitTests/CommonLibTests/bin/Debug/CommonLibTests.DLL" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="CommonLibTests.TrackBlockTest, CommonLibTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="TrainPresentTest" />
+    </UnitTest>
+    <UnitTest name="AuthorityTest" storage="c:\users\jeremy\documents\softwareengineering\b2\unittests\systemunittests\commonlibtests\bin\debug\commonlibtests.dll" id="ad04d487-79b3-e509-0338-28a4c8019605">
+      <Execution id="b0ce9aeb-ce0c-40fa-8966-84993de4f691" />
+      <TestMethod codeBase="C:/Users/Jeremy/Documents/SoftwareEngineering/B2/UnitTests/SystemUnitTests/CommonLibTests/bin/Debug/CommonLibTests.DLL" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="CommonLibTests.TrackBlockTest, CommonLibTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="AuthorityTest" />
+    </UnitTest>
+    <UnitTest name="HasTunnelTest" storage="c:\users\jeremy\documents\softwareengineering\b2\unittests\systemunittests\commonlibtests\bin\debug\commonlibtests.dll" id="4b91091c-9f8d-d972-e80e-cb32cfa0bca8">
+      <Execution id="18a92949-a22d-465a-8e60-b87519303239" />
+      <TestMethod codeBase="C:/Users/Jeremy/Documents/SoftwareEngineering/B2/UnitTests/SystemUnitTests/CommonLibTests/bin/Debug/CommonLibTests.DLL" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="CommonLibTests.TrackBlockTest, CommonLibTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="HasTunnelTest" />
+    </UnitTest>
+    <UnitTest name="SpeedLimitKphTest" storage="c:\users\jeremy\documents\softwareengineering\b2\unittests\systemunittests\commonlibtests\bin\debug\commonlibtests.dll" id="521f43af-3ced-100c-9f3e-022a2ddfafd9">
+      <Execution id="2bff3f12-23d3-4160-9d52-549f39fd5e0f" />
+      <TestMethod codeBase="C:/Users/Jeremy/Documents/SoftwareEngineering/B2/UnitTests/SystemUnitTests/CommonLibTests/bin/Debug/CommonLibTests.DLL" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="CommonLibTests.TrackBlockTest, CommonLibTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="SpeedLimitKphTest" />
+    </UnitTest>
+    <UnitTest name="TrackBlockConstructorTest1" storage="c:\users\jeremy\documents\softwareengineering\b2\unittests\systemunittests\commonlibtests\bin\debug\commonlibtests.dll" id="8d36ecb0-f598-b1cb-761a-431233d95f64">
+      <Execution id="3f7cd3c9-1457-4131-b31d-f9978f1bb183" />
+      <TestMethod codeBase="C:/Users/Jeremy/Documents/SoftwareEngineering/B2/UnitTests/SystemUnitTests/CommonLibTests/bin/Debug/CommonLibTests.DLL" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="CommonLibTests.TrackBlockTest, CommonLibTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="TrackBlockConstructorTest1" />
+    </UnitTest>
+    <UnitTest name="LogErrorFormatTest" storage="c:\users\jeremy\documents\softwareengineering\b2\unittests\systemunittests\commonlibtests\bin\debug\commonlibtests.dll" id="62d0045c-9fb5-c689-2ce6-85b242515620">
+      <Execution id="e4f1c496-191c-45fb-b253-b3999857cd7c" />
+      <TestMethod codeBase="C:/Users/Jeremy/Documents/SoftwareEngineering/B2/UnitTests/SystemUnitTests/CommonLibTests/bin/Debug/CommonLibTests.DLL" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="CommonLibTests.LoggingToolTest, CommonLibTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="LogErrorFormatTest" />
+    </UnitTest>
+    <UnitTest name="StationNameTest" storage="c:\users\jeremy\documents\softwareengineering\b2\unittests\systemunittests\commonlibtests\bin\debug\commonlibtests.dll" id="e178929a-84e9-c109-2c15-40988253dfb2">
+      <Execution id="6df4a494-c11d-4dce-b4d8-adf3bd3d5e72" />
+      <TestMethod codeBase="C:/Users/Jeremy/Documents/SoftwareEngineering/B2/UnitTests/SystemUnitTests/CommonLibTests/bin/Debug/CommonLibTests.DLL" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="CommonLibTests.TransponderTest, CommonLibTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="StationNameTest" />
+    </UnitTest>
+    <UnitTest name="LogDebugFormatTest" storage="c:\users\jeremy\documents\softwareengineering\b2\unittests\systemunittests\commonlibtests\bin\debug\commonlibtests.dll" id="2fa4c22f-50c5-5856-ab1e-ff1dca9ac6bd">
+      <Execution id="e2d422a8-11a6-4788-9a49-8ed38e49c06d" />
+      <TestMethod codeBase="C:/Users/Jeremy/Documents/SoftwareEngineering/B2/UnitTests/SystemUnitTests/CommonLibTests/bin/Debug/CommonLibTests.DLL" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="CommonLibTests.LoggingToolTest, CommonLibTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="LogDebugFormatTest" />
+    </UnitTest>
+    <UnitTest name="HasTransponderTest" storage="c:\users\jeremy\documents\softwareengineering\b2\unittests\systemunittests\commonlibtests\bin\debug\commonlibtests.dll" id="250fe511-f2d0-205b-8c2f-d06e565b9366">
+      <Execution id="abf125b3-1230-4183-a82d-a3883158e996" />
+      <TestMethod codeBase="C:/Users/Jeremy/Documents/SoftwareEngineering/B2/UnitTests/SystemUnitTests/CommonLibTests/bin/Debug/CommonLibTests.DLL" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="CommonLibTests.TrackBlockTest, CommonLibTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="HasTransponderTest" />
+    </UnitTest>
+    <UnitTest name="SignalStateTest" storage="c:\users\jeremy\documents\softwareengineering\b2\unittests\systemunittests\commonlibtests\bin\debug\commonlibtests.dll" id="e2c5835a-1a2e-c4d6-3a6f-2c602e491a10">
+      <Execution id="2faedd6d-f703-47c0-8f45-e5f8463ea8c6" />
+      <TestMethod codeBase="C:/Users/Jeremy/Documents/SoftwareEngineering/B2/UnitTests/SystemUnitTests/CommonLibTests/bin/Debug/CommonLibTests.DLL" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="CommonLibTests.TrackBlockTest, CommonLibTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="SignalStateTest" />
+    </UnitTest>
+    <UnitTest name="TransponderConstructorTest" storage="c:\users\jeremy\documents\softwareengineering\b2\unittests\systemunittests\commonlibtests\bin\debug\commonlibtests.dll" id="e62d153a-1a22-66b9-5266-d1832cc7229d">
+      <Execution id="0513433e-ef55-4b94-a8ab-3c70d3a82e9c" />
+      <TestMethod codeBase="C:/Users/Jeremy/Documents/SoftwareEngineering/B2/UnitTests/SystemUnitTests/CommonLibTests/bin/Debug/CommonLibTests.DLL" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="CommonLibTests.TransponderTest, CommonLibTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="TransponderConstructorTest" />
+    </UnitTest>
+    <UnitTest name="LogErrorTest" storage="c:\users\jeremy\documents\softwareengineering\b2\unittests\systemunittests\commonlibtests\bin\debug\commonlibtests.dll" id="b4e431a6-1d73-34a3-5aa2-a248e3cc4c96">
+      <Execution id="32d7b800-0adb-4cda-9111-79ebf23750bd" />
+      <TestMethod codeBase="C:/Users/Jeremy/Documents/SoftwareEngineering/B2/UnitTests/SystemUnitTests/CommonLibTests/bin/Debug/CommonLibTests.DLL" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="CommonLibTests.LoggingToolTest, CommonLibTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="LogErrorTest" />
+    </UnitTest>
+    <UnitTest name="TrackBlockConstructorTest" storage="c:\users\jeremy\documents\softwareengineering\b2\unittests\systemunittests\commonlibtests\bin\debug\commonlibtests.dll" id="c1053fe3-71d4-7277-6093-8d34b51b88a3">
+      <Execution id="34d04916-075b-4cd1-8c92-bc567bfde890" />
+      <TestMethod codeBase="C:/Users/Jeremy/Documents/SoftwareEngineering/B2/UnitTests/SystemUnitTests/CommonLibTests/bin/Debug/CommonLibTests.DLL" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="CommonLibTests.TrackBlockTest, CommonLibTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="TrackBlockConstructorTest" />
+    </UnitTest>
+    <UnitTest name="LogInfoFormatTest" storage="c:\users\jeremy\documents\softwareengineering\b2\unittests\systemunittests\commonlibtests\bin\debug\commonlibtests.dll" id="e5955082-e422-bc0b-728d-5c6038847f5b">
+      <Execution id="9f9627a8-7183-4b8e-bb6e-0e1cefcf607a" />
+      <TestMethod codeBase="C:/Users/Jeremy/Documents/SoftwareEngineering/B2/UnitTests/SystemUnitTests/CommonLibTests/bin/Debug/CommonLibTests.DLL" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="CommonLibTests.LoggingToolTest, CommonLibTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="LogInfoFormatTest" />
+    </UnitTest>
+    <UnitTest name="LengthTest" storage="c:\users\jeremy\documents\softwareengineering\b2\unittests\systemunittests\commonlibtests\bin\debug\commonlibtests.dll" id="0d068b79-783b-0484-0cd6-8aa0b94e7b9d">
+      <Execution id="39d38acc-ed8e-45fa-922d-a8f044ae189d" />
+      <TestMethod codeBase="C:/Users/Jeremy/Documents/SoftwareEngineering/B2/UnitTests/SystemUnitTests/CommonLibTests/bin/Debug/CommonLibTests.DLL" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="CommonLibTests.TrackBlockTest, CommonLibTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="LengthTest" />
+    </UnitTest>
+    <UnitTest name="LoggingToolConstructorTest" storage="c:\users\jeremy\documents\softwareengineering\b2\unittests\systemunittests\commonlibtests\bin\debug\commonlibtests.dll" id="4788be28-28ff-09cf-3f18-b3d2d5dc3992">
+      <Execution id="d758a04b-b9eb-40aa-8ff0-293fdb4723a9" />
+      <TestMethod codeBase="C:/Users/Jeremy/Documents/SoftwareEngineering/B2/UnitTests/SystemUnitTests/CommonLibTests/bin/Debug/CommonLibTests.DLL" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="CommonLibTests.LoggingToolTest, CommonLibTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="LoggingToolConstructorTest" />
+    </UnitTest>
+    <UnitTest name="RailroadCrossingTest" storage="c:\users\jeremy\documents\softwareengineering\b2\unittests\systemunittests\commonlibtests\bin\debug\commonlibtests.dll" id="d566fe7c-a1c6-b08d-7594-96784e8ef30a">
+      <Execution id="d255b694-3f6e-4e4b-8347-2ac3df09a573" />
+      <TestMethod codeBase="C:/Users/Jeremy/Documents/SoftwareEngineering/B2/UnitTests/SystemUnitTests/CommonLibTests/bin/Debug/CommonLibTests.DLL" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="CommonLibTests.TrackBlockTest, CommonLibTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="RailroadCrossingTest" />
+    </UnitTest>
+    <UnitTest name="TransponderTest" storage="c:\users\jeremy\documents\softwareengineering\b2\unittests\systemunittests\commonlibtests\bin\debug\commonlibtests.dll" id="5f1de81e-bbe9-3701-a390-d4f9d861eae3">
+      <Execution id="95b70e70-b88f-4edf-aaf3-2e138ac8842a" />
+      <TestMethod codeBase="C:/Users/Jeremy/Documents/SoftwareEngineering/B2/UnitTests/SystemUnitTests/CommonLibTests/bin/Debug/CommonLibTests.DLL" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="CommonLibTests.TrackBlockTest, CommonLibTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="TransponderTest" />
+    </UnitTest>
+    <UnitTest name="LogInfoTest" storage="c:\users\jeremy\documents\softwareengineering\b2\unittests\systemunittests\commonlibtests\bin\debug\commonlibtests.dll" id="6a465fa6-f0dd-5114-66f4-e824731ac934">
+      <Execution id="69f5dc2c-20f8-448b-a058-f5480d569484" />
+      <TestMethod codeBase="C:/Users/Jeremy/Documents/SoftwareEngineering/B2/UnitTests/SystemUnitTests/CommonLibTests/bin/Debug/CommonLibTests.DLL" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="CommonLibTests.LoggingToolTest, CommonLibTests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="LogInfoTest" />
+    </UnitTest>
+  </TestDefinitions>
+  <TestLists>
+    <TestList name="Results Not in a List" id="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestList name="All Loaded Results" id="19431567-8539-422a-85d7-44ee4e166bda" />
+  </TestLists>
+  <TestEntries>
+    <TestEntry testId="0d068b79-783b-0484-0cd6-8aa0b94e7b9d" executionId="39d38acc-ed8e-45fa-922d-a8f044ae189d" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="250fe511-f2d0-205b-8c2f-d06e565b9366" executionId="abf125b3-1230-4183-a82d-a3883158e996" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="2b2f2855-ff23-ef7c-93ef-50acfad14f46" executionId="6033bcb8-55d3-4290-a2dc-65d91c380816" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="2fa4c22f-50c5-5856-ab1e-ff1dca9ac6bd" executionId="e2d422a8-11a6-4788-9a49-8ed38e49c06d" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="3585da2e-cab7-43e0-f777-d4f5ce33894d" executionId="cc461421-e535-4bd9-82ee-a51b806cbccc" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="4788be28-28ff-09cf-3f18-b3d2d5dc3992" executionId="d758a04b-b9eb-40aa-8ff0-293fdb4723a9" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="4b91091c-9f8d-d972-e80e-cb32cfa0bca8" executionId="18a92949-a22d-465a-8e60-b87519303239" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="521f43af-3ced-100c-9f3e-022a2ddfafd9" executionId="2bff3f12-23d3-4160-9d52-549f39fd5e0f" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="5cb5dafc-f1c6-16dd-3320-d102a07b5db5" executionId="dacc6b18-4935-40ee-9665-6b0dbad85ad0" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="5f1de81e-bbe9-3701-a390-d4f9d861eae3" executionId="95b70e70-b88f-4edf-aaf3-2e138ac8842a" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="60a074b7-adcd-3f61-a0b5-619c0920c518" executionId="3e287ca4-5bc7-4b57-a917-68955dfe6ae8" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="62d0045c-9fb5-c689-2ce6-85b242515620" executionId="e4f1c496-191c-45fb-b253-b3999857cd7c" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="633e3d83-ae6b-b07e-3ef4-a8a7b1ee23c8" executionId="111ea71e-a746-4eb5-8b14-a9b6c72ff862" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="6a465fa6-f0dd-5114-66f4-e824731ac934" executionId="69f5dc2c-20f8-448b-a058-f5480d569484" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="8d36ecb0-f598-b1cb-761a-431233d95f64" executionId="3f7cd3c9-1457-4131-b31d-f9978f1bb183" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="ad04d487-79b3-e509-0338-28a4c8019605" executionId="b0ce9aeb-ce0c-40fa-8966-84993de4f691" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="b4e431a6-1d73-34a3-5aa2-a248e3cc4c96" executionId="32d7b800-0adb-4cda-9111-79ebf23750bd" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="c1053fe3-71d4-7277-6093-8d34b51b88a3" executionId="34d04916-075b-4cd1-8c92-bc567bfde890" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="d566fe7c-a1c6-b08d-7594-96784e8ef30a" executionId="d255b694-3f6e-4e4b-8347-2ac3df09a573" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="e178929a-84e9-c109-2c15-40988253dfb2" executionId="6df4a494-c11d-4dce-b4d8-adf3bd3d5e72" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="e2c5835a-1a2e-c4d6-3a6f-2c602e491a10" executionId="2faedd6d-f703-47c0-8f45-e5f8463ea8c6" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="e5955082-e422-bc0b-728d-5c6038847f5b" executionId="9f9627a8-7183-4b8e-bb6e-0e1cefcf607a" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="e62d153a-1a22-66b9-5266-d1832cc7229d" executionId="0513433e-ef55-4b94-a8ab-3c70d3a82e9c" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+  </TestEntries>
+  <Results>
+    <UnitTestResult executionId="39d38acc-ed8e-45fa-922d-a8f044ae189d" testId="0d068b79-783b-0484-0cd6-8aa0b94e7b9d" testName="LengthTest" computerName="JEREMY-PC" duration="00:00:00.1253351" startTime="2012-03-23T15:19:51.4040618-04:00" endTime="2012-03-23T15:19:52.3651168-04:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Inconclusive" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="39d38acc-ed8e-45fa-922d-a8f044ae189d">
+      <Output>
+        <ErrorInfo>
+          <Message>Assert.Inconclusive failed. Verify the correctness of this test method.</Message>
+          <StackTrace>   at CommonLibTests.TrackBlockTest.LengthTest() in C:\Users\Jeremy\Documents\SoftwareEngineering\B2\UnitTests\SystemUnitTests\CommonLibTests\TrackBlockTest.cs:line 262
+</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="abf125b3-1230-4183-a82d-a3883158e996" testId="250fe511-f2d0-205b-8c2f-d06e565b9366" testName="HasTransponderTest" computerName="JEREMY-PC" duration="00:00:00.0016865" startTime="2012-03-23T15:19:52.3861180-04:00" endTime="2012-03-23T15:19:52.4051191-04:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Inconclusive" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="abf125b3-1230-4183-a82d-a3883158e996">
+      <Output>
+        <ErrorInfo>
+          <Message>Assert.Inconclusive failed. Verify the correctness of this test method.</Message>
+          <StackTrace>   at CommonLibTests.TrackBlockTest.HasTransponderTest() in C:\Users\Jeremy\Documents\SoftwareEngineering\B2\UnitTests\SystemUnitTests\CommonLibTests\TrackBlockTest.cs:line 81
+</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="6033bcb8-55d3-4290-a2dc-65d91c380816" testId="2b2f2855-ff23-ef7c-93ef-50acfad14f46" testName="TrainPresentTest" computerName="JEREMY-PC" duration="00:00:00.0031296" startTime="2012-03-23T15:19:52.4181198-04:00" endTime="2012-03-23T15:19:52.4291204-04:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Inconclusive" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="6033bcb8-55d3-4290-a2dc-65d91c380816">
+      <Output>
+        <ErrorInfo>
+          <Message>Assert.Inconclusive failed. Verify the correctness of this test method.</Message>
+          <StackTrace>   at CommonLibTests.TrackBlockTest.TrainPresentTest() in C:\Users\Jeremy\Documents\SoftwareEngineering\B2\UnitTests\SystemUnitTests\CommonLibTests\TrackBlockTest.cs:line 171
+</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="e2d422a8-11a6-4788-9a49-8ed38e49c06d" testId="2fa4c22f-50c5-5856-ab1e-ff1dca9ac6bd" testName="LogDebugFormatTest" computerName="JEREMY-PC" duration="00:00:00.2070169" startTime="2012-03-23T15:19:52.4311206-04:00" endTime="2012-03-23T15:19:52.6481330-04:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="e2d422a8-11a6-4788-9a49-8ed38e49c06d">
+      <Output>
+        <ErrorInfo>
+          <Message>Test method CommonLibTests.LoggingToolTest.LogDebugFormatTest threw exception: 
+System.NullReferenceException: Object reference not set to an instance of an object.</Message>
+          <StackTrace>    at CommonLib.LoggingTool.LogDebugFormat(String format, Object[] args) in C:\Users\Jeremy\Documents\SoftwareEngineering\B2\CommonLib\LoggingTool.cs:line 81
+   at CommonLibTests.LoggingToolTest.LogDebugFormatTest() in C:\Users\Jeremy\Documents\SoftwareEngineering\B2\UnitTests\SystemUnitTests\CommonLibTests\LoggingToolTest.cs:line 146
+</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="cc461421-e535-4bd9-82ee-a51b806cbccc" testId="3585da2e-cab7-43e0-f777-d4f5ce33894d" testName="LogDebugTest" computerName="JEREMY-PC" duration="00:00:00.0052020" startTime="2012-03-23T15:19:52.6511331-04:00" endTime="2012-03-23T15:19:52.6671341-04:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="cc461421-e535-4bd9-82ee-a51b806cbccc">
+      <Output>
+        <ErrorInfo>
+          <Message>Test method CommonLibTests.LoggingToolTest.LogDebugTest threw exception: 
+System.NullReferenceException: Object reference not set to an instance of an object.</Message>
+          <StackTrace>    at CommonLib.LoggingTool.LogDebug(Object message) in C:\Users\Jeremy\Documents\SoftwareEngineering\B2\CommonLib\LoggingTool.cs:line 65
+   at CommonLibTests.LoggingToolTest.LogDebugTest() in C:\Users\Jeremy\Documents\SoftwareEngineering\B2\UnitTests\SystemUnitTests\CommonLibTests\LoggingToolTest.cs:line 159
+</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="d758a04b-b9eb-40aa-8ff0-293fdb4723a9" testId="4788be28-28ff-09cf-3f18-b3d2d5dc3992" testName="LoggingToolConstructorTest" computerName="JEREMY-PC" duration="00:00:00.0023169" startTime="2012-03-23T15:19:52.6841350-04:00" endTime="2012-03-23T15:19:52.7031361-04:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Inconclusive" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="d758a04b-b9eb-40aa-8ff0-293fdb4723a9">
+      <Output>
+        <ErrorInfo>
+          <Message>Assert.Inconclusive failed. TODO: Implement code to verify target</Message>
+          <StackTrace>   at CommonLibTests.LoggingToolTest.LoggingToolConstructorTest() in C:\Users\Jeremy\Documents\SoftwareEngineering\B2\UnitTests\SystemUnitTests\CommonLibTests\LoggingToolTest.cs:line 171
+</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="18a92949-a22d-465a-8e60-b87519303239" testId="4b91091c-9f8d-d972-e80e-cb32cfa0bca8" testName="HasTunnelTest" computerName="JEREMY-PC" duration="00:00:00.0053115" startTime="2012-03-23T15:19:52.7171369-04:00" endTime="2012-03-23T15:19:52.7281376-04:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Inconclusive" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="18a92949-a22d-465a-8e60-b87519303239">
+      <Output>
+        <ErrorInfo>
+          <Message>Assert.Inconclusive failed. Verify the correctness of this test method.</Message>
+          <StackTrace>   at CommonLibTests.TrackBlockTest.HasTunnelTest() in C:\Users\Jeremy\Documents\SoftwareEngineering\B2\UnitTests\SystemUnitTests\CommonLibTests\TrackBlockTest.cs:line 279
+</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="2bff3f12-23d3-4160-9d52-549f39fd5e0f" testId="521f43af-3ced-100c-9f3e-022a2ddfafd9" testName="SpeedLimitKphTest" computerName="JEREMY-PC" duration="00:00:00.0017446" startTime="2012-03-23T15:19:52.7341379-04:00" endTime="2012-03-23T15:19:52.7421384-04:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Inconclusive" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="2bff3f12-23d3-4160-9d52-549f39fd5e0f">
+      <Output>
+        <ErrorInfo>
+          <Message>Assert.Inconclusive failed. Verify the correctness of this test method.</Message>
+          <StackTrace>   at CommonLibTests.TrackBlockTest.SpeedLimitKphTest() in C:\Users\Jeremy\Documents\SoftwareEngineering\B2\UnitTests\SystemUnitTests\CommonLibTests\TrackBlockTest.cs:line 191
+</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="dacc6b18-4935-40ee-9665-6b0dbad85ad0" testId="5cb5dafc-f1c6-16dd-3320-d102a07b5db5" testName="OrientationTest" computerName="JEREMY-PC" duration="00:00:00.0007844" startTime="2012-03-23T15:19:52.7471386-04:00" endTime="2012-03-23T15:19:52.7541390-04:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Inconclusive" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="dacc6b18-4935-40ee-9665-6b0dbad85ad0">
+      <Output>
+        <ErrorInfo>
+          <Message>Assert.Inconclusive failed. Verify the correctness of this test method.</Message>
+          <StackTrace>   at CommonLibTests.TrackBlockTest.OrientationTest() in C:\Users\Jeremy\Documents\SoftwareEngineering\B2\UnitTests\SystemUnitTests\CommonLibTests\TrackBlockTest.cs:line 245
+</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="95b70e70-b88f-4edf-aaf3-2e138ac8842a" testId="5f1de81e-bbe9-3701-a390-d4f9d861eae3" testName="TransponderTest" computerName="JEREMY-PC" duration="00:00:00.0009435" startTime="2012-03-23T15:19:52.7611394-04:00" endTime="2012-03-23T15:19:52.7671398-04:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Inconclusive" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="95b70e70-b88f-4edf-aaf3-2e138ac8842a">
+      <Output>
+        <ErrorInfo>
+          <Message>Assert.Inconclusive failed. Verify the correctness of this test method.</Message>
+          <StackTrace>   at CommonLibTests.TrackBlockTest.TransponderTest() in C:\Users\Jeremy\Documents\SoftwareEngineering\B2\UnitTests\SystemUnitTests\CommonLibTests\TrackBlockTest.cs:line 151
+</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="3e287ca4-5bc7-4b57-a917-68955dfe6ae8" testId="60a074b7-adcd-3f61-a0b5-619c0920c518" testName="DistanceToStationTest" computerName="JEREMY-PC" duration="00:00:00.0010723" startTime="2012-03-23T15:19:52.7741402-04:00" endTime="2012-03-23T15:19:52.7801405-04:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Inconclusive" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="3e287ca4-5bc7-4b57-a917-68955dfe6ae8">
+      <Output>
+        <ErrorInfo>
+          <Message>Assert.Inconclusive failed. Verify the correctness of this test method.</Message>
+          <StackTrace>   at CommonLibTests.TransponderTest.DistanceToStationTest() in C:\Users\Jeremy\Documents\SoftwareEngineering\B2\UnitTests\SystemUnitTests\CommonLibTests\TransponderTest.cs:line 90
+</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="e4f1c496-191c-45fb-b253-b3999857cd7c" testId="62d0045c-9fb5-c689-2ce6-85b242515620" testName="LogErrorFormatTest" computerName="JEREMY-PC" duration="00:00:00.0063590" startTime="2012-03-23T15:19:52.7861409-04:00" endTime="2012-03-23T15:19:52.7971415-04:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="e4f1c496-191c-45fb-b253-b3999857cd7c">
+      <Output>
+        <ErrorInfo>
+          <Message>Test method CommonLibTests.LoggingToolTest.LogErrorFormatTest threw exception: 
+System.NullReferenceException: Object reference not set to an instance of an object.</Message>
+          <StackTrace>    at CommonLib.LoggingTool.LogErrorFormat(String format, Object[] args) in C:\Users\Jeremy\Documents\SoftwareEngineering\B2\CommonLib\LoggingTool.cs:line 150
+   at CommonLibTests.LoggingToolTest.LogErrorFormatTest() in C:\Users\Jeremy\Documents\SoftwareEngineering\B2\UnitTests\SystemUnitTests\CommonLibTests\LoggingToolTest.cs:line 105
+</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="111ea71e-a746-4eb5-8b14-a9b6c72ff862" testId="633e3d83-ae6b-b07e-3ef4-a8a7b1ee23c8" testName="LogErrorTest1" computerName="JEREMY-PC" duration="00:00:00.0015800" startTime="2012-03-23T15:19:52.8031418-04:00" endTime="2012-03-23T15:19:52.8101422-04:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="111ea71e-a746-4eb5-8b14-a9b6c72ff862">
+      <Output>
+        <ErrorInfo>
+          <Message>Test method CommonLibTests.LoggingToolTest.LogErrorTest1 threw exception: 
+System.NullReferenceException: Object reference not set to an instance of an object.</Message>
+          <StackTrace>    at CommonLib.LoggingTool.LogError(Object message) in C:\Users\Jeremy\Documents\SoftwareEngineering\B2\CommonLib\LoggingTool.cs:line 122
+   at CommonLibTests.LoggingToolTest.LogErrorTest1() in C:\Users\Jeremy\Documents\SoftwareEngineering\B2\UnitTests\SystemUnitTests\CommonLibTests\LoggingToolTest.cs:line 132
+</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="69f5dc2c-20f8-448b-a058-f5480d569484" testId="6a465fa6-f0dd-5114-66f4-e824731ac934" testName="LogInfoTest" computerName="JEREMY-PC" duration="00:00:00.0015821" startTime="2012-03-23T15:19:52.8161426-04:00" endTime="2012-03-23T15:19:52.8231430-04:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="69f5dc2c-20f8-448b-a058-f5480d569484">
+      <Output>
+        <ErrorInfo>
+          <Message>Test method CommonLibTests.LoggingToolTest.LogInfoTest threw exception: 
+System.NullReferenceException: Object reference not set to an instance of an object.</Message>
+          <StackTrace>    at CommonLib.LoggingTool.LogInfo(Object message) in C:\Users\Jeremy\Documents\SoftwareEngineering\B2\CommonLib\LoggingTool.cs:line 95
+   at CommonLibTests.LoggingToolTest.LogInfoTest() in C:\Users\Jeremy\Documents\SoftwareEngineering\B2\UnitTests\SystemUnitTests\CommonLibTests\LoggingToolTest.cs:line 91
+</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="3f7cd3c9-1457-4131-b31d-f9978f1bb183" testId="8d36ecb0-f598-b1cb-761a-431233d95f64" testName="TrackBlockConstructorTest1" computerName="JEREMY-PC" duration="00:00:00.0009140" startTime="2012-03-23T15:19:52.8301434-04:00" endTime="2012-03-23T15:19:52.8351437-04:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Inconclusive" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="3f7cd3c9-1457-4131-b31d-f9978f1bb183">
+      <Output>
+        <ErrorInfo>
+          <Message>Assert.Inconclusive failed. TODO: Implement code to verify target</Message>
+          <StackTrace>   at CommonLibTests.TrackBlockTest.TrackBlockConstructorTest1() in C:\Users\Jeremy\Documents\SoftwareEngineering\B2\UnitTests\SystemUnitTests\CommonLibTests\TrackBlockTest.cs:line 134
+</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="b0ce9aeb-ce0c-40fa-8966-84993de4f691" testId="ad04d487-79b3-e509-0338-28a4c8019605" testName="AuthorityTest" computerName="JEREMY-PC" duration="00:00:00.0008858" startTime="2012-03-23T15:19:52.8411440-04:00" endTime="2012-03-23T15:19:52.8481444-04:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Inconclusive" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="b0ce9aeb-ce0c-40fa-8966-84993de4f691">
+      <Output>
+        <ErrorInfo>
+          <Message>Assert.Inconclusive failed. Verify the correctness of this test method.</Message>
+          <StackTrace>   at CommonLibTests.TrackBlockTest.AuthorityTest() in C:\Users\Jeremy\Documents\SoftwareEngineering\B2\UnitTests\SystemUnitTests\CommonLibTests\TrackBlockTest.cs:line 101
+</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="32d7b800-0adb-4cda-9111-79ebf23750bd" testId="b4e431a6-1d73-34a3-5aa2-a248e3cc4c96" testName="LogErrorTest" computerName="JEREMY-PC" duration="00:00:00.0016125" startTime="2012-03-23T15:19:52.8531447-04:00" endTime="2012-03-23T15:19:52.8601451-04:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="32d7b800-0adb-4cda-9111-79ebf23750bd">
+      <Output>
+        <ErrorInfo>
+          <Message>Test method CommonLibTests.LoggingToolTest.LogErrorTest threw exception: 
+System.NullReferenceException: Object reference not set to an instance of an object.</Message>
+          <StackTrace>    at CommonLib.LoggingTool.LogError(Object message, Exception exception) in C:\Users\Jeremy\Documents\SoftwareEngineering\B2\CommonLib\LoggingTool.cs:line 136
+   at CommonLibTests.LoggingToolTest.LogErrorTest() in C:\Users\Jeremy\Documents\SoftwareEngineering\B2\UnitTests\SystemUnitTests\CommonLibTests\LoggingToolTest.cs:line 119
+</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="34d04916-075b-4cd1-8c92-bc567bfde890" testId="c1053fe3-71d4-7277-6093-8d34b51b88a3" testName="TrackBlockConstructorTest" computerName="JEREMY-PC" duration="00:00:00.0006792" startTime="2012-03-23T15:19:52.8661454-04:00" endTime="2012-03-23T15:19:52.8711457-04:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Inconclusive" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="34d04916-075b-4cd1-8c92-bc567bfde890">
+      <Output>
+        <ErrorInfo>
+          <Message>Assert.Inconclusive failed. TODO: Implement code to verify target</Message>
+          <StackTrace>   at CommonLibTests.TrackBlockTest.TrackBlockConstructorTest() in C:\Users\Jeremy\Documents\SoftwareEngineering\B2\UnitTests\SystemUnitTests\CommonLibTests\TrackBlockTest.cs:line 116
+</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="d255b694-3f6e-4e4b-8347-2ac3df09a573" testId="d566fe7c-a1c6-b08d-7594-96784e8ef30a" testName="RailroadCrossingTest" computerName="JEREMY-PC" duration="00:00:00.0007874" startTime="2012-03-23T15:19:52.8781461-04:00" endTime="2012-03-23T15:19:52.8831464-04:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Inconclusive" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="d255b694-3f6e-4e4b-8347-2ac3df09a573">
+      <Output>
+        <ErrorInfo>
+          <Message>Assert.Inconclusive failed. Verify the correctness of this test method.</Message>
+          <StackTrace>   at CommonLibTests.TrackBlockTest.RailroadCrossingTest() in C:\Users\Jeremy\Documents\SoftwareEngineering\B2\UnitTests\SystemUnitTests\CommonLibTests\TrackBlockTest.cs:line 228
+</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="6df4a494-c11d-4dce-b4d8-adf3bd3d5e72" testId="e178929a-84e9-c109-2c15-40988253dfb2" testName="StationNameTest" computerName="JEREMY-PC" duration="00:00:00.0009350" startTime="2012-03-23T15:19:52.8891468-04:00" endTime="2012-03-23T15:19:52.8951471-04:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Inconclusive" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="6df4a494-c11d-4dce-b4d8-adf3bd3d5e72">
+      <Output>
+        <ErrorInfo>
+          <Message>Assert.Inconclusive failed. Verify the correctness of this test method.</Message>
+          <StackTrace>   at CommonLibTests.TransponderTest.StationNameTest() in C:\Users\Jeremy\Documents\SoftwareEngineering\B2\UnitTests\SystemUnitTests\CommonLibTests\TransponderTest.cs:line 104
+</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="2faedd6d-f703-47c0-8f45-e5f8463ea8c6" testId="e2c5835a-1a2e-c4d6-3a6f-2c602e491a10" testName="SignalStateTest" computerName="JEREMY-PC" duration="00:00:00.0031262" startTime="2012-03-23T15:19:52.9011474-04:00" endTime="2012-03-23T15:19:52.9091479-04:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Inconclusive" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="2faedd6d-f703-47c0-8f45-e5f8463ea8c6">
+      <Output>
+        <ErrorInfo>
+          <Message>Assert.Inconclusive failed. Verify the correctness of this test method.</Message>
+          <StackTrace>   at CommonLibTests.TrackBlockTest.SignalStateTest() in C:\Users\Jeremy\Documents\SoftwareEngineering\B2\UnitTests\SystemUnitTests\CommonLibTests\TrackBlockTest.cs:line 211
+</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="9f9627a8-7183-4b8e-bb6e-0e1cefcf607a" testId="e5955082-e422-bc0b-728d-5c6038847f5b" testName="LogInfoFormatTest" computerName="JEREMY-PC" duration="00:00:00.0015996" startTime="2012-03-23T15:19:52.9151482-04:00" endTime="2012-03-23T15:19:52.9221486-04:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="9f9627a8-7183-4b8e-bb6e-0e1cefcf607a">
+      <Output>
+        <ErrorInfo>
+          <Message>Test method CommonLibTests.LoggingToolTest.LogInfoFormatTest threw exception: 
+System.NullReferenceException: Object reference not set to an instance of an object.</Message>
+          <StackTrace>    at CommonLib.LoggingTool.LogInfoFormat(String format, Object[] args) in C:\Users\Jeremy\Documents\SoftwareEngineering\B2\CommonLib\LoggingTool.cs:line 109
+   at CommonLibTests.LoggingToolTest.LogInfoFormatTest() in C:\Users\Jeremy\Documents\SoftwareEngineering\B2\UnitTests\SystemUnitTests\CommonLibTests\LoggingToolTest.cs:line 78
+</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="0513433e-ef55-4b94-a8ab-3c70d3a82e9c" testId="e62d153a-1a22-66b9-5266-d1832cc7229d" testName="TransponderConstructorTest" computerName="JEREMY-PC" duration="00:00:00.0006338" startTime="2012-03-23T15:19:52.9281490-04:00" endTime="2012-03-23T15:19:52.9341493-04:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Inconclusive" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="0513433e-ef55-4b94-a8ab-3c70d3a82e9c">
+      <Output>
+        <ErrorInfo>
+          <Message>Assert.Inconclusive failed. TODO: Implement code to verify target</Message>
+          <StackTrace>   at CommonLibTests.TransponderTest.TransponderConstructorTest() in C:\Users\Jeremy\Documents\SoftwareEngineering\B2\UnitTests\SystemUnitTests\CommonLibTests\TransponderTest.cs:line 76
+</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+  </Results>
+</TestRun>
