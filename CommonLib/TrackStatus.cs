@@ -5,14 +5,14 @@ using System.Text;
 
 namespace CommonLib
 {
-	public class TrackStatus
+	public struct TrackStatus
 	{
-		bool trainPresent;
-		bool brokenRail;
-		bool circuitFail;
-		bool powerFail;
-		bool isOpen;
-		TrackSignalState signalState;
-		TrackSwitchState switchState;
+		public bool TrainPresent;
+		public bool BrokenRail;
+		public bool CircuitFail;
+		public bool PowerFail;
+		public bool IsOpen;
+		public TrackSignalState SignalState;
+		public TrackSwitchState SwitchState;
 	}
 }

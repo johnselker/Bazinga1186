@@ -178,12 +178,12 @@ namespace CTCOfficeGUI
                 info.Add("Has RR Crossing:", "no");
             }
 
-            info.Add("Signal:", block.SignalState.ToString());
-            info.Add("Speed Limit:", block.SpeedLimitKph.ToString() + " " + KPH);
+            info.Add("Signal:", block.Status.SignalState.ToString());
+            info.Add("Speed Limit:", block.Authority.SpeedLimitKPH.ToString() + " " + KPH);
             info.Add("Start Elevation:", block.StartElevationMeters.ToString() + " " + METERS);
             info.Add("Start Point:", block.StartPoint.X.ToString() + ", " + block.StartPoint.Y.ToString());
             
-            if (block.TrainPresent)
+            if (block.Status.TrainPresent)
             {
                 info.Add("Train present:", "yes");
             }

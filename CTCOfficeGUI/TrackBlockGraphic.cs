@@ -218,7 +218,7 @@ namespace CTCOfficeGUI
         /// <returns></returns>
         private Color GetDrawColor()
         {
-            switch (m_block.SignalState)
+            switch (m_block.Status.SignalState)
             {
                 case TrackSignalState.Red:
                     return RedColor;

@@ -36,28 +36,36 @@ namespace CTCOfficeGUI
         {
             List<TrackBlock> blocks = new List<TrackBlock>();
 
-            TrackBlock test = new TrackBlock("A", TrackOrientation.EastWest, 100, false, false, TrackSignalState.Green, false, 50, 3, new Point(369, 260), 0, 0);
+            TrackBlock test = new TrackBlock("A", TrackOrientation.EastWest, 100, false, false, TrackSignalState.Green, 
+                                                                        false, new BlockAuthority(50, 3), new Point(369, 260), 0, 0);
             blocks.Add(test);
 
-            test = new TrackBlock("B", TrackOrientation.SouthWestNorthEast, 100, false, false, TrackSignalState.Yellow, false, 50, 3, new Point(469, 260), 0, 0);
+            test = new TrackBlock("B", TrackOrientation.SouthWestNorthEast, 100, false, false, TrackSignalState.Yellow,
+                                                                        false, new BlockAuthority(50, 3), new Point(469, 260), 0, 0);
             blocks.Add(test);
 
-            test = new TrackBlock("C", TrackOrientation.NorthSouth, 100, false, false, TrackSignalState.Red, false, 50, 3, new Point(540, 189), 0, 0);
+            test = new TrackBlock("C", TrackOrientation.NorthSouth, 100, false, false   , TrackSignalState.Red,
+                                                                        false, new BlockAuthority(50, 3), new Point(540, 189), 0, 0);
             blocks.Add(test);
 
-            test = new TrackBlock("D", TrackOrientation.NorthWestSouthEast, 100, false, false, TrackSignalState.SuperGreen, false, 50, 3, new Point(540, 189), 0, 0);
+            test = new TrackBlock("D", TrackOrientation.NorthWestSouthEast, 100, false, false, TrackSignalState.SuperGreen,
+                                                                        false, new BlockAuthority(50, 3), new Point(540, 189), 0, 0);
             blocks.Add(test);
 
-            test = new TrackBlock("E", TrackOrientation.EastWest, 100, false, false, TrackSignalState.Green, false, 50, 3, new Point(611, 260), 0, 0);
+            test = new TrackBlock("E", TrackOrientation.EastWest, 100, false, false, TrackSignalState.Green,
+                                                                        false, new BlockAuthority(50, 3), new Point(611, 260), 0, 0);
             blocks.Add(test);
 
-            test = new TrackBlock("F", TrackOrientation.NorthWestSouthEast, 100, false, false, TrackSignalState.Green, false, 50, 3, new Point(469, 260), 0, 0);
+            test = new TrackBlock("F", TrackOrientation.NorthWestSouthEast, 100, false, false, TrackSignalState.Green,
+                                                                        false, new BlockAuthority(50, 3), new Point(469, 260), 0, 0);
             blocks.Add(test);
 
-            test = new TrackBlock("G", TrackOrientation.SouthWestNorthEast, 100, false, false, TrackSignalState.Green, false, 50, 3, new Point(540, 331), 0, 0);
+            test = new TrackBlock("G", TrackOrientation.SouthWestNorthEast, 100, false, false, TrackSignalState.Green,
+                                                                        false, new BlockAuthority(50, 3), new Point(540, 331), 0, 0);
             blocks.Add(test);
 
-            test = new TrackBlock("H", TrackOrientation.NorthSouth, 100, false, false, TrackSignalState.Green, false, 50, 3, new Point(540, 431), 0, 0);
+            test = new TrackBlock("H", TrackOrientation.NorthSouth, 100, false, false, TrackSignalState.Green,
+                                                                        false, new BlockAuthority(50, 3), new Point(540, 431), 0, 0);
             blocks.Add(test);
 
             trackDisplayPanel.SetTrackLayout(blocks);

@@ -62,7 +62,7 @@ namespace CTCOfficeGUI
             commands.Add(TrackBlockCommands.SuggestSpeedLimit, "Suggest Speed Limit");
             commands.Add(TrackBlockCommands.SuggestAuthority, "Suggest Speed Limit");
 
-            if (block.IsOpen)
+            if (block.Status.IsOpen)
             {
                 commands.Add(TrackBlockCommands.CloseBlock, "Close Block");
             }

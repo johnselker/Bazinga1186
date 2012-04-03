@@ -38,7 +38,7 @@ namespace CTCOfficeGUI
 
             if (Int32.TryParse(value, out limit)) //Parse the string into an integer
             {
-                if (limit >= 0 && limit <= block.SpeedLimitKph)
+                if (limit >= 0 && limit <= block.Authority.SpeedLimitKPH)
                 {
                     //Send speed limit to wayside controller
                     result = true;
