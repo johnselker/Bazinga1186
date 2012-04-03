@@ -44,7 +44,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Authority.cs" />
+    <Compile Include="BlockAuthority.cs" />
     <Compile Include="EnumTypes.cs" />
     <Compile Include="LoggingTool.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
