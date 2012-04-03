@@ -60,7 +60,7 @@ namespace CTCOfficeGUI
         {
             Dictionary<object, string> commands = new Dictionary<object, string>();
             commands.Add(TrackBlockCommands.SuggestSpeedLimit, "Suggest Speed Limit");
-            commands.Add(TrackBlockCommands.SuggestAuthority, "Suggest Speed Limit");
+            commands.Add(TrackBlockCommands.SuggestAuthority, "Suggest Authority");
 
             if (block.Status.IsOpen)
             {

@@ -144,9 +144,12 @@ namespace CTCOfficeGUI
             if (block == null) return;
 
             Dictionary<string, string> info = new Dictionary<string, string>();
-            info.Add("Authority:", block.Authority.ToString());
+            info.Add("Authority:", block.Authority.Authority.ToString());
             info.Add("End Elevation:", block.EndElevationMeters.ToString() + " " + METERS);
             info.Add("End Point:", block.EndPoint.X.ToString() + ", " + block.EndPoint.Y.ToString());
+
+            KeyValuePair<string, string> failure = GetBlockFailureStateString(block);
+            info.Add(failure.Key, failure.Value);
 
             if (block.HasTransponder)
             {
@@ -246,6 +249,59 @@ namespace CTCOfficeGUI
                 //Right align the labels
                 m_fieldLabels[i].Left = m_valueLabels[i].Left - m_fieldLabels[i].Width;
             }
+        }
+
+        /// <summary>
+        /// Gets the failure state string for the given track block
+        /// </summary>
+        /// 
+        /// <remarks>There are 8 different possible strings, so this chunk of code gets ugly</remarks>
+        /// <param name="block">Track block</param>
+        /// <returns>Failure state string</returns>
+        private KeyValuePair<string, string> GetBlockFailureStateString(TrackBlock block)
+        {
+            KeyValuePair<string, string> pair;
+
+            //Check all 8 possible states
+            if (!block.Status.BrokenRail && !block.Status.CircuitFail && !block.Status.PowerFail)
+            {
+                pair = new KeyValuePair<string, string>("Failure State:", "none");
+            }
+            else if (!block.Status.BrokenRail && !block.Status.CircuitFail && block.Status.PowerFail)
+            {
+                pair = new KeyValuePair<string, string>("Failure State:", "Power Failure");
+            }
+            else if (!block.Status.BrokenRail && block.Status.CircuitFail && !block.Status.PowerFail)
+            {
+                pair = new KeyValuePair<string, string>("Failure State:", "Circuit Failure");
+            }
+            else if (!block.Status.BrokenRail && block.Status.CircuitFail && block.Status.PowerFail)
+            {
+                pair = new KeyValuePair<string, string>("Failure State:", "Circuit & Power Failure");
+            }
+            else if (block.Status.BrokenRail && !block.Status.CircuitFail && !block.Status.PowerFail)
+            {
+                pair = new KeyValuePair<string, string>("Failure State:", "Broken Rail");
+            }
+            else if (block.Status.BrokenRail && !block.Status.CircuitFail && block.Status.PowerFail)
+            {
+                pair = new KeyValuePair<string, string>("Failure State:", "Broken Rail & Power Failure");
+            }
+            else if (block.Status.BrokenRail && block.Status.CircuitFail && !block.Status.PowerFail)
+            {
+                pair = new KeyValuePair<string, string>("Failure State:", "Broken Rail & Circuit Failure");
+            }
+            else if (block.Status.BrokenRail && block.Status.CircuitFail && block.Status.PowerFail)
+            {
+                pair = new KeyValuePair<string, string>("Failure State:", "Broken Rail, Circuit, & Power Failure");
+            }
+            else
+            {
+                //Unreachable, but needed since pair is not nullable
+                pair = new KeyValuePair<string, string>();
+            }
+
+            return pair;
         }
 
         #endregion

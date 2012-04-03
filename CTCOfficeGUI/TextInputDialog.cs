@@ -67,7 +67,7 @@ namespace CTCOfficeGUI
         public TextInputDialog()
         {
             InitializeComponent();
-            lblPrompt.Focus();
+            txtInput.Focus();
         }
 
         /// <summary>
@@ -77,7 +77,7 @@ namespace CTCOfficeGUI
         public TextInputDialog(string prompt)
         {
             InitializeComponent();
-            lblPrompt.Focus();
+            txtInput.Focus();
             PromptText = prompt;
         }
 
