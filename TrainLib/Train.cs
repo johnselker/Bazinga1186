@@ -24,17 +24,17 @@ namespace Train
 		private TrainState state = new TrainState();
 		private Timer clock = new Timer();
 
-		public Train(int trainID, int x, int y, int direction, int cars=1, int crew = 0, int passengers = 0)
+		public Train(string trainID, int x, int y, int direction, int cars = 1, int crew = 0, int passengers = 0)
 		{
-			state.trainID = trainID;
-			state.x = x;
-			state.y = y;
-			state.direction = direction;
-			state.cars = cars;
-			state.crew = crew;
-			state.passengers = passengers;
-			state.doors = TrainState.door.Open;
-			state.lights = TrainState.light.Off;
+			state.TrainID = trainID;
+			state.X = x;
+			state.Y = y;
+			state.Direction = direction;
+			state.Cars = cars;
+			state.Crew = crew;
+			state.Passengers = passengers;
+			state.Doors = TrainState.Door.Open;
+			state.Lights = TrainState.Light.Off;
 			acceleration = 0;
 			// Add the event and the event handler for the method that will process the timer event to the timer.
 			clock.Elapsed += new ElapsedEventHandler(UpdateState);
@@ -51,28 +51,28 @@ namespace Train
 
 		private void UpdateSpeed()
 		{
-			double normalForce = state.mass * g * Math.Cos(slope); // Should always be positive
-			double engineForce = state.mass * acceleration;
-			double gravityForce = state.mass * g * Math.Sin(slope); // Negative means downward slope
+			double normalForce = state.Mass * g * Math.Cos(slope); // Should always be positive
+			double engineForce = state.Mass * acceleration;
+			double gravityForce = state.Mass * g * Math.Sin(slope); // Negative means downward slope
 			double frictionalForce = friction * normalForce;
 			double timestep = clock.Interval * 1000;
 
 			// Increase speed based on acceleration
-			state.speed += (engineForce / state.mass) * timestep;
+			state.Speed += (engineForce / state.Mass) * timestep;
 			// Adjust speed according to slope
-			state.speed -= (gravityForce / state.mass) * timestep;
+			state.Speed -= (gravityForce / state.Mass) * timestep;
 			// Decrease speed based on friction
-			state.speed -= (frictionalForce / state.mass) * timestep;
+			state.Speed -= (frictionalForce / state.Mass) * timestep;
 		}
 
 		public double GetSpeed()
 		{
-			return state.speed;
+			return state.Speed;
 		}
 
 		public int GetDirection()
 		{
-			return state.direction;
+			return state.Direction;
 		}
 
 		public int GetPosition()
@@ -92,15 +92,15 @@ namespace Train
 			return emergencyBrake;
 		}
 
-		public bool SetDoors(TrainState.door doors)
+		public bool SetDoors(TrainState.Door doors)
 		{
-			state.doors = doors;
+			state.Doors = doors;
 			return true;
 		}
 
-		public bool SetLights(TrainState.light lights)
+		public bool SetLights(TrainState.Light lights)
 		{
-			state.lights = lights;
+			state.Lights = lights;
 			return true;
 		}
 
@@ -153,6 +153,20 @@ namespace Train
 				this.acceleration = acceleration;
 				return true;
 			}
+		}
+
+		public bool SetPower(double power)
+		{
+			if (state.Speed < 0.1)
+			{
+				acceleration = power / (0.1 * state.Mass);
+			}
+			else
+			{
+				acceleration = power / (state.Speed * state.Mass);
+			}
+			UpdateSpeed();
+			return true;
 		}
 	}
 }

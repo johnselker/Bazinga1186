@@ -12,12 +12,13 @@ namespace Train
 		int GetDirection();
 		int GetPosition();
 		bool SetEmergencyBrake(bool brake);
-		bool SetDoors(TrainState.door doors);
-		bool SetLights(TrainState.light lights);
+		bool SetDoors(TrainState.Door doors);
+		bool SetLights(TrainState.Light lights);
 		bool SetAnnouncement(string announcement);
 		bool SetSlope(double slope);
 		bool SetFriction(double friction);
 		bool SetAcceleration(double acceleration);
+		bool SetPower(double power);
 		TrainState GetState();
 	}
 }
