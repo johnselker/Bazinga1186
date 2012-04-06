@@ -1,5 +1,0 @@
-C:\Users\HunterNA1\Documents\Schoolwork\Tertiary Education\Pitt Senior\Semester 2\COE 1186\Bazinga1186\Bin\TrackControlLib.dll
-C:\Users\HunterNA1\Documents\Schoolwork\Tertiary Education\Pitt Senior\Semester 2\COE 1186\Bazinga1186\Bin\TrackControlLib.pdb
-C:\Users\HunterNA1\Documents\Schoolwork\Tertiary Education\Pitt Senior\Semester 2\COE 1186\Bazinga1186\TrackControlLib\obj\Debug\ResolveAssemblyReference.cache
-C:\Users\HunterNA1\Documents\Schoolwork\Tertiary Education\Pitt Senior\Semester 2\COE 1186\Bazinga1186\TrackControlLib\obj\Debug\TrackControlLib.dll
-C:\Users\HunterNA1\Documents\Schoolwork\Tertiary Education\Pitt Senior\Semester 2\COE 1186\Bazinga1186\TrackControlLib\obj\Debug\TrackControlLib.pdb
