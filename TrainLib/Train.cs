@@ -16,20 +16,26 @@ namespace Train
 		private const double eBrakeDeceleration = 10.0;
 		private const double maxSpeed = 19.444444444;
 
-		private int cars = 1;
-		private double speed = 0.0;
-		private double acceleration = 0.0;
+		private double acceleration = 0;
 		private bool emergencyBrake = false;
 		private string announcement = "";
-		private double slope = 0.0;
+		private double slope = 0;
 		private double friction = 0.01; // arbitrary selection
 		private TrainState state = new TrainState();
 		private Timer clock = new Timer();
 
-		public Train(int cars=1, double acceleration=0)
+		public Train(int trainID, int x, int y, int direction, int cars=1, int crew = 0, int passengers = 0)
 		{
-			this.cars = cars;
-			this.acceleration = acceleration;
+			state.trainID = trainID;
+			state.x = x;
+			state.y = y;
+			state.direction = direction;
+			state.cars = cars;
+			state.crew = crew;
+			state.passengers = passengers;
+			state.doors = TrainState.door.Open;
+			state.lights = TrainState.light.Off;
+			acceleration = 0;
 			// Add the event and the event handler for the method that will process the timer event to the timer.
 			clock.Elapsed += new ElapsedEventHandler(UpdateState);
 			// Set the timer interval to 1 ms.
@@ -52,16 +58,16 @@ namespace Train
 			double timestep = clock.Interval * 1000;
 
 			// Increase speed based on acceleration
-			speed += (engineForce / state.mass) * timestep;
+			state.speed += (engineForce / state.mass) * timestep;
 			// Adjust speed according to slope
-			speed -= (gravityForce / state.mass) * timestep;
+			state.speed -= (gravityForce / state.mass) * timestep;
 			// Decrease speed based on friction
-			speed -= (frictionalForce / state.mass) * timestep;
+			state.speed -= (frictionalForce / state.mass) * timestep;
 		}
 
 		public double GetSpeed()
 		{
-			return speed;
+			return state.speed;
 		}
 
 		public int GetDirection()
@@ -126,6 +132,25 @@ namespace Train
 			else
 			{
 				this.friction = friction;
+				return true;
+			}
+		}
+
+		public bool SetAcceleration(double acceleration)
+		{
+			if (acceleration < 0)
+			{
+				this.acceleration = 0;
+				return false;
+			}
+			else if (acceleration > medAcceleration)
+			{
+				this.acceleration = medAcceleration;
+				return false;
+			}
+			else
+			{
+				this.acceleration = acceleration;
 				return true;
 			}
 		}

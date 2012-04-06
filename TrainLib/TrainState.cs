@@ -19,9 +19,9 @@ namespace Train
 
 		public int trainID;
 		public double speed;
-		public int direction;
 		public int x;
 		public int y;
+		public int direction;
 		public int cars;
 		public int passengers;
 		public int crew;
