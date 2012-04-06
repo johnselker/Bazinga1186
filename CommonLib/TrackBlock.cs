@@ -20,19 +20,19 @@ namespace CommonLib
     {
         #region Private Data
 
-        private Authority mAuthority;
-		private TrackStatus mStatus;
-        private bool mHasTunnel = false;
-        private double mLength = 0;
-        private TrackOrientation mOrientation;
-        private TrackSignalState mSignalState;
-        private bool mRailroadCrossing = false;
-        private Transponder mTransponder = null;
-        private Point mStartPoint = new Point(0, 0);
-        private Point mEndPoint = new Point(0, 0);
-        private double mStartElevation = 0;
-        private double mEndElevation = 0;
-        private string mName = string.Empty;
+        private BlockAuthority m_authority;
+		private TrackStatus m_status;
+        private bool m_hasTunnel = false;
+        private double m_length = 0;
+        private TrackOrientation m_orientation;
+        private TrackSignalState m_signalState;
+        private bool m_railroadCrossing = false;
+        private Transponder m_transponder = null;
+        private Point m_startPoint = new Point(0, 0);
+        private Point m_endPoint = new Point(0, 0);
+        private double m_startElevation = 0;
+        private double m_endElevation = 0;
+        private string m_name = string.Empty;
 
         #endregion
 
@@ -44,12 +44,12 @@ namespace CommonLib
         /// Authority to send to any train on this block
         /// </summary>
         //--------------------------------------------------------------------------------------
-        public Authority Authority
+        public BlockAuthority Authority
         {
-            get { return mAuthority; }
+            get { return m_authority; }
             set
             {
-                mAuthority = value;
+                m_authority = value;
             }
         }
 
@@ -61,8 +61,8 @@ namespace CommonLib
         //--------------------------------------------------------------------------------------
         public string Name
         {
-            get { return mName; }
-            set { mName = value; }
+            get { return m_name; }
+            set { m_name = value; }
         }
 
         #endregion
@@ -77,7 +77,7 @@ namespace CommonLib
         //--------------------------------------------------------------------------------------
         public bool HasTunnel
         {
-            get { return mHasTunnel; }
+            get { return m_hasTunnel; }
         }
 
         // ACCESSOR: Length
@@ -88,7 +88,7 @@ namespace CommonLib
         //--------------------------------------------------------------------------------------
         public double LengthMeters
         {
-            get { return mLength; }
+            get { return m_length; }
         }
 
         // ACCESSOR: Orientation
@@ -99,7 +99,7 @@ namespace CommonLib
         //--------------------------------------------------------------------------------------
         public TrackOrientation Orientation
         {
-            get { return mOrientation; }
+            get { return m_orientation; }
         }
 
         // ACCESSOR: RailroadCrossing
@@ -110,7 +110,7 @@ namespace CommonLib
         //--------------------------------------------------------------------------------------
         public bool RailroadCrossing
         {
-            get { return mRailroadCrossing; }
+            get { return m_railroadCrossing; }
         }
 
         // ACCESSOR: Transponder
@@ -121,7 +121,7 @@ namespace CommonLib
         //--------------------------------------------------------------------------------------
         public Transponder Transponder
         {
-            get { return mTransponder; }
+            get { return m_transponder; }
         }
 
         // ACCESSOR: HasTransponder
@@ -132,7 +132,7 @@ namespace CommonLib
         //--------------------------------------------------------------------------------------
         public bool HasTransponder
         {
-            get { return (mTransponder != null); }
+            get { return (m_transponder != null); }
         }
 
         // ACCESSOR: StartPoint
@@ -143,7 +143,7 @@ namespace CommonLib
         //--------------------------------------------------------------------------------------
         public Point StartPoint
         {
-            get { return mStartPoint; }
+            get { return m_startPoint; }
         }
 
         // ACCESSOR: EndPoint
@@ -154,7 +154,7 @@ namespace CommonLib
         //--------------------------------------------------------------------------------------
         public Point EndPoint
         {
-            get { return mEndPoint; }
+            get { return m_endPoint; }
         }
 
         // ACCESSOR: StartElevation
@@ -165,7 +165,7 @@ namespace CommonLib
         //--------------------------------------------------------------------------------------
         public double StartElevationMeters
         {
-            get { return mStartElevation; }
+            get { return m_startElevation; }
         }
 
         // ACCESSOR: EndElevation
@@ -176,7 +176,18 @@ namespace CommonLib
         //--------------------------------------------------------------------------------------
         public double EndElevationMeters
         {
-            get { return mEndElevation; }
+            get { return m_endElevation; }
+        }
+
+        // ACCESSOR: Status
+        //--------------------------------------------------------------------------------------
+        /// <summary>
+        /// Status of the track block
+        /// </summary>
+        //--------------------------------------------------------------------------------------
+        public TrackStatus Status
+        {
+            get { return m_status; }
         }
 
         #endregion
@@ -198,13 +209,13 @@ namespace CommonLib
         public TrackBlock(TrackOrientation orientation, double length, bool tunnel, bool railroadCrossing, 
                           Transponder transponder, Point startPoint)
         {
-            mOrientation = orientation;
-            mLength = length;
-            mHasTunnel = tunnel;
-            mRailroadCrossing = railroadCrossing;
-            mTransponder = transponder;
-            mStartPoint = startPoint;
-            mName = Guid.NewGuid().ToString();
+            m_orientation = orientation;
+            m_length = length;
+            m_hasTunnel = tunnel;
+            m_railroadCrossing = railroadCrossing;
+            m_transponder = transponder;
+            m_startPoint = startPoint;
+            m_name = Guid.NewGuid().ToString();
             CalculateEndPoint();
         }
 
@@ -218,25 +229,31 @@ namespace CommonLib
         /// <param name="orientation">Track block orientation</param>
         /// <param name="length">Track block length</param>
         /// <param name="tunnel">Flag indicating the presence of a tunnel</param>
+        /// <param name="railroadCrossing">Flag indicating the presence of a railroad crossing</param>
         /// <param name="signal">Track signal state</param>
         /// <param name="train">Flag indicating the presence of a train</param>
-        /// <param name="speedLimit">Speed limit of the block</param>
         /// <param name="authority">Authority of the block</param>
+        /// <param name="startPoint">Starting coordinates</param>
+        /// <param name="startElevation">Elevation at the start point</param>
+        /// <param name="endElevation">Elevation at the end point</param>
         //--------------------------------------------------------------------------------------
         public TrackBlock(string name, TrackOrientation orientation, double length, bool tunnel, bool railroadCrossing,
-                            TrackSignalState signal, bool train, int speedLimit, Authority authority, Point startPoint,
+                            TrackSignalState signal, bool train, BlockAuthority authority, Point startPoint,
                             double startElevation, double endElevation)
         {
-            mName = name;
-            mOrientation = orientation;
-            mLength = length;
-            mHasTunnel = tunnel;
-            mRailroadCrossing = railroadCrossing;
-            mAuthority = authority;
-            mStartPoint = startPoint;
+            m_name = name;
+            m_orientation = orientation;
+            m_length = length;
+            m_hasTunnel = tunnel;
+            m_railroadCrossing = railroadCrossing;
+            m_status.IsOpen = true;
+            m_status.SignalState = signal;
+            m_status.TrainPresent = train;
+            m_authority = authority;
+            m_startPoint = startPoint;
             CalculateEndPoint();
-            mStartElevation = startElevation;
-            mEndElevation = endElevation;
+            m_startElevation = startElevation;
+            m_endElevation = endElevation;
         }
 
         #endregion
@@ -259,21 +276,21 @@ namespace CommonLib
         private void CalculateEndPoint()
         {
             double delta = 0;
-            switch (mOrientation)
+            switch (m_orientation)
             {
                 case TrackOrientation.EastWest:
-                    mEndPoint = new Point(mStartPoint.X + (int) mLength, mStartPoint.Y);
+                    m_endPoint = new Point(m_startPoint.X + (int) m_length, m_startPoint.Y);
                     break;
                 case TrackOrientation.SouthWestNorthEast:
                     delta = System.Math.Sqrt((LengthMeters * LengthMeters) / 2.0); 
-                    mEndPoint = new Point(mStartPoint.X + (int)delta, mStartPoint.Y - (int) delta);
+                    m_endPoint = new Point(m_startPoint.X + (int)delta, m_startPoint.Y - (int) delta);
                     break;
                 case TrackOrientation.NorthSouth:
-                    mEndPoint = new Point(mStartPoint.X, mStartPoint.Y - (int) mLength);
+                    m_endPoint = new Point(m_startPoint.X, m_startPoint.Y - (int) m_length);
                     break;
                 case TrackOrientation.NorthWestSouthEast:
                     delta = System.Math.Sqrt((LengthMeters * LengthMeters) / 2.0);
-                    mEndPoint = new Point(mStartPoint.X + (int)delta, mStartPoint.Y + (int) delta);
+                    m_endPoint = new Point(m_startPoint.X + (int)delta, m_startPoint.Y + (int) delta);
                     break;
             }
         }

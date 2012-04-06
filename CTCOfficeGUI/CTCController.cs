@@ -5,6 +5,7 @@ using System.Text;
 using CommonLib;
 using TrackLib;
 using Train;
+using TrackControlLib;
 
 namespace CTCOfficeGUI
 {
@@ -38,10 +39,14 @@ namespace CTCOfficeGUI
 
             if (Int32.TryParse(value, out limit)) //Parse the string into an integer
             {
-                if (limit >= 0 && limit <= block.SpeedLimitKph)
+                if (limit >= 0 && limit <= block.Authority.SpeedLimitKPH)
                 {
                     //Send speed limit to wayside controller
-                    result = true;
+                    ITrackController controller = GetTrackController(block);
+                    if (controller != null)
+                    {
+                        result = controller.setAuthority(block.Name, new BlockAuthority(limit, block.Authority.Authority));
+                    }
                 }
             }
 
@@ -64,8 +69,61 @@ namespace CTCOfficeGUI
                 if (authority >= 0)
                 {
                     //Send authority to wayside controller
-                    result = true;
+                    ITrackController controller = GetTrackController(block);
+                    if (controller != null)
+                    {
+                        result = controller.setAuthority(block.Name, new BlockAuthority(block.Authority.SpeedLimitKPH, authority));
+                    }
                 }
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Gets the track controller that controls the given block
+        /// </summary>
+        /// <param name="block">Track block</param>
+        /// <returns>Track controller</returns>
+        public ITrackController GetTrackController(TrackBlock block)
+        {
+            //Lookup the track controller 
+            return null;
+        }
+
+        /// <summary>
+        /// Closes the track block 
+        /// </summary>
+        /// <param name="block">Track block to close</param>
+        /// <returns>bool Success</returns>
+        public bool CloseTrackBlock(TrackBlock block)
+        {
+            bool result = false;
+            ITrackController controller = GetTrackController(block);
+            
+            //Attempt to close the track block
+            if (controller != null)
+            {
+                result = controller.closeTrack(block.Name);
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Opens the track block 
+        /// </summary>
+        /// <param name="block">Track block to open</param>
+        /// <returns>bool Success</returns>
+        public bool OpenTrackBlock(TrackBlock block)
+        {
+            bool result = false;
+            ITrackController controller = GetTrackController(block);
+           
+            //Attempt to open the track block
+            if (controller != null)
+            {
+                result = controller.openTrack(block.Name);
             }
 
             return result;

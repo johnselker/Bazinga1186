@@ -8,7 +8,7 @@ namespace TrackControlLib
 {
 	public interface ITrackController
 	{
-		bool setAuthority(string trackId, Authority auth);
+		bool setAuthority(string trackId, BlockAuthority auth);
 		bool closeTrack(string trackId);
 		bool openTrack(string trackId);
 		bool isTrackClosed(string trackId);
