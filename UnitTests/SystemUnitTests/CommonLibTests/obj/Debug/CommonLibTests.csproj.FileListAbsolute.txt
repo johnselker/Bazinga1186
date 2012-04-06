@@ -1,8 +1,0 @@
-C:\Users\Jeremy\Documents\SoftwareEngineering\B2\UnitTests\SystemUnitTests\CommonLibTests\bin\Debug\CommonLibTests.dll
-C:\Users\Jeremy\Documents\SoftwareEngineering\B2\UnitTests\SystemUnitTests\CommonLibTests\bin\Debug\CommonLibTests.pdb
-C:\Users\Jeremy\Documents\SoftwareEngineering\B2\UnitTests\SystemUnitTests\CommonLibTests\bin\Debug\CommonLib.dll
-C:\Users\Jeremy\Documents\SoftwareEngineering\B2\UnitTests\SystemUnitTests\CommonLibTests\bin\Debug\log4net.dll
-C:\Users\Jeremy\Documents\SoftwareEngineering\B2\UnitTests\SystemUnitTests\CommonLibTests\bin\Debug\CommonLib.pdb
-C:\Users\Jeremy\Documents\SoftwareEngineering\B2\UnitTests\SystemUnitTests\CommonLibTests\obj\Debug\ResolveAssemblyReference.cache
-C:\Users\Jeremy\Documents\SoftwareEngineering\B2\UnitTests\SystemUnitTests\CommonLibTests\obj\Debug\CommonLibTests.dll
-C:\Users\Jeremy\Documents\SoftwareEngineering\B2\UnitTests\SystemUnitTests\CommonLibTests\obj\Debug\CommonLibTests.pdb
