@@ -22,6 +22,7 @@ namespace Train
 		public double Speed {get; set;}
 		public int X {get; set;}
 		public int Y {get; set;}
+        public int Delta { get; set; }
 		public Direction Direction {get; set;}
 		public int Cars {get; set;}
 		public int Passengers {get; set;}
