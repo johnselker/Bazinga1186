@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Timers;
+using System.Drawing;
+using CommonLib;
 
 namespace Train
 {
@@ -12,73 +14,88 @@ namespace Train
 		private const double carLength = 32.2;
 		private const double maxSlope = 0.540419500; // arctan(0.60)
 		private const double medAcceleration = 0.5;
-		private const double brakeDeceleration = 7.6;
-		private const double eBrakeDeceleration = 10.0;
+		private const double brakeDeceleration = -7.6;
+		private const double eBrakeDeceleration = -10.0;
 		private const double maxSpeed = 19.444444444;
 
 		private double acceleration = 0;
 		private bool emergencyBrake = false;
+		private Point position;
+		private Point deltaPosition;
 		private string announcement = "";
 		private double slope = 0;
 		private double friction = 0.01; // arbitrary selection
 		private TrainState state = new TrainState();
-		private Timer clock = new Timer();
+		private DateTime lastUpdate;
 
-		public Train(int trainID, int x, int y, int direction, int cars=1, int crew = 0, int passengers = 0)
+		public Train(string trainID, int x, int y, Direction direction, int cars = 1, int crew = 0, int passengers = 0)
 		{
-			state.trainID = trainID;
-			state.x = x;
-			state.y = y;
-			state.direction = direction;
-			state.cars = cars;
-			state.crew = crew;
-			state.passengers = passengers;
-			state.doors = TrainState.door.Open;
-			state.lights = TrainState.light.Off;
+			state.TrainID = trainID;
+			position = new Point(x, y);
+			state.Direction = direction;
+			state.Cars = cars;
+			state.Crew = crew;
+			state.Passengers = passengers;
+			state.Doors = TrainState.Door.Open;
+			state.Lights = TrainState.Light.Off;
 			acceleration = 0;
-			// Add the event and the event handler for the method that will process the timer event to the timer.
-			clock.Elapsed += new ElapsedEventHandler(UpdateState);
-			// Set the timer interval to 1 ms.
-			clock.Interval = 1;
-			clock.Start();
+			lastUpdate = DateTime.Now;
 		}
-
-		private void UpdateState(Object sender, ElapsedEventArgs arguments)
+/*
+		private void TestTimestep()
 		{
-			UpdateSpeed();
-//			UpdateLocation();
+			Random r = new Random();
+			double seconds = r.NextDouble() * 60;
+			DateTime first = DateTime.Now;
+			Thread.Sleep(seconds * 1000);
+			DateTime second = DateTime.Now;
+			double timestep = DateTime.Now.Subtract(lastUpdate).Duration().TotalSeconds;
+			Console.Out.WriteLine("Slept for " + seconds + " seconds.");
+			Console.Out.WriteLine(timestep+" seconds of time passed.");
 		}
-
+*/
 		private void UpdateSpeed()
 		{
-			double normalForce = state.mass * g * Math.Cos(slope); // Should always be positive
-			double engineForce = state.mass * acceleration;
-			double gravityForce = state.mass * g * Math.Sin(slope); // Negative means downward slope
-			double frictionalForce = friction * normalForce;
-			double timestep = clock.Interval * 1000;
+			// TODO: Test if this actually works
+			double timestep = DateTime.Now.Subtract(lastUpdate).Duration().TotalSeconds;
 
-			// Increase speed based on acceleration
-			state.speed += (engineForce / state.mass) * timestep;
-			// Adjust speed according to slope
-			state.speed -= (gravityForce / state.mass) * timestep;
-			// Decrease speed based on friction
-			state.speed -= (frictionalForce / state.mass) * timestep;
+			if (emergencyBrake)
+			{
+				acceleration = eBrakeDeceleration;
+			}
+			double normalForce = state.Mass * g * Math.Cos(slope); // Should always be positive
+			double engineForce = state.Mass * acceleration;
+			double gravityForce = state.Mass * g * Math.Sin(slope); // Negative means downward slope
+			double frictionalForce = friction * normalForce;
+//			double timestep = clock.Interval * 1000;
+
+			// Ensure that friction cannot cause a negative force
+			double forwardForce = engineForce - gravityForce;
+			if (frictionalForce > forwardForce)
+			{
+				forwardForce = 0;
+			}
+			else
+			{
+				forwardForce -= frictionalForce;
+			}
+			// Adjust speed based on net force
+			state.Speed += (forwardForce / state.Mass) * timestep;
 		}
 
 		public double GetSpeed()
 		{
-			return state.speed;
+			return state.Speed;
 		}
 
-		public int GetDirection()
+		public Direction GetDirection()
 		{
-			return state.direction;
+			return state.Direction;
 		}
 
-		public int GetPosition()
+		public Point GetPosition()
 		{
-			throw new NotImplementedException("TODO: Figure out what this method is intended to do.");
-			return 0;
+			return position;
 		}
 
 		public TrainState GetState()
@@ -92,15 +109,15 @@ namespace Train
 			return emergencyBrake;
 		}
 
-		public bool SetDoors(TrainState.door doors)
+		public bool SetDoors(TrainState.Door doors)
 		{
-			state.doors = doors;
+			state.Doors = doors;
 			return true;
 		}
 
-		public bool SetLights(TrainState.light lights)
+		public bool SetLights(TrainState.Light lights)
 		{
-			state.lights = lights;
+			state.Lights = lights;
 			return true;
 		}
 
@@ -138,9 +155,9 @@ namespace Train
 
 		public bool SetAcceleration(double acceleration)
 		{
-			if (acceleration < 0)
+			if (acceleration < brakeDeceleration)
 			{
-				this.acceleration = 0;
+				this.acceleration = brakeDeceleration;
 				return false;
 			}
 			else if (acceleration > medAcceleration)
@@ -153,6 +170,31 @@ namespace Train
 				this.acceleration = acceleration;
 				return true;
 			}
+		}
+
+		public bool SetPower(double power)
+		{
+			if (state.Speed < 0.1)
+			{
+				acceleration = power / (0.1 * state.Mass);
+			}
+			else
+			{
+				acceleration = power / (state.Speed * state.Mass);
+			}
+			UpdateSpeed();
+			return true;
+		}
+
+		public bool SetSignalPickupFailure(bool failure)
+		{
+			// TODO: Implement this
+			return false;
+		}
+		public bool SetEngineFailure(bool failure)
+		{
+			// TODO: Implement this
+			return false;
 		}
 	}
 }

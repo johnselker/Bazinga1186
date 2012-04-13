@@ -2,37 +2,39 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using CommonLib;
 
 namespace Train
 {
 	public class TrainState
 	{
-		public enum light {Off, Low, High};
-		public enum door {Closed, Open};
+		private const double PASSENGER_WEIGHT = 70;
+		private const int MAX_PASSENGERS = 222;
+		private const double CAR_MASS = 40900;
 
-		private const double passengerWeight = 70;
-		private const int maxPassengers = 222;
-		private const double carMass = 40900;
+		public enum Light {Off, Low, High};
+		public enum Door {Closed, Open};
 
-		public const double width = 2.65;
-		public const double height = 3.42;
+		public const double WIDTH = 2.65;
+		public const double HEIGHT = 3.42;
 
-		public int trainID;
-		public double speed;
-		public int x;
-		public int y;
-		public int direction;
-		public int cars;
-		public int passengers;
-		public int crew;
-		public door doors;
-		public light lights;
-		public double temperature;
-		public double mass
+		public string TrainID {get; set;}
+		public double Speed {get; set;}
+		public int X {get; set;}
+		public int Y {get; set;}
+        public int Delta { get; set; }
+		public Direction Direction {get; set;}
+		public int Cars {get; set;}
+		public int Passengers {get; set;}
+		public int Crew {get; set;}
+		public Door Doors {get; set;}
+		public Light Lights {get; set;}
+		public double Temperature {get; set;}
+		public double Mass
 		{
 			get
 			{
-				return carMass * cars + passengers * passengerWeight;
+				return CAR_MASS * Cars + Passengers * PASSENGER_WEIGHT;
 			}
 		}
 	}
