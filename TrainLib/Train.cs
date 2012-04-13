@@ -26,7 +26,7 @@ namespace Train
 		private double slope = 0;
 		private double friction = 0.01; // arbitrary selection
 		private TrainState state = new TrainState();
-		private Timer clock = new Timer();
+		private DateTime lastUpdate;
 
 		public Train(string trainID, int x, int y, Direction direction, int cars = 1, int crew = 0, int passengers = 0)
 		{
@@ -39,21 +39,26 @@ namespace Train
 			state.Doors = TrainState.Door.Open;
 			state.Lights = TrainState.Light.Off;
 			acceleration = 0;
-			// Add the event and the event handler for the method that will process the timer event to the timer.
-			clock.Elapsed += new ElapsedEventHandler(UpdateState);
-			// Set the timer interval to 1 ms.
-			clock.Interval = 1;
-			clock.Start();
+			lastUpdate = DateTime.Now;
 		}
 
-		private void UpdateState(Object sender, ElapsedEventArgs arguments)
+		private void TestTimestep()
 		{
-			UpdateSpeed();
-//			UpdateLocation();
+			Random r = new Random();
+			double seconds = r.NextDouble() * 60;
+			DateTime first = DateTime.Now;
+			Thread.Sleep(seconds * 1000);
+			DateTime second = DateTime.Now;
+			double timestep = DateTime.Now.Subtract(lastUpdate).Duration().TotalSeconds;
+			Console.Out.WriteLine("Slept for " + seconds + " seconds.");
+			Console.Out.WriteLine(timestep+" seconds of time passed.");
 		}
 
 		private void UpdateSpeed()
 		{
+			// TODO: Test if this actually works
+			double timestep = DateTime.Now.Subtract(lastUpdate).Duration().TotalSeconds;
+
 			if (emergencyBrake)
 			{
 				acceleration = eBrakeDeceleration;
@@ -62,7 +67,7 @@ namespace Train
 			double engineForce = state.Mass * acceleration;
 			double gravityForce = state.Mass * g * Math.Sin(slope); // Negative means downward slope
 			double frictionalForce = friction * normalForce;
-			double timestep = clock.Interval * 1000;
+//			double timestep = clock.Interval * 1000;
 
 			// Ensure that friction cannot cause a negative force
 			double forwardForce = engineForce - gravityForce;
