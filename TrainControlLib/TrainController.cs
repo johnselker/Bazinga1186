@@ -32,8 +32,7 @@ namespace TrainControllerLib
         private Train.Train m_myTrain;
         private TrainState m_currentState;
         private TrainState m_lastState;
-        private Track m_myTrack;
-        private TrackSignal m_signal;
+        private TrackBlock m_currentBlock;
         private bool m_inTunnel = false;
         private bool m_approachingStation = false;
         private bool m_atStation = false;
@@ -131,15 +130,15 @@ namespace TrainControllerLib
         /// Primary constructor
         /// </summary>
         /// 
-        /// <param name="myTrack">Track</param>
-        /// <param name="myTrain">Train</param>
+        /// <param name="startingBlock">The track block that the train starts on</param>
+        /// <param name="myTrain">The train associated with this controller</param>
         /// <param name="speedUp">Speed up factor</param>
         //--------------------------------------------------------------------------------------
-        public TrainController(Track myTrack, Train.Train myTrain, int speedUp = 1)
+        public TrainController(TrackBlock startingBlock, Train.Train myTrain, int speedUp = 1)
         {
             this.m_speedUp = speedUp;
             this.m_samplePeriod = 0.001 * speedUp;
-            this.m_myTrack = myTrack;
+            this.m_currentBlock = startingBlock;
             this.m_myTrain = myTrain;
             this.m_currentState = m_myTrain.GetState();
             this.m_trainID = m_currentState.TrainID;
@@ -192,6 +191,7 @@ namespace TrainControllerLib
             m_currentState = m_myTrain.GetState();
         }
 
+        /*
         // METHOD: GetSignal
         //--------------------------------------------------------------------------------------
         /// <summary>
@@ -208,6 +208,7 @@ namespace TrainControllerLib
                 m_signal = potentialSignal;
             }
         }
+        */
 
         // METHOD: SystemController
         //--------------------------------------------------------------------------------------
@@ -222,11 +223,11 @@ namespace TrainControllerLib
             // Get the state of the train
             GetState();
 
-            // Get the track m_signal
-            GetSignal();
+            // Set the current track block
+            m_currentBlock = m_currentState.CurrentBlock;
 
-            // Pass updated position and block slope to the train
-            m_myTrain.SetPosition(m_signal.x, m_signal.y, m_signal.currentBlock.Grade);
+            // Pass block slope to the train
+            m_myTrain.SetSlope(Math.Atan(m_currentBlock.Grade));
 
             // Determine the m_setPoint
             DetermineSetPoint();
@@ -278,22 +279,18 @@ namespace TrainControllerLib
             // The setPoint should be set to the lower of the two speed limits
             if (m_manualMode && m_manualSpeed >= 0)
             {
-                if (m_manualSpeed < m_signal.currentBlock.Authority.SpeedLimitKPH)
+                if (m_manualSpeed < m_currentBlock.Authority.SpeedLimitKPH)
                 {
                     m_setPoint = m_manualSpeed / 3.6;
                 }
                 else
                 {
-                    m_setPoint = m_signal.currentBlock.Authority.SpeedLimitKPH / 3.6;
+                    m_setPoint = m_currentBlock.Authority.SpeedLimitKPH / 3.6;
                 }
-            }
-            else if (m_signal.ctcSpeedLimit < m_signal.currentBlock.Authority.SpeedLimitKPH)
-            {
-                m_setPoint = m_signal.ctcSpeedLimit / 3.6;
             }
             else
             {
-                m_setPoint = m_signal.currentBlock.Authority.SpeedLimitKPH / 3.6;
+                m_setPoint = m_currentBlock.Authority.SpeedLimitKPH / 3.6;
             }
 
             if (m_setPoint < 0)
@@ -302,17 +299,17 @@ namespace TrainControllerLib
             }
 
             // If the signal is red, the train should not proceed
-            if (m_signal.currentBlock.SignalState == TrackSignalState.Red)
+            if (m_currentBlock.SignalState == TrackSignalState.Red)
             {
                 m_setPoint = 0;
             }
             // If the signal is yellow, the train should proceed at half speed
-            else if (m_signal.currentBlock.SignalState == TrackSignalState.Yellow)
+            else if (m_currentBlock.SignalState == TrackSignalState.Yellow)
             {
                 m_setPoint = m_setPoint * 0.5;
             }
             // If the signal is green, the train should proceed at three-quarters speed
-            else if (m_signal.currentBlock.SignalState == TrackSignalState.Green)
+            else if (m_currentBlock.SignalState == TrackSignalState.Green)
             {
                 m_setPoint = m_setPoint * 0.75;
             }
@@ -320,30 +317,30 @@ namespace TrainControllerLib
 
             // If the authority is equal to zero, the train cannot pass into the next block,
             // so the setPoint must be set to zero to engage the brake.
-            if (m_signal.currentBlock.Authority.Authority < 0)
+            if (m_currentBlock.Authority.Authority < 0)
             {
                 m_setPoint = 0;
             }
-            else if (m_stoppingTheTrain && m_currentState.speed <= 2 && CalculateStoppingDistance(0) >= m_signal.currentBlock.LengthMeters - m_signal.blockDelta)
+            else if (m_stoppingTheTrain && m_currentState.Speed <= 2 && CalculateStoppingDistance(0) >= m_currentBlock.LengthMeters - m_currentState.BlockProgress)
             {
                 m_setPoint = 0;
             }
-            else if (m_signal.currentBlock.Authority.Authority == 0 && CalculateStoppingDistance(0) >= m_signal.currentBlock.LengthMeters - m_signal.blockDelta)
+            else if (m_currentBlock.Authority.Authority == 0 && CalculateStoppingDistance(0) >= m_currentBlock.LengthMeters - m_currentState.BlockProgress)
             {
                 m_setPoint = 0;
             }
-            else if (m_signal.nextBlock.Authority.SpeedLimitKPH < m_signal.currentBlock.Authority.SpeedLimitKPH && CalculateStoppingDistance(m_signal.nextBlock.Authority.SpeedLimitKPH / 3.6) <= m_signal.currentBlock.LengthMeters - m_currentState.delta)
+            else if (m_currentBlock.NextBlock.Authority.SpeedLimitKPH < m_currentBlock.Authority.SpeedLimitKPH && CalculateStoppingDistance(m_currentBlock.NextBlock.Authority.SpeedLimitKPH / 3.6) <= m_currentBlock.LengthMeters - m_currentState.BlockProgress)
             {
-                m_setPoint = m_signal.nextBlock.Authority.SpeedLimitKPH / 3.6;
+                m_setPoint = m_currentBlock.NextBlock.Authority.SpeedLimitKPH / 3.6;
             }
 
             if (m_approachingStation)
             {
-                if (m_signal.currentBlock.HasTransponder && CalculateStoppingDistance(0) >= m_signal.currentBlock.LengthMeters + m_signal.nextBlock.LengthMeters * 0.5 - m_signal.blockDelta)
+                if (m_currentBlock.HasTransponder && CalculateStoppingDistance(0) >= m_currentBlock.LengthMeters + m_currentBlock.NextBlock.LengthMeters * 0.5 - m_currentState.BlockProgress)
                 {
                     m_setPoint = 0;
                 }
-                else if (!m_signal.currentBlock.HasTransponder && CalculateStoppingDistance(0) >= m_signal.currentBlock.LengthMeters * 0.5 - m_signal.blockDelta)
+                else if (!m_currentBlock.HasTransponder && CalculateStoppingDistance(0) >= m_currentBlock.LengthMeters * 0.5 - m_currentState.BlockProgress)
                 {
                     m_setPoint = 0;
                 }
@@ -370,7 +367,7 @@ namespace TrainControllerLib
             m_lastSample = m_currentSample;
 
             // Calculate the error signal
-            m_currentSample = m_setPoint - m_currentState.speed;
+            m_currentSample = m_setPoint - m_currentState.Speed;
 
             if (m_currentSample < 0)
             {
@@ -384,7 +381,7 @@ namespace TrainControllerLib
             // Issue the power command to the train if it's not waiting at a station
             if (!m_atStation && m_currentSample != 0)
             {
-                m_myTrain.setPower(m_powerCommand);
+                m_myTrain.SetPower(m_powerCommand);
             }
         }
 
@@ -426,15 +423,15 @@ namespace TrainControllerLib
         private void LightController()
         {
             // If the train is not in a tunnel and the track m_signal indicates a tunnel, turn the lights on
-            if (!m_inTunnel && m_signal.currentBlock.HasTunnel)
+            if (!m_inTunnel && m_currentBlock.HasTunnel)
             {
-                m_myTrain.SetLights(TrainState.light.High);
+                m_myTrain.SetLights(TrainState.Light.High);
                 m_inTunnel = true;
             }
             // If the train is in a tunnel and the track m_signal indicates no tunnel, turn the lights off
-            else if (m_inTunnel && !m_signal.currentBlock.HasTunnel)
+            else if (m_inTunnel && !m_currentBlock.HasTunnel)
             {
-                m_myTrain.SetLights(TrainState.light.Off);
+                m_myTrain.SetLights(TrainState.Light.Off);
                 m_inTunnel = false;
             }
         }
@@ -448,21 +445,21 @@ namespace TrainControllerLib
         private void StationController()
         {
             // If the train controller receives a transponder input, announce the next station
-            if (!m_approachingStation && m_signal.currentBlock.HasTransponder)
+            if (!m_approachingStation && m_currentBlock.HasTransponder)
             {
                 m_approachingStation = true;
                 //m_myTrain.SetAnnouncement(m_signal.m_routeInfo[m_nextStation]);
-                m_myTrain.SetAnnouncement(m_signal.currentBlock.Transponder.StationName);
+                m_myTrain.SetAnnouncement(m_currentBlock.Transponder.StationName);
                 m_nextStation++;
             }
             // If the train has arrived at the station, start to wait for passengers
-            if (m_approachingStation && m_currentState.speed == 0)
+            if (m_approachingStation && m_currentState.Speed == 0)
             {
                 m_atStation = true;
                 m_approachingStation = false;
-                m_myTrain.SetDoors(TrainState.door.Open);
+                m_myTrain.SetDoors(TrainState.Door.Open);
                 m_doorsOpen = true;
-                
+
                 m_stationTimer = new Timer();
                 m_stationTimer.Elapsed += new ElapsedEventHandler(LeaveStation);
                 m_stationTimer.Interval = 60000 / m_speedUp; // in milliseconds
@@ -481,11 +478,11 @@ namespace TrainControllerLib
         private void LeaveStation(object sender, EventArgs e)
         {
             // Close the doors
-            m_myTrain.SetDoors(TrainState.door.Closed);
+            m_myTrain.SetDoors(TrainState.Door.Closed);
             m_doorsOpen = false;
 
             // Announce the next stop
-            m_myTrain.SetAnnouncement(m_signal.routeInfo[m_nextStation]);
+            //m_myTrain.SetAnnouncement(m_signal.routeInfo[m_nextStation]);
             m_stationTimer.Stop();
 
             // Notify train to leave the station
@@ -509,11 +506,11 @@ namespace TrainControllerLib
             // From physics: final_velocity = acceleration * time + intial_velocity
             // Use: final_velocity = finalVelocity, initial_velocity = m_currentState.speed
             // solving for time yields: time = (finalVelocity - m_currentState.speed) / acceleration
-            double time = (finalVelocity - m_currentState.speed) / acceleration;
+            double time = (finalVelocity - m_currentState.Speed) / acceleration;
 
             // From physics: final_position = 0.5 * acceleration * time^2 + initial_velocity * time + intial_position
             // Use: final_position = stoppingDistance, initial_velocity = m_currentState.speed, intial_position = 0
-            double stoppingDistance = 0.5 * acceleration * time * time + m_currentState.speed * time;
+            double stoppingDistance = 0.5 * acceleration * time * time + m_currentState.Speed * time;
 
             return stoppingDistance;
         }
