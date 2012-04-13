@@ -5,7 +5,7 @@ using System.Text;
 using CommonLib;
 using TrackLib;
 using Train;
-using TrackControlLib;
+using TrackControlLib.Sean;
 
 namespace CTCOfficeGUI
 {

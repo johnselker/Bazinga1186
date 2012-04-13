@@ -6,14 +6,18 @@ using CommonLib;
 
 namespace TrackControlLib
 {
-	public interface ITrackController
+	namespace Sean
 	{
-		bool SetAdjTrackController(TrackController controller);
-		bool SetAuthority(string trackId, BlockAuthority auth);
-		bool CloseTrack(string trackId);
-		bool OpenTrack(string trackId);
-		bool IsTrackClosed(string trackId);
-		TrackStatus GetTrackStatus(string trackId);
-		Dictionary<string, TrackStatus> GetAllTrackStatus();
+		public interface ITrackController
+		{
+			bool AddTrackBlock(TrackBlock vertex, IEnumerable<TrackBlock> edges);
+			bool SetAdjTrackController(TrackController controller);
+			bool SetAuthority(string trackId, BlockAuthority auth);
+			bool CloseTrack(string trackId);
+			bool OpenTrack(string trackId);
+			bool IsTrackClosed(string trackId);
+			TrackStatus GetTrackStatus(string trackId);
+			Dictionary<string, TrackStatus> GetAllTrackStatus();
+		}
 	}
 }
