@@ -148,11 +148,15 @@ namespace CTCOfficeGUI
                 {
                     TrainGraphic graphic = new TrainGraphic(train);
 
+                    graphic.Location = new Point(System.Convert.ToInt32(train.GetState().X - graphic.Width / 2),
+                                               
+                    System.Convert.ToInt32(train.GetState().Y - graphic.Height / 2));
                     graphic.Margin = new Padding(3);
 
-                    graphic.Click += OnTrainGraphicClicked;
+                    graphic.TrainClicked += OnTrainGraphicClicked;
 
                     Controls.Add(graphic);
+                    graphic.BringToFront();
                     m_trainTable[train] = graphic;
                     result = true;
                 }
@@ -188,8 +192,8 @@ namespace CTCOfficeGUI
                     if (m_trainTable.ContainsKey(t))
                     {
                         TrainGraphic g = m_trainTable[t];
-                        //m_trainTable[t].Left = t.Position.x - g.Width / 2;
-                        //m_trainTable[t].Top = t.Position.y - g.Height / 2;
+                        //m_trainTable[t].Left = t.GetState().x * m_scale;
+                        //m_trainTable[t].Top = t.GetState().y * m_scale;
                     }
                 }
             }
@@ -199,7 +203,6 @@ namespace CTCOfficeGUI
         /// Unselects the selected graphic, if there is one
         /// </summary>
         public void UnselectAll()
-
         {
             if (m_selectedTrackBlock != null)
             {
@@ -306,7 +309,7 @@ namespace CTCOfficeGUI
 
                 blinkTimer.Start();
 
-                if (TrackBlockClicked != null)
+                if (TrainClicked != null)
                 {
                     TrainClicked(graphic.Train);
                 }
@@ -328,6 +331,10 @@ namespace CTCOfficeGUI
             if (m_selectedTrackBlock != null)
             {
                 m_selectedTrackBlock.Blink();
+            }
+            if (m_selectedTrain != null)
+            {
+                m_selectedTrain.Blink();
             }
         }
 

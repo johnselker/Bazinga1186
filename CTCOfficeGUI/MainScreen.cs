@@ -69,6 +69,9 @@ namespace CTCOfficeGUI
             blocks.Add(test);
 
             trackDisplayPanel.SetTrackLayout(blocks);
+
+            ITrain train = new Train.Train("TrainA", 1234, 369, Direction.East, 1, 4, 50);
+            trackDisplayPanel.AddTrain(train);
             trackDisplayPanel.Invalidate();
         }
 

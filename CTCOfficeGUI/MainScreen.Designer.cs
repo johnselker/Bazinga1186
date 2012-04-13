@@ -53,6 +53,7 @@
             this.trackDisplayPanel.Size = new System.Drawing.Size(1080, 520);
             this.trackDisplayPanel.TabIndex = 0;
             this.trackDisplayPanel.TrackBlockClicked += new CTCOfficeGUI.TrackDisplayPanel.OnTrackBlockClicked(this.OnTrackBlockClicked);
+            this.trackDisplayPanel.TrainClicked += new CTCOfficeGUI.TrackDisplayPanel.OnTrainClicked(this.OnTrainClicked);
             // 
             // infoPanel
             // 

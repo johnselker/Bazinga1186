@@ -38,18 +38,18 @@
             this.picIcon.Image = global::CTCOfficeGUI.Properties.Resources.train_icon_large;
             this.picIcon.Location = new System.Drawing.Point(0, 0);
             this.picIcon.Name = "picIcon";
-            this.picIcon.Size = new System.Drawing.Size(50, 50);
+            this.picIcon.Size = new System.Drawing.Size(30, 30);
             this.picIcon.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.picIcon.TabIndex = 0;
             this.picIcon.TabStop = false;
+            this.picIcon.Click += new System.EventHandler(this.OnPictureBoxClicked);
             // 
             // TrainGraphic
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.Controls.Add(this.picIcon);
             this.Name = "TrainGraphic";
-            this.Size = new System.Drawing.Size(50, 50);
+            this.Size = new System.Drawing.Size(30, 30);
             ((System.ComponentModel.ISupportInitialize)(this.picIcon)).EndInit();
             this.ResumeLayout(false);
 
