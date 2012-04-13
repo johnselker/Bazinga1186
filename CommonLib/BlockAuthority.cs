@@ -5,7 +5,7 @@ using System.Text;
 
 namespace CommonLib
 {
-	public struct BlockAuthority
+	public class BlockAuthority
 	{
 		public int SpeedLimitKPH;
 		public int Authority;

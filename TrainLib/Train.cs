@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Timers;
 using System.Drawing;
+using System.Threading;
 using CommonLib;
 
 namespace Train
@@ -20,6 +21,7 @@ namespace Train
 
 		private double acceleration = 0;
 		private bool emergencyBrake = false;
+		private bool brake = false;
 		private Point position;
 		private Point deltaPosition;
 		private string announcement = "";
@@ -41,19 +43,19 @@ namespace Train
 			acceleration = 0;
 			lastUpdate = DateTime.Now;
 		}
-/*
-		private void TestTimestep()
+
+		public void TestTimestep()
 		{
 			Random r = new Random();
 			double seconds = r.NextDouble() * 60;
 			DateTime first = DateTime.Now;
-			Thread.Sleep(seconds * 1000);
+			Thread.Sleep((int)(seconds * 1000));
 			DateTime second = DateTime.Now;
 			double timestep = DateTime.Now.Subtract(lastUpdate).Duration().TotalSeconds;
 			Console.Out.WriteLine("Slept for " + seconds + " seconds.");
 			Console.Out.WriteLine(timestep+" seconds of time passed.");
 		}
-*/
+
 		private void UpdateSpeed()
 		{
 			// TODO: Test if this actually works
@@ -63,6 +65,11 @@ namespace Train
 			{
 				acceleration = eBrakeDeceleration;
 			}
+			else if (brake)
+			{
+				acceleration = brakeDeceleration;
+			}
+
 			double normalForce = state.Mass * g * Math.Cos(slope); // Should always be positive
 			double engineForce = state.Mass * acceleration;
 			double gravityForce = state.Mass * g * Math.Sin(slope); // Negative means downward slope
@@ -82,7 +89,34 @@ namespace Train
 			// Adjust speed based on net force
 			state.Speed += (forwardForce / state.Mass) * timestep;
 		}
-
+/*
+		private void UpdatePosition()
+		{
+			double timestep = DateTime.Now.Subtract(lastUpdate).Duration().TotalSeconds;
+			switch (state.Direction)
+			{
+				case Direction.East:
+					break;
+				case Direction.North:
+					break;
+				case Direction.Northeast:
+					break;
+				case Direction.Northwest:
+					break;
+				case Direction.South:
+					break;
+				case Direction.Southeast:
+					break;
+				case Direction.Southwest:
+					break;
+				case Direction.West:
+					break;
+				default:
+					//Unreachable
+					break;
+			}
+		}
+*/
 		public double GetSpeed()
 		{
 			return state.Speed;
@@ -101,6 +135,12 @@ namespace Train
 		public TrainState GetState()
 		{
 			return state;
+		}
+
+		public bool SetBrake(bool brake)
+		{
+			this.brake = brake;
+			return this.brake;
 		}
 
 		public bool SetEmergencyBrake(bool brake)

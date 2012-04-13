@@ -5,7 +5,7 @@ using System.Text;
 
 namespace CommonLib
 {
-	public struct TrackStatus
+	public class TrackStatus
 	{
 		public bool TrainPresent;
 		public bool BrokenRail;
