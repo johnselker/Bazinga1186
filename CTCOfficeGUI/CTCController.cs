@@ -45,7 +45,7 @@ namespace CTCOfficeGUI
                     ITrackController controller = GetTrackController(block);
                     if (controller != null)
                     {
-                        result = controller.setAuthority(block.Name, new BlockAuthority(limit, block.Authority.Authority));
+                        result = controller.SetAuthority(block.Name, new BlockAuthority(limit, block.Authority.Authority));
                     }
                 }
             }
@@ -72,7 +72,7 @@ namespace CTCOfficeGUI
                     ITrackController controller = GetTrackController(block);
                     if (controller != null)
                     {
-                        result = controller.setAuthority(block.Name, new BlockAuthority(block.Authority.SpeedLimitKPH, authority));
+                        result = controller.SetAuthority(block.Name, new BlockAuthority(block.Authority.SpeedLimitKPH, authority));
                     }
                 }
             }
@@ -104,7 +104,7 @@ namespace CTCOfficeGUI
             //Attempt to close the track block
             if (controller != null)
             {
-                result = controller.closeTrack(block.Name);
+                result = controller.CloseTrack(block.Name);
             }
 
             return result;
@@ -123,7 +123,7 @@ namespace CTCOfficeGUI
             //Attempt to open the track block
             if (controller != null)
             {
-                result = controller.openTrack(block.Name);
+                result = controller.OpenTrack(block.Name);
             }
 
             return result;

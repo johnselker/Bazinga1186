@@ -8,10 +8,12 @@ namespace TrackControlLib
 {
 	public interface ITrackController
 	{
-		bool setAuthority(string trackId, BlockAuthority auth);
-		bool closeTrack(string trackId);
-		bool openTrack(string trackId);
-		bool isTrackClosed(string trackId);
-		TrackStatus getTrackStatus(string trackId);
+		bool SetAdjTrackConroller(TrackController controller)
+		bool SetAuthority(string trackId, BlockAuthority auth);
+		bool CloseTrack(string trackId);
+		bool OpenTrack(string trackId);
+		bool IsTrackClosed(string trackId);
+		TrackStatus GetTrackStatus(string trackId);
+		Dictionary<string, TrackStatus> GetAllTrackStatus();
 	}
 }
