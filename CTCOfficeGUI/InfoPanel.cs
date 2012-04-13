@@ -221,18 +221,18 @@ namespace CTCOfficeGUI
 
             Dictionary<string, string> info = new Dictionary<string, string>();
 
-            info.Add("Number of cars:", state.cars.ToString());
-            info.Add("Crew members:", state.crew.ToString());
-            info.Add("Direction:", state.direction.ToString());
-            info.Add("Door Status:", state.doors.ToString());
-            info.Add("Light Status:", state.lights.ToString());
-            info.Add("Mass:", state.mass.ToString());
-            info.Add("Passengers:", state.passengers.ToString());
-            info.Add("Speed:", state.speed.ToString() + " " + KPH);
-            info.Add("Temperature:", state.temperature.ToString());
-            info.Add("Position:", state.x.ToString() + ", " + state.y.ToString());
+            info.Add("Number of cars:", state.Cars.ToString());
+            info.Add("Crew members:", state.Crew.ToString());
+            info.Add("Direction:", state.Direction.ToString());
+            info.Add("Door Status:", state.Doors.ToString());
+            info.Add("Light Status:", state.Lights.ToString());
+            info.Add("Mass:", state.Mass.ToString());
+            info.Add("Passengers:", state.Passengers.ToString());
+            info.Add("Speed:", state.Speed.ToString() + " " + KPH);
+            info.Add("Temperature:", state.Temperature.ToString());
+            info.Add("Position:", state.X.ToString() + ", " + state.Y.ToString());
 
-            SetInfo(state.trainID.ToString(), info);
+            SetInfo(state.TrainID.ToString(), info);
         }
 
         #endregion
