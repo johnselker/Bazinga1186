@@ -21,7 +21,7 @@ namespace CommonLib
         #region Private Data
 
         private BlockAuthority m_authority;
-		private TrackStatus m_status;
+        private TrackStatus m_status;
         private bool m_hasTunnel = false;
         private double m_length = 0;
         private TrackOrientation m_orientation;
@@ -32,7 +32,10 @@ namespace CommonLib
         private Point m_endPoint = new Point(0, 0);
         private double m_startElevation = 0;
         private double m_endElevation = 0;
+        private double m_grade = 0;
         private string m_name = string.Empty;
+        private TrackBlock m_nextBlock;
+        private TrackBlock m_previousBlock;
 
         #endregion
 
@@ -53,6 +56,21 @@ namespace CommonLib
             }
         }
 
+        // PROPERTY: SignalState
+        //--------------------------------------------------------------------------------------
+        /// <summary>
+        /// State of the signal in this block
+        /// </summary>
+        //--------------------------------------------------------------------------------------
+        public TrackSignalState SignalState
+        {
+            get { return m_signalState; }
+            set
+            {
+                m_signalState = value;
+            }
+        }
+
         // PROPERTY: Name
         //--------------------------------------------------------------------------------------
         /// <summary>
@@ -63,6 +81,30 @@ namespace CommonLib
         {
             get { return m_name; }
             set { m_name = value; }
+        }
+
+        // PROPERTY: NextBlock
+        //--------------------------------------------------------------------------------------
+        /// <summary>
+        /// Next track block
+        /// </summary>
+        //--------------------------------------------------------------------------------------
+        public TrackBlock NextBlock
+        {
+            get { return m_nextBlock; }
+            set { m_nextBlock = value; }
+        }
+
+        // PROPERTY: PreviousBlock
+        //--------------------------------------------------------------------------------------
+        /// <summary>
+        /// Previous track block
+        /// </summary>
+        //--------------------------------------------------------------------------------------
+        public TrackBlock PreviousBlock
+        {
+            get { return m_previousBlock; }
+            set { m_previousBlock = value; }
         }
 
         #endregion
@@ -179,6 +221,17 @@ namespace CommonLib
             get { return m_endElevation; }
         }
 
+        // ACCESSOR: Grade
+        //--------------------------------------------------------------------------------------
+        /// <summary>
+        /// Grade of the block expressed as an angle of inclination to the horizontal
+        /// </summary>
+        //--------------------------------------------------------------------------------------
+        public double Grade
+        {
+            get { return m_grade; }
+        }
+
         // ACCESSOR: Status
         //--------------------------------------------------------------------------------------
         /// <summary>
@@ -206,7 +259,7 @@ namespace CommonLib
         /// <param name="railroadCrossing">Flag indicating the presence of a railroad crossing</param>
         /// <param name="transponder">Transponder object</param>
         //--------------------------------------------------------------------------------------
-        public TrackBlock(TrackOrientation orientation, double length, bool tunnel, bool railroadCrossing, 
+        public TrackBlock(TrackOrientation orientation, double length, bool tunnel, bool railroadCrossing,
                           Transponder transponder, Point startPoint)
         {
             m_orientation = orientation;
@@ -236,10 +289,11 @@ namespace CommonLib
         /// <param name="startPoint">Starting coordinates</param>
         /// <param name="startElevation">Elevation at the start point</param>
         /// <param name="endElevation">Elevation at the end point</param>
+        /// <param name="grade">Grade of the block expressed as a percentage</param>
         //--------------------------------------------------------------------------------------
         public TrackBlock(string name, TrackOrientation orientation, double length, bool tunnel, bool railroadCrossing,
                             TrackSignalState signal, bool train, BlockAuthority authority, Point startPoint,
-                            double startElevation, double endElevation)
+                            double startElevation, double endElevation, double grade)
         {
             m_name = name;
             m_orientation = orientation;
@@ -254,6 +308,7 @@ namespace CommonLib
             CalculateEndPoint();
             m_startElevation = startElevation;
             m_endElevation = endElevation;
+            m_grade = Math.Atan(grade * 0.01);
         }
 
         #endregion
@@ -279,18 +334,18 @@ namespace CommonLib
             switch (m_orientation)
             {
                 case TrackOrientation.EastWest:
-                    m_endPoint = new Point(m_startPoint.X + (int) m_length, m_startPoint.Y);
+                    m_endPoint = new Point(m_startPoint.X + (int)m_length, m_startPoint.Y);
                     break;
                 case TrackOrientation.SouthWestNorthEast:
-                    delta = System.Math.Sqrt((LengthMeters * LengthMeters) / 2.0); 
-                    m_endPoint = new Point(m_startPoint.X + (int)delta, m_startPoint.Y - (int) delta);
+                    delta = System.Math.Sqrt((LengthMeters * LengthMeters) / 2.0);
+                    m_endPoint = new Point(m_startPoint.X + (int)delta, m_startPoint.Y - (int)delta);
                     break;
                 case TrackOrientation.NorthSouth:
-                    m_endPoint = new Point(m_startPoint.X, m_startPoint.Y - (int) m_length);
+                    m_endPoint = new Point(m_startPoint.X, m_startPoint.Y - (int)m_length);
                     break;
                 case TrackOrientation.NorthWestSouthEast:
                     delta = System.Math.Sqrt((LengthMeters * LengthMeters) / 2.0);
-                    m_endPoint = new Point(m_startPoint.X + (int)delta, m_startPoint.Y + (int) delta);
+                    m_endPoint = new Point(m_startPoint.X + (int)delta, m_startPoint.Y + (int)delta);
                     break;
             }
         }
