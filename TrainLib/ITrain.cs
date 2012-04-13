@@ -14,6 +14,8 @@ namespace Train
 		Direction GetDirection();
 		Point GetPosition();
 		bool SetEmergencyBrake(bool brake);
+		bool SetEngineFailure(bool failure);
+		bool SetSignalPickupFailure(bool failure);
 		bool SetDoors(TrainState.Door doors);
 		bool SetLights(TrainState.Light lights);
 		bool SetAnnouncement(string announcement);

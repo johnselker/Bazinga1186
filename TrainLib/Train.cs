@@ -41,7 +41,7 @@ namespace Train
 			acceleration = 0;
 			lastUpdate = DateTime.Now;
 		}
-
+/*
 		private void TestTimestep()
 		{
 			Random r = new Random();
@@ -53,7 +53,7 @@ namespace Train
 			Console.Out.WriteLine("Slept for " + seconds + " seconds.");
 			Console.Out.WriteLine(timestep+" seconds of time passed.");
 		}
-
+*/
 		private void UpdateSpeed()
 		{
 			// TODO: Test if this actually works
@@ -184,6 +184,17 @@ namespace Train
 			}
 			UpdateSpeed();
 			return true;
+		}
+
+		public bool SetSignalPickupFailure(bool failure)
+		{
+			// TODO: Implement this
+			return false;
+		}
+		public bool SetEngineFailure(bool failure)
+		{
+			// TODO: Implement this
+			return false;
 		}
 	}
 }
