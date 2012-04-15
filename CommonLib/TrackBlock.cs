@@ -80,6 +80,48 @@ namespace CommonLib
 
         #region Accessors
 
+        // ACCESSOR: SignalState
+        //--------------------------------------------------------------------------------------
+        /// <summary>
+        /// State of the block's traffic signal
+        /// </summary>
+        //--------------------------------------------------------------------------------------
+
+        [XmlElement(ElementName = "SignalState")]
+        public TrackSignalState SignalState
+        {
+            get;
+            set;
+        }
+
+        // ACCESSOR: NextBlock
+        //--------------------------------------------------------------------------------------
+        /// <summary>
+        /// The block imediately after this block
+        /// </summary>
+        //--------------------------------------------------------------------------------------
+
+        [XmlElement(ElementName = "NextBlock")]
+        public TrackBlock NextBlock
+        {
+            get;
+            set;
+        }
+
+        // ACCESSOR: PreviousBlock
+        //--------------------------------------------------------------------------------------
+        /// <summary>
+        /// The block imediately before this block
+        /// </summary>
+        //--------------------------------------------------------------------------------------
+
+        [XmlElement(ElementName = "PreviousBlock")]
+        public TrackBlock PreviousBlock
+        {
+            get;
+            set;
+        }
+
         // ACCESSOR: HasTunnel
         //--------------------------------------------------------------------------------------
         /// <summary>
@@ -213,6 +255,20 @@ namespace CommonLib
         
         [XmlElement(ElementName = "EndElevation")]
         public double EndElevationMeters
+        {
+            get;
+            set;
+        }
+
+        // ACCESSOR: Grade
+        //--------------------------------------------------------------------------------------
+        /// <summary>
+        /// Grade of the block
+        /// </summary>
+        //--------------------------------------------------------------------------------------
+
+        [XmlElement(ElementName = "Grade")]
+        public double Grade
         {
             get;
             set;
