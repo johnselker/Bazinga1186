@@ -6,6 +6,7 @@ using CommonLib;
 using TrackLib;
 using Train;
 using TrackControlLib.Sean;
+using System.Reflection;
 
 namespace CTCOfficeGUI
 {
@@ -87,7 +88,10 @@ namespace CTCOfficeGUI
         /// <returns>Track controller</returns>
         public ITrackController GetTrackController(TrackBlock block)
         {
-            //Lookup the track controller 
+            if (m_trackTable.ContainsKey(block))
+            {
+                return m_trackTable[block];
+            }
             return null;
         }
 
@@ -129,11 +133,96 @@ namespace CTCOfficeGUI
             return result;
         }
 
+
+        /// <summary>
+        /// Initializes the track layout from file
+        /// </summary>
+        /// <param name="filename">File name</param>
+        /// <returns>bool Success</returns>
+        public bool LoadTrackLayout(string filename)
+        {
+            bool result = false;
+
+            TrackLayoutSerializer serializer = new TrackLayoutSerializer(filename);
+
+            try
+            {
+                serializer.Restore();
+                List<TrackBlock> blocks = serializer.BlockList;
+                result = BuildLayout(blocks);
+            }
+            catch (Exception e)
+            {
+                m_log.LogError("Layout restoration failed", e);
+            }
+
+            return result;
+        }
+        #endregion
+
+        #region Helper Methods
+
+        /// <summary>
+        /// Creates track controllers and assigns track blocks to them
+        /// </summary>
+        /// 
+        /// <param name="blocks">List of track blocks in the layout</param>
+        /// 
+        /// <returns>bool Sucess</returns>
+        private bool BuildLayout(List<TrackBlock> blocks)
+        {
+            if (blocks == null)
+            {
+                return false;
+            }
+
+            //Collection of track controllers 
+            Dictionary<string, ITrackController> trackControllers = new Dictionary<string, ITrackController>();
+
+            foreach (TrackBlock b in blocks)
+            {
+                //if (!trackControllers.ContainsKey(b.ControllerId))
+                //{
+                //    //Create a new track controller
+                //    ITrackController controller = new TrackController();
+                //    controller.AddTrackBlock(b, GetAdjacentBlocks(b));
+                //    m_trackTable[b] = controller;
+                //}
+                //else
+                //{
+                //    //Add it to the existing track controller
+                //    ITrackController controller = trackControllers[b.ControllerId];
+                //    controller.AddTrackBlock(b, GetAdjacentBlocks(b));
+                //    m_trackTable[b] = controller;
+                //}
+            }
+
+            return true;
+        }
+
+        /// <summary>
+        /// Gets the blocks adjacent to this one based on direction
+        /// </summary>
+        /// <param name="block">Track block to check</param>
+        /// <returns>List of adjacent blocks</returns>
+        private List<TrackBlock> GetAdjacentBlocks(TrackBlock block)
+        {
+            List<TrackBlock> blocks = new List<TrackBlock>();
+
+            if (block != null)
+            {
+            }
+
+            return blocks;
+        }
+
         #endregion
 
         #region Private Data
 
         private static CTCController m_singleton = null;
+        private Dictionary<TrackBlock, ITrackController> m_trackTable = new Dictionary<TrackBlock, ITrackController>();
+        private LoggingTool m_log = new LoggingTool(MethodBase.GetCurrentMethod());
 
         #endregion
     }
