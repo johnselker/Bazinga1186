@@ -89,7 +89,29 @@ namespace CTCOfficeGUI
                         //Launch scheduler
                         break;
                     case TrainCommands.SuggestRoute:
-                        //Enter routing mode
+                        commandPanel.ShowTrainRoutingCommands();
+                        //trackDisplayPanel.EnterRouteEditingMode(m_selectedTrain);
+                        break;
+                    default:
+                        //Unreachable
+                        break;
+                }
+            }
+            else if (tag.GetType() == typeof(RouteCommands))
+            {
+                switch ((RouteCommands)tag)
+                {
+                    case RouteCommands.SuggestRoute:
+                        //Suggest train route
+                        if (!m_ctcController.SuggestTrainRoute(m_selectedTrain, trackDisplayPanel.GetCurrentRoute()))
+                        {
+                            ShowOKPopup("Error", "Route is invalid", OnPopupAcknowledged);
+                        }
+                        break;
+                    case RouteCommands.CancelRoute:
+                        //Cancel the route editing
+                        //trackDisplayPanel.ExitRouteEdittingMode();
+                        commandPanel.ShowTrainCommands();
                         break;
                     default:
                         //Unreachable

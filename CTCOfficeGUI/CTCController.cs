@@ -133,6 +133,23 @@ namespace CTCOfficeGUI
             return result;
         }
 
+        /// <summary>
+        /// Suggests a route to a train
+        /// </summary>
+        /// <param name="train">Train to suggest to</param>
+        /// <param name="route">List of track blocks</param>
+        /// <returns>bool success</returns>
+        public bool SuggestTrainRoute(ITrain train, List<TrackBlock> route)
+        {
+            bool result = false;
+
+            if (train != null && route != null)
+            {
+                //Suggest the route
+            }
+
+            return result;
+        }
 
         /// <summary>
         /// Initializes the track layout from file

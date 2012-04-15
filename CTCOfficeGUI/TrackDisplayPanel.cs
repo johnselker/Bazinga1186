@@ -22,6 +22,8 @@ namespace CTCOfficeGUI
         private LoggingTool m_log = new LoggingTool(MethodBase.GetCurrentMethod());
         private TrackBlockGraphic m_selectedTrackBlock = null;
         private TrainGraphic m_selectedTrain = null;
+        private bool m_editingMode = false;
+        private List<TrackBlock> m_route;
 
         #endregion
 
@@ -212,6 +214,52 @@ namespace CTCOfficeGUI
             }
         }
 
+        /// <summary>
+        /// Enters Route editting mode
+        /// </summary>
+        /// <param name="editing">true to edit, false to exit/param>
+        //public void EnterRouteEditMode(ITrainController train)
+        //{
+        //    if (train != null)
+        //    {
+        //        m_editingMode = true;
+        //        if (train.Route != null)
+        //        {
+        //            m_route = train.Route;
+        //            foreach (TrackBlock b in train.Route)
+        //            {
+        //                m_blockTable[b].ShowDot = true;
+        //            }
+        //        }
+        //    }
+        //}
+
+        /// <summary>
+        /// Exits route editing mode
+        /// </summary>
+        //public void ExitRouteEditingMode()
+        //{
+        //    if (m_editingMode)
+        //    {
+        //        foreach (KeyValuePair<TrackBlock, TrackBlockGraphic> pair in m_blockTable)
+        //        {
+        //            pair.Value.ShowDot = false;
+        //        }
+        //
+        //        m_editingMode = false;
+        //        m_route = null;
+        //    }
+        //}
+
+        /// <summary>
+        /// Gets the current train route
+        /// </summary>
+        /// <returns>List of track blocks in the route</returns>
+        public List<TrackBlock> GetCurrentRoute()
+        {
+            return m_route;
+        }
+
         #endregion
 
         #region Helper Methods
@@ -258,23 +306,41 @@ namespace CTCOfficeGUI
             {
                 TrackBlockGraphic graphic = (TrackBlockGraphic)sender;
 
-                if (m_selectedTrackBlock != null && m_selectedTrackBlock != graphic)
+                if (!m_editingMode)
                 {
-                    m_selectedTrackBlock.StopBlinking();
+                    if (m_selectedTrackBlock != null && m_selectedTrackBlock != graphic)
+                    {
+                        m_selectedTrackBlock.StopBlinking();
+                    }
+                    if (m_selectedTrain != null)
+                    {
+                        m_selectedTrain.StopBlinking();
+                    }
+
+                    m_selectedTrain = null;
+                    m_selectedTrackBlock = graphic;
+
+                    blinkTimer.Start();
+
+                    if (TrackBlockClicked != null)
+                    {
+                        TrackBlockClicked(graphic.Block);
+                    }
                 }
-                if (m_selectedTrain != null)
+                else
                 {
-                    m_selectedTrain.StopBlinking();
-                }
-
-                m_selectedTrain = null;
-                m_selectedTrackBlock = graphic;
-
-                blinkTimer.Start();
-
-                if (TrackBlockClicked != null)
-                {
-                    TrackBlockClicked(graphic.Block);
+                    if (m_route.Contains(graphic.Block))
+                    {
+                        //Remove the block from the route
+                        m_route.Remove(graphic.Block);
+                        graphic.ShowDot = false;
+                    }
+                    else
+                    {
+                        //Add the block to the route
+                        m_route.Add(graphic.Block);
+                        graphic.ShowDot = true;
+                    }
                 }
             }
             catch (InvalidCastException ex)

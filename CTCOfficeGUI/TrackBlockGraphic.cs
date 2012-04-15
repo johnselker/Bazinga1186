@@ -86,6 +86,24 @@ namespace CTCOfficeGUI
             set;
         }
 
+        /// <summary>
+        /// Color of dot on the block
+        /// </summary>
+        public Color DotColor
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// Flag to show a dot on the block
+        /// </summary>
+        public bool ShowDot
+        {
+            get;
+            set;
+        }
+
         #endregion
 
         #region Public Methods
@@ -115,6 +133,7 @@ namespace CTCOfficeGUI
             YellowColor = Color.Yellow;
             GreenColor = Color.Green;
             SuperGreenColor = Color.Green;
+            DotColor = Color.Orange;
 
             m_block = block;
             m_currentColor = GetDrawColor();
@@ -257,6 +276,15 @@ namespace CTCOfficeGUI
             Pen pen = new Pen(m_currentColor, m_thickness);
             
             g.DrawLine(pen, m_scaledStart, m_scaledEnd); //Draw line
+
+            if (ShowDot)
+            {
+                Rectangle center = new Rectangle((this.Width - m_thickness) / 2, (this.Height - m_thickness) / 2, 
+                                                                                        m_thickness, m_thickness);
+                SolidBrush brush = new SolidBrush(DotColor);
+
+                g.FillEllipse(brush, center);
+            }
 
             pen.Dispose();
         }
