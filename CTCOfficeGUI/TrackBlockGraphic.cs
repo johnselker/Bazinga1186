@@ -12,14 +12,22 @@ namespace CTCOfficeGUI
 {
     public partial class TrackBlockGraphic : UserControl
     {
-
         #region Private Data
 
         private Point m_scaledStart;
         private Point m_scaledEnd;
         private TrackBlock m_block;
         private Color m_currentColor = Color.Green;
-        private int m_thickness = 5;
+
+        //Collection of points for drawing directional arrows
+        private Point m_arrow1Start1;
+        private Point m_arrow1End1;
+        private Point m_arrow1Start2;
+        private Point m_arrow1End2;
+        private Point m_arrow2Start1;
+        private Point m_arrow2End1;
+        private Point m_arrow2Start2;
+        private Point m_arrow2End2;
 
         #endregion
 
@@ -104,6 +112,24 @@ namespace CTCOfficeGUI
             set;
         }
 
+        /// <summary>
+        /// Thickness of the line representing the block
+        /// </summary>
+        public int LineThickness
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// Length of arrows of the block
+        /// </summary>
+        public int ArrowLength
+        {
+            get;
+            set;
+        }
+
         #endregion
 
         #region Public Methods
@@ -135,10 +161,14 @@ namespace CTCOfficeGUI
             SuperGreenColor = Color.Green;
             DotColor = Color.Orange;
 
+            LineThickness = 5;
+            ArrowLength = 10;
+
             m_block = block;
             m_currentColor = GetDrawColor();
 
             SetScale(scale);
+            CalculateArrowPoints();
             this.BackColor = Color.Transparent;
 
             this.ResumeLayout();
@@ -168,10 +198,10 @@ namespace CTCOfficeGUI
                     {
                         case TrackOrientation.EastWest:
                             //Horizontal rectangle
-                            this.Height = m_thickness + Margin.Left + Margin.Right;
+                            this.Height = LineThickness + Margin.Top + Margin.Bottom + 2 * ArrowLength;
                             this.Width = System.Convert.ToInt32(m_block.LengthMeters * scale);
-                            m_scaledStart = new Point(Margin.Left, (this.Height - m_thickness) / 2);
-                            m_scaledEnd = new Point(this.Width - Margin.Right, (this.Height - m_thickness) / 2);
+                            m_scaledStart = new Point(Margin.Left, (this.Height - LineThickness) / 2);
+                            m_scaledEnd = new Point(this.Width - Margin.Right, (this.Height - LineThickness) / 2);
                             break;
                         case TrackOrientation.SouthWestNorthEast:
                             //Create a box to fit the diagonal
@@ -182,10 +212,10 @@ namespace CTCOfficeGUI
                             break;
                         case TrackOrientation.NorthSouth:
                             //Horizontal rectangle
-                            this.Width = m_thickness + Margin.Left + Margin.Right;
+                            this.Width = LineThickness + Margin.Left + Margin.Right + 2 * ArrowLength;
                             this.Height = System.Convert.ToInt32(m_block.LengthMeters * scale);
-                            m_scaledStart = new Point((this.Width - m_thickness)/ 2, this.Height - Margin.Bottom);
-                            m_scaledEnd = new Point((this.Width - m_thickness)/ 2, Margin.Top);
+                            m_scaledStart = new Point((this.Width - LineThickness)/ 2, this.Height - Margin.Bottom);
+                            m_scaledEnd = new Point((this.Width - LineThickness)/ 2, Margin.Top);
                             break;
                         case TrackOrientation.NorthWestSouthEast:
                             //Create a box to fit the diagonal
@@ -251,6 +281,109 @@ namespace CTCOfficeGUI
                     return m_currentColor;
             }
         }
+
+        /// <summary>
+        /// Calculates the points for drawing arrows
+        /// </summary>
+        private void CalculateArrowPoints()
+        {
+            if (m_block != null)
+            {
+                switch (m_block.Orientation)
+                {
+                    case TrackOrientation.EastWest:
+                        if (m_block.AllowedDirection == TrackAllowedDirection.Both || m_block.AllowedDirection == TrackAllowedDirection.RightToLeft)
+                        {
+                            m_arrow1Start1 = m_arrow1Start2 = m_scaledStart;
+                            m_arrow1End1 = new Point(m_scaledStart.X + ArrowLength, m_scaledStart.Y - ArrowLength);
+                            m_arrow1End2 = new Point(m_scaledStart.X + ArrowLength, m_scaledStart.Y + ArrowLength);
+                        }
+                        if (m_block.AllowedDirection == TrackAllowedDirection.Both || m_block.AllowedDirection == TrackAllowedDirection.LeftToRight)
+                        {
+                            m_arrow2Start1 = m_arrow2Start2 = m_scaledEnd;
+                            m_arrow2End1 = new Point(m_scaledEnd.X - ArrowLength, m_scaledEnd.Y - ArrowLength);
+                            m_arrow2End2 = new Point(m_scaledEnd.X - ArrowLength, m_scaledEnd.Y + ArrowLength);
+                        }
+                        break;
+                    case TrackOrientation.NorthSouth:
+                        if (m_block.AllowedDirection == TrackAllowedDirection.Both || m_block.AllowedDirection == TrackAllowedDirection.RightToLeft)
+                        {
+                            m_arrow2Start1 = m_arrow2Start2 = m_scaledStart;
+                            m_arrow2End1 = new Point(m_scaledStart.X - ArrowLength, m_scaledStart.Y - ArrowLength);
+                            m_arrow2End2 = new Point(m_scaledStart.X + ArrowLength, m_scaledStart.Y - ArrowLength);
+                        }
+                        if (m_block.AllowedDirection == TrackAllowedDirection.Both || m_block.AllowedDirection == TrackAllowedDirection.LeftToRight)
+                        {
+                            m_arrow1Start1 = m_arrow1Start2 = m_scaledEnd;
+                            m_arrow1End1 = new Point(m_scaledEnd.X - ArrowLength, m_scaledEnd.Y + ArrowLength);
+                            m_arrow1End2 = new Point(m_scaledEnd.X + ArrowLength, m_scaledEnd.Y + ArrowLength);
+                        }
+                        break;
+                    case TrackOrientation.NorthWestSouthEast:
+                        if (m_block.AllowedDirection == TrackAllowedDirection.Both || m_block.AllowedDirection == TrackAllowedDirection.RightToLeft)
+                        {
+                            m_arrow1Start1 = m_arrow1Start2 = m_scaledStart;
+                            m_arrow1End1 = new Point(m_scaledStart.X, m_scaledStart.Y + ArrowLength);
+                            m_arrow1End2 = new Point(m_scaledStart.X + ArrowLength, m_scaledStart.Y);
+                        }
+                        if (m_block.AllowedDirection == TrackAllowedDirection.Both || m_block.AllowedDirection == TrackAllowedDirection.LeftToRight)
+                        {
+                            m_arrow2Start1 = m_arrow2Start2 = m_scaledEnd;
+                            m_arrow2End1 = new Point(m_scaledEnd.X, m_scaledEnd.Y - ArrowLength);
+                            m_arrow2End2 = new Point(m_scaledEnd.X - ArrowLength, m_scaledEnd.Y);
+                        }
+                        break;
+                    case TrackOrientation.SouthWestNorthEast:
+                        if (m_block.AllowedDirection == TrackAllowedDirection.Both || m_block.AllowedDirection == TrackAllowedDirection.RightToLeft)
+                        {
+                            m_arrow1Start1 = m_arrow1Start2 = m_scaledStart;
+                            m_arrow1End1 = new Point(m_scaledStart.X, m_scaledStart.Y - ArrowLength);
+                            m_arrow1End2 = new Point(m_scaledStart.X + ArrowLength, m_scaledStart.Y);
+                        }
+                        if (m_block.AllowedDirection == TrackAllowedDirection.Both || m_block.AllowedDirection == TrackAllowedDirection.LeftToRight)
+                        {
+                            m_arrow2Start1 = m_arrow2Start2 = m_scaledEnd;
+                            m_arrow2End1 = new Point(m_scaledEnd.X - ArrowLength, m_scaledEnd.Y);
+                            m_arrow2End2 = new Point(m_scaledEnd.X, m_scaledEnd.Y + ArrowLength);
+                        }
+                        break;
+                    default:
+                        //Unreachable
+                        break;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Draws the arrows indicating the allowed direction of travel of the block
+        /// </summary>
+        /// <param name="g">Graphics object</param>
+        /// <param name="p">Pen object</param>
+        private void DrawArrows(Graphics g, Pen p)
+        {
+            if (g != null && p != null)
+            {
+                p.Width = 3;
+
+                if (!m_arrow1Start1.IsEmpty && !m_arrow1End1.IsEmpty)
+                {
+                    g.DrawLine(p, m_arrow1Start1, m_arrow1End1);
+                }
+                if (!m_arrow1Start2.IsEmpty && !m_arrow1End2.IsEmpty)
+                {
+                    g.DrawLine(p, m_arrow1Start2, m_arrow1End2);
+                }
+                if (!m_arrow2Start1.IsEmpty && !m_arrow2End1.IsEmpty)
+                {
+                    g.DrawLine(p, m_arrow2Start1, m_arrow2End1);
+                }
+                if (!m_arrow2Start2.IsEmpty && !m_arrow2End2.IsEmpty)
+                {
+                    g.DrawLine(p, m_arrow2Start2, m_arrow2End2);
+                }
+            }
+        }
+
         #endregion
 
         #region Overrides
@@ -273,14 +406,16 @@ namespace CTCOfficeGUI
             Graphics g = e.Graphics;
 
             //Set the color
-            Pen pen = new Pen(m_currentColor, m_thickness);
+            Pen pen = new Pen(m_currentColor, LineThickness);
             
             g.DrawLine(pen, m_scaledStart, m_scaledEnd); //Draw line
 
+            DrawArrows(g, pen);
+            
             if (ShowDot)
             {
-                Rectangle center = new Rectangle((this.Width - m_thickness) / 2, (this.Height - m_thickness) / 2, 
-                                                                                        m_thickness, m_thickness);
+                Rectangle center = new Rectangle((this.Width - LineThickness) / 2, (this.Height - LineThickness) / 2, 
+                                                                                        LineThickness, LineThickness);
                 SolidBrush brush = new SolidBrush(DotColor);
 
                 g.FillEllipse(brush, center);

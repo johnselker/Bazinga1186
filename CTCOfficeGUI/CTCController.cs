@@ -7,6 +7,7 @@ using TrackLib;
 using Train;
 using TrackControlLib.Sean;
 using System.Reflection;
+using System.Drawing;
 
 namespace CTCOfficeGUI
 {
@@ -175,6 +176,25 @@ namespace CTCOfficeGUI
 
             return result;
         }
+
+        /// <summary>
+        /// Gets the total size of the track layout
+        /// </summary>
+        /// <returns>Layout size</returns>
+        public Size GetLayoutSize()
+        {
+            return m_layoutSize;
+        }
+
+        /// <summary>
+        /// Gets the top left corner of the track layout
+        /// </summary>
+        /// <returns>Layout position</returns>
+        public Point GetLayoutPosition()
+        {
+            return m_layoutStartPoint;
+        }
+
         #endregion
 
         #region Helper Methods
@@ -196,6 +216,12 @@ namespace CTCOfficeGUI
             //Collection of track controllers 
             Dictionary<string, ITrackController> trackControllers = new Dictionary<string, ITrackController>();
 
+            //Variables for calculating the size of the layout
+            double minX = Double.PositiveInfinity;
+            double maxX = 0;
+            double minY = Double.PositiveInfinity;
+            double maxY = 0; 
+
             foreach (TrackBlock b in blocks)
             {
                 //if (!trackControllers.ContainsKey(b.ControllerId))
@@ -212,6 +238,45 @@ namespace CTCOfficeGUI
                 //    controller.AddTrackBlock(b, GetAdjacentBlocks(b));
                 //    m_trackTable[b] = controller;
                 //}
+
+                //Calculate the min and max coordinates of the layout
+                if (b.StartPoint.X < minX)
+                {
+                    //Only need to check the start point since it is always smaller
+                    minX = b.StartPoint.X;
+                }
+                if (b.EndPoint.X > maxX)
+                {
+                    //Only need to check the end point since it is always larger
+                    maxX = b.EndPoint.X;
+                }
+
+                //Need to check both the start and end point for Y
+                if (b.StartPoint.Y < minY)
+                {
+                    minY = b.StartPoint.Y;
+                }
+                else if (b.EndPoint.Y < minY)
+                {
+                    minY = b.StartPoint.Y;
+                }
+
+                if (b.StartPoint.Y > maxY)
+                {
+                    maxY = b.StartPoint.Y;
+                }
+                else if (b.EndPoint.Y > maxY)
+                {
+                    maxY = b.EndPoint.Y;
+                }
+            }
+
+            //Calculate the start point and total size
+            m_layoutStartPoint = new Point(System.Convert.ToInt32(minX), System.Convert.ToInt32(minY));
+
+            if (maxX < Double.PositiveInfinity && maxY < Double.PositiveInfinity)
+            {
+                m_layoutSize = new Size(System.Convert.ToInt32(maxX - minX), System.Convert.ToInt32(maxY - minY));
             }
 
             return true;
@@ -228,6 +293,7 @@ namespace CTCOfficeGUI
 
             if (block != null)
             {
+                
             }
 
             return blocks;
@@ -240,7 +306,8 @@ namespace CTCOfficeGUI
         private static CTCController m_singleton = null;
         private Dictionary<TrackBlock, ITrackController> m_trackTable = new Dictionary<TrackBlock, ITrackController>();
         private LoggingTool m_log = new LoggingTool(MethodBase.GetCurrentMethod());
-
+        private Size m_layoutSize;
+        private Point m_layoutStartPoint;
         #endregion
     }
 }

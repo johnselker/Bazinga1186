@@ -62,4 +62,22 @@ namespace CommonLib
 		Throwing,
 		Closed
 	}
+
+    // ENUM: TrackAllowedDirection
+    //--------------------------------------------------------------------------------------
+    /// <summary>
+    /// The allowed direction of travel on the track block
+    /// </summary>
+    /// 
+    /// <remarks>
+    /// "Left" is considered to the left of the y axis on the xy plane, or -y if track block
+    /// is vertical
+    /// </remarks>
+    //-------------------------------------------------------------------------------------- 
+    public enum TrackAllowedDirection
+    {
+        LeftToRight,
+        RightToLeft,
+        Both
+    }
 }

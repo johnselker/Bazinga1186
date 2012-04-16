@@ -125,9 +125,8 @@ namespace CTCOfficeGUI
                 {
                     //Create a new trackblock graphic
                     TrackBlockGraphic graphic = new TrackBlockGraphic(b, m_scale);
-                    graphic.Margin = new Padding(3);
 
-                    graphic.Location = CalculateBlockPosition(b);
+                    graphic.Location = CalculateBlockPosition(b, graphic.ArrowLength);
 
                     graphic.Click += OnBlockClicked;
 
@@ -150,10 +149,8 @@ namespace CTCOfficeGUI
                 {
                     TrainGraphic graphic = new TrainGraphic(train);
 
-                    graphic.Location = new Point(System.Convert.ToInt32(train.GetState().X - graphic.Width / 2),
-                                               
-                    System.Convert.ToInt32(train.GetState().Y - graphic.Height / 2));
-                    graphic.Margin = new Padding(3);
+                    graphic.Location = new Point(System.Convert.ToInt32(train.GetPosition().X - graphic.Width / 2),                           
+                                                 System.Convert.ToInt32(train.GetPosition().Y - graphic.Height / 2));
 
                     graphic.TrainClicked += OnTrainGraphicClicked;
 
@@ -180,7 +177,7 @@ namespace CTCOfficeGUI
                 {
                     if (m_blockTable.ContainsKey(b))
                     {
-                        m_blockTable[b].Location = CalculateBlockPosition(b);
+                        m_blockTable[b].Location = CalculateBlockPosition(b, m_blockTable[b].ArrowLength);
                         m_blockTable[b].Invalidate();
                     }
                 }
@@ -268,20 +265,25 @@ namespace CTCOfficeGUI
         /// Calculates the position of the graphic on the display panel
         /// </summary>
         /// <param name="block">Track block to display</param>
+        /// <param name="arrowLength">Length of arrow graphics for position adjustment</param>
         /// <returns>Point of the graphic on the display panel</returns>
-        private Point CalculateBlockPosition(TrackBlock block)
+        private Point CalculateBlockPosition(TrackBlock block, int arrowLength)
         {
             if (block != null)
             {
                 switch (block.Orientation)
                 {
                     case TrackOrientation.EastWest:
+                        return new Point(System.Convert.ToInt32(block.StartPoint.X * m_scale),
+                                                     System.Convert.ToInt32(block.StartPoint.Y * m_scale - arrowLength));
                     case TrackOrientation.NorthWestSouthEast:
                         return new Point(System.Convert.ToInt32(block.StartPoint.X * m_scale),
                                                      System.Convert.ToInt32(block.StartPoint.Y * m_scale));
                     case TrackOrientation.SouthWestNorthEast:
-                    case TrackOrientation.NorthSouth:
                         return new Point(System.Convert.ToInt32(block.StartPoint.X * m_scale),
+                                                     System.Convert.ToInt32(block.EndPoint.Y * m_scale));
+                    case TrackOrientation.NorthSouth:
+                        return new Point(System.Convert.ToInt32(block.StartPoint.X * m_scale - arrowLength),
                                                      System.Convert.ToInt32(block.EndPoint.Y * m_scale));
                     default:
                         return new Point();
