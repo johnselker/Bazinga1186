@@ -28,6 +28,11 @@ namespace CommonLib
         private BlockAuthority m_authority;
         private TrackStatus m_status = new TrackStatus();
         private double m_grade = 0;
+        /// <summary>
+        /// StaticSpeedLimit set by physical limitation of the train
+        /// edited by trackcontroller for individual blocks
+        /// </summary>
+        private double m_staticSpeedLimit = 70;
    
         #endregion
 
@@ -119,7 +124,18 @@ namespace CommonLib
             get;
             set;
         }
-
+        // ACCESSOR: StaticSpeedLimit
+        //--------------------------------------------------------------------------------------
+        /// <summary>
+        /// Static Speed Limit set outside the CTC's speed limit
+        /// </summary>
+        //--------------------------------------------------------------------------------------
+        [XmlElement(ElementName = "StaticSpeedLimit")]
+        public double StaticSpeedLimit
+        {
+            get;
+            set;
+        }
         // ACCESSOR: Length
         //--------------------------------------------------------------------------------------
         /// <summary>
@@ -311,92 +327,11 @@ namespace CommonLib
             //Do nothing
         }
 
+        
         // METHOD: TrackBlock
         //--------------------------------------------------------------------------------------
         /// <summary>
-        /// Primary constructor
-        /// </summary>
-        /// 
-        /// <param name="orientation">Track block orientation</param>
-        /// <param name="length">Track block length</param>
-        /// <param name="tunnel">Flag indicating the presence of a tunnel</param>
-        /// <param name="railroadCrossing">Flag indicating the presence of a railroad crossing</param>
-        /// <param name="transponder">Transponder object</param>
-        /// <param name="controllerID">Primary controller ID</param>
-        /// <param name="secondaryControllerID">Secondary controller ID</param>
-        //--------------------------------------------------------------------------------------
-        public TrackBlock(TrackOrientation orientation, double length, bool tunnel, bool railroadCrossing,
-                          Transponder transponder, Point startPoint, string controllerID, string secondaryControllerID = null)
-        {
-            Orientation = orientation;
-            LengthMeters = length;
-            HasTunnel = tunnel;
-            RailroadCrossing = railroadCrossing;
-            Transponder = transponder;
-            StartPoint = startPoint;
-            Name = Guid.NewGuid().ToString();
-            AllowedDirection = TrackAllowedDirection.Both;
-            CalculateEndPoint();
-            ControllerId = controllerID;
-            SecondaryControllerId = secondaryControllerID;
-            if (LengthMeters > 0)
-            {
-                // Use arctangent to express the grade as an angle of inclination to the horizontal
-                m_grade = Math.Atan(((EndElevationMeters - StartElevationMeters) / LengthMeters));
-            }
-        }
-
-        // METHOD: TrackBlock
-        //--------------------------------------------------------------------------------------
-        /// <summary>
-        /// Overloaded constructor with initial state
-        /// </summary>
-        /// 
-        /// <param name="name">Track block name</param>
-        /// <param name="orientation">Track block orientation</param>
-        /// <param name="length">Track block length</param>
-        /// <param name="tunnel">Flag indicating the presence of a tunnel</param>
-        /// <param name="railroadCrossing">Flag indicating the presence of a railroad crossing</param>
-        /// <param name="signal">Track signal state</param>
-        /// <param name="train">Flag indicating the presence of a train</param>
-        /// <param name="authority">Authority of the block</param>
-        /// <param name="startPoint">Starting coordinates</param>
-        /// <param name="startElevation">Elevation at the start point</param>
-        /// <param name="endElevation">Elevation at the end point</param>
-        /// <param name="controllerID">Primary Controller ID</param>
-        /// <param name="secondaryControllerID">Secondary Controller ID</param>
-        //--------------------------------------------------------------------------------------
-        public TrackBlock(string name, TrackOrientation orientation, double length, bool tunnel, bool railroadCrossing,
-                            TrackSignalState signal, bool train, BlockAuthority authority, Point startPoint,
-                            double startElevation, double endElevation, TrackAllowedDirection direction, string controllerID, string secondaryControllerID = null)
-        {
-            Name = name;
-            Orientation = orientation;
-            LengthMeters = length;
-            HasTunnel = tunnel;
-            RailroadCrossing = railroadCrossing;
-            m_status.IsOpen = true;
-            m_status.SignalState = signal;
-            m_status.TrainPresent = train;
-            Authority = authority;
-            StartPoint = startPoint;
-            CalculateEndPoint();
-            StartElevationMeters = startElevation;
-            EndElevationMeters = endElevation;
-            AllowedDirection = direction;
-            ControllerId = controllerID;
-            SecondaryControllerId = secondaryControllerID;
-            if (LengthMeters > 0)
-            {
-                // Use arctangent to express the grade as an angle of inclination to the horizontal
-                m_grade = Math.Atan(((EndElevationMeters - StartElevationMeters) / LengthMeters));
-            }
-        }
-
-        // METHOD: TrackBlock
-        //--------------------------------------------------------------------------------------
-        /// <summary>
-        /// Overloaded constructor with initial state
+        /// Primary constructor with initial state
         /// </summary>
         /// 
         /// <param name="name">Track block name</param>
@@ -435,6 +370,8 @@ namespace CommonLib
             AllowedDirection = direction;
             ControllerId = controllerID;
             SecondaryControllerId = secondaryControllerID;
+            // Set default static max speed to physical limit of train
+            StaticSpeedLimit = m_staticSpeedLimit;
             if (LengthMeters > 0)
             {
                 StartElevationMeters = EndElevationMeters - ((LengthMeters * grade) / 100);
