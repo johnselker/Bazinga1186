@@ -263,11 +263,24 @@ namespace CommonLib
         // ACCESSOR: ControllerId
         //--------------------------------------------------------------------------------------
         /// <summary>
-        /// Id of the track controller controlling this block
+        /// Id of the primary track controller controlling this block
         /// </summary>
         //--------------------------------------------------------------------------------------
         [XmlElement(ElementName = "ControllerId")]
         public string ControllerId
+        {
+            get;
+            set;
+        }
+
+        // ACCESSOR: SecondaryControllerId
+        //--------------------------------------------------------------------------------------
+        /// <summary>
+        /// Id of the secondary track controller controlling this block
+        /// </summary>
+        //--------------------------------------------------------------------------------------
+        [XmlElement(ElementName = "SecondaryControllerId")]
+        public string SecondaryControllerId
         {
             get;
             set;
@@ -309,9 +322,11 @@ namespace CommonLib
         /// <param name="tunnel">Flag indicating the presence of a tunnel</param>
         /// <param name="railroadCrossing">Flag indicating the presence of a railroad crossing</param>
         /// <param name="transponder">Transponder object</param>
+        /// <param name="controllerID">Primary controller ID</param>
+        /// <param name="secondaryControllerID">Secondary controller ID</param>
         //--------------------------------------------------------------------------------------
-        public TrackBlock(TrackOrientation orientation, double length, bool tunnel, bool railroadCrossing, 
-                          Transponder transponder, Point startPoint)
+        public TrackBlock(TrackOrientation orientation, double length, bool tunnel, bool railroadCrossing,
+                          Transponder transponder, Point startPoint, string controllerID, string secondaryControllerID = null)
         {
             Orientation = orientation;
             LengthMeters = length;
@@ -322,9 +337,12 @@ namespace CommonLib
             Name = Guid.NewGuid().ToString();
             AllowedDirection = TrackAllowedDirection.Both;
             CalculateEndPoint();
+            ControllerId = controllerID;
+            SecondaryControllerId = secondaryControllerID;
             if (LengthMeters > 0)
             {
-                m_grade = ((EndElevationMeters - StartElevationMeters) / LengthMeters) * 100;
+                // Use arctangent to express the grade as an angle of inclination to the horizontal
+                m_grade = Math.Atan(((EndElevationMeters - StartElevationMeters) / LengthMeters));
             }
         }
 
@@ -345,10 +363,12 @@ namespace CommonLib
         /// <param name="startPoint">Starting coordinates</param>
         /// <param name="startElevation">Elevation at the start point</param>
         /// <param name="endElevation">Elevation at the end point</param>
+        /// <param name="controllerID">Primary Controller ID</param>
+        /// <param name="secondaryControllerID">Secondary Controller ID</param>
         //--------------------------------------------------------------------------------------
         public TrackBlock(string name, TrackOrientation orientation, double length, bool tunnel, bool railroadCrossing,
                             TrackSignalState signal, bool train, BlockAuthority authority, Point startPoint,
-                            double startElevation, double endElevation, TrackAllowedDirection direction)
+                            double startElevation, double endElevation, TrackAllowedDirection direction, string controllerID, string secondaryControllerID = null)
         {
             Name = name;
             Orientation = orientation;
@@ -364,9 +384,60 @@ namespace CommonLib
             StartElevationMeters = startElevation;
             EndElevationMeters = endElevation;
             AllowedDirection = direction;
+            ControllerId = controllerID;
+            SecondaryControllerId = secondaryControllerID;
             if (LengthMeters > 0)
             {
-                m_grade = ((EndElevationMeters - StartElevationMeters) / LengthMeters) * 100;
+                // Use arctangent to express the grade as an angle of inclination to the horizontal
+                m_grade = Math.Atan(((EndElevationMeters - StartElevationMeters) / LengthMeters));
+            }
+        }
+
+        // METHOD: TrackBlock
+        //--------------------------------------------------------------------------------------
+        /// <summary>
+        /// Overloaded constructor with initial state
+        /// </summary>
+        /// 
+        /// <param name="name">Track block name</param>
+        /// <param name="orientation">Track block orientation</param>
+        /// <param name="length">Track block length</param>
+        /// <param name="grade">Grade of the block expressed as a percent</param>
+        /// <param name="tunnel">Flag indicating the presence of a tunnel</param>
+        /// <param name="railroadCrossing">Flag indicating the presence of a railroad crossing</param>
+        /// <param name="signal">Track signal state</param>
+        /// <param name="train">Flag indicating the presence of a train</param>
+        /// <param name="authority">Authority of the block</param>
+        /// <param name="startPoint">Starting coordinates</param>
+        /// <param name="endElevation">Elevation at the end point</param>
+        /// <param name="direction">Direction of the block</param>
+        /// <param name="controllerID">Primary Controller ID</param>
+        /// <param name="secondaryControllerID">Secondary Controller ID</param>
+        //--------------------------------------------------------------------------------------
+        public TrackBlock(string name, TrackOrientation orientation, double length, double grade, bool tunnel, bool railroadCrossing,
+                            TrackSignalState signal, bool train, BlockAuthority authority, Point startPoint,
+                            double endElevation, TrackAllowedDirection direction, string controllerID, string secondaryControllerID)
+        {
+            Name = name;
+            Orientation = orientation;
+            LengthMeters = length;
+            // Use arctangent to express the grade as an angle of inclination to the horizontal
+            m_grade = Math.Atan(grade / 100);
+            HasTunnel = tunnel;
+            RailroadCrossing = railroadCrossing;
+            m_status.IsOpen = true;
+            m_status.SignalState = signal;
+            m_status.TrainPresent = train;
+            Authority = authority;
+            StartPoint = startPoint;
+            CalculateEndPoint();
+            EndElevationMeters = endElevation;
+            AllowedDirection = direction;
+            ControllerId = controllerID;
+            SecondaryControllerId = secondaryControllerID;
+            if (LengthMeters > 0)
+            {
+                StartElevationMeters = EndElevationMeters - ((LengthMeters * grade) / 100);
             }
         }
 
