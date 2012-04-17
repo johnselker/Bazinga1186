@@ -349,9 +349,9 @@ namespace CommonLib
         /// <param name="controllerID">Primary Controller ID</param>
         /// <param name="secondaryControllerID">Secondary Controller ID</param>
         //--------------------------------------------------------------------------------------
-        public TrackBlock(string name, TrackOrientation orientation, double length, double grade, bool tunnel, bool railroadCrossing,
-                            TrackSignalState signal, bool train, BlockAuthority authority, Point startPoint,
-                            double endElevation, TrackAllowedDirection direction, string controllerID, string secondaryControllerID)
+        public TrackBlock(string name, TrackOrientation orientation, Point startPoint, double length, double endElevation, 
+                            double grade, bool tunnel, bool railroadCrossing, int staticSpeedLimit,  
+                            TrackAllowedDirection direction, string controllerID, string secondaryControllerID)
         {
             Name = name;
             Orientation = orientation;
@@ -361,9 +361,6 @@ namespace CommonLib
             HasTunnel = tunnel;
             RailroadCrossing = railroadCrossing;
             m_status.IsOpen = true;
-            m_status.SignalState = signal;
-            m_status.TrainPresent = train;
-            Authority = authority;
             StartPoint = startPoint;
             CalculateEndPoint();
             EndElevationMeters = endElevation;

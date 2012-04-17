@@ -181,14 +181,10 @@ namespace TrackLib
         public void CreateTrackLayoutFile()
         {
             List<TrackBlock> testRegion = new List<TrackBlock>();
-            TrackBlock block1 = new TrackBlock("Block1", TrackOrientation.NorthSouth,100.00, false, false, TrackSignalState.SuperGreen, true, new BlockAuthority(100, 1), new Point(1, 1), 0, 100, TrackAllowedDirection.Both);
-            TrackBlock block2 = new TrackBlock("Block22", TrackOrientation.NorthSouth, 100.00, false, false, TrackSignalState.SuperGreen, true, new BlockAuthority(100, 1), new Point(1, 101), 0, 100, TrackAllowedDirection.Both);
-            TrackBlock block3 = new TrackBlock("Block333", TrackOrientation.NorthSouth, 100.00, false, true, TrackSignalState.SuperGreen, true, new BlockAuthority(100, 1), new Point(1, 201), 0, 100, TrackAllowedDirection.Both);
-            TrackBlock block4 = new TrackBlock("Block4444", TrackOrientation.NorthSouth, 100.00, true, false, TrackSignalState.SuperGreen, true, new BlockAuthority(100, 1), new Point(1, 301), 0, 100, TrackAllowedDirection.Both);
+            TrackBlock block1 = new TrackBlock("Block1", TrackOrientation.NorthSouth, new Point(1,1), 100, 0, 0, false, false, 50, TrackAllowedDirection.Both, "Controller1", null);
+            TrackBlock block2 = new TrackBlock("Block22", TrackOrientation.NorthSouth, new Point(1, 1), 100, 0, 0, false, false, 50, TrackAllowedDirection.Both, "Controller1", null);
             testRegion.Add(block1);
             testRegion.Add(block2);
-            testRegion.Add(block3);
-            testRegion.Add(block4);
             this.m_fileName = "Test.xml";
             this.m_blockList = testRegion;
         }
