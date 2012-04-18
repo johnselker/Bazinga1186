@@ -190,7 +190,7 @@ namespace CTCOfficeGUI
         //--------------------------------------------------------------------------------------
         public bool SetScale(double scale)
         {
-            if (scale > 0)
+            if (scale > 0 && scale < double.PositiveInfinity)
             {
                 if (m_block != null)
                 {
@@ -205,7 +205,7 @@ namespace CTCOfficeGUI
                             break;
                         case TrackOrientation.SouthWestNorthEast:
                             //Create a box to fit the diagonal
-                            int dimSize = System.Convert.ToInt32(System.Math.Sqrt((m_block.LengthMeters * m_block.LengthMeters) / 2.0));
+                            int dimSize = System.Convert.ToInt32(System.Math.Sqrt((m_block.LengthMeters * m_block.LengthMeters) / 2.0) * scale);
                             this.Width = this.Height = dimSize;
                             m_scaledStart = new Point(Margin.Left, this.Height - Margin.Bottom);
                             m_scaledEnd = new Point(this.Width - Margin.Right, Margin.Top);
@@ -219,7 +219,7 @@ namespace CTCOfficeGUI
                             break;
                         case TrackOrientation.NorthWestSouthEast:
                             //Create a box to fit the diagonal
-                            dimSize = System.Convert.ToInt32(System.Math.Sqrt((m_block.LengthMeters * m_block.LengthMeters) / 2.0));
+                            dimSize = System.Convert.ToInt32(System.Math.Sqrt((m_block.LengthMeters * m_block.LengthMeters) / 2.0) * scale);
                             this.Width = this.Height = dimSize;
                             m_scaledStart = new Point(Margin.Left, Margin.Top);
                             m_scaledEnd = new Point(this.Width - Margin.Right, this.Height - Margin.Bottom);
