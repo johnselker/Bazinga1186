@@ -360,7 +360,7 @@ namespace CommonLib
             Orientation = orientation;
             LengthMeters = length;
             // Use arctangent to express the grade as an angle of inclination to the horizontal
-            Grade = Math.Atan(grade / 100);
+            Grade = grade;
             HasTunnel = tunnel;
             RailroadCrossing = railroadCrossing;
             m_status.IsOpen = true;
