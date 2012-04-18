@@ -309,6 +309,12 @@ namespace CommonLib
             get;
             set;
         }
+        [XmlElement(ElementName = "HasSwitch")]
+        public Boolean HasSwitch
+        {
+            get;
+            set;
+        }
 
         #endregion
 

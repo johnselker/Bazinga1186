@@ -180,9 +180,42 @@ namespace TrackLib
         ///------------------------------------------------------------------------
         public void CreateTrackLayoutFileRedLine()
         {
-            List<TrackBlock> currentList = new List<TrackBlock>();
-            Region redRegion1 = new Region("redRegion1", currentList);
-            
+            // Region1 Sections A-C
+            // Controlled by redController1
+            // Block Names correspond to number in given list
+            Region redRegion1 = new Region("redRegion1");
+            TrackBlock redBlock1 = new TrackBlock("1", TrackOrientation.SouthWestNorthEast, new Point(0, 0), 50.0, 0.25, 0.5, false, false, 40, TrackAllowedDirection.Both, "redController1", null);
+            redRegion1.AddBlock(redBlock1);
+            TrackBlock redBlock2 = new TrackBlock("2", TrackOrientation.SouthWestNorthEast, redBlock1.EndPoint, 50.0, 0.75, 1, false, false, 40, TrackAllowedDirection.Both, "redController1", null);
+            redRegion1.AddBlock(redBlock2);
+            TrackBlock redBlock3 = new TrackBlock("3", TrackOrientation.SouthWestNorthEast, redBlock2.EndPoint, 50.0, 1.50, 1.5, false, false, 40, TrackAllowedDirection.Both, "redController1", null);
+            redRegion1.AddBlock(redBlock3);
+            TrackBlock redBlock4 = new TrackBlock("4", TrackOrientation.EastWest, redBlock3.EndPoint, 50.0, 2.5, 2, false, false, 40, TrackAllowedDirection.Both, "redController1", null);
+            redRegion1.AddBlock(redBlock4);
+            TrackBlock redBlock5 = new TrackBlock("5", TrackOrientation.EastWest, redBlock4.EndPoint, 50, 3.25, 1.5, false, false, 40, TrackAllowedDirection.Both, "redController1", null);
+            redRegion1.AddBlock(redBlock5);
+            TrackBlock redBlock6 = new TrackBlock("6", TrackOrientation.EastWest, redBlock5.EndPoint, 50, 3.75, 1, false, false, 40, TrackAllowedDirection.Both, "redController1", null);
+            redBlock6.Transponder = new Transponder("Shadyside", 50);
+            redRegion1.AddBlock(redBlock6);
+            TrackBlock redBlock7 = new TrackBlock("7", TrackOrientation.NorthWestSouthEast, redBlock6.EndPoint, 75, 4.13, 0.5, false, false, 40, TrackAllowedDirection.Both, "redController1", null);
+            redBlock7.Transponder = new Transponder("Shadyside", 0);
+            redRegion1.AddBlock(redBlock7);
+            TrackBlock redBlock8 = new TrackBlock("8", TrackOrientation.NorthWestSouthEast, redBlock7.EndPoint, 75, 4.13, 0, false, false, 40, TrackAllowedDirection.Both, "redController1", null);
+            redRegion1.AddBlock(redBlock8);
+            TrackBlock redBlock9 = new TrackBlock("9", TrackOrientation.NorthWestSouthEast, redBlock8.EndPoint, 75, 4.13, 0, false, false, 40, TrackAllowedDirection.Both, "redController1", "Yard");
+            redBlock9.HasSwitch = true;
+            redRegion1.AddBlock(redBlock9);
+            // End redController1 and redRegion1
+            // Region2 Sections D-E
+            // Controlled by redController2
+            Region redRegion2 = new Region("redRegion2");
+            redRegion2.SetPreviousRegion(redRegion1);
+            TrackBlock redBlock10 = new TrackBlock("10", TrackOrientation.EastWest, redBlock9.EndPoint, 75, 4.13, 0, false, false, 40, TrackAllowedDirection.Both, "redController2", "redController1");
+            redRegion2.AddBlock(redBlock10);
+            TrackBlock redBlock11 = new TrackBlock("11", TrackOrientation.EastWest, redBlock10.EndPoint, 75, 3.75, -0.5, false, false, 40, TrackAllowedDirection.Both, "redController2", null);
+            redRegion2.AddBlock(redBlock11);
+
+
         }
         // METHOD: CreateTrackLayoutFileGreenLine
         ///------------------------------------------------------------------------
