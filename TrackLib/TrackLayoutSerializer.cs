@@ -172,16 +172,22 @@ namespace TrackLib
 
         #region Helper Methods
 
-        // METHOD: CreateTrackLayoutFile
+        // METHOD: CreateTrackLayoutFileRedLine
         ///------------------------------------------------------------------------
         /// <summary>
-        /// Creates a file with a track layout
+        /// Creates a file with a track layout fior the red line
         /// </summary>
         ///------------------------------------------------------------------------
         public void CreateTrackLayoutFileRedLine()
         {
             
         }
+        // METHOD: CreateTrackLayoutFileGreenLine
+        ///------------------------------------------------------------------------
+        /// <summary>
+        /// Creates a file with a track layout fior the green line
+        /// </summary>
+        ///------------------------------------------------------------------------
         public void CreateTrackLayoutFileGreenLine()
         {
 
