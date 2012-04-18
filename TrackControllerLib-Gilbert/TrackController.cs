@@ -17,7 +17,33 @@ namespace TrackControllerLib
 
             #region Public Methods
 
-            //TODO: Add a constructor
+            // METHOD: TrackController
+            // - TrackController Constructor
+            public TrackController()
+            {
+                m_trackBlocks = new Dictionary<string,TrackBlock>();
+            }
+
+            // METHOD: TrackController
+            // - TrackController Constructor
+            public bool AddTrackBlock(TrackBlock block, List<TrackBlock> adjBlocks)
+            {
+                // Null Arguments
+                if (block == null)
+                    return false;
+                if (adjBlocks == null)
+                    return false;
+
+                // TrackBlock Duplicated
+                if (m_trackBlocks.ContainsKey(block.Name))
+                    return false;
+
+                m_trackBlocks.Add(block.Name, block);
+
+                // TODO: Add code for adjecent blocks
+
+                return true;
+            }
 
             // METHOD: checkTrackBlockExistence
             // - Check track block existence with given trackId
