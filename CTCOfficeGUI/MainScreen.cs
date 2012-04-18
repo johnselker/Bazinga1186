@@ -22,7 +22,6 @@ namespace CTCOfficeGUI
         public MainScreen()
         {
             InitializeComponent();
-            Initialize();
         }
 
         #endregion
@@ -32,12 +31,23 @@ namespace CTCOfficeGUI
         /// <summary>
         /// Initializes the screen
         /// </summary>
-        private void Initialize()
+        /// <param name="filename">Filename of the track layout</param>
+        /// <returns>bool Success</returns>
+        private bool Initialize(string filename)
         {
-            List<TrackBlock> blocks = m_ctcController.LoadTrackLayout(string.Empty);
-            Point p = m_ctcController.GetLayoutPosition();
-            Size s = m_ctcController.GetLayoutSize();
-            trackDisplayPanel.SetTrackLayout(blocks, s, p);
+            bool result = false;
+           
+            List<TrackBlock> blocks = m_ctcController.LoadTrackLayout(filename);
+            
+            if (blocks != null)
+            {
+                Point p = m_ctcController.GetLayoutPosition();
+                Size s = m_ctcController.GetLayoutSize();
+                trackDisplayPanel.SetTrackLayout(blocks, s, p);
+                result = true;
+            }
+
+            return result;
         }
 
         /// <summary>
@@ -243,6 +253,65 @@ namespace CTCOfficeGUI
         private void OnPopupAcknowledged(object sender, EventArgs e)
         {
             CloseOpenPopups();
+        }
+
+        /// <summary>
+        /// User selected the load track layout menu item
+        /// </summary>
+        /// <param name="sender">Sender of the event</param>
+        /// <param name="e">Event arguments</param>
+        private void OnLoadTrackLayoutClicked(object sender, EventArgs e)
+        {
+            OpenFileDialog dialog = new OpenFileDialog();
+            dialog.InitialDirectory = System.IO.Directory.GetCurrentDirectory();
+            dialog.CheckFileExists = true;
+            dialog.CheckPathExists = true;
+            dialog.RestoreDirectory = true;
+            dialog.Multiselect = false;
+            dialog.Title = "Select Track Layout";
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+                string filename = dialog.FileName;
+                if (Initialize(filename))
+                {
+                    dialog.Dispose();
+                    dialog = null;
+                }
+                else
+                {
+                    ShowOKPopup("Error", "Could not load track layout", OnPopupAcknowledged);
+                }
+            }
+        }
+
+        /// <summary>
+        /// User selected the exit menu item
+        /// </summary>
+        /// <param name="sender">Sender of the event</param>
+        /// <param name="e">Event arguments</param>
+        private void OnExitClicked(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        /// <summary>
+        /// User selected the table view menu item
+        /// </summary>
+        /// <param name="sender">Sender of the event</param>
+        /// <param name="e">Event arguments</param>
+        private void OnTableViewClicked(object sender, EventArgs e)
+        {
+
+        }
+
+        /// <summary>
+        /// User selected the scheduler menu item
+        /// </summary>
+        /// <param name="sender">Sender of the event</param>
+        /// <param name="e">Event arguments</param>
+        private void OnSchedulerClicked(object sender, EventArgs e)
+        {
+
         }
 
         #endregion
