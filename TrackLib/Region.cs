@@ -31,12 +31,12 @@ namespace TrackLib
         // Constructor: Overloaded Region
         ///------------------------------------------------------------------------
         /// <summary>
-        ///Constructor with Region Name and BockList
+        ///Constructor with Region Name
         /// </summary>
         ///------------------------------------------------------------------------
-        public Region(string name, List<TrackBlock> blockList)
+        public Region(string name)
         {
-            this.m_blockList = blockList;
+            this.m_blockList = new List<TrackBlock>();
             this.m_regionName = name;
         }
         // Constructor: Overloaded Region
