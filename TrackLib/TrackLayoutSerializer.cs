@@ -220,6 +220,67 @@ namespace TrackLib
             redRegion1.Add(redBlock10);
             TrackBlock redBlock11 = new TrackBlock("11", TrackOrientation.EastWest, redBlock10.EndPoint, 75, 3.75, -0.5, false, false, 40, TrackAllowedDirection.Both, "redController2", null);
             redRegion1.Add(redBlock11);
+            TrackBlock redBlock12 = new TrackBlock("12", TrackOrientation.EastWest, redBlock11.EndPoint, 75, 3.38, -0.5, false, false, 40, TrackAllowedDirection.Both, "redController2", null);
+            redRegion1.Add(redBlock12);
+            TrackBlock redBlock13 = new TrackBlock("13", TrackOrientation.EastWest, redBlock12.EndPoint, 68.4, 2.69, -1, false, false, 40, TrackAllowedDirection.Both, "redController2", null);
+            redRegion1.Add(redBlock13);
+            TrackBlock redBlock14 = new TrackBlock("14", TrackOrientation.EastWest, redBlock13.EndPoint, 60, 2.09, -1, false, false, 40, TrackAllowedDirection.Both, "redController2", null);
+            redRegion1.Add(redBlock14);
+            TrackBlock redBlock15 = new TrackBlock("15", TrackOrientation.EastWest, redBlock14.EndPoint, 60, 1.49, -1, false, false, 40, TrackAllowedDirection.Both, "redController2", null);
+            redBlock15.HasSwitch = true;
+            redBlock15.HasTransponder = true;
+            redBlock15.Transponder = new Transponder("Herron Ave",60);
+            redRegion1.Add(redBlock15);
+            // End redController2 and redRegion2
+            // Region3 Sections F-I
+            // Controlled by redController3
+            TrackBlock redBlock16 = new TrackBlock("16", TrackOrientation.EastWest, redBlock15.EndPoint, 50, 1.24, -0.5, false, false, 40, TrackAllowedDirection.Both, "redController2", "redController3");
+            redBlock16.Transponder = new Transponder("Herron Ave",0);
+            redRegion1.Add(redBlock16);
+            TrackBlock redBlock17 = new TrackBlock("17", TrackOrientation.EastWest, redBlock16.EndPoint, 200, 0.24, -0.5, false, false, 55, TrackAllowedDirection.Both, "redController3", null);
+            redRegion1.Add(redBlock17);
+            TrackBlock redBlock18 = new TrackBlock("18", TrackOrientation.EastWest, redBlock17.EndPoint, 400, 0, -0.06025, false, false, 70, TrackAllowedDirection.Both, "redController3", null);
+            redRegion1.Add(redBlock18);
+            TrackBlock redBlock19 = new TrackBlock("19", TrackOrientation.EastWest, redBlock18.EndPoint, 400, 0, 0, false, false, 70, TrackAllowedDirection.Both, "redController3", null);
+            redRegion1.Add(redBlock19);
+            TrackBlock redBlock20 = new TrackBlock("20", TrackOrientation.EastWest, redBlock19.EndPoint, 200, 0, 0, false, false, 70, TrackAllowedDirection.Both, "redController3", null);
+            redBlock20.HasTransponder = true;
+            redBlock20.Transponder = new Transponder("Swissville", 200);
+            redRegion1.Add(redBlock20);
+            TrackBlock redBlock21 = new TrackBlock("21", TrackOrientation.SouthWestNorthEast, redBlock20.EndPoint, 100, 0, 0, false, false, 55, TrackAllowedDirection.Both, "redController3", null);
+            redBlock21.HasTransponder = true;
+            redBlock21.Transponder = new Transponder("Swissville", 0);
+            redRegion1.Add(redBlock21);
+            TrackBlock redBlock22 = new TrackBlock("22", TrackOrientation.SouthWestNorthEast, redBlock21.EndPoint, 100, 0, 0, false, false, 55, TrackAllowedDirection.Both, "redController3", null);
+            redRegion1.Add(redBlock22);
+            TrackBlock redBlock23 = new TrackBlock("23", TrackOrientation.SouthWestNorthEast, redBlock22.EndPoint, 100, 0, 0, false, false, 55, TrackAllowedDirection.Both, "redController3", null);
+            redRegion1.Add(redBlock23);
+            TrackBlock redBlock24 = new TrackBlock("24", TrackOrientation.NorthSouth, redBlock23.EndPoint, 50, 0, 0, true, false, 70, TrackAllowedDirection.Both, "redController3", null);
+            redBlock24.HasTransponder = true;
+            redBlock24.Transponder = new Transponder("Penn Station", 50);
+            redRegion1.Add(redBlock24);
+            TrackBlock redBlock25 = new TrackBlock("25", TrackOrientation.NorthSouth, redBlock24.EndPoint, 50, 0, 0, true, false, 70, TrackAllowedDirection.Both, "redController3", null);
+            redBlock25.HasTransponder = true;
+            redBlock25.Transponder = new Transponder("Penn Station", 0);
+            redRegion1.Add(redBlock25);
+            TrackBlock redBlock26 = new TrackBlock("26", TrackOrientation.NorthSouth, redBlock25.EndPoint, 50, 0, 0, true, false, 70, TrackAllowedDirection.Both, "redController3", null);
+            redRegion1.Add(redBlock26);
+            TrackBlock redBlock27 = new TrackBlock("27", TrackOrientation.NorthSouth, redBlock26.EndPoint, 50, 0, 0, true, false, 70, TrackAllowedDirection.Both, "redController3", null);
+            redBlock27.HasSwitch = true;
+            redRegion1.Add(redBlock27);
+            TrackBlock redBlock28 = new TrackBlock("28", TrackOrientation.NorthSouth, redBlock27.EndPoint, 50, 0, 0, true, false, 70, TrackAllowedDirection.Both, "redController3", null);
+            redRegion1.Add(redBlock28);
+            TrackBlock redBlock29 = new TrackBlock("29", TrackOrientation.NorthSouth, redBlock28.EndPoint, 60, 0, 0, true, false, 70, TrackAllowedDirection.Both, "redController3", null);
+            redRegion1.Add(redBlock29);
+            TrackBlock redBlock30 = new TrackBlock("30", TrackOrientation.NorthSouth, redBlock29.EndPoint, 60, 0, 0, true, false, 70, TrackAllowedDirection.Both, "redController3", null);
+            redRegion1.Add(redBlock30);
+            TrackBlock redBlock31 = new TrackBlock("31", TrackOrientation.NorthSouth, redBlock30.EndPoint, 50, 0, 0, true, false, 70, TrackAllowedDirection.Both, "redController3", null);
+            redRegion1.Add(redBlock31);
+
+
+
+
+
             this.m_blockList = redRegion1;
 
         }

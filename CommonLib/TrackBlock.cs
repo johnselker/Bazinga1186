@@ -192,7 +192,8 @@ namespace CommonLib
         [XmlIgnore]
         public bool HasTransponder
         {
-            get { return Transponder != null; }
+            get;
+            set;
         }
 
         // ACCESSOR: StartPoint

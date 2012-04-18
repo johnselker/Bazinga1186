@@ -6,6 +6,7 @@ using System.Timers;
 using System.Drawing;
 using System.Threading;
 using CommonLib;
+using System.Diagnostics;
 
 namespace Train
 {
@@ -14,7 +15,7 @@ namespace Train
 		private const double g = 9.8;
 		private const double carLength = 32.2;
 		private const double maxSlope = 0.540419500; // arctan(0.60)
-		private const double medAcceleration = 0.5;
+		private const double medAcceleration = 0.5; // TODO: Change this to correct maxAcceleration
 		private const double brakeDeceleration = -7.6;
 		private const double eBrakeDeceleration = -10.0;
 		private const double maxSpeed = 19.444444444;
@@ -22,7 +23,6 @@ namespace Train
 		private double acceleration = 0;
 		private bool emergencyBrake = false;
 		private bool brake = false;
-		private Point deltaPosition;
 		private string announcement = "";
 		private double slope = 0;
 		private double friction = 0.01; // arbitrary selection
@@ -43,22 +43,15 @@ namespace Train
 			acceleration = 0;
 			lastUpdate = DateTime.Now;
 		}
-/*
-		public void TestTimestep()
+
+		public void Update()
 		{
-			Random r = new Random();
-			double seconds = r.NextDouble() * 60;
-			DateTime first = DateTime.Now;
-			Thread.Sleep((int)(seconds * 1000));
-			DateTime second = DateTime.Now;
-			double timestep = DateTime.Now.Subtract(lastUpdate).Duration().TotalSeconds;
-			Console.Out.WriteLine("Slept for " + seconds + " seconds.");
-			Console.Out.WriteLine(timestep+" seconds of time passed.");
+			UpdateSpeed();
+			UpdatePosition();
 		}
-*/
+
 		private void UpdateSpeed()
 		{
-			// TODO: Test if this actually works
 			double timestep = DateTime.Now.Subtract(lastUpdate).Duration().TotalSeconds;
 
 			if (emergencyBrake)
@@ -108,58 +101,118 @@ namespace Train
 					state.X += distance;
 					state.BlockProgress = (state.X - startX) / length;
 					break;
-
 				case Direction.North:
 					state.Y -= distance;
 					state.BlockProgress = (state.Y - startY) / length;
 					break;
-
 				case Direction.Northeast:
 					distance /= Math.Sqrt(2);
 					state.X += distance;
 					state.Y -= distance;
 					state.BlockProgress = Math.Sqrt(Math.Pow(state.Y - startY, 2) + Math.Pow(state.X - startX, 2)) / length;
 					break;
-
 				case Direction.Northwest:
 					distance /= Math.Sqrt(2);
 					state.X -= distance;
 					state.Y -= distance;
 					state.BlockProgress = Math.Sqrt(Math.Pow(state.Y - endY, 2) + Math.Pow(state.X - endX, 2)) / length;
 					break;
-
 				case Direction.South:
 					state.Y += distance;
 					state.BlockProgress = (state.Y - endY) / length;
 					break;
-
 				case Direction.Southeast:
 					distance /= Math.Sqrt(2);
 					state.X += distance;
 					state.Y += distance;
 					state.BlockProgress = Math.Sqrt(Math.Pow(state.Y - startY, 2) + Math.Pow(state.X - startX, 2)) / length;
 					break;
-
 				case Direction.Southwest:
 					distance /= Math.Sqrt(2);
 					state.X -= distance;
 					state.Y += distance;
 					state.BlockProgress = Math.Sqrt(Math.Pow(state.Y - endY, 2) + Math.Pow(state.X - endX, 2)) / length;
 					break;
-
 				case Direction.West:
 					state.X -= distance;
 					state.BlockProgress = (state.X - endX) / length;
 					break;
-
 				default:
-					//Unreachable
+					// Unreachable
 					break;
 			}
 			state.BlockProgress = Math.Abs(state.BlockProgress);
+
+			// Handle moving to next block
 			if (state.BlockProgress > 1)
 			{
-				// TODO: Handle moving to next block!
+				// Assume all blocks have the same length
+				Debug.Assert(block.NextBlock.LengthMeters == length);
+				state.BlockProgress--;
+
+				block = block.NextBlock;
+				switch (block.Orientation)
+				{
+					case TrackOrientation.EastWest:
+						if (state.Direction == Direction.East || state.Direction == Direction.Northeast || state.Direction == Direction.Southeast)
+						{
+							state.Direction = Direction.East;
+						}
+						else if (state.Direction == Direction.West || state.Direction == Direction.Northwest || state.Direction == Direction.Southwest)
+						{
+							state.Direction = Direction.West;
+						}
+						else
+						{
+							Debug.Fail("Invalid transition to EastWest block!");
+						}
+						break;
+					case TrackOrientation.NorthSouth:
+						if (state.Direction == Direction.North || state.Direction == Direction.Northeast || state.Direction == Direction.Northwest)
+						{
+							state.Direction = Direction.North;
+						}
+						else if (state.Direction == Direction.South || state.Direction == Direction.Southeast || state.Direction == Direction.Southwest)
+						{
+							state.Direction = Direction.South;
+						}
+						else
+						{
+							Debug.Fail("Invalid transition to NorthSouth block!");
+						}
+						break;
+					case TrackOrientation.NorthWestSouthEast:
+						if (state.Direction == Direction.North || state.Direction == Direction.West || state.Direction == Direction.Northwest)
+						{
+							state.Direction = Direction.Northwest;
+						}
+						else if (state.Direction == Direction.South || state.Direction == Direction.East || state.Direction == Direction.Southeast)
+						{
+							state.Direction = Direction.Southeast;
+						}
+						else
+						{
+							Debug.Fail("Invalid transition to NorthwestSoutheast block!");
+						}
+						break;
+					case TrackOrientation.SouthWestNorthEast:
+						if (state.Direction == Direction.South || state.Direction == Direction.West || state.Direction == Direction.Southwest)
+						{
+							state.Direction = Direction.Southwest;
+						}
+						else if (state.Direction == Direction.North || state.Direction == Direction.East || state.Direction == Direction.Northeast)
+						{
+							state.Direction = Direction.Northeast;
+						}
+						else
+						{
+							Debug.Fail("Invalid transition to NorthSouth block!");
+						}
+						break;
+					default:
+						// Unreachable
+						break;
+				}
 			}
 		}
 
