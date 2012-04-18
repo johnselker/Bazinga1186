@@ -157,24 +157,61 @@ namespace CTCOfficeGUI
         /// </summary>
         /// <param name="filename">File name</param>
         /// <returns>bool Success</returns>
-        public bool LoadTrackLayout(string filename)
+        public List<TrackBlock> LoadTrackLayout(string filename)
         {
-            bool result = false;
+            List<TrackBlock> blocks = new List<TrackBlock>();
 
-            TrackLayoutSerializer serializer = new TrackLayoutSerializer(filename);
+            TrackBlock test = new TrackBlock("A", TrackOrientation.EastWest, new Point(369, 260), 100, 0, 0, false, false,
+                                             50, TrackAllowedDirection.Both, "Controller1", null);
+            blocks.Add(test);
 
-            try
-            {
-                serializer.Restore();
-                List<TrackBlock> blocks = serializer.BlockList;
-                result = BuildLayout(blocks);
-            }
-            catch (Exception e)
-            {
-                m_log.LogError("Layout restoration failed", e);
-            }
+            test = new TrackBlock("B", TrackOrientation.SouthWestNorthEast, new Point(469, 260), 100, 0, 0, false, false,
+                                             50, TrackAllowedDirection.Both, "Controller1", null);
+            blocks.Add(test);
 
-            return result;
+            test = new TrackBlock("C", TrackOrientation.NorthSouth, new Point(540, 189), 100, 0, 0, false, false,
+                                            50, TrackAllowedDirection.Both, "Controller1", null);
+            blocks.Add(test);
+
+            test = new TrackBlock("D", TrackOrientation.NorthWestSouthEast, new Point(540, 189), 100, 0, 0, false, false,
+                                            50, TrackAllowedDirection.Both, "Controller1", null);
+            blocks.Add(test);
+
+            test = new TrackBlock("E", TrackOrientation.EastWest, new Point(611, 260), 100, 0, 0, false, false,
+                                            50, TrackAllowedDirection.Both, "Controller1", null);
+            blocks.Add(test);
+
+            test = new TrackBlock("F", TrackOrientation.NorthWestSouthEast, new Point(469, 260), 100, 0, 0, false, false,
+                                            50, TrackAllowedDirection.Both, "Controller1", null);
+            blocks.Add(test);
+
+            test = new TrackBlock("G", TrackOrientation.SouthWestNorthEast, new Point(540, 331), 100, 0, 0, false, false,
+                                            50, TrackAllowedDirection.Both, "Controller1", null);
+            blocks.Add(test);
+
+            test = new TrackBlock("H", TrackOrientation.NorthSouth, new Point(540, 431), 100, 0, 0, false, false,
+                                            50, TrackAllowedDirection.Both, "Controller1", null);
+            blocks.Add(test);
+
+            BuildLayout(blocks);
+            //TrackLayoutSerializer serializer = new TrackLayoutSerializer(filename);
+
+            //try
+            //{
+            //    serializer.Restore();
+            //    blocks = serializer.BlockList;
+            //    if (!BuildLayout(blocks))
+            //    {
+            //        blocks = null;
+            //        m_log.LogError("Layout building failed");
+            //    }
+            //}
+            //catch (Exception e)
+            //{
+            //    m_log.LogError("Layout restoration failed", e);
+            //}
+
+            return blocks;
         }
 
         /// <summary>
@@ -256,16 +293,16 @@ namespace CTCOfficeGUI
                 {
                     minY = b.StartPoint.Y;
                 }
-                else if (b.EndPoint.Y < minY)
+                if (b.EndPoint.Y < minY)
                 {
-                    minY = b.StartPoint.Y;
+                    minY = b.EndPoint.Y;
                 }
 
                 if (b.StartPoint.Y > maxY)
                 {
                     maxY = b.StartPoint.Y;
                 }
-                else if (b.EndPoint.Y > maxY)
+                if (b.EndPoint.Y > maxY)
                 {
                     maxY = b.EndPoint.Y;
                 }

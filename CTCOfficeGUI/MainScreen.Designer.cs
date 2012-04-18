@@ -49,7 +49,6 @@
             this.trackDisplayPanel.Location = new System.Drawing.Point(0, 0);
             this.trackDisplayPanel.Margin = new System.Windows.Forms.Padding(0);
             this.trackDisplayPanel.Name = "trackDisplayPanel";
-            this.trackDisplayPanel.ScaleFactor = 1D;
             this.trackDisplayPanel.Size = new System.Drawing.Size(1080, 520);
             this.trackDisplayPanel.TabIndex = 0;
             this.trackDisplayPanel.TrackBlockClicked += new CTCOfficeGUI.TrackDisplayPanel.OnTrackBlockClicked(this.OnTrackBlockClicked);
