@@ -148,20 +148,30 @@ namespace CTCOfficeGUI
             {
                 info.Add("Authority:", block.Authority.Authority.ToString());
             }
-            info.Add("End Elevation:", block.EndElevationMeters.ToString() + " " + METERS);
-            info.Add("End Point:", block.EndPoint.X.ToString() + ", " + block.EndPoint.Y.ToString());
 
-            KeyValuePair<string, string> failure = GetBlockFailureStateString(block);
-            info.Add(failure.Key, failure.Value);
-
-            if (block.HasTransponder)
+            if (block.Authority != null)
             {
-                info.Add("Has Transponder:", "yes");
+                info.Add("Speed Limit:", block.Authority.SpeedLimitKPH.ToString() + " " + KPH);
+            }
+
+            if (block.Status.TrainPresent)
+            {
+                info.Add("Train present:", "yes");
             }
             else
             {
-                info.Add("Has Transponder:", "no");
+                info.Add("Train present:", "no");
             }
+
+            info.Add("Signal:", block.Status.SignalState.ToString());
+
+            info.Add("Start Elevation:", block.StartElevationMeters.ToString() + " " + METERS);
+            
+            info.Add("End Elevation", block.EndElevationMeters.ToString() + " " + METERS);
+
+            info.Add("Grade", block.Grade.ToString() + "%");
+
+            info.Add("Length:", block.LengthMeters.ToString() + " " + METERS);
 
             if (block.HasTunnel)
             {
@@ -172,9 +182,6 @@ namespace CTCOfficeGUI
                 info.Add("Has Tunnel:", "no");
             }
 
-            info.Add("Length:", block.LengthMeters.ToString() + " " + METERS);
-            info.Add("Orientation:", block.Orientation.ToString());
-
             if (block.RailroadCrossing)
             {
                 info.Add("Has RR Crossing:", "yes");
@@ -184,31 +191,17 @@ namespace CTCOfficeGUI
                 info.Add("Has RR Crossing:", "no");
             }
 
-            info.Add("Signal:", block.Status.SignalState.ToString());
-            if (block.Authority != null)
-            {
-                info.Add("Speed Limit:", block.Authority.SpeedLimitKPH.ToString() + " " + KPH);
-            }
-            info.Add("Start Elevation:", block.StartElevationMeters.ToString() + " " + METERS);
-            info.Add("Start Point:", block.StartPoint.X.ToString() + ", " + block.StartPoint.Y.ToString());
-            
-            if (block.Status.TrainPresent)
-            {
-                info.Add("Train present:", "yes");
-            }
-            else
-            {
-                info.Add("Train present:", "no");
-            }
-
             if (block.Transponder != null) //Could use block.HasTransponder property, but check for null to be on the safe side...
             {
-                info.Add("Transponder:", block.Transponder.StationName + "in " + block.Transponder.DistanceToStation.ToString() + "blocks");
+                info.Add("Transponder:", block.Transponder.StationName + "in " + block.Transponder.DistanceToStation.ToString() + " blocks");
             }
             else
             {
                 info.Add("Transponder:", "none");
             }
+
+            KeyValuePair<string, string> failure = GetBlockFailureStateString(block);
+            info.Add(failure.Key, failure.Value);
 
             SetInfo(block.Name, info);
         }

@@ -74,7 +74,14 @@ namespace CTCOfficeGUI
                     ITrackController controller = GetTrackController(block);
                     if (controller != null)
                     {
-                        result = controller.SetAuthority(block.Name, new BlockAuthority(block.Authority.SpeedLimitKPH, authority));
+                        try
+                        {
+                            result = controller.SetAuthority(block.Name, new BlockAuthority(block.Authority.SpeedLimitKPH, authority));
+                        }
+                        catch (Exception e)
+                        {
+                            m_log.LogError("Error in setting authority", e);
+                        }
                     }
                 }
             }
@@ -109,7 +116,14 @@ namespace CTCOfficeGUI
             //Attempt to close the track block
             if (controller != null)
             {
-                result = controller.CloseTrack(block.Name);
+                try
+                {
+                    result = controller.CloseTrack(block.Name);
+                }
+                catch (Exception e)
+                {
+                    m_log.LogError("Error closing track block", e);
+                }
             }
 
             return result;
@@ -128,7 +142,14 @@ namespace CTCOfficeGUI
             //Attempt to open the track block
             if (controller != null)
             {
-                result = controller.OpenTrack(block.Name);
+                try
+                {
+                    result = controller.OpenTrack(block.Name);
+                }
+                catch (Exception e)
+                {
+                    m_log.LogError("Error opening track block", e);
+                }
             }
 
             return result;
@@ -226,20 +247,46 @@ namespace CTCOfficeGUI
 
             foreach (TrackBlock b in blocks)
             {
-                //if (!trackControllers.ContainsKey(b.ControllerId))
-                //{
-                //    //Create a new track controller
-                //    ITrackController controller = new TrackController();
-                //    controller.AddTrackBlock(b, GetAdjacentBlocks(b));
-                //    m_trackTable[b] = controller;
-                //}
-                //else
-                //{
-                //    //Add it to the existing track controller
-                //    ITrackController controller = trackControllers[b.ControllerId];
-                //    controller.AddTrackBlock(b, GetAdjacentBlocks(b));
-                //    m_trackTable[b] = controller;
-                //}
+                if (!string.IsNullOrEmpty(b.ControllerId))
+                {
+                    if (!trackControllers.ContainsKey(b.ControllerId))
+                    {
+                        //Create a new track controller
+                        ITrackController controller = new TrackController();
+                        controller.AddTrackBlock(b, GetAdjacentBlocks(b));
+                        m_trackTable[b] = controller;
+                    }
+                    else
+                    {
+                        //Add it to the existing track controller
+                        ITrackController controller = trackControllers[b.ControllerId];
+                        controller.AddTrackBlock(b, GetAdjacentBlocks(b));
+                        m_trackTable[b] = controller;
+                    }
+                }
+                else
+                {
+                    m_log.LogError("Block primary controller ID was null or empty. Not allowed");
+                    return false;
+                }
+
+                if (!string.IsNullOrEmpty(b.SecondaryControllerId))
+                {
+                    if (!trackControllers.ContainsKey(b.SecondaryControllerId))
+                    {
+                        //Create a new track controller
+                        ITrackController controller = new TrackController();
+                        controller.AddTrackBlock(b, GetAdjacentBlocks(b));
+                        m_trackTable[b] = controller;
+                    }
+                    else
+                    {
+                        //Add it to the existing track controller
+                        ITrackController controller = trackControllers[b.ControllerId];
+                        controller.AddTrackBlock(b, GetAdjacentBlocks(b));
+                        m_trackTable[b] = controller;
+                    }
+                }
 
                 //Calculate the min and max coordinates of the layout
                 if (b.StartPoint.X < minX)
