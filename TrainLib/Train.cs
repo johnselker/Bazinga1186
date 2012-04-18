@@ -242,34 +242,29 @@ namespace Train
 			return state;
 		}
 
-		public bool SetBrake(bool brake)
+		public void SetBrake(bool brake)
 		{
 			this.brake = brake;
-			return this.brake;
 		}
 
-		public bool SetEmergencyBrake(bool brake)
+		public void SetEmergencyBrake(bool brake)
 		{
 			emergencyBrake = brake;
-			return emergencyBrake;
 		}
 
-		public bool SetDoors(TrainState.Door doors)
+		public void SetDoors(TrainState.Door doors)
 		{
 			state.Doors = doors;
-			return true;
 		}
 
-		public bool SetLights(TrainState.Light lights)
+		public void SetLights(TrainState.Light lights)
 		{
 			state.Lights = lights;
-			return true;
 		}
 
-		public bool SetAnnouncement(string announcement)
+		public void SetAnnouncement(string announcement)
 		{
 			this.announcement = announcement;
-			return true;
 		}
 
 		public bool SetSlope(double slope)
