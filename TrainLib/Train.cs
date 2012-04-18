@@ -22,7 +22,6 @@ namespace Train
 		private double acceleration = 0;
 		private bool emergencyBrake = false;
 		private bool brake = false;
-		private Point position;
 		private Point deltaPosition;
 		private string announcement = "";
 		private double slope = 0;
@@ -30,10 +29,11 @@ namespace Train
 		private TrainState state = new TrainState();
 		private DateTime lastUpdate;
 
-		public Train(string trainID, int x, int y, Direction direction, int cars = 1, int crew = 0, int passengers = 0)
+		public Train(string trainID, double x, double y, Direction direction, int cars = 1, int crew = 0, int passengers = 0)
 		{
 			state.TrainID = trainID;
-			position = new Point(x, y);
+			state.X = x;
+			state.Y = y;
 			state.Direction = direction;
 			state.Cars = cars;
 			state.Crew = crew;
@@ -175,7 +175,7 @@ namespace Train
 
 		public Point GetPosition()
 		{
-			return position;
+			return new Point((int)state.X, (int)state.Y);
 		}
 
 		public TrainState GetState()
