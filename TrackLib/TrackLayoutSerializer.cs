@@ -178,17 +178,14 @@ namespace TrackLib
         /// Creates a file with a track layout
         /// </summary>
         ///------------------------------------------------------------------------
-        public void CreateTrackLayoutFile()
+        public void CreateTrackLayoutFileRedLine()
         {
-            List<TrackBlock> testRegion = new List<TrackBlock>();
-            TrackBlock block1 = new TrackBlock("Block1", TrackOrientation.NorthSouth, new Point(1,1), 100, 0, 0, false, false, 50, TrackAllowedDirection.Both, "Controller1", null);
-            TrackBlock block2 = new TrackBlock("Block22", TrackOrientation.NorthSouth, new Point(1, 1), 100, 0, 0, false, false, 50, TrackAllowedDirection.Both, "Controller1", null);
-            testRegion.Add(block1);
-            testRegion.Add(block2);
-            this.m_fileName = "Test.xml";
-            this.m_blockList = testRegion;
+            
         }
+        public void CreateTrackLayoutFileGreenLine()
+        {
 
+        }
         #endregion
 
         #region Private Data
