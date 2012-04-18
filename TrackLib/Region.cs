@@ -4,18 +4,26 @@ using System.Linq;
 using System.Text;
 using TrackLib;
 using CommonLib;
+using System.Runtime.Serialization;
+using System.Xml;
+using System.Xml.Serialization;
 
 namespace TrackLib
 {
+    [Serializable]
+    [XmlType(TypeName = "Region")]
     class Region
     {
-        #region Private Virables
+        #region Private Variables
         private List<TrackBlock> m_blockList;
         private string m_regionName;
         private Region m_nextRegion;
         private Region m_previousRegion;
         #endregion
 
+        #region Public Variables
+
+        #endregion
         #region Constructors
         // Constructor: Region
         ///------------------------------------------------------------------------
