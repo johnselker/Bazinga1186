@@ -156,64 +156,25 @@ namespace CTCOfficeGUI
         /// Initializes the track layout from file
         /// </summary>
         /// <param name="filename">File name</param>
-        /// <returns>bool Success</returns>
+        /// <returns>List of track blocks</returns>
         public List<TrackBlock> LoadTrackLayout(string filename)
         {
-            TrackLayoutSerializer layoutSerializer = new TrackLayoutSerializer("redline.xml");
-            layoutSerializer.CreateTrackLayoutFileRedLine();
-            layoutSerializer.Save();
-            List<TrackBlock> blocks = layoutSerializer.BlockList;
-            //List<TrackBlock> blocks = new List<TrackBlock>();
+            List<TrackBlock> blocks = null;
 
-            //TrackBlock test = new TrackBlock("A", TrackOrientation.EastWest, new Point(369, 260), 100, 0, 0, false, false,
-            //                                 50, TrackAllowedDirection.Both, "Controller1", null);
-            //blocks.Add(test);
-
-            //test = new TrackBlock("B", TrackOrientation.SouthWestNorthEast, new Point(469, 260), 100, 0, 0, false, false,
-            //                                 50, TrackAllowedDirection.Both, "Controller1", null);
-            //blocks.Add(test);
-
-            //test = new TrackBlock("C", TrackOrientation.NorthSouth, new Point(540, 189), 100, 0, 0, false, false,
-            //                                50, TrackAllowedDirection.Both, "Controller1", null);
-            //blocks.Add(test);
-
-            //test = new TrackBlock("D", TrackOrientation.NorthWestSouthEast, new Point(540, 189), 100, 0, 0, false, false,
-            //                                50, TrackAllowedDirection.Both, "Controller1", null);
-            //blocks.Add(test);
-
-            //test = new TrackBlock("E", TrackOrientation.EastWest, new Point(611, 260), 100, 0, 0, false, false,
-            //                                50, TrackAllowedDirection.Both, "Controller1", null);
-            //blocks.Add(test);
-
-            //test = new TrackBlock("F", TrackOrientation.NorthWestSouthEast, new Point(469, 260), 100, 0, 0, false, false,
-            //                                50, TrackAllowedDirection.Both, "Controller1", null);
-            //blocks.Add(test);
-
-            //test = new TrackBlock("G", TrackOrientation.SouthWestNorthEast, new Point(540, 331), 100, 0, 0, false, false,
-            //                                50, TrackAllowedDirection.Both, "Controller1", null);
-            //blocks.Add(test);
-
-            //test = new TrackBlock("H", TrackOrientation.NorthSouth, new Point(540, 431), 100, 0, 0, false, false,
-            //                                50, TrackAllowedDirection.Both, "Controller1", null);
-            //blocks.Add(test);
-
-            //BuildLayout(blocks);
-            //TrackLayoutSerializer serializer = new TrackLayoutSerializer(filename);
-
-            //try
-            //{
-            //    serializer.Restore();
-            //    blocks = serializer.BlockList;
-            //    if (!BuildLayout(blocks))
-            //    {
-            //        blocks = null;
-            //        m_log.LogError("Layout building failed");
-            //    }
-            //}
-            //catch (Exception e)
-            //{
-            //    m_log.LogError("Layout restoration failed", e);
-            //}
+            try
+            {
+                TrackLayoutSerializer layoutSerializer = new TrackLayoutSerializer(filename);
+                layoutSerializer.Restore();
+                blocks = layoutSerializer.BlockList;
+                if (!BuildLayout(blocks))
+                {
+                    m_log.LogError("Error building track layout");
+                }
+            }
+            catch (Exception e)
+            {
+                m_log.LogError("Layout restoration failed", e);
+            }
 
             return blocks;
         }
