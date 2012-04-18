@@ -17,17 +17,34 @@ namespace TrackLib
         #endregion
 
         #region Constructors
-        // Empty Constructor
+        // Constructor: Region
+        ///------------------------------------------------------------------------
+        /// <summary>
+        /// Empty Default Constructor needed for serialization
+        /// </summary>
+        ///------------------------------------------------------------------------
         public Region()
         {
             this.m_blockList = new List<TrackBlock>();
             this.m_regionName = "";
         }
+        // Constructor: Overloaded Region
+        ///------------------------------------------------------------------------
+        /// <summary>
+        ///Constructor with Region Name and BockList
+        /// </summary>
+        ///------------------------------------------------------------------------
         public Region(string name, List<TrackBlock> blockList)
         {
             this.m_blockList = blockList;
             this.m_regionName = name;
         }
+        // Constructor: Overloaded Region
+        ///------------------------------------------------------------------------
+        /// <summary>
+        ///Constructor with Region Name and BockList, next region and previous region
+        /// </summary>
+        ///------------------------------------------------------------------------
         public Region(string name, List<TrackBlock> blockList, Region next, Region previous)
         {
             this.m_blockList = blockList;

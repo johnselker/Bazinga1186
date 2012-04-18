@@ -180,6 +180,8 @@ namespace TrackLib
         ///------------------------------------------------------------------------
         public void CreateTrackLayoutFileRedLine()
         {
+            List<TrackBlock> currentList = new List<TrackBlock>();
+            Region redRegion1 = new Region("redRegion1", currentList);
             
         }
         // METHOD: CreateTrackLayoutFileGreenLine

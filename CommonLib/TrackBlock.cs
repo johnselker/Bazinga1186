@@ -28,12 +28,7 @@ namespace CommonLib
         private BlockAuthority m_authority;
         private TrackStatus m_status = new TrackStatus();
         private double m_grade = 0;
-        /// <summary>
-        /// StaticSpeedLimit set by physical limitation of the train
-        /// edited by trackcontroller for individual blocks
-        /// </summary>
-        private double m_staticSpeedLimit = 70;
-   
+       
         #endregion
 
         #region Properties
@@ -367,8 +362,8 @@ namespace CommonLib
             AllowedDirection = direction;
             ControllerId = controllerID;
             SecondaryControllerId = secondaryControllerID;
-            // Set default static max speed to physical limit of train
-            StaticSpeedLimit = m_staticSpeedLimit;
+            // Set default static max speed to physical limit
+            StaticSpeedLimit = staticSpeedLimit;
             if (LengthMeters > 0)
             {
                 StartElevationMeters = EndElevationMeters - ((LengthMeters * grade) / 100);
