@@ -27,7 +27,7 @@ namespace CommonLib
 
         private BlockAuthority m_authority = new BlockAuthority(0, 0);
         private TrackStatus m_status = new TrackStatus();
-        private double m_grade = 0;
+        private double m_grade;
        
         #endregion
 
@@ -256,7 +256,8 @@ namespace CommonLib
         [XmlIgnore]
         public double Grade
         {
-            get { return m_grade; }
+            get;
+            set;
         }
 
         // ACCESSOR: Status
@@ -358,7 +359,7 @@ namespace CommonLib
             Orientation = orientation;
             LengthMeters = length;
             // Use arctangent to express the grade as an angle of inclination to the horizontal
-            m_grade = Math.Atan(grade / 100);
+            Grade = Math.Atan(grade / 100);
             HasTunnel = tunnel;
             RailroadCrossing = railroadCrossing;
             m_status.IsOpen = true;
