@@ -24,6 +24,7 @@ namespace CTCOfficeGUI
         private TrainGraphic m_selectedTrain = null;
         private bool m_editingMode = false;
         private List<TrackBlock> m_route;
+        private const int m_margin = 10;
 
         #endregion
 
@@ -57,31 +58,6 @@ namespace CTCOfficeGUI
 
         #endregion
 
-        #region Properties
-
-        /// <summary>
-        /// Factor by which to scale the graphics (scale of 1 = 1 pixel per km)
-        /// </summary>
-        public double ScaleFactor
-        {
-            get { return m_scale; }
-            set
-            {
-                if (value > 0)
-                {
-                    //Update the scaling factor
-                    m_scale = value;
-
-                    foreach (KeyValuePair<TrackBlock, TrackBlockGraphic> block in m_blockTable)
-                    {
-                        block.Value.SetScale(value);
-                    }
-                }
-            }
-        }
-
-        #endregion
-
         #region Constructors
 
         /// <summary>
@@ -92,15 +68,6 @@ namespace CTCOfficeGUI
             InitializeComponent();
         }
 
-        /// <summary>
-        /// Primary constructor for the track display panel
-        /// </summary>
-        public TrackDisplayPanel(List<TrackBlock> blocks)
-        {
-            InitializeComponent();
-            SetTrackLayout(blocks);
-        }
-
         #endregion
 
         #region Public methods
@@ -109,7 +76,7 @@ namespace CTCOfficeGUI
         /// Draws the track layout
         /// </summary>
         /// <param name="blocks">List of track blocks in the layout</param>
-        public void SetTrackLayout(List<TrackBlock> blocks)
+        public void SetTrackLayout(List<TrackBlock> blocks, Size layoutSize, Point layoutPosition)
         {
             if (blocks != null)
             {
@@ -121,12 +88,14 @@ namespace CTCOfficeGUI
 
                 m_blockTable.Clear();
 
+                CalculateScale(layoutSize);
+
                 foreach (TrackBlock b in blocks)
                 {
                     //Create a new trackblock graphic
                     TrackBlockGraphic graphic = new TrackBlockGraphic(b, m_scale);
 
-                    graphic.Location = CalculateBlockPosition(b, graphic.ArrowLength);
+                    graphic.Location = CalculateBlockPosition(b, layoutPosition, graphic.ArrowLength);
 
                     graphic.Click += OnBlockClicked;
 
@@ -177,7 +146,6 @@ namespace CTCOfficeGUI
                 {
                     if (m_blockTable.ContainsKey(b))
                     {
-                        m_blockTable[b].Location = CalculateBlockPosition(b, m_blockTable[b].ArrowLength);
                         m_blockTable[b].Invalidate();
                     }
                 }
@@ -191,8 +159,8 @@ namespace CTCOfficeGUI
                     if (m_trainTable.ContainsKey(t))
                     {
                         TrainGraphic g = m_trainTable[t];
-                        //m_trainTable[t].Left = t.GetState().x * m_scale;
-                        //m_trainTable[t].Top = t.GetState().y * m_scale;
+                        m_trainTable[t].Left = System.Convert.ToInt32(t.GetState().X * m_scale);
+                        m_trainTable[t].Top = System.Convert.ToInt32(t.GetState().Y * m_scale);
                     }
                 }
             }
@@ -267,30 +235,67 @@ namespace CTCOfficeGUI
         /// <param name="block">Track block to display</param>
         /// <param name="arrowLength">Length of arrow graphics for position adjustment</param>
         /// <returns>Point of the graphic on the display panel</returns>
-        private Point CalculateBlockPosition(TrackBlock block, int arrowLength)
+        private Point CalculateBlockPosition(TrackBlock block, Point layoutPosition, int arrowLength)
         {
             if (block != null)
             {
                 switch (block.Orientation)
                 {
                     case TrackOrientation.EastWest:
-                        return new Point(System.Convert.ToInt32(block.StartPoint.X * m_scale),
-                                                     System.Convert.ToInt32(block.StartPoint.Y * m_scale - arrowLength));
+                        return new Point(System.Convert.ToInt32((block.StartPoint.X - layoutPosition.X) * m_scale),
+                                                     System.Convert.ToInt32((block.StartPoint.Y - layoutPosition.Y)  * m_scale - arrowLength));
                     case TrackOrientation.NorthWestSouthEast:
-                        return new Point(System.Convert.ToInt32(block.StartPoint.X * m_scale),
-                                                     System.Convert.ToInt32(block.StartPoint.Y * m_scale));
+                        return new Point(System.Convert.ToInt32((block.StartPoint.X - layoutPosition.X) * m_scale),
+                                                     System.Convert.ToInt32((block.StartPoint.Y - layoutPosition.Y) * m_scale));
                     case TrackOrientation.SouthWestNorthEast:
-                        return new Point(System.Convert.ToInt32(block.StartPoint.X * m_scale),
-                                                     System.Convert.ToInt32(block.EndPoint.Y * m_scale));
+                        return new Point(System.Convert.ToInt32((block.StartPoint.X - layoutPosition.X) * m_scale),
+                                                     System.Convert.ToInt32((block.EndPoint.Y - layoutPosition.Y) * m_scale));
                     case TrackOrientation.NorthSouth:
-                        return new Point(System.Convert.ToInt32(block.StartPoint.X * m_scale - arrowLength),
-                                                     System.Convert.ToInt32(block.EndPoint.Y * m_scale));
+                        return new Point(System.Convert.ToInt32((block.StartPoint.X - layoutPosition.X) * m_scale - arrowLength),
+                                                     System.Convert.ToInt32((block.EndPoint.Y - layoutPosition.Y) * m_scale));
                     default:
                         return new Point();
                 }
             }
 
             return new Point();
+        }
+
+        /// <summary>
+        /// Calculates the scaling factor for the layout
+        /// </summary>
+        /// <param name="layoutSize">Size of the layout</param>
+        private void CalculateScale(Size layoutSize)
+        {
+            if (layoutSize.Width < this.Width - m_margin && layoutSize.Height < this.Height - m_margin)
+            {
+                //Layout is smaller than the panel, scale it up
+                if ((layoutSize.Width / (double)(this.Width - m_margin)) > (layoutSize.Height / (double)(this.Height - m_margin)))
+                {
+                    //X is the limiting dimension, scale by it
+                    m_scale = (this.Width - m_margin) / (double)layoutSize.Width;
+                }
+                else
+                {
+                    //Y is the limiting dimension, scale by it
+                    m_scale = (this.Height - m_margin) / (double)layoutSize.Height;
+                }
+            }
+            else
+            {
+                //Layout is larger than the panel, scale it down
+                //Layout is smaller than the panel, scale it up
+                if ((layoutSize.Width / (double)(this.Width - m_margin)) > (layoutSize.Height / (double)(this.Height - m_margin)))
+                {
+                    //X is the limiting dimension, scale by it
+                    m_scale = layoutSize.Width / (double)(this.Width - m_margin);
+                }
+                else
+                {
+                    //Y is the limiting dimension, scale by it
+                    m_scale = layoutSize.Height / (double)(this.Height - m_margin);
+                }
+            }
         }
 
         #endregion

@@ -144,7 +144,10 @@ namespace CTCOfficeGUI
             if (block == null) return;
 
             Dictionary<string, string> info = new Dictionary<string, string>();
-            info.Add("Authority:", block.Authority.Authority.ToString());
+            if (block.Authority != null)
+            {
+                info.Add("Authority:", block.Authority.Authority.ToString());
+            }
             info.Add("End Elevation:", block.EndElevationMeters.ToString() + " " + METERS);
             info.Add("End Point:", block.EndPoint.X.ToString() + ", " + block.EndPoint.Y.ToString());
 
@@ -182,7 +185,10 @@ namespace CTCOfficeGUI
             }
 
             info.Add("Signal:", block.Status.SignalState.ToString());
-            info.Add("Speed Limit:", block.Authority.SpeedLimitKPH.ToString() + " " + KPH);
+            if (block.Authority != null)
+            {
+                info.Add("Speed Limit:", block.Authority.SpeedLimitKPH.ToString() + " " + KPH);
+            }
             info.Add("Start Elevation:", block.StartElevationMeters.ToString() + " " + METERS);
             info.Add("Start Point:", block.StartPoint.X.ToString() + ", " + block.StartPoint.Y.ToString());
             
