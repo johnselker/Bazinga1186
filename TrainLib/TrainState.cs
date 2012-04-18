@@ -21,8 +21,8 @@ namespace Train
         public TrackBlock CurrentBlock { get; set; }
         public string TrainID { get; set; }
         public double Speed { get; set; }
-        public int X { get; set; }
-        public int Y { get; set; }
+        public double X { get; set; }
+        public double Y { get; set; }
         public double BlockProgress { get; set; }
         public Direction Direction { get; set; }
         public int Cars { get; set; }

@@ -43,7 +43,7 @@ namespace Train
 			acceleration = 0;
 			lastUpdate = DateTime.Now;
 		}
-
+/*
 		public void TestTimestep()
 		{
 			Random r = new Random();
@@ -55,7 +55,7 @@ namespace Train
 			Console.Out.WriteLine("Slept for " + seconds + " seconds.");
 			Console.Out.WriteLine(timestep+" seconds of time passed.");
 		}
-
+*/
 		private void UpdateSpeed()
 		{
 			// TODO: Test if this actually works
@@ -89,34 +89,80 @@ namespace Train
 			// Adjust speed based on net force
 			state.Speed += (forwardForce / state.Mass) * timestep;
 		}
-/*
+
 		private void UpdatePosition()
 		{
 			double timestep = DateTime.Now.Subtract(lastUpdate).Duration().TotalSeconds;
+			lastUpdate = DateTime.Now;
+			double distance = timestep * state.Speed;
+			TrackBlock block = state.CurrentBlock;
+			int startX = block.StartPoint.X;
+			int startY = block.StartPoint.Y;
+			int endX = block.EndPoint.X;
+			int endY = block.EndPoint.Y;
+			double length = block.LengthMeters;
+
 			switch (state.Direction)
 			{
 				case Direction.East:
+					state.X += distance;
+					state.BlockProgress = (state.X - startX) / length;
 					break;
+
 				case Direction.North:
+					state.Y -= distance;
+					state.BlockProgress = (state.Y - startY) / length;
 					break;
+
 				case Direction.Northeast:
+					distance /= Math.Sqrt(2);
+					state.X += distance;
+					state.Y -= distance;
+					state.BlockProgress = Math.Sqrt(Math.Pow(state.Y - startY, 2) + Math.Pow(state.X - startX, 2)) / length;
 					break;
+
 				case Direction.Northwest:
+					distance /= Math.Sqrt(2);
+					state.X -= distance;
+					state.Y -= distance;
+					state.BlockProgress = Math.Sqrt(Math.Pow(state.Y - endY, 2) + Math.Pow(state.X - endX, 2)) / length;
 					break;
+
 				case Direction.South:
+					state.Y += distance;
+					state.BlockProgress = (state.Y - endY) / length;
 					break;
+
 				case Direction.Southeast:
+					distance /= Math.Sqrt(2);
+					state.X += distance;
+					state.Y += distance;
+					state.BlockProgress = Math.Sqrt(Math.Pow(state.Y - startY, 2) + Math.Pow(state.X - startX, 2)) / length;
 					break;
+
 				case Direction.Southwest:
+					distance /= Math.Sqrt(2);
+					state.X -= distance;
+					state.Y += distance;
+					state.BlockProgress = Math.Sqrt(Math.Pow(state.Y - endY, 2) + Math.Pow(state.X - endX, 2)) / length;
 					break;
+
 				case Direction.West:
+					state.X -= distance;
+					state.BlockProgress = (state.X - endX) / length;
 					break;
+
 				default:
 					//Unreachable
 					break;
 			}
+			state.BlockProgress = Math.Abs(state.BlockProgress);
+			if (state.BlockProgress > 1)
+			{
+				// TODO: Handle moving to next block!
+			}
 		}
-*/
+
 		public double GetSpeed()
 		{
 			return state.Speed;
