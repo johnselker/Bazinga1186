@@ -21,8 +21,10 @@ namespace Train
 		private const double maxSpeed = 19.444444444;
 
 		private double acceleration = 0;
-		private bool emergencyBrake = false;
 		private bool brake = false;
+		private bool emergencyBrake = false;
+		private bool engineFailure = false;
+		private bool signalPickupFailure = false;
 		private string announcement = "";
 		private double slope = 0;
 		private double friction = 0.01; // arbitrary selection
@@ -61,6 +63,10 @@ namespace Train
 			else if (brake)
 			{
 				acceleration = brakeDeceleration;
+			}
+			else if (engineFailure)
+			{
+				acceleration = 0;
 			}
 
 			double normalForce = state.Mass * g * Math.Cos(slope); // Should always be positive
@@ -146,7 +152,7 @@ namespace Train
 			// Handle moving to next block
 			if (state.BlockProgress > 1)
 			{
-				// Assume all blocks have the same length
+				// TODO: Remove assumption that all blocks are same length
 				Debug.Assert(block.NextBlock.LengthMeters == length);
 				state.BlockProgress--;
 
@@ -294,46 +300,59 @@ namespace Train
 
 		public bool SetAcceleration(double acceleration)
 		{
-			if (acceleration < brakeDeceleration)
+			if (!signalPickupFailure)
 			{
-				this.acceleration = brakeDeceleration;
-				return false;
-			}
-			else if (acceleration > medAcceleration)
-			{
-				this.acceleration = medAcceleration;
-				return false;
+				if (acceleration < brakeDeceleration)
+				{
+					this.acceleration = brakeDeceleration;
+					return false;
+				}
+				else if (acceleration > medAcceleration)
+				{
+					this.acceleration = medAcceleration;
+					return false;
+				}
+				else
+				{
+					this.acceleration = acceleration;
+					return true;
+				}
 			}
 			else
 			{
-				this.acceleration = acceleration;
-				return true;
+				return false;
 			}
 		}
 
 		public bool SetPower(double power)
 		{
-			if (state.Speed < 0.1)
+			if (!signalPickupFailure)
 			{
-				acceleration = power / (0.1 * state.Mass);
+				if (state.Speed < 0.1)
+				{
+					acceleration = power / (0.1 * state.Mass);
+				}
+				else
+				{
+					acceleration = power / (state.Speed * state.Mass);
+				}
+				Update();
+				return true;
 			}
 			else
 			{
-				acceleration = power / (state.Speed * state.Mass);
+				return false;
 			}
-			UpdateSpeed();
-			return true;
 		}
 
-		public bool SetSignalPickupFailure(bool failure)
+		public void SetSignalPickupFailure(bool failure)
 		{
-			// TODO: Implement this
-			return false;
+			signalPickupFailure = failure;
 		}
-		public bool SetEngineFailure(bool failure)
+
+		public void SetEngineFailure(bool failure)
 		{
-			// TODO: Implement this
-			return false;
+			engineFailure = failure;
 		}
 	}
 }

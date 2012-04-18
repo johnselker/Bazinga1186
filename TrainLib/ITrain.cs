@@ -13,6 +13,7 @@ namespace Train
 		double GetSpeed();
 		Direction GetDirection();
 		Point GetPosition();
+		void Update();
 		bool SetBrake(bool brake);
 		bool SetEmergencyBrake(bool brake);
 		bool SetEngineFailure(bool failure);
