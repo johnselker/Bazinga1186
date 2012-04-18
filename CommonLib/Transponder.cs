@@ -49,6 +49,11 @@ namespace CommonLib
 
         #region Constructor
 
+        /// <summary>
+        /// Empty constructor for serialization
+        /// </summary>
+        public Transponder() { }
+
         // METHOD: Transponder
         //--------------------------------------------------------------------------------------
         /// <summary>

@@ -83,6 +83,11 @@ namespace TrackLib
             string file = Path.Combine(Environment.CurrentDirectory, m_filePath);
             file = Path.Combine(file, m_fileName);
 
+            if (!Directory.Exists(m_filePath))
+            {
+                Directory.CreateDirectory(m_filePath);
+            }
+
             XmlSerializer serializer = new XmlSerializer(typeof(TrackLayoutSerializer), new Type[] { typeof(TrackLayoutSerializer) });
 
             TextWriter textWriter = null;

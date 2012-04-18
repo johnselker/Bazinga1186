@@ -25,7 +25,7 @@ namespace CommonLib
     {
         #region Private Data
 
-        private BlockAuthority m_authority;
+        private BlockAuthority m_authority = new BlockAuthority(0, 0);
         private TrackStatus m_status = new TrackStatus();
         private double m_grade = 0;
        
