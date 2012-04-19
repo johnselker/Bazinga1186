@@ -32,6 +32,7 @@ namespace Train
 		{
 			state.TrainID = trainID;
 			state.CurrentBlock = block;
+			block.Status.TrainPresent = true;
 			switch (direction)
 			{
 				case Direction.East:
@@ -179,7 +180,9 @@ namespace Train
 				Debug.Assert(block.NextBlock.LengthMeters == length);
 				state.BlockProgress--;
 
+				block.Status.TrainPresent = false;
 				block = block.NextBlock;
+				block.Status.TrainPresent = true;
 				slope = Math.Atan(block.Grade / 100.0);
 				switch (block.Orientation)
 				{
