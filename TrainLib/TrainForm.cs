@@ -6,13 +6,14 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.Diagnostics;
 
 namespace Train
 {
 	public partial class TrainForm : Form
 	{
 		private ITrain train;
-		private string validPower;
+		private string validPower = "0";
 
 		public TrainForm(ITrain train)
 		{
@@ -37,20 +38,21 @@ namespace Train
 
 		private void setButton_Click(object sender, EventArgs e)
 		{
-			try
-			{
+//			try
+//			{
 				int newPower = int.Parse(powerTextBox.Text);
 				train.SetPower(newPower);
-			}
-			catch(Exception)
-			{
-				powerTextBox.Text = validPower;
-			}
+				validPower = powerTextBox.Text;
+//			}
+//			catch(Exception)
+//			{
+//				powerTextBox.Text = validPower;
+//			}
 		}
 
 		private void updateButton_Click(object sender, EventArgs e)
 		{
-			speedLabel.Text = train.GetState().Speed.ToString();
+			speedTextBox.Text = train.GetState().Speed.ToString();
 		}
 	}
 }

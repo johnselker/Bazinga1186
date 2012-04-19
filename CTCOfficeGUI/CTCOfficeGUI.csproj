@@ -85,6 +85,12 @@
       <DependentUpon>SchedulingScreen.cs</DependentUpon>
     </Compile>
     <Compile Include="Simulator.cs" />
+    <Compile Include="SimulatorWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SimulatorWindow.Designer.cs">
+      <DependentUpon>SimulatorWindow.cs</DependentUpon>
+    </Compile>
     <Compile Include="TextInputDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -135,6 +141,9 @@
     <EmbeddedResource Include="SchedulingScreen.resx">
       <DependentUpon>SchedulingScreen.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="SimulatorWindow.resx">
+      <DependentUpon>SimulatorWindow.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="TextInputDialog.resx">
       <DependentUpon>TextInputDialog.cs</DependentUpon>
     </EmbeddedResource>
@@ -147,7 +156,9 @@
     <EmbeddedResource Include="TrainGraphic.resx">
       <DependentUpon>TrainGraphic.cs</DependentUpon>
     </EmbeddedResource>
-    <None Include="app.config" />
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

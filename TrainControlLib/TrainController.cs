@@ -277,16 +277,14 @@ namespace TrainControllerLib
         //--------------------------------------------------------------------------------------
         private void FaultMonitor()
         {
-            // If the last power command was positive but the train speed did not increase
-            // there has been an engine failure, so the m_setPoint must be set to zero to 
-            // engage the brake.
-            if (m_powerCommand > 0 && m_currentState.Speed - m_lastState.Speed <= 0)
+            // If there has been an engine failure or signal pickup failure,
+            // the setpoint must be set to zero to engage the brake.
+            if(m_currentState.EngineFailure || m_currentState.SignalPickupFailure)
             {
-                //m_setPoint = 0;
+                m_setPoint = 0;
             }
-            // If the last power command was negative but the train speed did not decrease
-            // there has been a brake failure, so the emergency brake must be engaged.
-            else if (m_powerCommand < 0 && m_currentState.Speed - m_lastState.Speed >= 0)
+            // If there has been a brake failure, the emergency brake must be engaged.
+            else if(m_currentState.BrakeFailure)
             {
                 m_brakeFailure = true;
             }
