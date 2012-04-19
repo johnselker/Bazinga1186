@@ -267,34 +267,16 @@ namespace CTCOfficeGUI
         /// <param name="layoutSize">Size of the layout</param>
         private void CalculateScale(Size layoutSize)
         {
-            if (layoutSize.Width < this.Width - m_margin && layoutSize.Height < this.Height - m_margin)
+            //Layout is smaller than the panel, scale it up
+            if ((layoutSize.Width / (double)(this.Width - m_margin)) > (layoutSize.Height / (double)(this.Height - m_margin)))
             {
-                //Layout is smaller than the panel, scale it up
-                if ((layoutSize.Width / (double)(this.Width - m_margin)) > (layoutSize.Height / (double)(this.Height - m_margin)))
-                {
-                    //X is the limiting dimension, scale by it
-                    m_scale = (this.Width - m_margin) / (double)layoutSize.Width;
-                }
-                else
-                {
-                    //Y is the limiting dimension, scale by it
-                    m_scale = (this.Height - m_margin) / (double)layoutSize.Height;
-                }
+                //X is the limiting dimension, scale by it
+                m_scale = (this.Width - m_margin) / (double)layoutSize.Width;
             }
             else
             {
-                //Layout is larger than the panel, scale it down
-                //Layout is smaller than the panel, scale it up
-                if ((layoutSize.Width / (double)(this.Width - m_margin)) > (layoutSize.Height / (double)(this.Height - m_margin)))
-                {
-                    //X is the limiting dimension, scale by it
-                    m_scale = layoutSize.Width / (double)(this.Width - m_margin);
-                }
-                else
-                {
-                    //Y is the limiting dimension, scale by it
-                    m_scale = layoutSize.Height / (double)(this.Height - m_margin);
-                }
+                //Y is the limiting dimension, scale by it
+                m_scale = (this.Height - m_margin) / (double)layoutSize.Height;
             }
         }
 

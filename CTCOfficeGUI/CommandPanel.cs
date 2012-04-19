@@ -159,7 +159,7 @@ namespace CTCOfficeGUI
         #region Event Handlers
 
         /// <summary>
-        /// Commad button was clicked
+        /// Command button was clicked
         /// </summary>
         /// <param name="sender">Sender of the event</param>
         /// <param name="e">Event arguments</param>
