@@ -28,7 +28,7 @@ namespace TrainControllerLib
         private int m_authority = 0;
         private int m_stationWaitStartTime;
         private int m_nextStation = 0;
-        private List<String> m_routeInfo;
+        private Queue<ScheduleInfo> m_routeInfo;
         private Train.Train m_myTrain;
         private TrainState m_currentState;
         private TrainState m_lastState;
@@ -46,18 +46,6 @@ namespace TrainControllerLib
         private Timer m_stationTimer;
 
         #region Properties
-
-        // PROPERTY: SpeedUp
-        //--------------------------------------------------------------------------------------
-        /// <summary>
-        /// Speed up factor
-        /// </summary>
-        //--------------------------------------------------------------------------------------
-        public int SpeedUp
-        {
-            get { return m_speedUp; }
-            set { m_speedUp = value; }
-        }
 
         // PROPERTY: ManualMode
         //--------------------------------------------------------------------------------------
@@ -134,10 +122,8 @@ namespace TrainControllerLib
         /// <param name="myTrain">The train associated with this controller</param>
         /// <param name="speedUp">Speed up factor</param>
         //--------------------------------------------------------------------------------------
-        public TrainController(TrackBlock startingBlock, Train.Train myTrain, int speedUp = 1)
+        public TrainController(TrackBlock startingBlock, Train.Train myTrain)
         {
-            this.m_speedUp = speedUp;
-            this.m_samplePeriod = 0.001 * speedUp;
             this.m_currentBlock = startingBlock;
             this.m_myTrain = myTrain;
             this.m_currentState = m_myTrain.GetState();
@@ -159,7 +145,7 @@ namespace TrainControllerLib
         public void StartController()
         {
             m_systemTimer = new Timer();
-            m_systemTimer.Elapsed += new ElapsedEventHandler(SystemController);
+            m_systemTimer.Elapsed += new ElapsedEventHandler(CallSystemController);
             m_systemTimer.Interval = 1; // in milliseconds
             m_systemTimer.Start();
         }
@@ -173,6 +159,29 @@ namespace TrainControllerLib
         public void StopController()
         {
             m_run = false;
+        }
+
+        // METHOD: Update
+        //--------------------------------------------------------------------------------------
+        /// <summary>
+        /// Call the train contoller
+        /// </summary>
+        /// <param name="dt">Delta time</param>
+        //--------------------------------------------------------------------------------------
+        public void Update(double dt)
+        {
+            SystemController(dt);
+        }
+
+        // METHOD: SetSchedule
+        //--------------------------------------------------------------------------------------
+        /// <summary>
+        /// Set the schedule
+        /// </summary>
+        //--------------------------------------------------------------------------------------
+        public void SetSchedule(Queue<ScheduleInfo> routeInfo)
+        {
+            m_routeInfo = routeInfo;
         }
 
         #endregion
@@ -210,16 +219,31 @@ namespace TrainControllerLib
         }
         */
 
+        // METHOD: CallSystemController
+        //--------------------------------------------------------------------------------------
+        /// <summary>
+        /// Call the system controller
+        /// </summary>
+        /// <param name="sender">Sender</param>
+        /// <param name="e">Event Arguments</param>
+        //--------------------------------------------------------------------------------------
+        private void CallSystemController(object sender, ElapsedEventArgs e)
+        {
+            SystemController(0.001);
+        }
+
         // METHOD: SystemController
         //--------------------------------------------------------------------------------------
         /// <summary>
         /// Manage the starting, stopping, coordination and scheduling of all system processes
         /// </summary>
-        /// <param name="sender">Sender</param>
-        /// <param name="e">Event Arguments</param>
+        /// <param name="samplePeriod">Sample period</param>
         //--------------------------------------------------------------------------------------
-        private void SystemController(object sender, ElapsedEventArgs e)
+        private void SystemController(double samplePeriod)
         {
+            //Set the sample period
+            m_samplePeriod = samplePeriod;
+
             // Get the state of the train
             GetState();
 
@@ -227,7 +251,7 @@ namespace TrainControllerLib
             m_currentBlock = m_currentState.CurrentBlock;
 
             // Pass block slope to the train
-            m_myTrain.SetSlope(Math.Atan(m_currentBlock.Grade));
+            m_myTrain.SetSlope(Math.Atan(m_currentBlock.Grade / 100));
 
             // Determine the m_setPoint
             DetermineSetPoint();
@@ -253,16 +277,14 @@ namespace TrainControllerLib
         //--------------------------------------------------------------------------------------
         private void FaultMonitor()
         {
-            // If the last power command was positive but the train speed did not increase
-            // there has been an engine failure, so the m_setPoint must be set to zero to 
-            // engage the brake.
-            if (m_powerCommand > 0 && m_currentState.Speed - m_lastState.Speed <= 0)
+            // If there has been an engine failure or signal pickup failure,
+            // the setpoint must be set to zero to engage the brake.
+            if(m_currentState.EngineFailure || m_currentState.SignalPickupFailure)
             {
-                //m_setPoint = 0;
+                m_setPoint = 0;
             }
-            // If the last power command was negative but the train speed did not decrease
-            // there has been a brake failure, so the emergency brake must be engaged.
-            else if (m_powerCommand < 0 && m_currentState.Speed - m_lastState.Speed >= 0)
+            // If there has been a brake failure, the emergency brake must be engaged.
+            else if(m_currentState.BrakeFailure)
             {
                 m_brakeFailure = true;
             }
@@ -462,7 +484,7 @@ namespace TrainControllerLib
 
                 m_stationTimer = new Timer();
                 m_stationTimer.Elapsed += new ElapsedEventHandler(LeaveStation);
-                m_stationTimer.Interval = 60000 / m_speedUp; // in milliseconds
+                m_stationTimer.Interval = 60 / m_samplePeriod;
                 m_stationTimer.Start();
             }
         }

@@ -23,7 +23,6 @@ namespace Train
 		void SetAnnouncement(string announcement);
 		bool SetSlope(double slope);
 		bool SetFriction(double friction);
-		bool SetAcceleration(double acceleration);
 		bool SetPower(double power);
 		TrainState GetState();
 	}
