@@ -15,7 +15,7 @@ namespace Train
 		private const double g = 9.8;
 		private const double carLength = 32.2;
 		private const double maxSlope = 0.540419500; // arctan(0.60)
-		private const double medAcceleration = 0.5; // TODO: Change this to correct maxAcceleration
+//		private const double medAcceleration = 0.5;
 		private const double brakeDeceleration = -7.6;
 		private const double eBrakeDeceleration = -10.0;
 		private const double maxSpeed = 19.444444444;
@@ -23,19 +23,36 @@ namespace Train
 		private double acceleration = 0;
 		private bool brake = false;
 		private bool emergencyBrake = false;
-		private bool engineFailure = false;
-		private bool signalPickupFailure = false;
-		private string announcement = "";
 		private double slope = 0;
-		private double friction = 0.01; // arbitrary selection
+		private double friction = 0.0124744274; // 5000N / (40900kg * 9.8m/s^2)
 		private TrainState state = new TrainState();
 		private DateTime lastUpdate;
 
-		public Train(string trainID, double x, double y, Direction direction, int cars = 1, int crew = 0, int passengers = 0)
+		public Train(string trainID, TrackBlock block, Direction direction, int cars = 1, int crew = 0, int passengers = 0)
 		{
 			state.TrainID = trainID;
-			state.X = x;
-			state.Y = y;
+			state.CurrentBlock = block;
+			switch (direction)
+			{
+				case Direction.East:
+				case Direction.North:
+				case Direction.Northeast:
+				case Direction.Southeast:
+					state.X = block.StartPoint.X;
+					state.Y = block.StartPoint.Y;
+					break;
+				case Direction.West:
+				case Direction.South:
+				case Direction.Northwest:
+				case Direction.Southwest:
+					state.X = block.EndPoint.X;
+					state.Y = block.EndPoint.Y;
+					break;
+				default:
+					break; // Unreachable
+			}
+
+			slope = Math.Atan(block.Grade / 100.0); // Store slope in radians
 			state.Direction = direction;
 			state.Cars = cars;
 			state.Crew = crew;
@@ -62,9 +79,16 @@ namespace Train
 			}
 			else if (brake)
 			{
-				acceleration = brakeDeceleration;
+				if (state.BrakeFailure)
+				{
+					acceleration = 0;
+				}
+				else
+				{
+					acceleration = brakeDeceleration;
+				}
 			}
-			else if (engineFailure)
+			else if (state.EngineFailure)
 			{
 				acceleration = 0;
 			}
@@ -144,12 +168,11 @@ namespace Train
 					state.BlockProgress = (state.X - endX) / length;
 					break;
 				default:
-					// Unreachable
-					break;
+					break; // Unreachable
 			}
 			state.BlockProgress = Math.Abs(state.BlockProgress);
 
-			// Handle moving to next block
+			// Move to next block
 			if (state.BlockProgress > 1)
 			{
 				// TODO: Remove assumption that all blocks are same length
@@ -157,6 +180,7 @@ namespace Train
 				state.BlockProgress--;
 
 				block = block.NextBlock;
+				slope = Math.Atan(block.Grade / 100.0);
 				switch (block.Orientation)
 				{
 					case TrackOrientation.EastWest:
@@ -216,8 +240,7 @@ namespace Train
 						}
 						break;
 					default:
-						// Unreachable
-						break;
+						break; // Unreachable
 				}
 			}
 		}
@@ -245,11 +268,13 @@ namespace Train
 		public void SetBrake(bool brake)
 		{
 			this.brake = brake;
+			acceleration = 0;
 		}
 
 		public void SetEmergencyBrake(bool brake)
 		{
 			emergencyBrake = brake;
+			acceleration = 0;
 		}
 
 		public void SetDoors(TrainState.Door doors)
@@ -264,7 +289,7 @@ namespace Train
 
 		public void SetAnnouncement(string announcement)
 		{
-			this.announcement = announcement;
+			state.Announcement = announcement;
 		}
 
 		public bool SetSlope(double slope)
@@ -293,61 +318,33 @@ namespace Train
 			}
 		}
 
-		public bool SetAcceleration(double acceleration)
-		{
-			if (!signalPickupFailure)
-			{
-				if (acceleration < brakeDeceleration)
-				{
-					this.acceleration = brakeDeceleration;
-					return false;
-				}
-				else if (acceleration > medAcceleration)
-				{
-					this.acceleration = medAcceleration;
-					return false;
-				}
-				else
-				{
-					this.acceleration = acceleration;
-					return true;
-				}
-			}
-			else
-			{
-				return false;
-			}
-		}
-
 		public bool SetPower(double power)
 		{
-			if (!signalPickupFailure)
+			if (state.Speed < 0.1)
 			{
-				if (state.Speed < 0.1)
-				{
-					acceleration = power / (0.1 * state.Mass);
-				}
-				else
-				{
-					acceleration = power / (state.Speed * state.Mass);
-				}
-				Update();
-				return true;
+				acceleration = power / (0.1 * state.Mass);
 			}
 			else
 			{
-				return false;
+				acceleration = power / (state.Speed * state.Mass);
 			}
+			Update();
+			return true;
+		}
+
+		public void SetBrakeFailure(bool failure)
+		{
+			state.BrakeFailure = failure;
 		}
 
 		public void SetSignalPickupFailure(bool failure)
 		{
-			signalPickupFailure = failure;
+			state.SignalPickupFailure = failure;
 		}
 
 		public void SetEngineFailure(bool failure)
 		{
-			engineFailure = failure;
+			state.EngineFailure = failure;
 		}
 	}
 }

@@ -27,10 +27,14 @@ namespace Train
         public Direction Direction { get; set; }
         public int Cars { get; set; }
         public int Passengers { get; set; }
-        public int Crew { get; set; }
+		public int Crew { get; set; }
+		public string Announcement { get; set; }
         public Door Doors { get; set; }
         public Light Lights { get; set; }
-        public double Temperature { get; set; }
+		public double Temperature { get; set; }
+		public bool BrakeFailure { get; set; }
+		public bool EngineFailure { get; set; }
+		public bool SignalPickupFailure { get; set; }
         public double Mass
         {
             get
