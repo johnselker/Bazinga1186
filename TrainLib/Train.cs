@@ -32,6 +32,8 @@ namespace Train
 		{
 			state.TrainID = trainID;
 			state.CurrentBlock = block;
+			block.Status.TrainPresent = true;
+			block.Status.TrainDirection = direction;
 			switch (direction)
 			{
 				case Direction.East:
@@ -179,8 +181,9 @@ namespace Train
 				Debug.Assert(block.NextBlock.LengthMeters == length);
 				state.BlockProgress--;
 
+				block.Status.TrainPresent = false;
 				block = block.NextBlock;
-				slope = Math.Atan(block.Grade / 100.0);
+				block.Status.TrainPresent = true;
 				switch (block.Orientation)
 				{
 					case TrackOrientation.EastWest:
@@ -242,6 +245,8 @@ namespace Train
 					default:
 						break; // Unreachable
 				}
+				block.Status.TrainDirection = state.Direction;
+				slope = Math.Atan(block.Grade / 100.0);
 			}
 		}
 
