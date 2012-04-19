@@ -15,6 +15,7 @@ namespace Train
 		Point GetPosition();
 		void Update();
 		void SetBrake(bool brake);
+		void SetBrakeFailure(bool failure);
 		void SetEmergencyBrake(bool brake);
 		void SetEngineFailure(bool failure);
 		void SetSignalPickupFailure(bool failure);
