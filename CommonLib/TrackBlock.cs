@@ -312,6 +312,19 @@ namespace CommonLib
             get { return m_status; }
         }
 
+        // ACCESSOR: SwitchId
+        //--------------------------------------------------------------------------------------
+        /// <summary>
+        /// Id of the switch connecting to this block
+        /// </summary>
+        //--------------------------------------------------------------------------------------
+        [XmlElement(ElementName = "SwitchId")]
+        public string SwitchId
+        {
+            get;
+            set;
+        }
+
         // ACCESSOR: ControllerId
         //--------------------------------------------------------------------------------------
         /// <summary>
@@ -388,12 +401,13 @@ namespace CommonLib
         /// <param name="startPoint">Starting coordinates</param>
         /// <param name="endElevation">Elevation at the end point</param>
         /// <param name="direction">Direction of the block</param>
+        /// <param name="switchID">Switch ID</param>
         /// <param name="controllerID">Primary Controller ID</param>
         /// <param name="secondaryControllerID">Secondary Controller ID</param>
         //--------------------------------------------------------------------------------------
         public TrackBlock(string name, TrackOrientation orientation, Point startPoint, double length, double endElevation, 
                             double grade, bool tunnel, bool railroadCrossing, int staticSpeedLimit,  
-                            TrackAllowedDirection direction, string controllerID, string secondaryControllerID)
+                            TrackAllowedDirection direction, string switchID, string controllerID, string secondaryControllerID)
         {
             Name = name;
             Orientation = orientation;
@@ -407,6 +421,7 @@ namespace CommonLib
             CalculateEndPoint();
             EndElevationMeters = endElevation;
             AllowedDirection = direction;
+            SwitchId = switchID;
             ControllerId = controllerID;
             SecondaryControllerId = secondaryControllerID;
             // Set default static max speed to physical limit
