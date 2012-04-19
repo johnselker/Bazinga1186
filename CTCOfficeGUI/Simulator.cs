@@ -21,6 +21,7 @@ namespace CTCOfficeGUI
         //private List<ITrainController> m_trainList = new List<ITrainController>();
         private DateTime m_lastUpdateTime;
         private double m_simulationScale = 1;
+        private LoggingTool m_log = new LoggingTool(MethodBase.GetCurrentMethod());
 
         #endregion
 
@@ -90,17 +91,44 @@ namespace CTCOfficeGUI
             m_simulationTimer.Start();
         }
 
+        /// <summary>
+        /// Simulates a train pickup failure
+        /// </summary>
+        /// <param name="train">Train to simulate on</param>
+        /// <param name="failure">True to invoke failure or false to clear it</param>
         public void SimulatePickupFailure(ITrain train, bool failure)
         {
+            if (train != null)
+            {
+                try
+                {
+                    train.SetSignalPickupFailure(failure);
+                }
+                catch (Exception e)
+                {
+                    
+                }
+            }
         }
 
+        /// <summary>
+        /// Simulates a train brake failure
+        /// </summary>
+        /// <param name="train">Train to simulate on</param>
+        /// <param name="failure">True to invoke failure or false to clear it</param>
         public void SimulateBrakeFailure(ITrain train, bool failure)
         {
         }
 
+        /// <summary>
+        /// Simulates a train engine failure
+        /// </summary>
+        /// <param name="train">Train to simulate on</param>
+        /// <param name="failure">True to invoke failure or false to clear it</param>
         public void SimulateEngineFailure(ITrain train, bool failure)
         {
         }
+
         #endregion
 
         #region Constructor
