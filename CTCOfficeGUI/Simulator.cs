@@ -8,6 +8,7 @@ using CommonLib;
 using System.Reflection;
 using TrackControlLib.Sean;
 using TrainControllerLib;
+using Train;
 
 namespace CTCOfficeGUI
 {
@@ -29,7 +30,7 @@ namespace CTCOfficeGUI
         /// Gets the singleton simulator instance
         /// </summary>
         /// <returns>Singleton instance</returns>
-        public Simulator GetSimulator()
+        public static Simulator GetSimulator()
         {
             if (m_singleton == null)
             {
@@ -89,6 +90,17 @@ namespace CTCOfficeGUI
             m_simulationTimer.Start();
         }
 
+        public void SimulatePickupFailure(ITrain train, bool failure)
+        {
+        }
+
+        public void SimulateBrakeFailure(ITrain train, bool failure)
+        {
+        }
+
+        public void SimulateEngineFailure(ITrain train, bool failure)
+        {
+        }
         #endregion
 
         #region Constructor
