@@ -203,6 +203,10 @@ namespace CTCOfficeGUI
             KeyValuePair<string, string> failure = GetBlockFailureStateString(block);
             info.Add(failure.Key, failure.Value);
 
+#if DEBUG
+            info.Add("Start Point", block.StartPoint.X + ", " + block.StartPoint.Y);
+            info.Add("End Point", block.EndPoint.X + ", " + block.EndPoint.Y);
+#endif
             SetInfo(block.Name, info);
         }
 
