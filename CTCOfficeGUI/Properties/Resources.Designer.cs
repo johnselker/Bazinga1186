@@ -60,9 +60,23 @@ namespace CTCOfficeGUI.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap railroadCrossing {
+            get {
+                object obj = ResourceManager.GetObject("railroadCrossing", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap train_icon_large {
             get {
                 object obj = ResourceManager.GetObject("train_icon_large", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap tunnelIcon {
+            get {
+                object obj = ResourceManager.GetObject("tunnelIcon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

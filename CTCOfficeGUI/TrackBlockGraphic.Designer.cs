@@ -28,16 +28,52 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.picTunnel = new System.Windows.Forms.PictureBox();
+            this.picRRCrossing = new System.Windows.Forms.PictureBox();
+            ((System.ComponentModel.ISupportInitialize)(this.picTunnel)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picRRCrossing)).BeginInit();
             this.SuspendLayout();
+            // 
+            // picTunnel
+            // 
+            this.picTunnel.Image = global::CTCOfficeGUI.Properties.Resources.tunnelIcon;
+            this.picTunnel.Location = new System.Drawing.Point(46, 0);
+            this.picTunnel.Name = "picTunnel";
+            this.picTunnel.Size = new System.Drawing.Size(20, 20);
+            this.picTunnel.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.picTunnel.TabIndex = 0;
+            this.picTunnel.TabStop = false;
+            this.picTunnel.Visible = false;
+            this.picTunnel.Click += new System.EventHandler(this.OnClick);
+            // 
+            // picRRCrossing
+            // 
+            this.picRRCrossing.Image = global::CTCOfficeGUI.Properties.Resources.railroadCrossing;
+            this.picRRCrossing.Location = new System.Drawing.Point(0, 0);
+            this.picRRCrossing.Name = "picRRCrossing";
+            this.picRRCrossing.Size = new System.Drawing.Size(20, 20);
+            this.picRRCrossing.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.picRRCrossing.TabIndex = 0;
+            this.picRRCrossing.TabStop = false;
+            this.picRRCrossing.Visible = false;
+            this.picRRCrossing.Click += new System.EventHandler(this.OnClick);
             // 
             // TrackBlockGraphic
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
+            this.Controls.Add(this.picTunnel);
+            this.Controls.Add(this.picRRCrossing);
             this.Name = "TrackBlockGraphic";
+            this.Click += new System.EventHandler(this.OnClick);
+            ((System.ComponentModel.ISupportInitialize)(this.picTunnel)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picRRCrossing)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
+
+        private System.Windows.Forms.PictureBox picRRCrossing;
+        private System.Windows.Forms.PictureBox picTunnel;
     }
 }

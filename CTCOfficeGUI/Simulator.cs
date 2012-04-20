@@ -18,7 +18,7 @@ namespace CTCOfficeGUI
 
         private System.Timers.Timer m_simulationTimer = new System.Timers.Timer(1);
         private static Simulator m_singleton;
-        //private List<ITrainController> m_trainList = new List<ITrainController>();
+        private List<ITrainController> m_trainList = new List<ITrainController>();
         private DateTime m_lastUpdateTime;
         private double m_simulationScale = 1;
         private LoggingTool m_log = new LoggingTool(MethodBase.GetCurrentMethod());

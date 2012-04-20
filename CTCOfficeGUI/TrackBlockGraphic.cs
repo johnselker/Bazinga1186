@@ -31,6 +31,12 @@ namespace CTCOfficeGUI
 
         #endregion
 
+        #region Events
+
+        public event EventHandler TrackBlockClicked;
+
+        #endregion
+
         #region Properties
 
         // PROPERTY: Block
@@ -46,6 +52,9 @@ namespace CTCOfficeGUI
             { 
                 m_block = value;
                 m_currentColor = GetDrawColor();
+
+                picRRCrossing.Visible = m_block.RailroadCrossing;
+                picTunnel.Visible = m_block.HasTunnel;
             }
         }
 
@@ -164,7 +173,8 @@ namespace CTCOfficeGUI
             LineThickness = 5;
             ArrowLength = 10;
 
-            m_block = block;
+            Block = block;
+
             m_currentColor = GetDrawColor();
 
             SetScale(scale);
@@ -226,6 +236,24 @@ namespace CTCOfficeGUI
                             break;
 
                     }
+
+                    if (m_block.RailroadCrossing && !m_block.HasTunnel)
+                    {
+                        picRRCrossing.Left = System.Convert.ToInt32((this.Width - picRRCrossing.Width) / 2.0);
+                        picRRCrossing.Top = System.Convert.ToInt32((this.Height - picRRCrossing.Height) / 2.0);
+                    }
+                    else if (!m_block.RailroadCrossing && m_block.HasTunnel)
+                    {
+                        picTunnel.Left = System.Convert.ToInt32((this.Width - picRRCrossing.Width) / 2.0);
+                        picTunnel.Top = System.Convert.ToInt32((this.Height - picRRCrossing.Height) / 2.0);
+                    }
+                    else
+                    {
+                        picRRCrossing.Left = System.Convert.ToInt32((this.Width / 2.0) - picRRCrossing.Width);
+                        picTunnel.Left = System.Convert.ToInt32(this.Width / 2.0);
+                        picTunnel.Top = picRRCrossing.Top = System.Convert.ToInt32((this.Height - picRRCrossing.Height) / 2.0);
+                    }
+
                     return true;
                 }
             }
@@ -237,15 +265,7 @@ namespace CTCOfficeGUI
         /// </summary>
         public void Blink()
         {
-            if (m_currentColor != BlinkColor)
-            {
-                m_currentColor = BlinkColor;
-            }
-            else
-            {
-                m_currentColor = GetDrawColor();
-            }
-            Invalidate();
+            this.Visible = !this.Visible;
         }
 
         /// <summary>
@@ -253,8 +273,7 @@ namespace CTCOfficeGUI
         /// </summary>
         public void StopBlinking()
         {
-            m_currentColor = GetDrawColor();
-            Invalidate();
+            this.Visible = true;
         }
 
         #endregion
@@ -384,6 +403,22 @@ namespace CTCOfficeGUI
             }
         }
 
+        #endregion
+
+        #region Event Handlers
+
+        /// <summary>
+        /// Catch and rethrow of the click event. Necessary to allow picture boxes to throw the click event as well
+        /// </summary>
+        /// <param name="sender">Sender of the event</param>
+        /// <param name="e">Event arguments</param>
+        private void OnClick(object sender, EventArgs e)
+        {
+            if (TrackBlockClicked != null)
+            {
+                TrackBlockClicked(this, e);
+            }
+        }
         #endregion
 
         #region Overrides
