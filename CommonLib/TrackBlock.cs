@@ -75,45 +75,6 @@ namespace CommonLib
             set;
         }
 
-        // PROPERTY: BrokenRail
-        //--------------------------------------------------------------------------------------
-        /// <summary>
-        /// Indicates the presence of a broken rail in the block
-        /// </summary>
-        //--------------------------------------------------------------------------------------
-        [XmlIgnore]
-        public bool BrokenRail
-        {
-            get;
-            set;
-        }
-
-        // PROPERTY: PowerFailure
-        //--------------------------------------------------------------------------------------
-        /// <summary>
-        /// Indicates a power failure in the block
-        /// </summary>
-        //--------------------------------------------------------------------------------------
-        [XmlIgnore]
-        public bool PowerFailure
-        {
-            get;
-            set;
-        }
-
-        // PROPERTY: TrackCircuitFailure
-        //--------------------------------------------------------------------------------------
-        /// <summary>
-        /// Indicates a failure of the track circuit in the block
-        /// </summary>
-        //--------------------------------------------------------------------------------------
-        [XmlIgnore]
-        public bool TrackCircuitFailure
-        {
-            get;
-            set;
-        }
-
         #endregion
 
         #region Accessors
@@ -128,19 +89,6 @@ namespace CommonLib
         //--------------------------------------------------------------------------------------
         [XmlElement(ElementName = "Name")]
         public string Name
-        {
-            get;
-            set;
-        }
-
-        // ACCESSOR: SignalState
-        //--------------------------------------------------------------------------------------
-        /// <summary>
-        /// State of the block's traffic signal
-        /// </summary>
-        //--------------------------------------------------------------------------------------
-        [XmlIgnore]
-        public TrackSignalState SignalState
         {
             get;
             set;

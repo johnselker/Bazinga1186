@@ -262,7 +262,7 @@ namespace Train
 
 		public Point GetPosition()
 		{
-			return new Point((int)state.X, (int)state.Y);
+			return new Point(System.Convert.ToInt32(state.X), System.Convert.ToInt32(state.Y));
 		}
 
 		public TrainState GetState()
