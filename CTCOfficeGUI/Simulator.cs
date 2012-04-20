@@ -22,6 +22,7 @@ namespace CTCOfficeGUI
         private DateTime m_lastUpdateTime;
         private double m_simulationScale = 1;
         private LoggingTool m_log = new LoggingTool(MethodBase.GetCurrentMethod());
+        private Dictionary<string, Direction> m_startingDirections;
 
         #endregion
 
@@ -207,10 +208,30 @@ namespace CTCOfficeGUI
         /// <param name="name">Name of the train</param>
         public void SpawnNewTrain(TrackBlock initialBlock, string name)
         {
-            ITrain train = new Train.Train(name, initialBlock, Direction.East);
-            ITrainController trainController = new TrainController(initialBlock, train);
-            m_trainList.Add(trainController);
-            //trainController.SetSchedule();
+            if (initialBlock != null)
+            {
+                if (initialBlock.HasTransponder)
+                {
+                    string start = initialBlock.Transponder.StationName;
+                    if (m_startingDirections.ContainsKey(start))
+                    {
+                        //Create the new train and train controller
+                        ITrain train = new Train.Train(name, initialBlock, m_startingDirections[start]);
+                        ITrainController trainController = new TrainController(train);
+                        m_trainList.Add(trainController);
+
+                        //Set the train schedule
+                        if (start == Constants.REDYARD)
+                        {
+                            trainController.SetSchedule(CTCController.GetCTCController().GetRedlineSchedule());
+                        }
+                        else if (start == Constants.GREENYARDOUT)
+                        {
+                            trainController.SetSchedule(CTCController.GetCTCController().GetGreenlineSchedule());
+                        }
+                    }
+                }
+            }
         }
 
         #endregion
@@ -225,6 +246,9 @@ namespace CTCOfficeGUI
             m_simulationTimer.AutoReset = true;
             m_simulationTimer.Elapsed += OnSimulationTimerElapsed;
             m_lastUpdateTime = DateTime.Now;
+
+            m_startingDirections = new Dictionary<string, Direction>(){
+            {Constants.REDYARD, Direction.North}, {Constants.GREENYARDIN, Direction.Southwest}, {Constants.GREENYARDOUT, Direction.South} };
         }
 
         #endregion
