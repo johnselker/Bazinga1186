@@ -41,6 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class1.cs" />
+    <Compile Include="ITrainController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TrainController.cs" />
   </ItemGroup>

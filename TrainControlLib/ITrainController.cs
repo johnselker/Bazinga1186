@@ -6,9 +6,8 @@ using CommonLib;
 
 namespace TrainControllerLib
 {
-    class ITrainController
+    public interface ITrainController
     {
-        #region Public Methods
         // METHOD: Update
         //--------------------------------------------------------------------------------------
         /// <summary>
@@ -16,7 +15,7 @@ namespace TrainControllerLib
         /// </summary>
         /// <param name="dt">Delta time</param>
         //--------------------------------------------------------------------------------------
-        public void Update(double dt) {}
+        void Update(double dt);
 
         // METHOD: SetSchedule
         //--------------------------------------------------------------------------------------
@@ -24,8 +23,6 @@ namespace TrainControllerLib
         /// Set the schedule
         /// </summary>
         //--------------------------------------------------------------------------------------
-        public void SetSchedule(Queue<ScheduleInfo> routeInfo) {}
-
-        #endregion
+        void SetSchedule(Queue<ScheduleInfo> routeInfo);
     }
 }

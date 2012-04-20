@@ -9,7 +9,7 @@ using Train;
 
 namespace TrainControllerLib
 {
-    public class TrainController
+    public class TrainController : ITrainController
     {
         private const double MAXIMUM_POWER = 120000;
         private const double PORPORTIONAL_GAIN = 1000000;
