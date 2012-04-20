@@ -142,6 +142,7 @@
 			this.brakeFailureBox.TabIndex = 9;
 			this.brakeFailureBox.Text = "Brake Failure";
 			this.brakeFailureBox.UseVisualStyleBackColor = true;
+			this.brakeFailureBox.CheckedChanged += new System.EventHandler(this.brakeFailureBox_CheckedChanged);
 			// 
 			// accelerationLabel
 			// 
@@ -171,6 +172,7 @@
 			this.brakeBox.TabIndex = 12;
 			this.brakeBox.Text = "Brake";
 			this.brakeBox.UseVisualStyleBackColor = true;
+			this.brakeBox.CheckedChanged += new System.EventHandler(this.brakeBox_CheckedChanged);
 			// 
 			// TrainForm
 			// 

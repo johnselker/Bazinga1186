@@ -21,9 +21,19 @@ namespace Train
 			this.train = train;
 		}
 
+		private void brakeBox_CheckedChanged(object sender, EventArgs e)
+		{
+			train.SetBrake(brakeBox.Checked);
+		}
+
 		private void emergencyBrakeBox_CheckedChanged(object sender, EventArgs e)
 		{
 			train.SetEmergencyBrake(emergencyBrakeBox.Checked);
+		}
+
+		private void brakeFailureBox_CheckedChanged(object sender, EventArgs e)
+		{
+			train.SetBrakeFailure(brakeFailureBox.Checked);
 		}
 
 		private void engineFailureBox_CheckedChanged(object sender, EventArgs e)
@@ -38,21 +48,28 @@ namespace Train
 
 		private void setButton_Click(object sender, EventArgs e)
 		{
-//			try
-//			{
+			try
+			{
 				int newPower = int.Parse(powerTextBox.Text);
 				train.SetPower(newPower);
 				validPower = powerTextBox.Text;
-//			}
-//			catch(Exception)
-//			{
-//				powerTextBox.Text = validPower;
-//			}
+			}
+			catch(Exception)
+			{
+				powerTextBox.Text = validPower;
+			}
 		}
 
 		private void updateButton_Click(object sender, EventArgs e)
 		{
-			speedTextBox.Text = train.GetState().Speed.ToString();
+			train.Update();
+			TrainState ts = train.GetState();
+			brakeBox.Checked = train.GetBrake();
+			emergencyBrakeBox.Checked = train.GetEmergencyBrake();
+			brakeFailureBox.Checked = ts.BrakeFailure;
+			powerTextBox.Text = train.GetPower().ToString();
+			speedTextBox.Text = ts.Speed.ToString();
+			accelerationTextBox.Text = train.GetAcceleration().ToString();
 		}
 	}
 }

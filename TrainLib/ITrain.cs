@@ -11,6 +11,10 @@ namespace Train
 	public interface ITrain
 	{
 		double GetSpeed();
+		double GetAcceleration();
+		bool GetBrake();
+		bool GetEmergencyBrake();
+		double GetPower();
 		Direction GetDirection();
 		Point GetPosition();
 		void Update();
@@ -24,7 +28,7 @@ namespace Train
 		void SetAnnouncement(string announcement);
 		bool SetSlope(double slope);
 		bool SetFriction(double friction);
-		bool SetPower(double power);
+		void SetPower(double power);
 		TrainState GetState();
 	}
 }
