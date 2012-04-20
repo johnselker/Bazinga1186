@@ -253,14 +253,14 @@ namespace CTCOfficeGUI
                     {
                         //Create a new track controller
                         ITrackController controller = new TrackController();
-                        controller.AddTrackBlock(b, GetAdjacentBlocks(b));
+                        controller.AddTrackBlock(b);
                         m_trackTable[b] = controller;
                     }
                     else
                     {
                         //Add it to the existing track controller
                         ITrackController controller = trackControllers[b.ControllerId];
-                        controller.AddTrackBlock(b, GetAdjacentBlocks(b));
+                        controller.AddTrackBlock(b);
                         m_trackTable[b] = controller;
                     }
                 }
@@ -276,14 +276,14 @@ namespace CTCOfficeGUI
                     {
                         //Create a new track controller
                         ITrackController controller = new TrackController();
-                        controller.AddTrackBlock(b, GetAdjacentBlocks(b));
+                        controller.AddTrackBlock(b);
                         m_trackTable[b] = controller;
                     }
                     else
                     {
                         //Add it to the existing track controller
                         ITrackController controller = trackControllers[b.ControllerId];
-                        controller.AddTrackBlock(b, GetAdjacentBlocks(b));
+                        controller.AddTrackBlock(b);
                         m_trackTable[b] = controller;
                     }
                 }
