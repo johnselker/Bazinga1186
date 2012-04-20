@@ -1,4 +1,8 @@
-﻿using System.Collections.Generic;
+﻿/// TrackBlock.cs
+/// Gilbert Liu
+/// Bazinga! 
+
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Drawing;
@@ -23,7 +27,7 @@ namespace CommonLib
 
         #region Private Data
 
-        private TrackSwitchState m_state = TrackSwitchState.Closed;
+        private TrackSwitchState m_state;
 
         #endregion
 
@@ -40,6 +44,24 @@ namespace CommonLib
         {
             get { return m_state; }
             set { m_state = value; }
+        }
+
+        // PROPERTY: CurrentBranch
+        //--------------------------------------------------------------------------------------
+        /// <summary>
+        /// Current branch of the switch
+        /// </summary>
+        //--------------------------------------------------------------------------------------
+        [XmlIgnore]
+        public string CurrentBranchName
+        {
+            get
+            {
+                if (m_state == TrackSwitchState.Closed)
+                    return BranchClosedId;
+                else
+                    return BranchOpenId;
+            }
         }
 
         #endregion
@@ -74,40 +96,40 @@ namespace CommonLib
             set;
         }
 
-        // PROPERTY: Trunk
+        // PROPERTY: TrunkId
         //--------------------------------------------------------------------------------------
         /// <summary>
-        /// The trunk block connected to the switch
+        /// Id of the trunk block connecting to the switch
         /// </summary>
         //--------------------------------------------------------------------------------------
-        [XmlElement(ElementName = "Trunk")]
-        public TrackBlock Trunk
+        [XmlElement(ElementName = "TrunkId")]
+        public string TrunkId
         {
             get;
             set;
         }
 
-        // PROPERTY: Branch
+        // PROPERTY: BranchClosedId
         //--------------------------------------------------------------------------------------
         /// <summary>
-        /// The branch blocks connected to the switch
+        /// Id of the branch blocks connecting to the switch when closed
         /// </summary>
         //--------------------------------------------------------------------------------------
-        [XmlElement(ElementName = "Branch")]
-        public Dictionary<string, TrackBlock> Branch
+        [XmlElement(ElementName = "BranchClosedId")]
+        public string BranchClosedId
         {
             get;
             set;
         }
 
-        // PROPERTY: DefaultBranch
+        // PROPERTY: BranchOpenId
         //--------------------------------------------------------------------------------------
         /// <summary>
-        /// The default branch block
+        /// Name of the branch blocks connecting to the switch when open
         /// </summary>
         //--------------------------------------------------------------------------------------
-        [XmlElement(ElementName = "DefaultBranch")]
-        public TrackBlock DefaultBranch
+        [XmlElement(ElementName = "BranchOpenId")]
+        public string BranchOpenId
         {
             get;
             set;
@@ -117,6 +139,8 @@ namespace CommonLib
 
         #region Constructors
 
+        // METHOD: TrackSwitch
+        //--------------------------------------------------------------------------------------
         /// <summary>
         /// Empty constructor for serialization
         /// </summary>
@@ -134,18 +158,19 @@ namespace CommonLib
         /// 
         /// <param name="name">Track switch name</param>
         /// <param name="controllerID">ID of the TrackController assigned to the switch</param>
-        /// <param name="trunk">Trunk block connected to the switch</param>
-        /// <param name="branch">Branch blocks connected to the switch</param>
-        /// <param name="defaultBranch">default branch block connected to the switch</param>
+        /// <param name="trunkID">ID of the trunk block connecting to the switch</param>
+        /// <param name="branchClosedID">ID of the branch blocks connecting to the switch when closed</param>
+        /// <param name="branchOpenID">ID of the branch blocks connecting to the switch when open</param>
         //--------------------------------------------------------------------------------------
-        public TrackSwitch(string name, string controllerID, TrackBlock trunk, Dictionary<string, TrackBlock> branch, TrackBlock defaultBranch)
+        public TrackSwitch(string name, string controllerID, string trunkID, string branchClosedID, string branchOpenID)
         {
-            m_state = TrackSwitchState.Closed;
             Name = name;
-            Trunk = trunk;
-            Branch = branch;
             ControllerId = controllerID;
-            DefaultBranch = defaultBranch;
+            TrunkId = trunkID;
+            BranchClosedId = branchClosedID;
+            BranchOpenId = branchOpenID;
+
+            m_state = TrackSwitchState.Closed;
         }
 
         #endregion

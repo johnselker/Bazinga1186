@@ -8,6 +8,7 @@ namespace CommonLib
 	public class TrackStatus
 	{
 		public bool TrainPresent;
+		public Direction TrainDirection;
 		public bool BrokenRail;
 		public bool IsOpen;
 		public TrackSignalState SignalState;

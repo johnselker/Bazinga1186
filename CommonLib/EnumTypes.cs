@@ -59,7 +59,7 @@ namespace CommonLib
 	//-------------------------------------------------------------------------------------- 
 	public enum TrackSwitchState
 	{
-		Throwing,
+		Open,
 		Closed
 	}
 

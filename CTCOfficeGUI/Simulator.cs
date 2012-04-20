@@ -8,6 +8,7 @@ using CommonLib;
 using System.Reflection;
 using TrackControlLib.Sean;
 using TrainControllerLib;
+using Train;
 
 namespace CTCOfficeGUI
 {
@@ -20,6 +21,7 @@ namespace CTCOfficeGUI
         //private List<ITrainController> m_trainList = new List<ITrainController>();
         private DateTime m_lastUpdateTime;
         private double m_simulationScale = 1;
+        private LoggingTool m_log = new LoggingTool(MethodBase.GetCurrentMethod());
 
         #endregion
 
@@ -29,7 +31,7 @@ namespace CTCOfficeGUI
         /// Gets the singleton simulator instance
         /// </summary>
         /// <returns>Singleton instance</returns>
-        public Simulator GetSimulator()
+        public static Simulator GetSimulator()
         {
             if (m_singleton == null)
             {
@@ -87,6 +89,114 @@ namespace CTCOfficeGUI
         public void StartSimulation()
         {
             m_simulationTimer.Start();
+        }
+
+        /// <summary>
+        /// Simulates a train pickup failure
+        /// </summary>
+        /// <param name="train">Train to simulate on</param>
+        /// <param name="failure">True to invoke failure or false to clear it</param>
+        public void SimulatePickupFailure(ITrain train, bool failure)
+        {
+            if (train != null)
+            {
+                try
+                {
+                    train.SetSignalPickupFailure(failure);
+                }
+                catch (Exception e)
+                {
+                    m_log.LogError("Error in setting signal pickup failure");
+                }
+            }
+        }
+
+        /// <summary>
+        /// Simulates a train brake failure
+        /// </summary>
+        /// <param name="train">Train to simulate on</param>
+        /// <param name="failure">True to invoke failure or false to clear it</param>
+        public void SimulateBrakeFailure(ITrain train, bool failure)
+        {
+            if (train != null)
+            {
+                try
+                {
+                    //train.SetSignalPickupFailure(failure);
+                }
+                catch (Exception e)
+                {
+                    m_log.LogError("Error in setting signal pickup failure");
+                }
+            }
+        }
+
+        /// <summary>
+        /// Simulates a train engine failure
+        /// </summary>
+        /// <param name="train">Train to simulate on</param>
+        /// <param name="failure">True to invoke failure or false to clear it</param>
+        public void SimulateEngineFailure(ITrain train, bool failure)
+        {
+            if (train != null)
+            {
+                try
+                {
+                    train.SetEngineFailure(failure);
+                }
+                catch (Exception e)
+                {
+                    m_log.LogError("Error in setting signal pickup failure");
+                }
+            }
+        }
+
+        /// <summary>
+        /// Simulates a track broken rail
+        /// </summary>
+        /// <param name="block">Block to simulate on</param>
+        /// <param name="failure">True to invoke failure or false to clear it</param>
+        public void SimulateBrokenRail(TrackBlock block, bool failure)
+        {
+            if (block != null)
+            {
+                if (block.Status != null)
+                {
+                    block.Status.BrokenRail = failure;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Simulates a track block circuit failure
+        /// </summary>
+        /// <param name="block">Track block to simulate on</param>
+        /// <param name="failure">True to invoke failure or false to clear it</param>
+        public void SimulateCircuitFailure(TrackBlock block, bool failure)
+        {
+            if (block != null)
+            {
+                if (block.Status != null)
+                {
+                    block.Status.CircuitFail = failure;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Simulates a track block power failure
+        /// </summary>
+        /// <param name="block">Block to simulate on</param>
+        /// <param name="failure">True to invoke failure or false to clear it</param>
+        public void SimulateEngineFailure(TrackBlock block, bool failure)
+        {
+            if (block != null)
+            {
+                if (block.Status != null)
+                {
+                    block.Status.PowerFail = failure;
+                }
+            }
         }
 
         #endregion
