@@ -10,14 +10,15 @@ namespace TrackControlLib
 	{
 		public interface ITrackController
 		{
-			bool AddTrackBlock(TrackBlock vertex, IEnumerable<TrackBlock> edges);
+			bool AddTrackBlock(TrackBlock block);
 			bool SetAdjTrackController(TrackController controller);
-			bool SetAuthority(string trackId, BlockAuthority auth);
+			bool SuggestAuthority(string trackId, BlockAuthority auth);
 			bool CloseTrack(string trackId);
 			bool OpenTrack(string trackId);
 			bool IsTrackClosed(string trackId);
 			TrackStatus GetTrackStatus(string trackId);
 			Dictionary<string, TrackStatus> GetAllTrackStatus();
+			void Update();
 		}
 	}
 }

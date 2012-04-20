@@ -47,7 +47,7 @@ namespace CTCOfficeGUI
                     ITrackController controller = GetTrackController(block);
                     if (controller != null)
                     {
-                        result = controller.SetAuthority(block.Name, new BlockAuthority(limit, block.Authority.Authority));
+                        result = controller.SuggestAuthority(block.Name, new BlockAuthority(limit, block.Authority.Authority));
                     }
                 }
             }
@@ -76,7 +76,7 @@ namespace CTCOfficeGUI
                     {
                         try
                         {
-                            result = controller.SetAuthority(block.Name, new BlockAuthority(block.Authority.SpeedLimitKPH, authority));
+                            result = controller.SuggestAuthority(block.Name, new BlockAuthority(block.Authority.SpeedLimitKPH, authority));
                         }
                         catch (Exception e)
                         {

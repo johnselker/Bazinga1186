@@ -9,8 +9,6 @@ namespace CommonLib
 	{
 		public bool TrainPresent;
 		public bool BrokenRail;
-		public bool CircuitFail;
-		public bool PowerFail;
 		public bool IsOpen;
 		public TrackSignalState SignalState;
 		public TrackSwitchState SwitchState;

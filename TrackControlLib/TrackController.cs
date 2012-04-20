@@ -12,9 +12,6 @@ namespace TrackControlLib
 	{
 		public class TrackController : ITrackController
 		{
-			private Thread m_mainThread;
-			private Mutex m_dbMutex;
-
 			private Dictionary<string, TrackBlock> m_trackBlocks;
 			private TrackController m_next;
 			private TrackController m_prev;
@@ -22,31 +19,22 @@ namespace TrackControlLib
 			private BlockAuthority m_suggAuth;
 			private string m_currBlockId;
 
-			private Dictionary<string, TrackBlock[]> m_regionGraph;
-
 			public TrackController()
 			{
-				m_mainThread = new Thread(Run);
-				m_dbMutex = new Mutex(true);
-
 				m_trackBlocks = new Dictionary<string, TrackBlock>();
 				m_next = m_prev = null;
 
 				m_suggAuth = null;
 				m_currBlockId = string.Empty;
-
-				m_regionGraph = new Dictionary<string, TrackBlock[]>();
 			}
 
-			public bool AddTrackBlock(TrackBlock vertex, IEnumerable<TrackBlock> edges)
+			public bool AddTrackBlock(TrackBlock block)
 			{
-				if (vertex == null) return false;
-				if (edges == null) return false;
-				if (m_trackBlocks.ContainsKey(vertex.Name) || m_regionGraph.ContainsKey(vertex.Name))
+				if (block == null) return false;
+				if (m_trackBlocks.ContainsKey(block.Name))
 					return false;
 				
-				m_trackBlocks.Add(vertex.Name, vertex);
-				m_regionGraph.Add(vertex.Name, edges.ToArray<TrackBlock>());
+				m_trackBlocks.Add(block.Name, block);
 				return true;
 			}
 
@@ -61,23 +49,16 @@ namespace TrackControlLib
 				else
 					return false;
 
-				m_dbMutex.ReleaseMutex();
-				m_mainThread.Start();
-
 				return true;
 			}
 
-			public bool SetAuthority(string trackId, BlockAuthority auth)
+			public bool SuggestAuthority(string trackId, BlockAuthority auth)
 			{
-				if (!m_trackBlocks.ContainsKey(trackId)) throw new KeyNotFoundException();
+				if (!m_trackBlocks.ContainsKey(trackId)) return false;
 				if (auth == null) return false;
-
-				m_dbMutex.WaitOne();
 
 				m_currBlockId = trackId;
 				m_suggAuth = auth;
-
-				m_dbMutex.ReleaseMutex();
 
 				return true;
 			}
@@ -86,26 +67,37 @@ namespace TrackControlLib
 			{
 				if (m_trackBlocks.ContainsKey(trackId))
 				{
-					m_dbMutex.WaitOne();
+					m_trackBlocks[trackId].Authority.Authority = 0;
+					m_trackBlocks[trackId].Authority.SpeedLimitKPH = 0;
+					m_trackBlocks[trackId].Status.SignalState = TrackSignalState.Red;
 					m_trackBlocks[trackId].Status.IsOpen = false;
-					m_dbMutex.ReleaseMutex();
+
+					m_trackBlocks[trackId].PreviousBlock.Authority.Authority = 0;
+					m_trackBlocks[trackId].PreviousBlock.Authority.SpeedLimitKPH = 0;
+					m_trackBlocks[trackId].PreviousBlock.Status.SignalState = TrackSignalState.Red;
+
+					if (m_trackBlocks[trackId].AllowedDirection == TrackAllowedDirection.Both)
+					{
+						m_trackBlocks[trackId].NextBlock.Authority.Authority = 0;
+						m_trackBlocks[trackId].NextBlock.Authority.SpeedLimitKPH = 0;
+						m_trackBlocks[trackId].NextBlock.Status.SignalState = TrackSignalState.Red;
+					}
+
 					return true;
 				}
 				else
-					throw new KeyNotFoundException();
+					return false;
 			}
 
 			public bool OpenTrack(string trackId)
 			{
 				if (m_trackBlocks.ContainsKey(trackId))
 				{
-					m_dbMutex.WaitOne();
 					m_trackBlocks[trackId].Status.IsOpen = true;
-					m_dbMutex.ReleaseMutex();
 					return true;
 				}
 				else
-					throw new KeyNotFoundException();
+					return false;
 			}
 
 			public bool IsTrackClosed(string trackId)
@@ -132,9 +124,20 @@ namespace TrackControlLib
 				return statuses;
 			}
 
-			private void Run()
+			public void Update()
 			{
+				foreach (TrackBlock b in m_trackBlocks.Values)
+				{
+					// check for track block errors
+					if (b.Status.BrokenRail)
+					{
+						if (!IsTrackClosed(b.Name)) CloseTrack(b.Name);
+					}
+					// take suggested authority and determine if safe
+					// if safe, execute it
+					// if not 
 
+				}
 			}
 		}
 	}

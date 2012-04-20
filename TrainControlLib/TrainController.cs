@@ -321,17 +321,17 @@ namespace TrainControllerLib
             }
 
             // If the signal is red, the train should not proceed
-            if (m_currentBlock.SignalState == TrackSignalState.Red)
+            if (m_currentBlock.Status.SignalState == TrackSignalState.Red)
             {
                 m_setPoint = 0;
             }
             // If the signal is yellow, the train should proceed at half speed
-            else if (m_currentBlock.SignalState == TrackSignalState.Yellow)
+			else if (m_currentBlock.Status.SignalState == TrackSignalState.Yellow)
             {
                 m_setPoint = m_setPoint * 0.5;
             }
             // If the signal is green, the train should proceed at three-quarters speed
-            else if (m_currentBlock.SignalState == TrackSignalState.Green)
+			else if (m_currentBlock.Status.SignalState == TrackSignalState.Green)
             {
                 m_setPoint = m_setPoint * 0.75;
             }
