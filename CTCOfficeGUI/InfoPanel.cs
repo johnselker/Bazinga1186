@@ -238,6 +238,16 @@ namespace CTCOfficeGUI
             SetInfo(state.TrainID.ToString(), info);
         }
 
+        /// <summary>
+        /// Displays info about the train yard
+        /// </summary>
+        /// <param name="b">Track block</param>
+        public void SetTrainYardInfo(TrackBlock b)
+        {
+            //Just show the block name
+            SetInfo(b.Name, null);
+        }
+
         #endregion
 
         #region Helper Methods

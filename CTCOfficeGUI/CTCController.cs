@@ -13,6 +13,20 @@ namespace CTCOfficeGUI
 {
     public class CTCController
     {
+        #region Constructor
+
+        /// <summary>
+        /// Private constructor for the CTCController
+        /// </summary>
+        private CTCController()
+        {
+            //Initialize the hard-coded train schedules
+            Queue<ScheduleInfo> redline = new Queue<ScheduleInfo>();
+            
+        }
+
+        #endregion
+
         #region Public Methods
 
         /// <summary>
