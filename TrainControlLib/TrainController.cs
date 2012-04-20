@@ -9,7 +9,7 @@ using Train;
 
 namespace TrainControllerLib
 {
-    public class TrainController : ITrainController
+    public class TrainController
     {
         private const double MAXIMUM_POWER = 120000;
         private const double PORPORTIONAL_GAIN = 1000000;
@@ -118,48 +118,19 @@ namespace TrainControllerLib
         /// Primary constructor
         /// </summary>
         /// 
-        /// <param name="startingBlock">The track block that the train starts on</param>
         /// <param name="myTrain">The train associated with this controller</param>
-        /// <param name="speedUp">Speed up factor</param>
         //--------------------------------------------------------------------------------------
-        public TrainController(TrackBlock startingBlock, Train.Train myTrain)
+        public TrainController(Train.Train myTrain)
         {
-            this.m_currentBlock = startingBlock;
+            this.m_currentBlock = myTrain.GetState().CurrentBlock;
             this.m_myTrain = myTrain;
             this.m_currentState = m_myTrain.GetState();
             this.m_trainID = m_currentState.TrainID;
-
-            StartController();
         }
 
         #endregion
 
         #region Public Methods
-
-        // METHOD: StartController
-        //--------------------------------------------------------------------------------------
-        /// <summary>
-        /// Start the train contoller; create a timer to trigger the system controller every sample period
-        /// </summary>
-        //--------------------------------------------------------------------------------------
-        public void StartController()
-        {
-            m_systemTimer = new Timer();
-            m_systemTimer.Elapsed += new ElapsedEventHandler(CallSystemController);
-            m_systemTimer.Interval = 1; // in milliseconds
-            m_systemTimer.Start();
-        }
-
-        // METHOD: StopController
-        //--------------------------------------------------------------------------------------
-        /// <summary>
-        /// Stop the train contoller
-        /// </summary>
-        //--------------------------------------------------------------------------------------
-        public void StopController()
-        {
-            m_run = false;
-        }
 
         // METHOD: Update
         //--------------------------------------------------------------------------------------
@@ -199,25 +170,6 @@ namespace TrainControllerLib
             m_lastState = m_currentState;
             m_currentState = m_myTrain.GetState();
         }
-
-        /*
-        // METHOD: GetSignal
-        //--------------------------------------------------------------------------------------
-        /// <summary>
-        /// Get a TrackSignal object from the track
-        /// </summary>
-        //--------------------------------------------------------------------------------------
-        private void GetSignal()
-        {
-            TrackSignal potentialSignal = m_myTrack.getSignal(m_trainID, m_currentState.X, m_currentState.Y, m_currentState.Delta);
-
-            // Ensure that the m_signal is for this train
-            if (potentialSignal.trainID == m_trainID)
-            {
-                m_signal = potentialSignal;
-            }
-        }
-        */
 
         // METHOD: CallSystemController
         //--------------------------------------------------------------------------------------
@@ -277,14 +229,22 @@ namespace TrainControllerLib
         //--------------------------------------------------------------------------------------
         private void FaultMonitor()
         {
-            // If there has been an engine failure or signal pickup failure,
-            // the setpoint must be set to zero to engage the brake.
-            if(m_currentState.EngineFailure || m_currentState.SignalPickupFailure)
+            // If the Track Block has a power failure or a track circuit failure,
+            // the train will not be able to pick up the track signal, thus there is a signal pickup failure
+            // and the setpoint must be set to zero to engage the brake.
+            if (m_currentState.CurrentBlock.PowerFailure || m_currentState.CurrentBlock.TrackCircuitFailure)
             {
                 m_setPoint = 0;
             }
+
+            // If there has been an engine failure, the setpoint must be set to zero to engage the brake.
+            if (m_currentState.EngineFailure)
+            {
+                m_setPoint = 0;
+            }
+
             // If there has been a brake failure, the emergency brake must be engaged.
-            else if(m_currentState.BrakeFailure)
+            if (m_currentState.BrakeFailure)
             {
                 m_brakeFailure = true;
             }
@@ -320,23 +280,6 @@ namespace TrainControllerLib
                 m_setPoint = 0;
             }
 
-            // If the signal is red, the train should not proceed
-            if (m_currentBlock.Status.SignalState == TrackSignalState.Red)
-            {
-                m_setPoint = 0;
-            }
-            // If the signal is yellow, the train should proceed at half speed
-			else if (m_currentBlock.Status.SignalState == TrackSignalState.Yellow)
-            {
-                m_setPoint = m_setPoint * 0.5;
-            }
-            // If the signal is green, the train should proceed at three-quarters speed
-			else if (m_currentBlock.Status.SignalState == TrackSignalState.Green)
-            {
-                m_setPoint = m_setPoint * 0.75;
-            }
-            // (If the signal is super green, the train should proceed at full speed)
-
             // If the authority is equal to zero, the train cannot pass into the next block,
             // so the setPoint must be set to zero to engage the brake.
             if (m_currentBlock.Authority.Authority < 0)
@@ -351,18 +294,18 @@ namespace TrainControllerLib
             {
                 m_setPoint = 0;
             }
-            else if (m_currentBlock.NextBlock.Authority.SpeedLimitKPH < m_currentBlock.Authority.SpeedLimitKPH && CalculateStoppingDistance(m_currentBlock.NextBlock.Authority.SpeedLimitKPH / 3.6) <= m_currentBlock.LengthMeters - m_currentState.BlockProgress)
+            else if (m_currentBlock.NextBlock.Authority.SpeedLimitKPH < m_currentBlock.Authority.SpeedLimitKPH && CalculateStoppingDistance(m_currentBlock.NextBlock.Authority.SpeedLimitKPH / 3.6) >= m_currentBlock.LengthMeters - m_currentState.BlockProgress)
             {
                 m_setPoint = m_currentBlock.NextBlock.Authority.SpeedLimitKPH / 3.6;
             }
 
             if (m_approachingStation)
             {
-                if (m_currentBlock.HasTransponder && CalculateStoppingDistance(0) >= m_currentBlock.LengthMeters + m_currentBlock.NextBlock.LengthMeters * 0.5 - m_currentState.BlockProgress)
+                if (m_currentBlock.HasTransponder && m_currentBlock.Transponder.DistanceToStation == 1 && CalculateStoppingDistance(0) >= m_currentBlock.LengthMeters + m_currentBlock.NextBlock.LengthMeters * 0.5 - m_currentState.BlockProgress)
                 {
                     m_setPoint = 0;
                 }
-                else if (!m_currentBlock.HasTransponder && CalculateStoppingDistance(0) >= m_currentBlock.LengthMeters * 0.5 - m_currentState.BlockProgress)
+                else if (m_currentBlock.HasTransponder && m_currentBlock.Transponder.DistanceToStation == 0 && CalculateStoppingDistance(0) >= m_currentBlock.LengthMeters * 0.5 - m_currentState.BlockProgress)
                 {
                     m_setPoint = 0;
                 }
