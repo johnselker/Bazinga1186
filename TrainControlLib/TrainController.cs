@@ -9,7 +9,7 @@ using Train;
 
 namespace TrainControllerLib
 {
-    public class TrainController
+    public class TrainController : ITrainController
     {
         private const double MAXIMUM_POWER = 120000;
         private const double PORPORTIONAL_GAIN = 1000000;
@@ -29,7 +29,7 @@ namespace TrainControllerLib
         private int m_stationWaitStartTime;
         private int m_nextStation = 0;
         private Queue<ScheduleInfo> m_routeInfo;
-        private Train.Train m_myTrain;
+        private ITrain m_myTrain;
         private TrainState m_currentState;
         private TrainState m_lastState;
         private TrackBlock m_currentBlock;
@@ -120,7 +120,7 @@ namespace TrainControllerLib
         /// 
         /// <param name="myTrain">The train associated with this controller</param>
         //--------------------------------------------------------------------------------------
-        public TrainController(Train.Train myTrain)
+        public TrainController(ITrain myTrain)
         {
             this.m_currentBlock = myTrain.GetState().CurrentBlock;
             this.m_myTrain = myTrain;
