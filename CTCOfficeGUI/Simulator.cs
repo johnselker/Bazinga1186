@@ -199,6 +199,20 @@ namespace CTCOfficeGUI
             }
         }
 
+        /// <summary>
+        /// Creates a new train on the track
+        /// 
+        /// </summary>
+        /// <param name="initialBlock">Starting block of the train</param>
+        /// <param name="name">Name of the train</param>
+        public void SpawnNewTrain(TrackBlock initialBlock, string name)
+        {
+            ITrain train = new Train.Train(name, initialBlock, Direction.East);
+            ITrainController trainController = new TrainController(initialBlock, train);
+            m_trainList.Add(trainController);
+            //trainController.SetSchedule();
+        }
+
         #endregion
 
         #region Constructor

@@ -124,6 +124,13 @@ namespace CTCOfficeGUI
                         break;
                 }
             }
+            else if (tag.GetType() == typeof(string))
+            {
+                if (tag == Constants.SPAWNTRAIN)
+                {
+                    ShowTextInputPopup("Enter train name", "Train1", OnTrainNameEntered);
+                }
+            }
         }
 
         /// <summary>
@@ -180,8 +187,31 @@ namespace CTCOfficeGUI
             m_log.LogInfo("Track block was clicked");
             m_selectedTrain = null;
             m_selectedTrackBlock = b;
-            infoPanel.SetTrackBlockInfo(b);
-            commandPanel.ShowTrackBlockCommands(b);
+
+            if (b != null)
+            {
+                if (b.HasTransponder)
+                {
+                    if (b.Transponder.StationName == Constants.TRAINYARD && b.Transponder.DistanceToStation == 0)
+                    {
+                        //This is a train yard, handle it specially
+                        infoPanel.SetTrainYardInfo(b);
+                        commandPanel.ShowTrainYardCommands();
+                    }
+                    else
+                    {
+                        //Normal track block
+                        infoPanel.SetTrackBlockInfo(b);
+                        commandPanel.ShowTrackBlockCommands(b);
+                    }
+                }
+                else
+                {
+                    //Normal track block
+                    infoPanel.SetTrackBlockInfo(b);
+                    commandPanel.ShowTrackBlockCommands(b);
+                }
+            }
 
             CloseOpenPopups();
         }
@@ -312,6 +342,22 @@ namespace CTCOfficeGUI
         private void OnSchedulerClicked(object sender, EventArgs e)
         {
 
+        }
+
+        /// <summary>
+        /// Train name was entered for a new train
+        /// </summary>
+        /// <param name="value">Train name</param>
+        private void OnTrainNameEntered(string value)
+        {
+            if (!string.IsNullOrEmpty(value))
+            {
+                Simulator.GetSimulator().SpawnNewTrain(m_selectedTrackBlock, value);
+            }
+            else
+            {
+                ShowOKPopup("Error", "Train name cannot be empty", OnPopupAcknowledged);
+            }
         }
 
         #endregion
