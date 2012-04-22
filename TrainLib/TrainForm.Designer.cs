@@ -36,11 +36,18 @@
 			this.setButton = new System.Windows.Forms.Button();
 			this.speedLabel = new System.Windows.Forms.Label();
 			this.speedTextBox = new System.Windows.Forms.TextBox();
-			this.updateButton = new System.Windows.Forms.Button();
 			this.brakeFailureBox = new System.Windows.Forms.CheckBox();
 			this.accelerationLabel = new System.Windows.Forms.Label();
 			this.accelerationTextBox = new System.Windows.Forms.TextBox();
 			this.brakeBox = new System.Windows.Forms.CheckBox();
+			this.directionLabel = new System.Windows.Forms.Label();
+			this.directionTextBox = new System.Windows.Forms.TextBox();
+			this.progressLabel = new System.Windows.Forms.Label();
+			this.speedUnitLabel = new System.Windows.Forms.Label();
+			this.accelerationUnitLabel = new System.Windows.Forms.Label();
+			this.progressTextBox = new System.Windows.Forms.TextBox();
+			this.progressUnitLabel = new System.Windows.Forms.Label();
+			this.powerUnitLabel = new System.Windows.Forms.Label();
 			this.SuspendLayout();
 			// 
 			// emergencyBrakeBox
@@ -78,7 +85,7 @@
 			// 
 			// powerTextBox
 			// 
-			this.powerTextBox.Location = new System.Drawing.Point(96, 126);
+			this.powerTextBox.Location = new System.Drawing.Point(261, 103);
 			this.powerTextBox.Name = "powerTextBox";
 			this.powerTextBox.Size = new System.Drawing.Size(47, 20);
 			this.powerTextBox.TabIndex = 3;
@@ -88,7 +95,7 @@
 			// powerLabel
 			// 
 			this.powerLabel.AutoSize = true;
-			this.powerLabel.Location = new System.Drawing.Point(21, 129);
+			this.powerLabel.Location = new System.Drawing.Point(188, 110);
 			this.powerLabel.Name = "powerLabel";
 			this.powerLabel.Size = new System.Drawing.Size(40, 13);
 			this.powerLabel.TabIndex = 4;
@@ -96,9 +103,9 @@
 			// 
 			// setButton
 			// 
-			this.setButton.Location = new System.Drawing.Point(149, 123);
+			this.setButton.Location = new System.Drawing.Point(335, 102);
 			this.setButton.Name = "setButton";
-			this.setButton.Size = new System.Drawing.Size(50, 23);
+			this.setButton.Size = new System.Drawing.Size(43, 23);
 			this.setButton.TabIndex = 5;
 			this.setButton.Text = "Set";
 			this.setButton.UseVisualStyleBackColor = true;
@@ -107,7 +114,7 @@
 			// speedLabel
 			// 
 			this.speedLabel.AutoSize = true;
-			this.speedLabel.Location = new System.Drawing.Point(21, 152);
+			this.speedLabel.Location = new System.Drawing.Point(186, 18);
 			this.speedLabel.Name = "speedLabel";
 			this.speedLabel.Size = new System.Drawing.Size(41, 13);
 			this.speedLabel.TabIndex = 6;
@@ -115,23 +122,13 @@
 			// 
 			// speedTextBox
 			// 
-			this.speedTextBox.Location = new System.Drawing.Point(96, 149);
+			this.speedTextBox.Location = new System.Drawing.Point(261, 12);
 			this.speedTextBox.Name = "speedTextBox";
 			this.speedTextBox.ReadOnly = true;
 			this.speedTextBox.Size = new System.Drawing.Size(47, 20);
 			this.speedTextBox.TabIndex = 7;
 			this.speedTextBox.Text = "0";
 			this.speedTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-			// 
-			// updateButton
-			// 
-			this.updateButton.Location = new System.Drawing.Point(149, 149);
-			this.updateButton.Name = "updateButton";
-			this.updateButton.Size = new System.Drawing.Size(50, 41);
-			this.updateButton.TabIndex = 8;
-			this.updateButton.Text = "Update";
-			this.updateButton.UseVisualStyleBackColor = true;
-			this.updateButton.Click += new System.EventHandler(this.updateButton_Click);
 			// 
 			// brakeFailureBox
 			// 
@@ -147,7 +144,7 @@
 			// accelerationLabel
 			// 
 			this.accelerationLabel.AutoSize = true;
-			this.accelerationLabel.Location = new System.Drawing.Point(21, 173);
+			this.accelerationLabel.Location = new System.Drawing.Point(186, 41);
 			this.accelerationLabel.Name = "accelerationLabel";
 			this.accelerationLabel.Size = new System.Drawing.Size(69, 13);
 			this.accelerationLabel.TabIndex = 10;
@@ -155,7 +152,7 @@
 			// 
 			// accelerationTextBox
 			// 
-			this.accelerationTextBox.Location = new System.Drawing.Point(96, 170);
+			this.accelerationTextBox.Location = new System.Drawing.Point(261, 35);
 			this.accelerationTextBox.Name = "accelerationTextBox";
 			this.accelerationTextBox.ReadOnly = true;
 			this.accelerationTextBox.Size = new System.Drawing.Size(47, 20);
@@ -174,16 +171,95 @@
 			this.brakeBox.UseVisualStyleBackColor = true;
 			this.brakeBox.CheckedChanged += new System.EventHandler(this.brakeBox_CheckedChanged);
 			// 
+			// directionLabel
+			// 
+			this.directionLabel.AutoSize = true;
+			this.directionLabel.Location = new System.Drawing.Point(187, 64);
+			this.directionLabel.Name = "directionLabel";
+			this.directionLabel.Size = new System.Drawing.Size(52, 13);
+			this.directionLabel.TabIndex = 13;
+			this.directionLabel.Text = "Direction:";
+			// 
+			// directionTextBox
+			// 
+			this.directionTextBox.Location = new System.Drawing.Point(261, 58);
+			this.directionTextBox.Name = "directionTextBox";
+			this.directionTextBox.ReadOnly = true;
+			this.directionTextBox.Size = new System.Drawing.Size(75, 20);
+			this.directionTextBox.TabIndex = 14;
+			// 
+			// progressLabel
+			// 
+			this.progressLabel.AutoSize = true;
+			this.progressLabel.Location = new System.Drawing.Point(188, 87);
+			this.progressLabel.Name = "progressLabel";
+			this.progressLabel.Size = new System.Drawing.Size(51, 13);
+			this.progressLabel.TabIndex = 15;
+			this.progressLabel.Text = "Progress:";
+			// 
+			// speedUnitLabel
+			// 
+			this.speedUnitLabel.AutoSize = true;
+			this.speedUnitLabel.Location = new System.Drawing.Point(311, 18);
+			this.speedUnitLabel.Name = "speedUnitLabel";
+			this.speedUnitLabel.Size = new System.Drawing.Size(25, 13);
+			this.speedUnitLabel.TabIndex = 16;
+			this.speedUnitLabel.Text = "m/s";
+			// 
+			// accelerationUnitLabel
+			// 
+			this.accelerationUnitLabel.AutoSize = true;
+			this.accelerationUnitLabel.Location = new System.Drawing.Point(311, 41);
+			this.accelerationUnitLabel.Name = "accelerationUnitLabel";
+			this.accelerationUnitLabel.Size = new System.Drawing.Size(25, 13);
+			this.accelerationUnitLabel.TabIndex = 17;
+			this.accelerationUnitLabel.Text = "m/s";
+			// 
+			// progressTextBox
+			// 
+			this.progressTextBox.Location = new System.Drawing.Point(261, 81);
+			this.progressTextBox.Name = "progressTextBox";
+			this.progressTextBox.ReadOnly = true;
+			this.progressTextBox.Size = new System.Drawing.Size(47, 20);
+			this.progressTextBox.TabIndex = 18;
+			this.progressTextBox.Text = "0";
+			this.progressTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			// 
+			// progressUnitLabel
+			// 
+			this.progressUnitLabel.AutoSize = true;
+			this.progressUnitLabel.Location = new System.Drawing.Point(311, 87);
+			this.progressUnitLabel.Name = "progressUnitLabel";
+			this.progressUnitLabel.Size = new System.Drawing.Size(15, 13);
+			this.progressUnitLabel.TabIndex = 19;
+			this.progressUnitLabel.Text = "%";
+			// 
+			// powerUnitLabel
+			// 
+			this.powerUnitLabel.AutoSize = true;
+			this.powerUnitLabel.Location = new System.Drawing.Point(311, 106);
+			this.powerUnitLabel.Name = "powerUnitLabel";
+			this.powerUnitLabel.Size = new System.Drawing.Size(18, 13);
+			this.powerUnitLabel.TabIndex = 20;
+			this.powerUnitLabel.Text = "W";
+			// 
 			// TrainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(217, 204);
+			this.ClientSize = new System.Drawing.Size(394, 137);
+			this.Controls.Add(this.powerUnitLabel);
+			this.Controls.Add(this.progressUnitLabel);
+			this.Controls.Add(this.progressTextBox);
+			this.Controls.Add(this.accelerationUnitLabel);
+			this.Controls.Add(this.speedUnitLabel);
+			this.Controls.Add(this.progressLabel);
+			this.Controls.Add(this.directionTextBox);
+			this.Controls.Add(this.directionLabel);
 			this.Controls.Add(this.brakeBox);
 			this.Controls.Add(this.accelerationTextBox);
 			this.Controls.Add(this.accelerationLabel);
 			this.Controls.Add(this.brakeFailureBox);
-			this.Controls.Add(this.updateButton);
 			this.Controls.Add(this.speedTextBox);
 			this.Controls.Add(this.speedLabel);
 			this.Controls.Add(this.setButton);
@@ -209,10 +285,17 @@
 		private System.Windows.Forms.Button setButton;
 		private System.Windows.Forms.Label speedLabel;
 		private System.Windows.Forms.TextBox speedTextBox;
-		private System.Windows.Forms.Button updateButton;
 		private System.Windows.Forms.CheckBox brakeFailureBox;
 		private System.Windows.Forms.Label accelerationLabel;
 		private System.Windows.Forms.TextBox accelerationTextBox;
 		private System.Windows.Forms.CheckBox brakeBox;
+		private System.Windows.Forms.Label directionLabel;
+		private System.Windows.Forms.TextBox directionTextBox;
+		private System.Windows.Forms.Label progressLabel;
+		private System.Windows.Forms.Label speedUnitLabel;
+		private System.Windows.Forms.Label accelerationUnitLabel;
+		private System.Windows.Forms.TextBox progressTextBox;
+		private System.Windows.Forms.Label progressUnitLabel;
+		private System.Windows.Forms.Label powerUnitLabel;
 	}
 }

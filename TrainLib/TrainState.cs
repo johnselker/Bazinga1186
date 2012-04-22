@@ -9,8 +9,10 @@ namespace Train
     public class TrainState
     {
         private const double PASSENGER_WEIGHT = 70;
-        private const int MAX_PASSENGERS = 222;
         private const double CAR_MASS = 40900;
+        public const int MAX_PASSENGERS = 222;
+
+		private int passengers;
 
         public enum Light { Off, Low, High };
         public enum Door { Closed, Open };
@@ -26,7 +28,20 @@ namespace Train
         public double BlockProgress { get; set; }
         public Direction Direction { get; set; }
         public int Cars { get; set; }
-        public int Passengers { get; set; }
+        public int Passengers
+		{
+			get
+			{
+				return passengers;
+			}
+			set
+			{
+				if (value > 0 && value <= MAX_PASSENGERS)
+				{
+					passengers = value;
+				}
+			}
+		}
 		public int Crew { get; set; }
 		public string Announcement { get; set; }
         public Door Doors { get; set; }
