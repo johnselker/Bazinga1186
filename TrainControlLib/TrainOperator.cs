@@ -15,7 +15,7 @@ namespace TrainControllerLib
     {
         private TrainController myTrainController;
         private ITrain myTrain;
-        private double mySpeed;
+        private double mySpeed = 0;
         private Timer myTimer;
         //private double currentSpeedD;
 
@@ -31,10 +31,15 @@ namespace TrainControllerLib
 
         private void createTrain_Click(object sender, EventArgs e)
         {
-            TrackBlock startingBlock = new TrackBlock("Block1", TrackOrientation.EastWest, new Point(123, 456), 100, 50, 1, true, false, 70, TrackAllowedDirection.Both, null, "controller1", "controller2", "previousBlock", "nextBlock");
+            TrackBlock startingBlock = new TrackBlock("Block1", TrackOrientation.EastWest, new Point(0, 0), 100, 0, 0, true, false, 70, TrackAllowedDirection.Both, null, "controller1", "controller2", "Block0", "Block2");
+            startingBlock.NextBlock = new TrackBlock("Block2", TrackOrientation.EastWest, new Point(100, 0), 100, 0, 0, true, false, 70, TrackAllowedDirection.Both, null, "controller1", "controller2", "Block1", "Block3");
+            startingBlock.Authority = new BlockAuthority(70, 1);
+            startingBlock.NextBlock.Authority = new BlockAuthority(70,0);
+            startingBlock.NextBlock.NextBlock = new TrackBlock("Block3", TrackOrientation.EastWest, new Point(200, 0), 100, 0, 0, true, false, 70, TrackAllowedDirection.Both, null, "controller1", "controller2", "Block2", "Block4");
+            
             myTrain = new Train.Train("train1", startingBlock, Direction.East);
             myTrainController = new TrainController(myTrain);
-            mySpeed = 0;
+            myTrainController.SetSchedule(GetRedlineSchedule());
 
             Timer updateTimer = new Timer();
             updateTimer.Tick += new EventHandler(updateTrainController);
@@ -44,7 +49,7 @@ namespace TrainControllerLib
 
             myTimer = new Timer();
             myTimer.Tick += new EventHandler(updateDisplay);
-            myTimer.Interval = 500; // in miliseconds
+            myTimer.Interval = 500;
             myTimer.Enabled = true;
             myTimer.Start();
         }
@@ -62,6 +67,33 @@ namespace TrainControllerLib
             {
                 myTrainController.ManualSpeed = mySpeed;
             }
+        }
+
+        /// <summary>
+        /// Gets the redline schedule
+        /// </summary>
+        /// <returns>Queue of schedule info</returns>
+        public Queue<ScheduleInfo> GetRedlineSchedule()
+        {
+            Queue<ScheduleInfo> redline = new Queue<ScheduleInfo>();
+            ScheduleInfo info = new ScheduleInfo(Constants.StationNames.SHADYSIDE, 3.7);
+            redline.Enqueue(info);
+            info = new ScheduleInfo(Constants.StationNames.HERRONAVE, 2.3);
+            redline.Enqueue(info);
+            info = new ScheduleInfo(Constants.StationNames.SWISSVALE, 1.5);
+            redline.Enqueue(info);
+            info = new ScheduleInfo(Constants.StationNames.PENNSTATION, 1.8);
+            redline.Enqueue(info);
+            info = new ScheduleInfo(Constants.StationNames.STEELPLAZA, 2.1);
+            redline.Enqueue(info);
+            info = new ScheduleInfo(Constants.StationNames.FIRSTAVE, 2.1);
+            redline.Enqueue(info);
+            info = new ScheduleInfo(Constants.StationNames.STATIONSQUARE, 1.7);
+            redline.Enqueue(info);
+            info = new ScheduleInfo(Constants.StationNames.SOUTHHILLS, 2.3);
+            redline.Enqueue(info);
+
+            return redline;
         }
     }
 }
