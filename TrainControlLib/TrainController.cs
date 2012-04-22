@@ -303,7 +303,7 @@ namespace TrainControllerLib
             // If there has been a brake failure, do not issue a power command.
             if (m_brakeFailure)
             {
-                m_myTrain.SetEmergencyBrake(true);
+                m_myTrain.SetEmergencyBrake(true, m_samplePeriod);
                 return;
             }
 
@@ -316,7 +316,7 @@ namespace TrainControllerLib
 
             if (m_currentSample < 0)
             {
-                m_myTrain.SetBrake(true);
+                m_myTrain.SetBrake(true, m_samplePeriod);
                 return;
             }
 
@@ -326,7 +326,7 @@ namespace TrainControllerLib
             // Issue the power command to the train if it's not waiting at a station
             if (!m_atStation && m_currentSample != 0)
             {
-                m_myTrain.SetPower(m_powerCommand);
+                m_myTrain.SetPower(m_powerCommand, m_samplePeriod);
             }
         }
 

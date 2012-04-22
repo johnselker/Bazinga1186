@@ -65,17 +65,18 @@ namespace Train
 			lastUpdate = DateTime.Now;
 		}
 
-		public void Update()
+		public void Update(double deltaTime)
 		{
-			UpdateSpeed();
-			UpdatePosition();
+			UpdateSpeed(deltaTime);
+			UpdatePosition(deltaTime);
 			lastUpdate = DateTime.Now;
 		}
 
-		private void UpdateSpeed()
+		private void UpdateSpeed(double deltaTime)
 		{
-			double timestep = DateTime.Now.Subtract(lastUpdate).Duration().TotalSeconds;
-			double acceleration = GetAcceleration();
+            //double timestep = DateTime.Now.Subtract(lastUpdate).Duration().TotalSeconds;
+            double timestep = deltaTime; 
+            double acceleration = GetAcceleration();
 
 			if (emergencyBrake)
 			{
@@ -117,9 +118,10 @@ namespace Train
 			}
 		}
 
-		private void UpdatePosition()
+		private void UpdatePosition(double deltaTime)
 		{
-			double timestep = DateTime.Now.Subtract(lastUpdate).Duration().TotalSeconds;
+            //double timestep = DateTime.Now.Subtract(lastUpdate).Duration().TotalSeconds;
+            double timestep = deltaTime;
 			double distance = timestep * state.Speed;
 			TrackBlock block = state.CurrentBlock;
 			int startX = block.StartPoint.X;
@@ -250,6 +252,8 @@ namespace Train
 				state.CurrentBlock.Status.TrainDirection = state.Direction;
 				slope = Math.Atan(block.Grade / 100.0);
 			}
+
+            //state.BlockProgress *= length;
 		}
 
 		public double GetSpeed()
@@ -294,22 +298,24 @@ namespace Train
 			return state;
 		}
 
-		public void SetBrake(bool brake)
+		public void SetBrake(bool brake, double deltaTime)
 		{
 			this.brake = brake;
 			if (brake)
 			{
 				power = 0;
 			}
+            Update(deltaTime);
 		}
 
-		public void SetEmergencyBrake(bool brake)
+        public void SetEmergencyBrake(bool brake, double deltaTime)
 		{
 			emergencyBrake = brake;
 			if (brake)
 			{
 				power = 0;
 			}
+            Update(deltaTime);
 		}
 
 		public void SetDoors(TrainState.Door doors)
@@ -358,7 +364,7 @@ namespace Train
 			return power;
 		}
 
-		public void SetPower(double power)
+        public void SetPower(double power, double deltaTime)
 		{
 			if (power < 0)
 			{
@@ -368,7 +374,7 @@ namespace Train
 			{
 				this.power = power;
 			}
-			Update();
+			Update(deltaTime);
 		}
 
 		public void SetBrakeFailure(bool failure)
