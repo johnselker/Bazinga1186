@@ -64,6 +64,7 @@
     <Compile Include="InfoPanel.Designer.cs">
       <DependentUpon>InfoPanel.cs</DependentUpon>
     </Compile>
+    <Compile Include="ITrainSystemWatcher.cs" />
     <Compile Include="MainScreen.cs">
       <SubType>Form</SubType>
     </Compile>
