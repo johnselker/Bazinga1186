@@ -30,13 +30,13 @@ namespace Train
 
 		private void brakeBox_CheckedChanged(object sender, EventArgs e)
 		{
-			train.SetBrake(brakeBox.Checked);
+			train.SetBrake(brakeBox.Checked, 0.1);
 			powerTextBox.Text = train.GetPower().ToString();
 		}
 
 		private void emergencyBrakeBox_CheckedChanged(object sender, EventArgs e)
 		{
-			train.SetEmergencyBrake(emergencyBrakeBox.Checked);
+            train.SetEmergencyBrake(emergencyBrakeBox.Checked, 0.1);
 			powerTextBox.Text = train.GetPower().ToString();
 		}
 
@@ -60,7 +60,7 @@ namespace Train
 			try
 			{
 				int newPower = int.Parse(powerTextBox.Text);
-				train.SetPower(newPower);
+                train.SetPower(newPower, 0.1);
 				validPower = powerTextBox.Text;
 			}
 			catch(Exception)
@@ -75,7 +75,7 @@ namespace Train
 		}
 		private void UpdateState()
 		{
-			train.Update();
+			//train.Update(0.1);
 			TrainState ts = train.GetState();
 			brakeBox.Checked = train.GetBrake();
 			emergencyBrakeBox.Checked = train.GetEmergencyBrake();
