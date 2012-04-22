@@ -15,23 +15,23 @@ namespace TrainControllerLib
         private const double PORPORTIONAL_GAIN = 1000000;
         private const double INTEGRAL_GAIN = 10000;
 
-        private double m_samplePeriod = 0.001;
+        public event OnTrainAtStation TrainAtStation;
+
+        private double m_samplePeriod = 0.0;
+        private double m_timePassed = 0;
         private double m_currentSample = 0;
         private double m_lastSample = 0;
         private double m_currentIntegral = 0;
         private double m_lastIntegral = 0;
         private double m_powerCommand = 0;
         private double m_setPoint = 0;
-        private double m_manualSpeed = -1;
         private string m_trainID;
         private int m_speedUp = 1;
         private int m_authority = 0;
         private int m_stationWaitStartTime;
-        private int m_nextStation = 0;
         private Queue<ScheduleInfo> m_routeInfo;
         private ITrain m_myTrain;
         private TrainState m_currentState;
-        private TrainState m_lastState;
         private TrackBlock m_currentBlock;
         private bool m_inTunnel = false;
         private bool m_approachingStation = false;
@@ -41,22 +41,21 @@ namespace TrainControllerLib
         private bool m_engineFailure = false;
         private bool m_run = true;
         private bool m_stoppingTheTrain = false;
-        private bool m_manualMode = false;
-        private Timer m_systemTimer;
-        private Timer m_stationTimer;
+        private ScheduleInfo m_nextStationInfo;
+        private Random m_passengerGenerator;
 
         #region Properties
 
         // PROPERTY: ManualMode
         //--------------------------------------------------------------------------------------
         /// <summary>
-        /// Manual mode
+        /// Indicates manual control of the train
         /// </summary>
         //--------------------------------------------------------------------------------------
         public bool ManualMode
         {
-            get { return m_manualMode; }
-            set { m_manualMode = value; }
+            get;
+            set;
         }
 
         // PROPERTY: ManualSpeed
@@ -67,8 +66,8 @@ namespace TrainControllerLib
         //--------------------------------------------------------------------------------------
         public double ManualSpeed
         {
-            get { return m_manualSpeed; }
-            set { m_manualSpeed = value; }
+            get;
+            set;
         }
 
         #endregion
@@ -122,10 +121,12 @@ namespace TrainControllerLib
         //--------------------------------------------------------------------------------------
         public TrainController(ITrain myTrain)
         {
-            this.m_currentBlock = myTrain.GetState().CurrentBlock;
             this.m_myTrain = myTrain;
             this.m_currentState = m_myTrain.GetState();
             this.m_trainID = m_currentState.TrainID;
+            this.m_currentBlock = m_currentState.CurrentBlock;
+            this.m_passengerGenerator = new Random((int)DateTime.Now.Ticks);
+            this.ManualSpeed = -1;
         }
 
         #endregion
@@ -159,31 +160,6 @@ namespace TrainControllerLib
 
         #region Private Methods
 
-        // METHOD: GetState
-        //--------------------------------------------------------------------------------------
-        /// <summary>
-        /// Get a TrainState object from the train
-        /// </summary>
-        //--------------------------------------------------------------------------------------
-        private void GetState()
-        {
-            m_lastState = m_currentState;
-            m_currentState = m_myTrain.GetState();
-        }
-
-        // METHOD: CallSystemController
-        //--------------------------------------------------------------------------------------
-        /// <summary>
-        /// Call the system controller
-        /// </summary>
-        /// <param name="sender">Sender</param>
-        /// <param name="e">Event Arguments</param>
-        //--------------------------------------------------------------------------------------
-        private void CallSystemController(object sender, ElapsedEventArgs e)
-        {
-            SystemController(0.001);
-        }
-
         // METHOD: SystemController
         //--------------------------------------------------------------------------------------
         /// <summary>
@@ -193,17 +169,21 @@ namespace TrainControllerLib
         //--------------------------------------------------------------------------------------
         private void SystemController(double samplePeriod)
         {
-            //Set the sample period
-            m_samplePeriod = samplePeriod;
+            // If this is the first time SystemController has been called,
+            // the train is at the yard and needs to leave
+            if (m_samplePeriod == 0.0)
+            {
+                LeaveStation();
+            }
 
-            // Get the state of the train
-            GetState();
+            // Keep track of the time that has passed since leaving the last station
+            m_timePassed += samplePeriod;
+
+            // Set the sample period
+            m_samplePeriod = samplePeriod;
 
             // Set the current track block
             m_currentBlock = m_currentState.CurrentBlock;
-
-            // Pass block slope to the train
-            m_myTrain.SetSlope(Math.Atan(m_currentBlock.Grade / 100));
 
             // Determine the m_setPoint
             DetermineSetPoint();
@@ -259,11 +239,11 @@ namespace TrainControllerLib
         private void DetermineSetPoint()
         {
             // The setPoint should be set to the lower of the two speed limits
-            if (m_manualMode && m_manualSpeed >= 0)
+            if (ManualMode && ManualSpeed >= 0)
             {
-                if (m_manualSpeed < m_currentBlock.Authority.SpeedLimitKPH)
+                if (ManualSpeed < m_currentBlock.Authority.SpeedLimitKPH)
                 {
-                    m_setPoint = m_manualSpeed / 3.6;
+                    m_setPoint = ManualSpeed / 3.6;
                 }
                 else
                 {
@@ -410,25 +390,34 @@ namespace TrainControllerLib
         private void StationController()
         {
             // If the train controller receives a transponder input, announce the next station
-            if (!m_approachingStation && m_currentBlock.HasTransponder)
+            if (!m_approachingStation && m_currentBlock.HasTransponder && m_currentBlock.Transponder.DistanceToStation == 1)
             {
                 m_approachingStation = true;
-                //m_myTrain.SetAnnouncement(m_signal.m_routeInfo[m_nextStation]);
                 m_myTrain.SetAnnouncement(m_currentBlock.Transponder.StationName);
-                m_nextStation++;
             }
-            // If the train has arrived at the station, start to wait for passengers
-            if (m_approachingStation && m_currentState.Speed == 0)
+
+            // If the train has arrived at the station, open the doors and load and unload passengers
+            if (m_approachingStation && m_currentState.Speed == 0 && m_currentBlock.HasTransponder && m_currentBlock.Transponder.DistanceToStation == 0)
             {
                 m_atStation = true;
                 m_approachingStation = false;
                 m_myTrain.SetDoors(TrainState.Door.Open);
                 m_doorsOpen = true;
 
-                m_stationTimer = new Timer();
-                m_stationTimer.Elapsed += new ElapsedEventHandler(LeaveStation);
-                m_stationTimer.Interval = 60 / m_samplePeriod;
-                m_stationTimer.Start();
+                // Simulate passengers getting on and off at the station
+                m_currentState.Passengers = m_passengerGenerator.Next(0, 222);
+
+                // Fire an event to let the CTC know the train has arrived at a station
+                if (TrainAtStation != null)
+                {
+                    TrainAtStation(this, m_currentBlock.Transponder.StationName);
+                }
+            }
+
+            // If the train is at the station and the dwell time is up, leave the station
+            if (m_atStation && m_timePassed >= m_nextStationInfo.TimeToStationMinutes * 60)
+            {
+                LeaveStation();
             }
         }
 
@@ -437,21 +426,21 @@ namespace TrainControllerLib
         /// <summary>
         /// Close the doors, announce the next stop and notify train to leave the station
         /// </summary>
-        /// <param name="sender">Sender</param>
-        /// <param name="e">Event Arguments</param>
         //--------------------------------------------------------------------------------------
-        private void LeaveStation(object sender, EventArgs e)
+        private void LeaveStation()
         {
             // Close the doors
             m_myTrain.SetDoors(TrainState.Door.Closed);
             m_doorsOpen = false;
 
             // Announce the next stop
-            //m_myTrain.SetAnnouncement(m_signal.routeInfo[m_nextStation]);
-            m_stationTimer.Stop();
+            m_nextStationInfo = m_routeInfo.Dequeue();
+            m_myTrain.SetAnnouncement(m_nextStationInfo.StationName);
 
             // Notify train to leave the station
             m_atStation = false;
+
+            m_timePassed = 0;
         }
 
         // METHOD: CalculateStoppingDistance
