@@ -6,8 +6,18 @@ using CommonLib;
 
 namespace TrainControllerLib
 {
+    public delegate void OnTrainAtStation(ITrainController trainController, string stationName);
+
     public interface ITrainController
     {
+        // EVENT: TrainAtStation
+        //--------------------------------------------------------------------------------------
+        /// <summary>
+        /// An event that indicates that the train has arrived at a station
+        /// </summary>
+        //--------------------------------------------------------------------------------------
+        event OnTrainAtStation TrainAtStation;
+
         // METHOD: Update
         //--------------------------------------------------------------------------------------
         /// <summary>

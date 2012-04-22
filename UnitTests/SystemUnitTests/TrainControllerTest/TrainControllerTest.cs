@@ -9,8 +9,8 @@ using System.Drawing;
 
 namespace TrainControllerTest
 {
-    
-    
+
+
     /// <summary>
     ///This is a test class for TrainControllerTest and is intended
     ///to contain all TrainControllerTest Unit Tests
@@ -18,7 +18,7 @@ namespace TrainControllerTest
     [TestClass()]
     public class TrainControllerTest
     {
-
+        private string station;
 
         private TestContext testContextInstance;
 
@@ -83,9 +83,11 @@ namespace TrainControllerTest
 
             Assert.IsNotNull(target);
             Assert.AreEqual(myTrain, target.m_myTrain);
-            Assert.AreEqual(startingBlock, target.m_currentBlock);
             Assert.AreEqual(myTrain.GetState(), target.m_currentState);
             Assert.AreEqual(myTrain.GetState().TrainID, target.m_trainID);
+            Assert.AreEqual(startingBlock, target.m_currentBlock);
+            Assert.IsNotNull(target.m_passengerGenerator);
+            Assert.AreEqual(-1.0, target.ManualSpeed);
         }
 
         /// <summary>
@@ -107,34 +109,6 @@ namespace TrainControllerTest
             double actual;
             actual = target.CalculateStoppingDistance(finalVelocity);
             Assert.AreEqual(expected, Math.Round(actual, 4, MidpointRounding.AwayFromZero));
-        }
-
-        /// <summary>
-        ///A test for CallSystemController
-        ///</summary>
-        [TestMethod()]
-        [DeploymentItem("TrainControllerLib.dll")]
-        public void CallSystemControllerTest()
-        {
-            TrackBlock startingBlock = new TrackBlock("Block1", TrackOrientation.EastWest, new Point(123, 456), 100, 50, 1, true, false, 70, TrackAllowedDirection.Both, null, "controller1", "controller2", "previousBlock", "nextBlock");
-            ITrain myTrain = new Train.Train("train1", startingBlock, Direction.East);
-            TrainController myTrainController = new TrainController(myTrain);
-            PrivateObject param0 = new PrivateObject(myTrainController);
-            TrainController_Accessor target = new TrainController_Accessor(param0);
-
-            target.m_samplePeriod = 0.02;
-
-            Timer myTimer = new Timer();
-            myTimer.Elapsed += new ElapsedEventHandler(target.CallSystemController);
-            myTimer.Interval = 1;
-            myTimer.Start();
-            int i = 0;
-            while (target.m_samplePeriod == 0.02 && i < 1000000000)
-            {
-                i++;
-            }
-            Assert.AreEqual(0.001, target.m_samplePeriod);
-            myTimer.Stop();
         }
 
         /// <summary>
@@ -202,41 +176,41 @@ namespace TrainControllerTest
             target.m_currentBlock.NextBlock.Authority = new BlockAuthority(100, 0);
 
             target.m_setPoint = 0;
-            target.m_manualMode = true;
-            target.m_manualSpeed = -1;
+            target.ManualMode = true;
+            target.ManualSpeed = -1;
             target.m_currentBlock.Authority.SpeedLimitKPH = 36;
             target.DetermineSetPoint();
             Assert.AreEqual(10.0, target.m_setPoint);
 
             target.m_setPoint = 0;
-            target.m_manualMode = true;
-            target.m_manualSpeed = 72;
+            target.ManualMode = true;
+            target.ManualSpeed = 72;
             target.m_currentBlock.Authority.SpeedLimitKPH = 36;
             target.DetermineSetPoint();
             Assert.AreEqual(10.0, target.m_setPoint);
 
             target.m_setPoint = 0;
-            target.m_manualMode = true;
-            target.m_manualSpeed = 72;
+            target.ManualMode = true;
+            target.ManualSpeed = 72;
             target.m_currentBlock.Authority.SpeedLimitKPH = 80;
             target.DetermineSetPoint();
             Assert.AreEqual(20.0, target.m_setPoint);
 
             target.m_setPoint = 20.0;
-            target.m_manualMode = false;
+            target.ManualMode = false;
             target.m_currentBlock.Authority.SpeedLimitKPH = -36;
             target.DetermineSetPoint();
             Assert.AreEqual(0.0, target.m_setPoint);
 
             target.m_setPoint = 20.0;
-            target.m_manualMode = false;
+            target.ManualMode = false;
             target.m_currentBlock.Authority.Authority = -36;
             target.m_currentBlock.Authority.SpeedLimitKPH = 36;
             target.DetermineSetPoint();
             Assert.AreEqual(0.0, target.m_setPoint);
 
             target.m_setPoint = 20.0;
-            target.m_manualMode = false;
+            target.ManualMode = false;
             target.m_stoppingTheTrain = true;
             target.m_currentBlock.Authority.Authority = 36;
             target.m_currentBlock.Authority.SpeedLimitKPH = 36;
@@ -244,7 +218,7 @@ namespace TrainControllerTest
             Assert.AreEqual(10.0, target.m_setPoint);
 
             target.m_setPoint = 20.0;
-            target.m_manualMode = false;
+            target.ManualMode = false;
             target.m_currentBlock.Authority.Authority = 36;
             target.m_currentBlock.Authority.SpeedLimitKPH = 36;
             target.m_stoppingTheTrain = true;
@@ -255,7 +229,7 @@ namespace TrainControllerTest
             Assert.AreEqual(0.0, target.m_setPoint);
 
             target.m_setPoint = 20.0;
-            target.m_manualMode = false;
+            target.ManualMode = false;
             target.m_currentBlock.Authority.Authority = 36;
             target.m_currentBlock.Authority.SpeedLimitKPH = 36;
             target.m_stoppingTheTrain = false;
@@ -266,7 +240,7 @@ namespace TrainControllerTest
             Assert.AreEqual(10.0, target.m_setPoint);
 
             target.m_setPoint = 20.0;
-            target.m_manualMode = false;
+            target.ManualMode = false;
             target.m_currentBlock.Authority.Authority = 36;
             target.m_currentBlock.Authority.SpeedLimitKPH = 36;
             target.m_stoppingTheTrain = true;
@@ -277,7 +251,7 @@ namespace TrainControllerTest
             Assert.AreEqual(10.0, target.m_setPoint);
 
             target.m_setPoint = 20.0;
-            target.m_manualMode = false;
+            target.ManualMode = false;
             target.m_currentBlock.Authority.Authority = 0;
             target.m_currentBlock.Authority.SpeedLimitKPH = 36;
             target.m_stoppingTheTrain = false;
@@ -288,7 +262,7 @@ namespace TrainControllerTest
             Assert.AreEqual(0.0, target.m_setPoint);
 
             target.m_setPoint = 20.0;
-            target.m_manualMode = false;
+            target.ManualMode = false;
             target.m_currentBlock.Authority.Authority = 36;
             target.m_currentBlock.Authority.SpeedLimitKPH = 36;
             target.m_currentBlock.NextBlock.Authority.SpeedLimitKPH = 18;
@@ -300,7 +274,38 @@ namespace TrainControllerTest
             Assert.AreEqual(5.0, target.m_setPoint);
 
             target.m_setPoint = 20.0;
-            target.m_manualMode = false;
+            target.ManualMode = false;
+            target.m_currentBlock.Authority.Authority = 36;
+            target.m_currentBlock.Authority.SpeedLimitKPH = 36;
+            target.m_currentBlock.NextBlock.Authority.SpeedLimitKPH = 36;
+            target.m_stoppingTheTrain = false;
+            target.m_currentState.Speed = 10;
+            target.m_currentBlock.LengthMeters = 0;
+            target.m_currentState.BlockProgress = 100;
+
+            target.m_approachingStation = true;
+
+            target.DetermineSetPoint();
+            Assert.AreEqual(10.0, target.m_setPoint);
+
+            target.m_setPoint = 20.0;
+            target.ManualMode = false;
+            target.m_currentBlock.Authority.Authority = 36;
+            target.m_currentBlock.Authority.SpeedLimitKPH = 36;
+            target.m_currentBlock.NextBlock.Authority.SpeedLimitKPH = 36;
+            target.m_stoppingTheTrain = false;
+            target.m_currentState.Speed = 10;
+            target.m_currentBlock.LengthMeters = 0;
+            target.m_currentState.BlockProgress = 100;
+
+            target.m_approachingStation = true;
+            target.m_currentBlock.Transponder = new Transponder("station1", 2);
+
+            target.DetermineSetPoint();
+            Assert.AreEqual(10.0, target.m_setPoint);
+
+            target.m_setPoint = 20.0;
+            target.ManualMode = false;
             target.m_currentBlock.Authority.Authority = 36;
             target.m_currentBlock.Authority.SpeedLimitKPH = 36;
             target.m_currentBlock.NextBlock.Authority.SpeedLimitKPH = 36;
@@ -314,6 +319,22 @@ namespace TrainControllerTest
 
             target.DetermineSetPoint();
             Assert.AreEqual(0.0, target.m_setPoint);
+
+            target.m_setPoint = 20.0;
+            target.ManualMode = false;
+            target.m_currentBlock.Authority.Authority = 36;
+            target.m_currentBlock.Authority.SpeedLimitKPH = 36;
+            target.m_currentBlock.NextBlock.Authority.SpeedLimitKPH = 36;
+            target.m_stoppingTheTrain = false;
+            target.m_currentState.Speed = 10;
+            target.m_currentBlock.LengthMeters = 0;
+            target.m_currentState.BlockProgress = 100;
+
+            target.m_approachingStation = true;
+            target.m_currentBlock.Transponder = new Transponder("station1", 0);
+
+            target.DetermineSetPoint();
+            Assert.AreEqual(0.0, target.m_setPoint);
         }
 
         /// <summary>
@@ -323,23 +344,48 @@ namespace TrainControllerTest
         [DeploymentItem("TrainControllerLib.dll")]
         public void FaultMonitorTest()
         {
-            PrivateObject param0 = null; // TODO: Initialize to an appropriate value
-            TrainController_Accessor target = new TrainController_Accessor(param0); // TODO: Initialize to an appropriate value
-            target.FaultMonitor();
-            Assert.Inconclusive("A method that does not return a value cannot be verified.");
-        }
+            TrackBlock startingBlock = new TrackBlock("Block1", TrackOrientation.EastWest, new Point(123, 456), 100, 50, 1, true, false, 70, TrackAllowedDirection.Both, null, "controller1", "controller2", "previousBlock", "nextBlock");
+            ITrain myTrain = new Train.Train("train1", startingBlock, Direction.East);
+            TrainController myTrainController = new TrainController(myTrain);
+            PrivateObject param0 = new PrivateObject(myTrainController);
+            TrainController_Accessor target = new TrainController_Accessor(param0);
 
-        /// <summary>
-        ///A test for GetState
-        ///</summary>
-        [TestMethod()]
-        [DeploymentItem("TrainControllerLib.dll")]
-        public void GetStateTest()
-        {
-            PrivateObject param0 = null; // TODO: Initialize to an appropriate value
-            TrainController_Accessor target = new TrainController_Accessor(param0); // TODO: Initialize to an appropriate value
-            target.GetState();
-            Assert.Inconclusive("A method that does not return a value cannot be verified.");
+            target.m_setPoint = 10.0;
+            target.m_currentState.CurrentBlock.PowerFailure = false;
+            target.m_currentState.CurrentBlock.TrackCircuitFailure = false;
+            target.m_currentState.EngineFailure = false;
+            target.m_currentState.BrakeFailure = false;
+
+            target.FaultMonitor();
+            Assert.AreEqual(10.0, target.m_setPoint);
+
+            target.m_setPoint = 10.0;
+            target.m_currentState.CurrentBlock.PowerFailure = true;
+
+            target.FaultMonitor();
+            Assert.AreEqual(0.0, target.m_setPoint);
+
+            target.m_setPoint = 10.0;
+            target.m_currentState.CurrentBlock.PowerFailure = false;
+            target.m_currentState.CurrentBlock.TrackCircuitFailure = true;
+
+            target.FaultMonitor();
+            Assert.AreEqual(0.0, target.m_setPoint);
+
+            target.m_setPoint = 10.0;
+            target.m_currentState.CurrentBlock.TrackCircuitFailure = false;
+            target.m_currentState.EngineFailure = true;
+
+            target.FaultMonitor();
+            Assert.AreEqual(0.0, target.m_setPoint);
+
+            target.m_setPoint = 10.0;
+            target.m_currentState.EngineFailure = false;
+            target.m_currentState.BrakeFailure = true;
+
+            target.FaultMonitor();
+            Assert.AreEqual(10.0, target.m_setPoint);
+            Assert.IsTrue(target.m_brakeFailure);
         }
 
         /// <summary>
@@ -349,12 +395,24 @@ namespace TrainControllerTest
         [DeploymentItem("TrainControllerLib.dll")]
         public void LeaveStationTest()
         {
-            PrivateObject param0 = null; // TODO: Initialize to an appropriate value
-            TrainController_Accessor target = new TrainController_Accessor(param0); // TODO: Initialize to an appropriate value
-            object sender = null; // TODO: Initialize to an appropriate value
-            EventArgs e = null; // TODO: Initialize to an appropriate value
-            target.LeaveStation(sender, e);
-            Assert.Inconclusive("A method that does not return a value cannot be verified.");
+            TrackBlock startingBlock = new TrackBlock("Block1", TrackOrientation.EastWest, new Point(123, 456), 100, 50, 1, true, false, 70, TrackAllowedDirection.Both, null, "controller1", "controller2", "previousBlock", "nextBlock");
+            ITrain myTrain = new Train.Train("train1", startingBlock, Direction.East);
+            TrainController myTrainController = new TrainController(myTrain);
+            PrivateObject param0 = new PrivateObject(myTrainController);
+            TrainController_Accessor target = new TrainController_Accessor(param0);
+
+            Queue<ScheduleInfo> routeInfo = new Queue<ScheduleInfo>();
+            routeInfo.Enqueue(new ScheduleInfo("station123", 1));
+            target.m_routeInfo = routeInfo;
+
+            target.LeaveStation();
+
+            Assert.AreEqual(TrainState.Door.Closed, target.m_currentState.Doors);
+            Assert.IsFalse(target.m_doorsOpen);
+            Assert.AreEqual("station123", target.m_nextStationInfo.StationName);
+            Assert.AreEqual("station123", target.m_currentState.Announcement);
+            Assert.IsFalse(target.m_atStation);
+            Assert.AreEqual(0.0, target.m_timePassed);
         }
 
         /// <summary>
@@ -364,10 +422,42 @@ namespace TrainControllerTest
         [DeploymentItem("TrainControllerLib.dll")]
         public void LightControllerTest()
         {
-            PrivateObject param0 = null; // TODO: Initialize to an appropriate value
-            TrainController_Accessor target = new TrainController_Accessor(param0); // TODO: Initialize to an appropriate value
+            TrackBlock startingBlock = new TrackBlock("Block1", TrackOrientation.EastWest, new Point(123, 456), 100, 50, 1, true, false, 70, TrackAllowedDirection.Both, null, "controller1", "controller2", "previousBlock", "nextBlock");
+            ITrain myTrain = new Train.Train("train1", startingBlock, Direction.East);
+            TrainController myTrainController = new TrainController(myTrain);
+            PrivateObject param0 = new PrivateObject(myTrainController);
+            TrainController_Accessor target = new TrainController_Accessor(param0);
+
+            target.m_inTunnel = false;
+            target.m_currentBlock.HasTunnel = false;
+            target.m_currentState.Lights = TrainState.Light.Off;
+
             target.LightController();
-            Assert.Inconclusive("A method that does not return a value cannot be verified.");
+
+            Assert.AreEqual(TrainState.Light.Off, target.m_currentState.Lights);
+            Assert.IsFalse(target.m_inTunnel);
+
+            target.m_currentBlock.HasTunnel = true;
+
+            target.LightController();
+
+            Assert.AreEqual(TrainState.Light.High, target.m_currentState.Lights);
+            Assert.IsTrue(target.m_inTunnel);
+
+            target.m_currentBlock.HasTunnel = false;
+
+            target.LightController();
+
+            Assert.AreEqual(TrainState.Light.Off, target.m_currentState.Lights);
+            Assert.IsFalse(target.m_inTunnel);
+
+            target.m_inTunnel = true;
+            target.m_currentBlock.HasTunnel = true;
+
+            target.LightController();
+
+            Assert.AreEqual(TrainState.Light.Off, target.m_currentState.Lights);
+            Assert.IsTrue(target.m_inTunnel);
         }
 
         /// <summary>
@@ -376,11 +466,18 @@ namespace TrainControllerTest
         [TestMethod()]
         public void SetScheduleTest()
         {
-            ITrain myTrain = null; // TODO: Initialize to an appropriate value
-            TrainController target = new TrainController(myTrain); // TODO: Initialize to an appropriate value
-            Queue<ScheduleInfo> routeInfo = null; // TODO: Initialize to an appropriate value
+            TrackBlock startingBlock = new TrackBlock("Block1", TrackOrientation.EastWest, new Point(123, 456), 100, 50, 1, true, false, 70, TrackAllowedDirection.Both, null, "controller1", "controller2", "previousBlock", "nextBlock");
+            ITrain myTrain = new Train.Train("train1", startingBlock, Direction.East);
+            TrainController myTrainController = new TrainController(myTrain);
+            PrivateObject param0 = new PrivateObject(myTrainController);
+            TrainController_Accessor target = new TrainController_Accessor(param0);
+
+            Queue<ScheduleInfo> routeInfo = new Queue<ScheduleInfo>();
+            routeInfo.Enqueue(new ScheduleInfo("station123", 1));
+
             target.SetSchedule(routeInfo);
-            Assert.Inconclusive("A method that does not return a value cannot be verified.");
+
+            Assert.AreEqual(routeInfo, target.m_routeInfo);
         }
 
         /// <summary>
@@ -390,10 +487,87 @@ namespace TrainControllerTest
         [DeploymentItem("TrainControllerLib.dll")]
         public void StationControllerTest()
         {
-            PrivateObject param0 = null; // TODO: Initialize to an appropriate value
-            TrainController_Accessor target = new TrainController_Accessor(param0); // TODO: Initialize to an appropriate value
+            TrackBlock startingBlock = new TrackBlock("Block1", TrackOrientation.EastWest, new Point(123, 456), 100, 50, 1, true, false, 70, TrackAllowedDirection.Both, null, "controller1", "controller2", "previousBlock", "nextBlock");
+            ITrain myTrain = new Train.Train("train1", startingBlock, Direction.East);
+            TrainController myTrainController = new TrainController(myTrain);
+            PrivateObject param0 = new PrivateObject(myTrainController);
+            TrainController_Accessor target = new TrainController_Accessor(param0);
+
+            myTrainController.TrainAtStation += new OnTrainAtStation(myTrainController_TrainAtStation);
+
+            Queue<ScheduleInfo> routeInfo = new Queue<ScheduleInfo>();
+            routeInfo.Enqueue(new ScheduleInfo("station123", 1));
+            target.m_routeInfo = routeInfo;
+
+            target.m_nextStationInfo = new ScheduleInfo("stationABC", 1);
+
+            station = "";
+            target.m_approachingStation = false;
+            target.m_currentBlock.Transponder = null;
+            target.m_currentState.Speed = 10;
+            target.m_atStation = false;
+            target.m_timePassed = 1;
+            target.m_doorsOpen = false;
+            target.m_currentState.Passengers = -1;
+
             target.StationController();
-            Assert.Inconclusive("A method that does not return a value cannot be verified.");
+
+            Assert.AreEqual("", station);
+            Assert.IsFalse(target.m_approachingStation);
+            Assert.IsFalse(target.m_atStation);
+            Assert.AreEqual(1.0, target.m_timePassed);
+            Assert.IsFalse(target.m_doorsOpen);
+            Assert.AreEqual("stationABC", target.m_nextStationInfo.StationName);
+            Assert.AreEqual(-1, target.m_currentState.Passengers);
+
+            target.m_currentBlock.Transponder = new Transponder("station456", 1);
+
+            target.StationController();
+
+            Assert.AreEqual("", station);
+            Assert.IsTrue(target.m_approachingStation);
+            Assert.IsFalse(target.m_atStation);
+            Assert.AreEqual(1.0, target.m_timePassed);
+            Assert.IsFalse(target.m_doorsOpen);
+            Assert.AreEqual("stationABC", target.m_nextStationInfo.StationName);
+            Assert.AreEqual(-1, target.m_currentState.Passengers);
+
+            target.m_currentBlock.Transponder = new Transponder("station456", 0);
+            target.m_approachingStation = true;
+            target.m_currentState.Speed = 0;
+
+            target.StationController();
+
+            Assert.AreEqual("station456", station);
+            Assert.IsFalse(target.m_approachingStation);
+            Assert.IsTrue(target.m_atStation);
+            Assert.AreEqual(1.0, target.m_timePassed);
+            Assert.IsTrue(target.m_doorsOpen);
+            Assert.AreEqual("stationABC", target.m_nextStationInfo.StationName);
+            Assert.IsTrue(target.m_currentState.Passengers >= 0);
+
+            station = "";
+            target.m_timePassed = 60;
+
+            target.StationController();
+
+            Assert.AreEqual("", station);
+            Assert.IsFalse(target.m_approachingStation);
+            Assert.IsFalse(target.m_atStation);
+            Assert.AreEqual(0.0, target.m_timePassed);
+            Assert.IsFalse(target.m_doorsOpen);
+            Assert.AreEqual("station123", target.m_nextStationInfo.StationName);
+
+            target.m_currentBlock.Transponder = new Transponder("station456", 1);
+
+            target.StationController();
+
+            Assert.AreEqual("", station);
+        }
+
+        void myTrainController_TrainAtStation(ITrainController trainController, string stationName)
+        {
+            station = stationName;
         }
 
         /// <summary>
@@ -403,11 +577,54 @@ namespace TrainControllerTest
         [DeploymentItem("TrainControllerLib.dll")]
         public void SystemControllerTest()
         {
-            PrivateObject param0 = null; // TODO: Initialize to an appropriate value
-            TrainController_Accessor target = new TrainController_Accessor(param0); // TODO: Initialize to an appropriate value
-            double samplePeriod = 0F; // TODO: Initialize to an appropriate value
-            target.SystemController(samplePeriod);
-            Assert.Inconclusive("A method that does not return a value cannot be verified.");
+            TrackBlock startingBlock = new TrackBlock("Block1", TrackOrientation.EastWest, new Point(123, 456), 100, 50, 1, true, false, 70, TrackAllowedDirection.Both, null, "controller1", "controller2", "previousBlock", "nextBlock");
+            startingBlock.Authority.Authority = -1;
+            startingBlock.Transponder = new Transponder("station456", 1);
+            startingBlock.NextBlock = new TrackBlock("nextBlock", TrackOrientation.EastWest, new Point(123, 456), 100, 50, 1, true, false, 70, TrackAllowedDirection.Both, null, "controller1", "controller2", "Block1", "nextBlock2");
+            startingBlock.NextBlock.Authority = new BlockAuthority(100, 0);
+            ITrain myTrain = new Train.Train("train1", startingBlock, Direction.East);
+            TrainController myTrainController = new TrainController(myTrain);
+            PrivateObject param0 = new PrivateObject(myTrainController);
+            TrainController_Accessor target = new TrainController_Accessor(param0);
+
+            target.m_samplePeriod = 1;
+            target.m_timePassed = 1;
+            target.m_currentBlock = null;
+            target.m_setPoint = 10;
+            target.m_currentState.BrakeFailure = true;
+            target.m_powerCommand = 200000;
+            target.m_inTunnel = false;
+            target.m_approachingStation = true;
+            target.m_doorsOpen = true;
+
+            target.SystemController(0.001);
+
+            Assert.AreEqual(0.001, target.m_samplePeriod);
+            Assert.AreEqual(1.001, target.m_timePassed);
+            Assert.AreEqual(startingBlock, target.m_currentBlock);
+            Assert.AreEqual(0.0, target.m_setPoint);
+            Assert.IsTrue(target.m_brakeFailure);
+            Assert.AreEqual(200000, target.m_powerCommand);
+            Assert.IsTrue(target.m_inTunnel);
+            Assert.IsTrue(target.m_approachingStation);
+            Assert.IsTrue(target.m_doorsOpen);
+
+            target.m_samplePeriod = 0;
+            Queue<ScheduleInfo> routeInfo = new Queue<ScheduleInfo>();
+            routeInfo.Enqueue(new ScheduleInfo("station123", 1));
+            target.m_routeInfo = routeInfo;
+
+            target.SystemController(0.002);
+
+            Assert.AreEqual(0.002, target.m_samplePeriod);
+            Assert.AreEqual(0.002, target.m_timePassed);
+            Assert.AreEqual(startingBlock, target.m_currentBlock);
+            Assert.AreEqual(0.0, target.m_setPoint);
+            Assert.IsTrue(target.m_brakeFailure);
+            Assert.AreEqual(200000, target.m_powerCommand);
+            Assert.IsTrue(target.m_inTunnel);
+            Assert.IsTrue(target.m_approachingStation);
+            Assert.IsFalse(target.m_doorsOpen);
         }
 
         /// <summary>
@@ -416,11 +633,24 @@ namespace TrainControllerTest
         [TestMethod()]
         public void UpdateTest()
         {
-            ITrain myTrain = null; // TODO: Initialize to an appropriate value
-            TrainController target = new TrainController(myTrain); // TODO: Initialize to an appropriate value
-            double dt = 0F; // TODO: Initialize to an appropriate value
-            target.Update(dt);
-            Assert.Inconclusive("A method that does not return a value cannot be verified.");
+            TrackBlock startingBlock = new TrackBlock("Block1", TrackOrientation.EastWest, new Point(123, 456), 100, 50, 1, true, false, 70, TrackAllowedDirection.Both, null, "controller1", "controller2", "previousBlock", "nextBlock");
+            ITrain myTrain = new Train.Train("train1", startingBlock, Direction.East);
+            TrainController myTrainController = new TrainController(myTrain);
+            PrivateObject param0 = new PrivateObject(myTrainController);
+            TrainController_Accessor target = new TrainController_Accessor(param0);
+
+            target.m_samplePeriod = 0.001;
+
+            try
+            {
+                target.Update(0.123);
+            }
+            catch (System.NullReferenceException e)
+            {
+                Assert.IsNotNull(e);
+            }
+
+            Assert.AreEqual(0.123, target.m_samplePeriod);
         }
 
         /// <summary>
@@ -430,10 +660,39 @@ namespace TrainControllerTest
         [DeploymentItem("TrainControllerLib.dll")]
         public void VelocityControllerTest()
         {
-            PrivateObject param0 = null; // TODO: Initialize to an appropriate value
-            TrainController_Accessor target = new TrainController_Accessor(param0); // TODO: Initialize to an appropriate value
+            TrackBlock startingBlock = new TrackBlock("Block1", TrackOrientation.EastWest, new Point(123, 456), 100, 50, 1, true, false, 70, TrackAllowedDirection.Both, null, "controller1", "controller2", "previousBlock", "nextBlock");
+            ITrain myTrain = new Train.Train("train1", startingBlock, Direction.East);
+            TrainController myTrainController = new TrainController(myTrain);
+            PrivateObject param0 = new PrivateObject(myTrainController);
+            TrainController_Accessor target = new TrainController_Accessor(param0);
+
+            target.m_powerCommand = 200000;
+            target.m_brakeFailure = true;
+
             target.VelocityController();
-            Assert.Inconclusive("A method that does not return a value cannot be verified.");
+
+            Assert.AreEqual(200000, target.m_powerCommand);
+
+            target.m_brakeFailure = false;
+            target.m_currentIntegral = 0;
+            target.m_currentSample = 0;
+            target.m_setPoint = 0;
+            target.m_currentState.Speed = 0;
+
+            target.VelocityController();
+
+            Assert.AreEqual(0.0, target.m_lastIntegral);
+            Assert.AreEqual(0.0, target.m_lastSample);
+            Assert.AreEqual(0.0, target.m_currentSample);
+            Assert.AreEqual(0.0, target.m_powerCommand);
+
+            target.m_powerCommand = 200000;
+            target.m_currentState.Speed = 100;
+
+            target.VelocityController();
+
+            Assert.AreEqual(-100.0, target.m_currentSample);
+            Assert.AreEqual(200000, target.m_powerCommand);
         }
 
         /// <summary>
@@ -442,11 +701,15 @@ namespace TrainControllerTest
         [TestMethod()]
         public void LocationXTest()
         {
-            ITrain myTrain = null; // TODO: Initialize to an appropriate value
-            TrainController target = new TrainController(myTrain); // TODO: Initialize to an appropriate value
-            double actual;
-            actual = target.LocationX;
-            Assert.Inconclusive("Verify the correctness of this test method.");
+            TrackBlock startingBlock = new TrackBlock("Block1", TrackOrientation.EastWest, new Point(123, 456), 100, 50, 1, true, false, 70, TrackAllowedDirection.Both, null, "controller1", "controller2", "previousBlock", "nextBlock");
+            ITrain myTrain = new Train.Train("train1", startingBlock, Direction.East);
+            TrainController myTrainController = new TrainController(myTrain);
+            PrivateObject param0 = new PrivateObject(myTrainController);
+            TrainController_Accessor target = new TrainController_Accessor(param0);
+
+            target.m_currentState.X = 123.456;
+
+            Assert.AreEqual(123.456, target.LocationX);
         }
 
         /// <summary>
@@ -455,11 +718,15 @@ namespace TrainControllerTest
         [TestMethod()]
         public void LocationYTest()
         {
-            ITrain myTrain = null; // TODO: Initialize to an appropriate value
-            TrainController target = new TrainController(myTrain); // TODO: Initialize to an appropriate value
-            double actual;
-            actual = target.LocationY;
-            Assert.Inconclusive("Verify the correctness of this test method.");
+            TrackBlock startingBlock = new TrackBlock("Block1", TrackOrientation.EastWest, new Point(123, 456), 100, 50, 1, true, false, 70, TrackAllowedDirection.Both, null, "controller1", "controller2", "previousBlock", "nextBlock");
+            ITrain myTrain = new Train.Train("train1", startingBlock, Direction.East);
+            TrainController myTrainController = new TrainController(myTrain);
+            PrivateObject param0 = new PrivateObject(myTrainController);
+            TrainController_Accessor target = new TrainController_Accessor(param0);
+
+            target.m_currentState.Y = 123.456;
+
+            Assert.AreEqual(123.456, target.LocationY);
         }
 
         /// <summary>
@@ -468,14 +735,17 @@ namespace TrainControllerTest
         [TestMethod()]
         public void ManualModeTest()
         {
-            ITrain myTrain = null; // TODO: Initialize to an appropriate value
-            TrainController target = new TrainController(myTrain); // TODO: Initialize to an appropriate value
-            bool expected = false; // TODO: Initialize to an appropriate value
-            bool actual;
-            target.ManualMode = expected;
-            actual = target.ManualMode;
-            Assert.AreEqual(expected, actual);
-            Assert.Inconclusive("Verify the correctness of this test method.");
+            TrackBlock startingBlock = new TrackBlock("Block1", TrackOrientation.EastWest, new Point(123, 456), 100, 50, 1, true, false, 70, TrackAllowedDirection.Both, null, "controller1", "controller2", "previousBlock", "nextBlock");
+            ITrain myTrain = new Train.Train("train1", startingBlock, Direction.East);
+            TrainController myTrainController = new TrainController(myTrain);
+            PrivateObject param0 = new PrivateObject(myTrainController);
+            TrainController_Accessor target = new TrainController_Accessor(param0);
+
+            target.ManualMode = true;
+            Assert.IsTrue(target.ManualMode);
+
+            target.ManualMode = false;
+            Assert.IsFalse(target.ManualMode);
         }
 
         /// <summary>
@@ -484,14 +754,15 @@ namespace TrainControllerTest
         [TestMethod()]
         public void ManualSpeedTest()
         {
-            ITrain myTrain = null; // TODO: Initialize to an appropriate value
-            TrainController target = new TrainController(myTrain); // TODO: Initialize to an appropriate value
-            double expected = 0F; // TODO: Initialize to an appropriate value
-            double actual;
-            target.ManualSpeed = expected;
-            actual = target.ManualSpeed;
-            Assert.AreEqual(expected, actual);
-            Assert.Inconclusive("Verify the correctness of this test method.");
+            TrackBlock startingBlock = new TrackBlock("Block1", TrackOrientation.EastWest, new Point(123, 456), 100, 50, 1, true, false, 70, TrackAllowedDirection.Both, null, "controller1", "controller2", "previousBlock", "nextBlock");
+            ITrain myTrain = new Train.Train("train1", startingBlock, Direction.East);
+            TrainController myTrainController = new TrainController(myTrain);
+            PrivateObject param0 = new PrivateObject(myTrainController);
+            TrainController_Accessor target = new TrainController_Accessor(param0);
+
+            target.ManualSpeed = 123.456;
+
+            Assert.AreEqual(123.456, target.ManualSpeed);
         }
 
         /// <summary>
@@ -500,11 +771,15 @@ namespace TrainControllerTest
         [TestMethod()]
         public void SpeedTest()
         {
-            ITrain myTrain = null; // TODO: Initialize to an appropriate value
-            TrainController target = new TrainController(myTrain); // TODO: Initialize to an appropriate value
-            double actual;
-            actual = target.Speed;
-            Assert.Inconclusive("Verify the correctness of this test method.");
+            TrackBlock startingBlock = new TrackBlock("Block1", TrackOrientation.EastWest, new Point(123, 456), 100, 50, 1, true, false, 70, TrackAllowedDirection.Both, null, "controller1", "controller2", "previousBlock", "nextBlock");
+            ITrain myTrain = new Train.Train("train1", startingBlock, Direction.East);
+            TrainController myTrainController = new TrainController(myTrain);
+            PrivateObject param0 = new PrivateObject(myTrainController);
+            TrainController_Accessor target = new TrainController_Accessor(param0);
+
+            target.m_currentState.Speed = 10.0;
+
+            Assert.AreEqual(36.0, target.Speed);
         }
     }
 }

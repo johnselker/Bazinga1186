@@ -20,7 +20,7 @@ namespace Train
 		private const double eBrakeDeceleration = -10.0;
 		private const double maxSpeed = 19.444444444;
 
-		private double acceleration = 0;
+		private double power = 0;
 		private bool brake = false;
 		private bool emergencyBrake = false;
 		private double slope = 0;
@@ -61,7 +61,7 @@ namespace Train
 			state.Passengers = passengers;
 			state.Doors = TrainState.Door.Open;
 			state.Lights = TrainState.Light.Off;
-			acceleration = 0;
+			power = 0;
 			lastUpdate = DateTime.Now;
 		}
 
@@ -69,11 +69,13 @@ namespace Train
 		{
 			UpdateSpeed();
 			UpdatePosition();
+			lastUpdate = DateTime.Now;
 		}
 
 		private void UpdateSpeed()
 		{
 			double timestep = DateTime.Now.Subtract(lastUpdate).Duration().TotalSeconds;
+			double acceleration = GetAcceleration();
 
 			if (emergencyBrake)
 			{
@@ -95,30 +97,29 @@ namespace Train
 				acceleration = 0;
 			}
 
-			double normalForce = state.Mass * g * Math.Cos(slope); // Should always be positive
-			double engineForce = state.Mass * acceleration;
+			double normalForce = state.Mass * g * Math.Cos(slope); // Always positive
+			double engineForce = state.Mass * acceleration; // Negative means brakes are applied
 			double gravityForce = state.Mass * g * Math.Sin(slope); // Negative means downward slope
-			double frictionalForce = friction * normalForce;
-//			double timestep = clock.Interval * 1000;
+			double frictionalForce = friction * normalForce; // Always positive
 
-			// Ensure that friction cannot cause a negative force
-			double forwardForce = engineForce - gravityForce;
-			if (frictionalForce > forwardForce)
-			{
-				forwardForce = 0;
-			}
-			else
-			{
-				forwardForce -= frictionalForce;
-			}
+			// Calculate the net force on the train
+			double netForce = engineForce - (gravityForce + frictionalForce);
 			// Adjust speed based on net force
-			state.Speed += (forwardForce / state.Mass) * timestep;
+			double previousSpeed = state.Speed;
+			state.Speed += (netForce / state.Mass) * timestep;
+			if (state.Speed < 0)
+			{
+				state.Speed = 0;
+			}
+			else if (state.Speed > maxSpeed)
+			{
+				state.Speed = maxSpeed;
+			}
 		}
 
 		private void UpdatePosition()
 		{
 			double timestep = DateTime.Now.Subtract(lastUpdate).Duration().TotalSeconds;
-			lastUpdate = DateTime.Now;
 			double distance = timestep * state.Speed;
 			TrackBlock block = state.CurrentBlock;
 			int startX = block.StartPoint.X;
@@ -127,6 +128,7 @@ namespace Train
 			int endY = block.EndPoint.Y;
 			double length = block.LengthMeters;
 
+			double previousProgress = state.BlockProgress;
 			switch (state.Direction)
 			{
 				case Direction.East:
@@ -181,10 +183,10 @@ namespace Train
 				Debug.Assert(block.NextBlock.LengthMeters == length);
 				state.BlockProgress--;
 
-				block.Status.TrainPresent = false;
-				block = block.NextBlock;
-				block.Status.TrainPresent = true;
-				switch (block.Orientation)
+				state.CurrentBlock.Status.TrainPresent = false;
+				state.CurrentBlock = block.NextBlock;
+				state.CurrentBlock.Status.TrainPresent = true;
+				switch (state.CurrentBlock.Orientation)
 				{
 					case TrackOrientation.EastWest:
 						if (state.Direction == Direction.East || state.Direction == Direction.Northeast || state.Direction == Direction.Southeast)
@@ -245,7 +247,7 @@ namespace Train
 					default:
 						break; // Unreachable
 				}
-				block.Status.TrainDirection = state.Direction;
+				state.CurrentBlock.Status.TrainDirection = state.Direction;
 				slope = Math.Atan(block.Grade / 100.0);
 			}
 		}
@@ -253,6 +255,28 @@ namespace Train
 		public double GetSpeed()
 		{
 			return state.Speed;
+		}
+
+		public double GetAcceleration()
+		{
+			if (state.Speed < 0.1)
+			{
+				return power / (0.1 * state.Mass);
+			}
+			else
+			{
+				return power / (state.Speed * state.Mass);
+			}
+		}
+
+		public bool GetBrake()
+		{
+			return brake;
+		}
+
+		public bool GetEmergencyBrake()
+		{
+			return emergencyBrake;
 		}
 
 		public Direction GetDirection()
@@ -273,13 +297,19 @@ namespace Train
 		public void SetBrake(bool brake)
 		{
 			this.brake = brake;
-			acceleration = 0;
+			if (brake)
+			{
+				power = 0;
+			}
 		}
 
 		public void SetEmergencyBrake(bool brake)
 		{
 			emergencyBrake = brake;
-			acceleration = 0;
+			if (brake)
+			{
+				power = 0;
+			}
 		}
 
 		public void SetDoors(TrainState.Door doors)
@@ -323,18 +353,22 @@ namespace Train
 			}
 		}
 
-		public bool SetPower(double power)
+		public double GetPower()
 		{
-			if (state.Speed < 0.1)
+			return power;
+		}
+
+		public void SetPower(double power)
+		{
+			if (power < 0)
 			{
-				acceleration = power / (0.1 * state.Mass);
+				this.power = 0;
 			}
 			else
 			{
-				acceleration = power / (state.Speed * state.Mass);
+				this.power = power;
 			}
 			Update();
-			return true;
 		}
 
 		public void SetBrakeFailure(bool failure)
