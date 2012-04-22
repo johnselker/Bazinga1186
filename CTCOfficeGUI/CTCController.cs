@@ -8,6 +8,7 @@ using Train;
 using TrackControlLib.Sean;
 using System.Reflection;
 using System.Drawing;
+using System.Timers;
 
 namespace CTCOfficeGUI
 {
@@ -25,7 +26,28 @@ namespace CTCOfficeGUI
             {
                 m_singleton = new CTCController();
             }
+
             return m_singleton;
+        }
+
+        /// <summary>
+        /// Subscribes for train system updates
+        /// </summary>
+        /// <param name="subscriber">Subscriber</param>
+        /// <returns>bool success</returns>
+        public bool Subscribe(ITrainSystemWatcher subscriber)
+        {
+            bool result = false;
+            if (subscriber != null)
+            {
+                if (!m_subscriberList.Contains(subscriber))
+                {
+                    //Add it to the subscriber list
+                    m_subscriberList.Add(subscriber);
+                    result = true;
+                }
+            }
+            return result;
         }
 
         /// <summary>
@@ -294,6 +316,19 @@ namespace CTCOfficeGUI
 
         #endregion
 
+        #region Constructor
+
+        /// <summary>
+        /// Private constructor for the CTC controller
+        /// </summary>
+        private CTCController()
+        {
+            m_updateTimer = new Timer(200); //Update every 200 ms
+            m_updateTimer.AutoReset = true;
+        }
+
+        #endregion
+
         #region Helper Methods
 
         /// <summary>
@@ -424,6 +459,26 @@ namespace CTCOfficeGUI
 
         #endregion
 
+        #region Event Handlers
+
+        /// <summary>
+        /// Update timer expired
+        /// </summary>
+        /// <param name="sender">Sender of the event</param>
+        /// <param name="e">Event arguments</param>
+        private void OnUpdateTimerElapsed(object sender, ElapsedEventArgs e)
+        {
+            lock (m_subscriberList)
+            {
+                foreach (ITrainSystemWatcher watcher in m_subscriberList)
+                {
+                    //Update the subscribers
+                    watcher.Update();
+                }
+            }
+        }
+        #endregion
+
         #region Private Data
 
         private static CTCController m_singleton = null;
@@ -431,6 +486,9 @@ namespace CTCOfficeGUI
         private LoggingTool m_log = new LoggingTool(MethodBase.GetCurrentMethod());
         private Size m_layoutSize;
         private Point m_layoutStartPoint;
+        private List<ITrainSystemWatcher> m_subscriberList = new List<ITrainSystemWatcher>();
+        private Timer m_updateTimer;
+
         #endregion
     }
 }
