@@ -193,7 +193,14 @@ namespace CTCOfficeGUI
 
             if (block.Transponder != null) //Could use block.HasTransponder property, but check for null to be on the safe side...
             {
-                info.Add("Transponder:", block.Transponder.StationName + "in " + block.Transponder.DistanceToStation.ToString() + " blocks");
+                if (block.Transponder.DistanceToStation != 0)
+                {
+                    info.Add("Transponder:", block.Transponder.StationName + "in " + block.Transponder.DistanceToStation.ToString() + " block(s)");
+                }
+                else
+                {
+                    info.Add("Transponder:", "At " + block.Transponder.StationName);
+                }
             }
             else
             {
