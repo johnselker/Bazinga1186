@@ -193,7 +193,14 @@ namespace CTCOfficeGUI
 
             if (block.Transponder != null) //Could use block.HasTransponder property, but check for null to be on the safe side...
             {
-                info.Add("Transponder:", block.Transponder.StationName + "in " + block.Transponder.DistanceToStation.ToString() + " blocks");
+                if (block.Transponder.DistanceToStation != 0)
+                {
+                    info.Add("Transponder:", block.Transponder.StationName + "in " + block.Transponder.DistanceToStation.ToString() + " block(s)");
+                }
+                else
+                {
+                    info.Add("Transponder:", "At " + block.Transponder.StationName);
+                }
             }
             else
             {
@@ -236,6 +243,16 @@ namespace CTCOfficeGUI
             info.Add("Position:", state.X.ToString() + ", " + state.Y.ToString());
 
             SetInfo(state.TrainID.ToString(), info);
+        }
+
+        /// <summary>
+        /// Displays info about the train yard
+        /// </summary>
+        /// <param name="b">Track block</param>
+        public void SetTrainYardInfo(TrackBlock b)
+        {
+            //Just show the block name
+            SetInfo(b.Name, null);
         }
 
         #endregion

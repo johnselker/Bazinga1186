@@ -45,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BlockAuthority.cs" />
+    <Compile Include="Constants.cs" />
     <Compile Include="TrackSwitch.cs" />
     <Compile Include="EnumTypes.cs" />
     <Compile Include="LoggingTool.cs" />

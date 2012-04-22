@@ -8,6 +8,7 @@ using Train;
 using TrackControlLib.Sean;
 using System.Reflection;
 using System.Drawing;
+using System.Timers;
 
 namespace CTCOfficeGUI
 {
@@ -25,7 +26,28 @@ namespace CTCOfficeGUI
             {
                 m_singleton = new CTCController();
             }
+
             return m_singleton;
+        }
+
+        /// <summary>
+        /// Subscribes for train system updates
+        /// </summary>
+        /// <param name="subscriber">Subscriber</param>
+        /// <returns>bool success</returns>
+        public bool Subscribe(ITrainSystemWatcher subscriber)
+        {
+            bool result = false;
+            if (subscriber != null)
+            {
+                if (!m_subscriberList.Contains(subscriber))
+                {
+                    //Add it to the subscriber list
+                    m_subscriberList.Add(subscriber);
+                    result = true;
+                }
+            }
+            return result;
         }
 
         /// <summary>
@@ -218,6 +240,93 @@ namespace CTCOfficeGUI
             return m_layoutStartPoint;
         }
 
+        /// <summary>
+        /// Gets the redline schedule
+        /// </summary>
+        /// <returns>Queue of schedule info</returns>
+        public Queue<ScheduleInfo> GetRedlineSchedule()
+        {
+            Queue<ScheduleInfo> redline = new Queue<ScheduleInfo>();
+            ScheduleInfo info = new ScheduleInfo(Constants.StationNames.SHADYSIDE, 3.7);
+            redline.Enqueue(info);
+            info = new ScheduleInfo(Constants.StationNames.HERRONAVE, 2.3);
+            redline.Enqueue(info);
+            info = new ScheduleInfo(Constants.StationNames.SWISSVALE, 1.5);
+            redline.Enqueue(info);
+            info = new ScheduleInfo(Constants.StationNames.PENNSTATION, 1.8);
+            redline.Enqueue(info);
+            info = new ScheduleInfo(Constants.StationNames.STEELPLAZA, 2.1);
+            redline.Enqueue(info);
+            info = new ScheduleInfo(Constants.StationNames.FIRSTAVE, 2.1);
+            redline.Enqueue(info);
+            info = new ScheduleInfo(Constants.StationNames.STATIONSQUARE, 1.7);
+            redline.Enqueue(info);
+            info = new ScheduleInfo(Constants.StationNames.SOUTHHILLS, 2.3);
+            redline.Enqueue(info);
+
+            return redline;
+        }
+
+        /// <summary>
+        /// Gets the greenline schedule
+        /// </summary>
+        /// <returns></returns>
+        public Queue<ScheduleInfo> GetGreenlineSchedule()
+        {
+            Queue<ScheduleInfo> greenline = new Queue<ScheduleInfo>();
+            ScheduleInfo info = new ScheduleInfo(Constants.StationNames.PIONEER, 2.3);
+            greenline.Enqueue(info);
+            info = new ScheduleInfo(Constants.StationNames.EDGEBROOK, 2.3);
+            greenline.Enqueue(info);
+            info = new ScheduleInfo(Constants.StationNames.STATION, 2.4);
+            greenline.Enqueue(info);
+            info = new ScheduleInfo(Constants.StationNames.WHITED, 2.7);
+            greenline.Enqueue(info);
+            info = new ScheduleInfo(Constants.StationNames.SOUTHBANK, 2.6);
+            greenline.Enqueue(info);
+            info = new ScheduleInfo(Constants.StationNames.CENTRAL, 1.9);
+            greenline.Enqueue(info);
+            info = new ScheduleInfo(Constants.StationNames.INGLEWOOD, 2.0);
+            greenline.Enqueue(info);
+            info = new ScheduleInfo(Constants.StationNames.OVERBROOK, 2.0);
+            greenline.Enqueue(info);
+            info = new ScheduleInfo(Constants.StationNames.GLENBURY, 2.2);
+            greenline.Enqueue(info);
+            info = new ScheduleInfo(Constants.StationNames.DORMONT, 2.5);
+            greenline.Enqueue(info);
+            info = new ScheduleInfo(Constants.StationNames.MTLEBANON, 2.2);
+            greenline.Enqueue(info);
+            info = new ScheduleInfo(Constants.StationNames.POPLAR, 4.4);
+            greenline.Enqueue(info);
+            info = new ScheduleInfo(Constants.StationNames.CASTLESHANNON, 2.2);
+            greenline.Enqueue(info);
+            info = new ScheduleInfo(Constants.StationNames.DORMONT, 2.3);
+            greenline.Enqueue(info);
+            info = new ScheduleInfo(Constants.StationNames.GLENBURY, 2.4);
+            greenline.Enqueue(info);
+            info = new ScheduleInfo(Constants.StationNames.OVERBROOK, 2.1);
+            greenline.Enqueue(info);
+            info = new ScheduleInfo(Constants.StationNames.INGLEWOOD, 2.0);
+            greenline.Enqueue(info);
+            info = new ScheduleInfo(Constants.StationNames.CENTRAL, 2.0);
+            greenline.Enqueue(info);
+
+            return greenline;
+        }
+
+        #endregion
+
+        #region Constructor
+
+        /// <summary>
+        /// Private constructor for the CTC controller
+        /// </summary>
+        private CTCController()
+        {
+            m_updateTimer = new Timer(200); //Update every 200 ms
+            m_updateTimer.AutoReset = true;
+        }
+
         #endregion
 
         #region Helper Methods
@@ -253,14 +362,14 @@ namespace CTCOfficeGUI
                     {
                         //Create a new track controller
                         ITrackController controller = new TrackController();
-                        controller.AddTrackBlock(b, GetAdjacentBlocks(b));
+                        controller.AddTrackBlock(b);
                         m_trackTable[b] = controller;
                     }
                     else
                     {
                         //Add it to the existing track controller
                         ITrackController controller = trackControllers[b.ControllerId];
-                        controller.AddTrackBlock(b, GetAdjacentBlocks(b));
+                        controller.AddTrackBlock(b);
                         m_trackTable[b] = controller;
                     }
                 }
@@ -276,14 +385,14 @@ namespace CTCOfficeGUI
                     {
                         //Create a new track controller
                         ITrackController controller = new TrackController();
-                        controller.AddTrackBlock(b, GetAdjacentBlocks(b));
+                        controller.AddTrackBlock(b);
                         m_trackTable[b] = controller;
                     }
                     else
                     {
                         //Add it to the existing track controller
                         ITrackController controller = trackControllers[b.ControllerId];
-                        controller.AddTrackBlock(b, GetAdjacentBlocks(b));
+                        controller.AddTrackBlock(b);
                         m_trackTable[b] = controller;
                     }
                 }
@@ -350,6 +459,26 @@ namespace CTCOfficeGUI
 
         #endregion
 
+        #region Event Handlers
+
+        /// <summary>
+        /// Update timer expired
+        /// </summary>
+        /// <param name="sender">Sender of the event</param>
+        /// <param name="e">Event arguments</param>
+        private void OnUpdateTimerElapsed(object sender, ElapsedEventArgs e)
+        {
+            lock (m_subscriberList)
+            {
+                foreach (ITrainSystemWatcher watcher in m_subscriberList)
+                {
+                    //Update the subscribers
+                    watcher.Update();
+                }
+            }
+        }
+        #endregion
+
         #region Private Data
 
         private static CTCController m_singleton = null;
@@ -357,6 +486,9 @@ namespace CTCOfficeGUI
         private LoggingTool m_log = new LoggingTool(MethodBase.GetCurrentMethod());
         private Size m_layoutSize;
         private Point m_layoutStartPoint;
+        private List<ITrainSystemWatcher> m_subscriberList = new List<ITrainSystemWatcher>();
+        private Timer m_updateTimer;
+
         #endregion
     }
 }

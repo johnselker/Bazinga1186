@@ -97,7 +97,7 @@ namespace CTCOfficeGUI
 
                     graphic.Location = CalculateBlockPosition(b, layoutPosition, graphic.ArrowLength);
 
-                    graphic.Click += OnBlockClicked;
+                    graphic.TrackBlockClicked += OnBlockClicked;
 
                     Controls.Add(graphic);
                     m_blockTable[b] = graphic;

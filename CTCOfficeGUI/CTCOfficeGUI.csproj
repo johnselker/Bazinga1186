@@ -64,6 +64,7 @@
     <Compile Include="InfoPanel.Designer.cs">
       <DependentUpon>InfoPanel.cs</DependentUpon>
     </Compile>
+    <Compile Include="ITrainSystemWatcher.cs" />
     <Compile Include="MainScreen.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -193,6 +194,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="train_icon_large.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tunnelIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\railroadCrossing.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

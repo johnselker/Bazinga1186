@@ -12,7 +12,7 @@ using Train;
 
 namespace CTCOfficeGUI
 {
-    public partial class MainScreen : Form
+    public partial class MainScreen : Form, ITrainSystemWatcher
     {
         #region Constructor
 
@@ -22,6 +22,21 @@ namespace CTCOfficeGUI
         public MainScreen()
         {
             InitializeComponent();
+
+            m_ctcController.Subscribe(this);
+
+            m_simulatorWindow.Show();
+        }
+
+        #endregion
+
+        #region ITrainSystemWatcher Methods
+
+        /// <summary>
+        /// Updates the CTC display with the new data
+        /// </summary>
+        public void Update()
+        {
         }
 
         #endregion
@@ -124,6 +139,13 @@ namespace CTCOfficeGUI
                         break;
                 }
             }
+            else if (tag.GetType() == typeof(string))
+            {
+                if ((string) tag == Constants.SPAWNTRAIN)
+                {
+                    ShowTextInputPopup("Enter train name", "Train1", OnTrainNameEntered);
+                }
+            }
         }
 
         /// <summary>
@@ -180,8 +202,39 @@ namespace CTCOfficeGUI
             m_log.LogInfo("Track block was clicked");
             m_selectedTrain = null;
             m_selectedTrackBlock = b;
-            infoPanel.SetTrackBlockInfo(b);
-            commandPanel.ShowTrackBlockCommands(b);
+
+            if (m_simulatorWindow == null || m_simulatorWindow.IsDisposed || m_simulatorWindow.Disposing)
+            {
+                m_simulatorWindow = new SimulatorWindow(); //User may have closed the simulator
+                m_simulatorWindow.Show();
+            }
+
+            m_simulatorWindow.SetSelectedTrackBlock(m_selectedTrackBlock);
+
+            if (b != null)
+            {
+                if (b.HasTransponder)
+                {
+                    if (b.Transponder.StationName == Constants.TRAINYARD && b.Transponder.DistanceToStation == 0)
+                    {
+                        //This is a train yard, handle it specially
+                        infoPanel.SetTrainYardInfo(b);
+                        commandPanel.ShowTrainYardCommands();
+                    }
+                    else
+                    {
+                        //Normal track block
+                        infoPanel.SetTrackBlockInfo(b);
+                        commandPanel.ShowTrackBlockCommands(b);
+                    }
+                }
+                else
+                {
+                    //Normal track block
+                    infoPanel.SetTrackBlockInfo(b);
+                    commandPanel.ShowTrackBlockCommands(b);
+                }
+            }
 
             CloseOpenPopups();
         }
@@ -197,6 +250,14 @@ namespace CTCOfficeGUI
             m_selectedTrain = train;
             infoPanel.SetTrainInfo(train);
             commandPanel.ShowTrainCommands();
+
+            if (m_simulatorWindow == null || m_simulatorWindow.IsDisposed || m_simulatorWindow.Disposing)
+            {
+                m_simulatorWindow = new SimulatorWindow(); //User may have closed the simulator
+                m_simulatorWindow.Show();
+            }
+
+            m_simulatorWindow.SetSelectedTrackBlock(m_selectedTrackBlock);
 
             CloseOpenPopups();
         }
@@ -305,13 +366,36 @@ namespace CTCOfficeGUI
         }
 
         /// <summary>
-        /// User selected the scheduler menu item
+        /// User selected the view simulator window menu item
         /// </summary>
-        /// <param name="sender">Sender of the event</param>
-        /// <param name="e">Event arguments</param>
-        private void OnSchedulerClicked(object sender, EventArgs e)
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnViewSimulatorWindowClicked(object sender, EventArgs e)
         {
+            if (m_simulatorWindow == null || m_simulatorWindow.IsDisposed || m_simulatorWindow.Disposing)
+            {
+                m_simulatorWindow = new SimulatorWindow();
+                m_simulatorWindow.SetSelectedTrackBlock(m_selectedTrackBlock);
+            }
 
+            m_simulatorWindow.WindowState = FormWindowState.Normal;
+            m_simulatorWindow.Show();
+        }
+
+        /// <summary>
+        /// Train name was entered for a new train
+        /// </summary>
+        /// <param name="value">Train name</param>
+        private void OnTrainNameEntered(string value)
+        {
+            if (!string.IsNullOrEmpty(value))
+            {
+                Simulator.GetSimulator().SpawnNewTrain(m_selectedTrackBlock, value);
+            }
+            else
+            {
+                ShowOKPopup("Error", "Train name cannot be empty", OnPopupAcknowledged);
+            }
         }
 
         #endregion
@@ -323,6 +407,7 @@ namespace CTCOfficeGUI
         private ITrain m_selectedTrain = null;
         private List<Form> m_openPopups = new List<Form>();
         private CTCController m_ctcController = CTCController.GetCTCController();
+        private SimulatorWindow m_simulatorWindow = new SimulatorWindow();
 
         #endregion
     }

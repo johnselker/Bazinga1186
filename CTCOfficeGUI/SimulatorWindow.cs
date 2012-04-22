@@ -17,147 +17,41 @@ namespace CTCOfficeGUI
         #region Public Methods
 
         /// <summary>
-        /// Gets the singleton simulator window instance
+        /// Sets the selected track block, or clears it if null
         /// </summary>
-        /// <returns>Singleton instance</returns>
-        public static SimulatorWindow GetSimulatorWindow()
+        /// <param name="block">Selected track block</param>
+        public void SetSelectedTrackBlock(TrackBlock block)
         {
-            if (m_singleton == null)
+            m_selectedBlock = block;
+
+            if (block != null)
             {
-                m_singleton = new SimulatorWindow();
+                chkBrokenRail.Visible = chkCircuitFail.Visible = chkPowerFail.Visible = true;
+
+                if (block.Status != null)
+                {
+                    //Set the failure status
+                    chkBrokenRail.Checked = block.Status.BrokenRail;
+                    chkCircuitFail.Checked = block.Status.CircuitFail;
+                    chkPowerFail.Checked = block.Status.PowerFail;
+                }
+                else
+                {
+                    //This shouldn't happen. Uncheck the boxes
+                    chkBrokenRail.Checked = chkCircuitFail.Checked = chkPowerFail.Checked = false;
+                }
             }
-
-            return m_singleton;
-        }
-
-        /// <summary>
-        /// Shows simulation commands for a train
-        /// </summary>
-        /// <param name="train"></param>
-        public void ShowTrainFailCommands(ITrain train)
-        {
-            m_selectedTrain = train;
-            Dictionary<object, string> commands = new Dictionary<object, string>();
-
-            if (train != null)
+            else
             {
-                
-                commands.Add(TrainFailureCommands.EngineFailure, "Engine Failure");
-                commands.Add(TrainFailureCommands.SignalPickupFailure, "Signal Pickup Failure");
-                SetCommands(commands);
+                //Hide the check boxes
+                chkBrokenRail.Visible = chkCircuitFail.Visible = chkPowerFail.Visible = false;
+                chkBrokenRail.Checked = chkCircuitFail.Checked = chkPowerFail.Checked = false;
             }
-        }
-
-        /// <summary>
-        /// Clears the buttons on the panel
-        /// </summary>
-        public void ClearButtons()
-        {
-            m_selectedTrain = null;
-            m_selectedBlock = null;
-            foreach (Button b in m_buttonList)
-            {
-                Controls.Remove(b);
-            }
-
-            m_buttonList.Clear();
         }
 
         #endregion
 
         #region Helper Methods
-
-        /// <summary>
-        /// Sets the list of commands to display
-        /// </summary>
-        /// <param name="commands">Command strings and tags for identification</param>
-        private void SetCommands(Dictionary<object, string> commands)
-        {
-            if (commands != null)
-            {
-                ClearButtons();
-
-                foreach (KeyValuePair<object, string> pair in commands)
-                {
-                    AddButton(pair.Key, pair.Value);
-                }
-            }
-        }
-
-        /// <summary>
-        /// Adds a new button to the display
-        /// </summary>
-        /// <param name="tag">Tag used to identify the button</param>
-        /// <param name="text">Text to display on the button</param>
-        private void AddButton(object tag, string text)
-        {
-            Button b = new Button();
-            b.Tag = tag;
-            b.Text = text;
-            b.Left = (this.Width - m_buttonWidth) / 2;
-            b.Top = GetNextYValue();
-            b.Height = m_buttonHeight;
-            b.Width = m_buttonWidth;
-            b.Click += OnButtonClicked;
-            Controls.Add(b);
-            b.BringToFront();
-            b.Show();
-            m_buttonList.Add(b);
-        }
-
-        /// <summary>
-        /// Gets the Y location for the next button
-        /// </summary>
-        /// <returns>Y location</returns>
-        private int GetNextYValue()
-        {
-            int yLoc = 0;
-            if (m_buttonList.Count == 0)
-            {
-                yLoc = btnSetTime.Bottom + m_verticalSpacing; 
-            }
-            else
-            {
-                yLoc = m_buttonList[m_buttonList.Count - 1].Bottom + m_verticalSpacing;
-            }
-            return yLoc;
-        }
-
-        /// <summary>
-        /// Processes the simulation command 
-        /// </summary>
-        /// <param name="tag">Tag of the button that was clicked</param>
-        private void ProcessSimulationInput(object tag)
-        {
-            if (tag.GetType() == typeof(TrainFailureCommands))
-            {
-                switch ((TrainFailureCommands)tag)
-                {
-                    case TrainFailureCommands.EngineFailure:
-                        m_simulator.SimulateEngineFailure(m_selectedTrain, true);
-                        break;
-                    case TrainFailureCommands.SignalPickupFailure:
-                        m_simulator.SimulatePickupFailure(m_selectedTrain, true);
-                        break;
-                    case TrainFailureCommands.BrakeFailure:
-                        m_simulator.SimulateBrakeFailure(m_selectedTrain, true);
-                        break;
-                    case TrainFailureCommands.ClearEngineFailure:
-                        m_simulator.SimulateEngineFailure(m_selectedTrain, false);
-                        break;
-                    case TrainFailureCommands.ClearPickupFailure:
-                        m_simulator.SimulatePickupFailure(m_selectedTrain, false);
-                        break;
-                    case TrainFailureCommands.ClearBrakeFailure:
-                        m_simulator.SimulateBrakeFailure(m_selectedTrain, false);
-                        break;
-                    default: 
-                        //Unreachable
-                        break;
-
-                }
-            }
-        }
 
         #endregion
 
@@ -166,9 +60,11 @@ namespace CTCOfficeGUI
         /// <summary>
         /// Constructor for the simulator window
         /// </summary>
-        private SimulatorWindow()
+        public SimulatorWindow()
         {
             InitializeComponent();
+
+            chkRunSimulation.Checked = m_simulator.SimulationRunning;
         }
 
         #endregion
@@ -176,22 +72,99 @@ namespace CTCOfficeGUI
         #region Event Handlers
 
         /// <summary>
-        /// Simulation command button was clicked
+        /// User pressed the SetSimulationSpeed button
         /// </summary>
         /// <param name="sender">Sender of the event</param>
         /// <param name="e">Event arguments</param>
-        private void OnButtonClicked(object sender, EventArgs e)
+        private void OnSetSimulationSpeedClicked(object sender, EventArgs e)
         {
-            try
-            {
-                Button b = (Button)sender;
+            double speed;
+            bool valid = false;
 
-                ProcessSimulationInput(b.Tag);
-            }
-            catch (InvalidCastException ex)
+            if (Double.TryParse(txtSpeed.Text, out speed))
             {
-                m_log.LogError(ex);
-                throw ex;
+                if (m_simulator.SetSimulationSpeed(speed)) //Set the simulation speed
+                {
+                    valid = true;
+                }
+            }
+            
+            if (!valid)
+            {
+                //Show invalid popup
+                m_okPopup = new MessageDialog("Time is invalid", "OK", OnPopupAcknowledged);
+                m_okPopup.TitleBarText = "Error";
+                m_okPopup.Show();
+            }
+        }
+
+        /// <summary>
+        /// User clicked the broken rail checkbox
+        /// </summary>
+        /// <param name="sender">Sender of the event</param>
+        /// <param name="e">Event arguments</param>
+        private void OnBrokenRailClicked(object sender, EventArgs e)
+        {
+            if (m_selectedBlock != null)
+            {
+                m_simulator.SimulateBrokenRail(m_selectedBlock, chkBrokenRail.Checked);
+            }
+        }
+
+        /// <summary>
+        /// User clicked the power failure checkbox
+        /// </summary>
+        /// <param name="sender">Sender of the event</param>
+        /// <param name="e">Event arguments</param>
+        private void OnPowerFailureClicked(object sender, EventArgs e)
+        {
+            if (m_selectedBlock != null)
+            {
+                m_simulator.SimulatePowerFailure(m_selectedBlock, chkPowerFail.Checked);
+            }
+        }
+
+        /// <summary>
+        /// User clicked the circuit failure checkbox
+        /// </summary>
+        /// <param name="sender">Sender of the event</param>
+        /// <param name="e">Event arguments</param>
+        private void OnCircuitFailureClicked(object sender, EventArgs e)
+        {
+            if (m_selectedBlock != null)
+            {
+                m_simulator.SimulateCircuitFailure(m_selectedBlock, chkCircuitFail.Checked);
+            }
+        }
+
+        /// <summary>
+        /// Run simulation checkbox was clicked
+        /// </summary>
+        /// <param name="sender">Sender of the event</param>
+        /// <param name="e">Event arguments</param>
+        private void OnRunSimulationClicked(object sender, EventArgs e)
+        {
+            if (chkRunSimulation.Checked)
+            {
+                m_simulator.StartSimulation();
+            }
+            else
+            {
+                m_simulator.PauseSimulation();
+            }
+        }
+
+        /// <summary>
+        /// OK popup was acknowledged
+        /// </summary>
+        /// <param name="sender">Sender of the event</param>
+        /// <param name="e">Event arguments</param>
+        private void OnPopupAcknowledged(object sender, EventArgs e)
+        {
+            if (m_okPopup != null)
+            {
+                m_okPopup.Close();
+                m_okPopup = null;
             }
         }
 
@@ -199,16 +172,12 @@ namespace CTCOfficeGUI
 
         #region Private Data
 
-        private static SimulatorWindow m_singleton = null;
-        private List<Button> m_buttonList = new List<Button>();
-        private int m_verticalSpacing = 15;
-        private int m_buttonWidth = 100;
-        private int m_buttonHeight = 40;
         private LoggingTool m_log = new LoggingTool(MethodBase.GetCurrentMethod());
         private Simulator m_simulator = Simulator.GetSimulator();
-        private ITrain m_selectedTrain = null;
         private TrackBlock m_selectedBlock = null;
+        private MessageDialog m_okPopup = null;
 
         #endregion
+
     }
 }

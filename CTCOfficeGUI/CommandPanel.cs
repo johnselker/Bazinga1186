@@ -75,6 +75,16 @@ namespace CTCOfficeGUI
         }
 
         /// <summary>
+        /// Displays commands for a train yard
+        /// </summary>
+        public void ShowTrainYardCommands()
+        {
+            Dictionary<object, string> commands = new Dictionary<object, string>();
+            commands.Add(Constants.SPAWNTRAIN, Constants.SPAWNTRAIN);
+            SetCommands(commands);
+        }
+
+        /// <summary>
         /// Displays commands for routing trains
         /// </summary>
         public void ShowTrainRoutingCommands()

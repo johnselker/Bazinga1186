@@ -1,6 +1,6 @@
 ﻿/// TrackBlock.cs
 /// Jeremy Nelson
-/// Bazinga! 
+/// Bazinga!
 
 using System.Collections.Generic;
 using System.Linq;
@@ -27,8 +27,8 @@ namespace CommonLib
 
         private BlockAuthority m_authority = new BlockAuthority(0, 0);
         private TrackStatus m_status = new TrackStatus();
-        private double m_grade;
-       
+        private TrackSwitch m_switch = null;
+
         #endregion
 
         #region Properties
@@ -75,6 +75,46 @@ namespace CommonLib
             set;
         }
 
+        // PROPERTY: BrokenRail
+        //--------------------------------------------------------------------------------------
+        /// <summary>
+        /// Indicates the presence of a broken rail in the block
+        /// </summary>
+        //--------------------------------------------------------------------------------------
+        [XmlIgnore]
+        public bool BrokenRail
+        {
+            get;
+            set;
+        }
+
+        // PROPERTY: PowerFailure
+        //--------------------------------------------------------------------------------------
+        /// <summary>
+        /// Indicates a power failure in the block
+        /// </summary>
+        //--------------------------------------------------------------------------------------
+        [XmlIgnore]
+        public bool PowerFailure
+        {
+            get;
+            set;
+        }
+
+        // PROPERTY: TrackCircuitFailure
+        //--------------------------------------------------------------------------------------
+        /// <summary>
+        /// Indicates a failure of the track circuit in the block
+        /// </summary>
+        //--------------------------------------------------------------------------------------
+        [XmlIgnore]
+        public bool TrackCircuitFailure
+        {
+            get;
+            set;
+        }
+
+
         #endregion
 
         #region Accessors
@@ -106,6 +146,7 @@ namespace CommonLib
             get;
             set;
         }
+
         // ACCESSOR: StaticSpeedLimit
         //--------------------------------------------------------------------------------------
         /// <summary>
@@ -118,6 +159,7 @@ namespace CommonLib
             get;
             set;
         }
+
         // ACCESSOR: Length
         //--------------------------------------------------------------------------------------
         /// <summary>
@@ -170,19 +212,6 @@ namespace CommonLib
             set;
         }
 
-        // ACCESSOR: HasTransponder
-        //--------------------------------------------------------------------------------------
-        /// <summary>
-        /// Shortcut to indicate the presence of a transponder
-        /// </summary>
-        //--------------------------------------------------------------------------------------
-        [XmlIgnore]
-        public bool HasTransponder
-        {
-            get;
-            set;
-        }
-
         // ACCESSOR: StartPoint
         //--------------------------------------------------------------------------------------
         /// <summary>
@@ -214,8 +243,8 @@ namespace CommonLib
         /// <summary>
         /// Starting elevation of the block
         /// </summary>
-        //--------------------------------------------------------------------------------------   
-        [XmlElement(ElementName = "StartElevation")]
+        //--------------------------------------------------------------------------------------
+        [XmlIgnore]
         public double StartElevationMeters
         {
             get;
@@ -246,18 +275,6 @@ namespace CommonLib
         {
             get;
             set;
-        }
-
-        // ACCESSOR: Status
-        //--------------------------------------------------------------------------------------
-        /// <summary>
-        /// Status of the track block
-        /// </summary>
-        //--------------------------------------------------------------------------------------
-        [XmlIgnore]
-        public TrackStatus Status
-        {
-            get { return m_status; }
         }
 
         // ACCESSOR: SwitchId
@@ -311,11 +328,101 @@ namespace CommonLib
             get;
             set;
         }
-        [XmlElement(ElementName = "HasSwitch")]
-        public Boolean HasSwitch
+
+        // ACCESSOR: Switch
+        //--------------------------------------------------------------------------------------
+        /// <summary>
+        /// Switch object
+        /// </summary>
+        //--------------------------------------------------------------------------------------
+        [XmlIgnore]
+        public TrackSwitch Switch
+        {
+            get { return m_switch; }
+            set
+            {
+                m_switch = value;
+                if (m_switch != null)
+                {
+                    SwitchId = m_switch.Name;
+                }
+                else
+                {
+                    SwitchId = string.Empty;
+                }
+            }
+        }
+
+        // ACCESSOR: PreviousBlockId
+        //--------------------------------------------------------------------------------------
+        /// <summary>
+        /// Id of the previous block attached to this one for connectivity
+        /// </summary>
+        ///
+        /// <remarks>
+        /// Only used for serialization. During runtime, NextBlock/PreviousBlock
+        /// fields should be used
+        /// </remarks>
+        //--------------------------------------------------------------------------------------
+        [XmlElement(ElementName = "PreviousBlockId")]
+        public string PreviousBockId
         {
             get;
             set;
+        }
+
+        // ACCESSOR: NextBlockId
+        //--------------------------------------------------------------------------------------
+        /// <summary>
+        /// Id of the next block attached to this one for connectivity
+        /// </summary>
+        ///
+        /// <remarks>
+        /// Only used for serialization. During runtime, NextBlock/PreviousBlock
+        /// fields should be used
+        /// </remarks>
+        //--------------------------------------------------------------------------------------
+        [XmlElement(ElementName = "NextBlockId")]
+        public string NextBockId
+        {
+            get;
+            set;
+        }
+
+        // ACCESSOR: HasTransponder
+        //--------------------------------------------------------------------------------------
+        /// <summary>
+        /// Shortcut to indicate the presence of a transponder
+        /// </summary>
+        //--------------------------------------------------------------------------------------
+        [XmlIgnore]
+        public bool HasTransponder
+        {
+            get { return Transponder != null; }
+        }
+
+        // ACCESSOR: HasSwitch
+        //--------------------------------------------------------------------------------------
+        /// <summary>
+        /// Shortcut to determine if the block has a switch
+        /// </summary>
+        //--------------------------------------------------------------------------------------
+        [XmlIgnore]
+        public Boolean HasSwitch
+        {
+            get { return m_switch != null; }
+        }
+
+        // ACCESSOR: Status
+        //--------------------------------------------------------------------------------------
+        /// <summary>
+        /// Status of the track block
+        /// </summary>
+        //--------------------------------------------------------------------------------------
+        [XmlIgnore]
+        public TrackStatus Status
+        {
+            get { return m_status; }
         }
 
         #endregion
@@ -330,13 +437,13 @@ namespace CommonLib
             //Do nothing
         }
 
-        
+
         // METHOD: TrackBlock
         //--------------------------------------------------------------------------------------
         /// <summary>
         /// Primary constructor with initial state
         /// </summary>
-        /// 
+        ///
         /// <param name="name">Track block name</param>
         /// <param name="orientation">Track block orientation</param>
         /// <param name="length">Track block length</param>
@@ -353,9 +460,10 @@ namespace CommonLib
         /// <param name="controllerID">Primary Controller ID</param>
         /// <param name="secondaryControllerID">Secondary Controller ID</param>
         //--------------------------------------------------------------------------------------
-        public TrackBlock(string name, TrackOrientation orientation, Point startPoint, double length, double endElevation, 
-                            double grade, bool tunnel, bool railroadCrossing, int staticSpeedLimit,  
-                            TrackAllowedDirection direction, string switchID, string controllerID, string secondaryControllerID)
+        public TrackBlock(string name, TrackOrientation orientation, Point startPoint, double length, double endElevation,
+                            double grade, bool tunnel, bool railroadCrossing, int staticSpeedLimit,
+                            TrackAllowedDirection direction, string switchID, string controllerID,
+                            string secondaryControllerID, string prevBlockID, string nextBlockID)
         {
             Name = name;
             Orientation = orientation;
@@ -378,6 +486,8 @@ namespace CommonLib
             {
                 StartElevationMeters = EndElevationMeters - ((LengthMeters * grade) / 100);
             }
+            PreviousBockId = prevBlockID;
+            NextBockId = nextBlockID;
         }
 
         #endregion
@@ -389,11 +499,11 @@ namespace CommonLib
         /// <summary>
         /// Calculates the endpoint of the block based on the length and orientation
         /// </summary>
-        /// 
+        ///
         /// <remarks>
         /// The starting point is assumed to be the leftmost point, or
         /// the southern point if oriented vertically. Y coordinates are
-        /// relative to the screen where (0,0) is the top left corner. 
+        /// relative to the screen where (0,0) is the top left corner.
         /// Diagonal blocks are assumed to be at 45 degree angles.
         /// </remarks>
         //--------------------------------------------------------------------------------------
@@ -403,7 +513,7 @@ namespace CommonLib
             switch (Orientation)
             {
                 case TrackOrientation.EastWest:
-                    EndPoint = new Point(StartPoint.X + (int) LengthMeters, StartPoint.Y);
+                    EndPoint = new Point(StartPoint.X + (int)LengthMeters, StartPoint.Y);
                     break;
                 case TrackOrientation.SouthWestNorthEast:
                     delta = System.Math.Sqrt((LengthMeters * LengthMeters) / 2.0);
