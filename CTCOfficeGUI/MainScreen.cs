@@ -12,7 +12,7 @@ using Train;
 
 namespace CTCOfficeGUI
 {
-    public partial class MainScreen : Form, ITrainSystemWatcher
+    public partial class MainScreen : Form
     {
         #region Constructor
 
@@ -23,20 +23,10 @@ namespace CTCOfficeGUI
         {
             InitializeComponent();
 
-            m_ctcController.Subscribe(this);
+            m_ctcController.Subscribe(trackDisplayPanel);
+            m_ctcController.Subscribe(infoPanel);
 
             m_simulatorWindow.Show();
-        }
-
-        #endregion
-
-        #region ITrainSystemWatcher Methods
-
-        /// <summary>
-        /// Updates the CTC display with the new data
-        /// </summary>
-        public void Update()
-        {
         }
 
         #endregion
@@ -215,7 +205,7 @@ namespace CTCOfficeGUI
             {
                 if (b.HasTransponder)
                 {
-                    if (b.Transponder.StationName == Constants.TRAINYARD && b.Transponder.DistanceToStation == 0)
+                    if (b.Transponder.StationName.Contains(Constants.TRAINYARD) && b.Transponder.DistanceToStation == 0)
                     {
                         //This is a train yard, handle it specially
                         infoPanel.SetTrainYardInfo(b);

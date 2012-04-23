@@ -14,7 +14,7 @@ namespace CTCOfficeGUI
     /// <summary>
     /// Class for displaying text information to the user
     /// </summary>
-    public partial class InfoPanel : UserControl
+    public partial class InfoPanel : UserControl, ITrainSystemWatcher
     {
         #region Public Methods
 
@@ -143,6 +143,9 @@ namespace CTCOfficeGUI
         {
             if (block == null) return;
 
+            m_displayedBlock = block;
+            m_displayedTrain = null;
+
             Dictionary<string, string> info = new Dictionary<string, string>();
             if (block.Authority != null)
             {
@@ -151,9 +154,11 @@ namespace CTCOfficeGUI
 
             if (block.Authority != null)
             {
-                info.Add("Speed Limit:", block.Authority.SpeedLimitKPH.ToString() + " " + KPH);
+                info.Add("CTC Speed Limit:", block.Authority.SpeedLimitKPH.ToString() + " " + KPH);
             }
 
+            info.Add("Static Speed Limit:", block.StaticSpeedLimit.ToString() + " " + KPH);
+           
             if (block.Status.TrainPresent)
             {
                 info.Add("Train present:", "yes");
@@ -229,6 +234,9 @@ namespace CTCOfficeGUI
 
             if (state == null) return;
 
+            m_displayedBlock = null;
+            m_displayedTrain = train;
+
             Dictionary<string, string> info = new Dictionary<string, string>();
 
             info.Add("Number of cars:", state.Cars.ToString());
@@ -253,6 +261,24 @@ namespace CTCOfficeGUI
         {
             //Just show the block name
             SetInfo(b.Name, null);
+        }
+
+        /// <summary>
+        /// Updates the display 
+        /// </summary>
+        /// <param name="blocks">List of track blocks</param>
+        /// <param name="trains">List of trains</param>
+        public void UpdateDisplay(List<TrackBlock> blocks, List<ITrain> trains)
+        {
+            //No reason to check if the block or train is in the list, faster to just update anyway
+            if (m_displayedBlock != null)
+            {
+                SetTrackBlockInfo(m_displayedBlock);
+            }
+            else if (m_displayedTrain != null)
+            {
+                SetTrainInfo(m_displayedTrain);
+            }
         }
 
         #endregion
@@ -330,6 +356,8 @@ namespace CTCOfficeGUI
 
         private List<Label> m_fieldLabels = new List<Label>();
         private List<Label> m_valueLabels = new List<Label>();
+        private TrackBlock m_displayedBlock = null;
+        private ITrain m_displayedTrain = null;
         private const int NUM_LABELS = 15;
         private const string UNKNOWN_TEXT = "Unknown";
         private const string METERS = "m";

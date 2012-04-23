@@ -171,7 +171,7 @@ namespace CTCOfficeGUI
             DotColor = Color.Orange;
 
             LineThickness = 5;
-            ArrowLength = 10;
+            ArrowLength = 5;
 
             Block = block;
 

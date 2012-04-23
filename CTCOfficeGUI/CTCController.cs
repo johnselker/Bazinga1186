@@ -126,6 +126,24 @@ namespace CTCOfficeGUI
         }
 
         /// <summary>
+        /// Gets a copy of the track block list
+        /// </summary>
+        /// <returns>Copy of the block list</returns>
+        public List<TrackBlock> GetBlockList()
+        {
+            return new List<TrackBlock>(m_blockList);
+        }
+
+        /// <summary>
+        /// Gets a copy of the list of trains
+        /// </summary>
+        /// <returns>Copied list of trains</returns>
+        public List<ITrain> GetTrainList()
+        {
+            return new List<ITrain>(m_trainList);
+        }
+
+        /// <summary>
         /// Closes the track block 
         /// </summary>
         /// <param name="block">Track block to close</param>
@@ -202,14 +220,12 @@ namespace CTCOfficeGUI
         /// <returns>List of track blocks</returns>
         public List<TrackBlock> LoadTrackLayout(string filename)
         {
-            List<TrackBlock> blocks = null;
-
             try
             {
                 TrackLayoutSerializer layoutSerializer = new TrackLayoutSerializer(filename);
                 layoutSerializer.Restore();
-                blocks = layoutSerializer.BlockList;
-                if (!BuildLayout(blocks))
+                m_blockList = layoutSerializer.BlockList;
+                if (!BuildLayout(m_blockList))
                 {
                     m_log.LogError("Error building track layout");
                 }
@@ -219,7 +235,7 @@ namespace CTCOfficeGUI
                 m_log.LogError("Layout restoration failed", e);
             }
 
-            return blocks;
+            return m_blockList;
         }
 
         /// <summary>
@@ -312,6 +328,42 @@ namespace CTCOfficeGUI
             greenline.Enqueue(info);
 
             return greenline;
+        }
+
+        /// <summary>
+        /// Adds a train to the list of trains
+        /// </summary>
+        /// <param name="train">Train to add</param>
+        /// <returns>bool success</returns>
+        public bool AddTrainToList(ITrain train)
+        {
+            bool result = false;
+
+            if (!m_trainList.Contains(train))
+            {
+                m_trainList.Add(train);
+                result = true;
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Removes a train from the list of trains
+        /// </summary>
+        /// <param name="train">Train to remove</param>
+        /// <returns>bool success</returns>
+        public bool RemoveTrainFromList(ITrain train)
+        {
+            bool result = false;
+
+            if (m_trainList.Contains(train))
+            {
+                m_trainList.Remove(train);
+                result = true;
+            }
+
+            return result;
         }
 
         #endregion
@@ -473,16 +525,19 @@ namespace CTCOfficeGUI
                 foreach (ITrainSystemWatcher watcher in m_subscriberList)
                 {
                     //Update the subscribers
-                    watcher.Update();
+                    watcher.UpdateDisplay(GetBlockList(), GetTrainList());
                 }
             }
         }
+
         #endregion
 
         #region Private Data
 
         private static CTCController m_singleton = null;
         private Dictionary<TrackBlock, ITrackController> m_trackTable = new Dictionary<TrackBlock, ITrackController>();
+        private List<TrackBlock> m_blockList;
+        private List<ITrain> m_trainList = new List<ITrain>();
         private LoggingTool m_log = new LoggingTool(MethodBase.GetCurrentMethod());
         private Size m_layoutSize;
         private Point m_layoutStartPoint;

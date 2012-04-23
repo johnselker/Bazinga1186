@@ -12,7 +12,7 @@ using Train;
 
 namespace CTCOfficeGUI
 {
-    public partial class TrackDisplayPanel : UserControl
+    public partial class TrackDisplayPanel : UserControl, ITrainSystemWatcher
     {
         #region Private Data
 
@@ -134,9 +134,10 @@ namespace CTCOfficeGUI
         }
 
         /// <summary>
-        /// Redraws the track layout with the new state
+        /// Updates the display 
         /// </summary>
-        /// <param name="updatedBlocks">List of blocks that have changed state</param>
+        /// <param name="blocks">List of track blocks</param>
+        /// <param name="trains">List of trains</param>
         public void UpdateDisplay(List<TrackBlock> updatedBlocks, List<ITrain> trains)
         {
             //Update the block layout

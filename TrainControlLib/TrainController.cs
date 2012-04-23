@@ -224,7 +224,7 @@ namespace TrainControllerLib
             // If the Track Block has a power failure or a track circuit failure,
             // the train will not be able to pick up the track signal, thus there is a signal pickup failure
             // and the setpoint must be set to zero to engage the brake.
-            if (m_currentState.CurrentBlock.PowerFailure || m_currentState.CurrentBlock.TrackCircuitFailure)
+            if (m_currentState.CurrentBlock.Status.PowerFail || m_currentState.CurrentBlock.Status.CircuitFail)
             {
                 m_setPoint = 0;
             }

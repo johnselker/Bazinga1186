@@ -92,6 +92,12 @@
     <Compile Include="SimulatorWindow.Designer.cs">
       <DependentUpon>SimulatorWindow.cs</DependentUpon>
     </Compile>
+    <Compile Include="TableViewScreen.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TableViewScreen.Designer.cs">
+      <DependentUpon>TableViewScreen.cs</DependentUpon>
+    </Compile>
     <Compile Include="TextInputDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -144,6 +150,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="SimulatorWindow.resx">
       <DependentUpon>SimulatorWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TableViewScreen.resx">
+      <DependentUpon>TableViewScreen.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="TextInputDialog.resx">
       <DependentUpon>TextInputDialog.cs</DependentUpon>

@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using CommonLib;
+using Train;
 
 namespace CTCOfficeGUI
 {
@@ -10,6 +12,6 @@ namespace CTCOfficeGUI
     /// </summary>
     public interface ITrainSystemWatcher
     {
-        void Update();
+        void UpdateDisplay(List<TrackBlock> blocks, List<ITrain> trains);
     }
 }

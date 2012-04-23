@@ -18,7 +18,7 @@ namespace CTCOfficeGUI
 
         private System.Timers.Timer m_simulationTimer = new System.Timers.Timer(1);
         private static Simulator m_singleton;
-        private List<ITrainController> m_trainList = new List<ITrainController>();
+        private List<ITrainController> m_trainControllerList = new List<ITrainController>();
         private DateTime m_lastUpdateTime;
         private double m_simulationScale = 1;
         private LoggingTool m_log = new LoggingTool(MethodBase.GetCurrentMethod());
@@ -229,7 +229,8 @@ namespace CTCOfficeGUI
                         //Create the new train and train controller
                         ITrain train = new Train.Train(name, initialBlock, m_startingDirections[start]);
                         ITrainController trainController = new TrainController(train);
-                        m_trainList.Add(trainController);
+                        m_trainControllerList.Add(trainController);
+                        CTCController.GetCTCController().AddTrainToList(train); 
 
                         //Set the train schedule
                         if (start == Constants.REDYARD)
@@ -282,13 +283,30 @@ namespace CTCOfficeGUI
             double timeStep = (timeDiff.Ticks / (double)TimeSpan.TicksPerSecond) * m_simulationScale;
             m_lastUpdateTime = timeFreeze;
 
-            lock (m_trainList)
+            lock (m_trainControllerList)
             {
                 //Update all the trains
-                foreach (ITrainController train in m_trainList)
+                foreach (ITrainController train in m_trainControllerList)
                 {
                     train.Update(timeStep);
                 }
+            }
+        }
+
+        /// <summary>
+        /// Train arrived at a station
+        /// </summary>
+        /// <param name="train">Train</param>
+        /// <param name="stationName">Name of the station</param>
+        private void OnTrainAtStation(ITrainController train, string stationName)
+        {
+            if (stationName.Contains(Constants.TRAINYARD))
+            {
+                //Train arrived at the train yard. Destroy it.
+                m_log.LogInfo("Train has arrived at the train yard");
+                m_trainControllerList.Remove(train);
+                
+                //Need to dispose of the train and update the UI
             }
         }
 
