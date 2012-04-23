@@ -29,6 +29,7 @@ namespace TrainControllerLib
         private int m_speedUp = 1;
         private int m_authority = 0;
         private int m_stationWaitStartTime;
+        private int m_lastCommand = 0;
         private Queue<ScheduleInfo> m_routeInfo;
         private ITrain m_myTrain;
         private TrainState m_currentState;
@@ -105,6 +106,17 @@ namespace TrainControllerLib
         public double LocationY
         {
             get { return m_currentState.Y; }
+        }
+
+        // PROPERTY: TimePassed
+        //--------------------------------------------------------------------------------------
+        /// <summary>
+        /// time passed since the train departed the last station
+        /// </summary>
+        //--------------------------------------------------------------------------------------
+        public double TimePassed
+        {
+            get { return m_timePassed; }
         }
 
         #endregion
@@ -192,7 +204,7 @@ namespace TrainControllerLib
             FaultMonitor();
 
             // Generate and issue a power command
-            VelocityController();
+            m_lastCommand = VelocityController();
 
             // Control lights
             LightController();
@@ -298,13 +310,13 @@ namespace TrainControllerLib
         /// Determine and issue the next power command (control train speed)
         /// </summary>
         //--------------------------------------------------------------------------------------
-        private void VelocityController()
+        private int VelocityController()
         {
-            // If there has been a brake failure, do not issue a power command.
+            // If there has been a brake failure, set the emergency brake and do not issue a power command.
             if (m_brakeFailure)
             {
                 m_myTrain.SetEmergencyBrake(true, m_samplePeriod);
-                return;
+                return 1;
             }
 
             // Store values from the last iteration
@@ -317,7 +329,7 @@ namespace TrainControllerLib
             if (m_currentSample < 0)
             {
                 m_myTrain.SetBrake(true, m_samplePeriod);
-                return;
+                return 2;
             }
 
             // Invoke the control law to calculate the next power command
@@ -327,7 +339,10 @@ namespace TrainControllerLib
             if (!m_atStation && m_currentSample != 0)
             {
                 m_myTrain.SetPower(m_powerCommand, m_samplePeriod);
+                return 3;
             }
+
+            return 0;
         }
 
         // METHOD: ControlLaw
