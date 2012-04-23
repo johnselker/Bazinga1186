@@ -184,10 +184,6 @@
       <Project>{F84DC4AD-4D0C-4F6F-9576-AF656EB63D77}</Project>
       <Name>CommonLib</Name>
     </ProjectReference>
-    <ProjectReference Include="..\TrackControlLib-Sean\TrackControlLib-Sean.csproj">
-      <Project>{3F3F705C-5298-4DF6-AC70-AD493D314D04}</Project>
-      <Name>TrackControlLib-Sean</Name>
-    </ProjectReference>
     <ProjectReference Include="..\TrackLib\TrackLib.csproj">
       <Project>{9FD33000-B6F5-4F4E-9D70-C7F95569AF33}</Project>
       <Name>TrackLib</Name>

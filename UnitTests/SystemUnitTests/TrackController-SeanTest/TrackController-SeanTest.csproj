@@ -6,11 +6,11 @@
     <ProductVersion>
     </ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{CFF616C4-A02F-4B34-8A6E-73D84EBC24FE}</ProjectGuid>
+    <ProjectGuid>{C556CA2B-E123-47B3-A8B8-68E8583F4975}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>CTCUnitTests</RootNamespace>
-    <AssemblyName>CTCUnitTests</AssemblyName>
+    <RootNamespace>TrackController_SeanTest</RootNamespace>
+    <AssemblyName>TrackController-SeanTest</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -33,9 +33,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="log4net">
-      <HintPath>..\..\..\Bin\log4net.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="System" />
@@ -44,9 +41,6 @@
     </Reference>
     <Reference Include="System.Data" />
     <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="System.Deployment" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
@@ -56,34 +50,20 @@
     </CodeAnalysisDependentAssemblyPaths>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CommandPanelTest.cs" />
-    <Compile Include="CTCControllerTest.cs" />
-    <Compile Include="DrawingUtilsTest.cs" />
-    <Compile Include="InfoPanelTest.cs" />
-    <Compile Include="MainScreenTest.cs" />
-    <Compile Include="MessageDialogTest.cs" />
-    <Compile Include="ProgramTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TextInputDialogTest.cs" />
-    <Compile Include="TrackBlockGraphicTest.cs" />
-    <Compile Include="TrackDisplayPanelTest.cs" />
-    <Compile Include="TrainGraphicTest.cs" />
+    <Compile Include="TrackControllerTest.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Shadow Include="Test References\CTCOfficeGUI.accessor" />
+    <Shadow Include="Test References\TrackControlLib.accessor" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\CommonLib\CommonLib.csproj">
       <Project>{F84DC4AD-4D0C-4F6F-9576-AF656EB63D77}</Project>
       <Name>CommonLib</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\CTCOfficeGUI\CTCOfficeGUI.csproj">
-      <Project>{3A314C23-4C0E-42C7-97E6-D5A014D09DE9}</Project>
-      <Name>CTCOfficeGUI</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\TrainLib\TrainLib.csproj">
-      <Project>{69FA46C5-B2BD-45DA-A60A-022932F30C1E}</Project>
-      <Name>TrainLib</Name>
+    <ProjectReference Include="..\..\..\TrackControlLib-Sean\TrackControlLib-Sean.csproj">
+      <Project>{3F3F705C-5298-4DF6-AC70-AD493D314D04}</Project>
+      <Name>TrackControlLib-Sean</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

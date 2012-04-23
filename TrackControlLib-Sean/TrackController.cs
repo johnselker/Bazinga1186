@@ -13,24 +13,17 @@ namespace TrackControlLib
 		{		
 			private const int AUTH_THRESH_SWITCH = 2;
 			private const int AUTH_THRESH_YELLOW = 1;
-			private const int AUTH_THRESH_GREEN = 10;
-			private const int AUTH_THRESH_SUPERGREEN = 20;
+			private const int AUTH_THRESH_GREEN = 5;
+			private const int AUTH_THRESH_SUPERGREEN = 10;
 
 			private Dictionary<string, TrackBlock> m_trackBlocks;
 			private TrackController m_next;
 			private TrackController m_prev;
-			private TrackBlock m_switch;
-
-			private BlockAuthority m_suggAuth;
-			private string m_currBlockId;
 
 			public TrackController()
 			{
 				m_trackBlocks = new Dictionary<string, TrackBlock>();
 				m_next = m_prev = null;
-
-				m_suggAuth = null;
-				m_currBlockId = string.Empty;
 			}
 
 			public bool AddTrackBlock(TrackBlock block)
@@ -40,7 +33,7 @@ namespace TrackControlLib
 					return false;
 				
 				m_trackBlocks.Add(block.Name, block);
-				if (block.HasSwitch) m_switch = block;
+
 				return true;
 			}
 
@@ -63,8 +56,15 @@ namespace TrackControlLib
 				if (!m_trackBlocks.ContainsKey(trackId)) return false;
 				if (auth == null) return false;
 
-				m_currBlockId = trackId;
-				m_suggAuth = auth;
+				if (auth.Authority < m_trackBlocks[trackId].Authority.Authority)
+					UpdateSpeedAuthoritySignal(m_trackBlocks[trackId], auth.Authority);
+				else
+					return false;
+
+				if (auth.SpeedLimitKPH < m_trackBlocks[trackId].Authority.SpeedLimitKPH)
+					m_trackBlocks[trackId].Authority.SpeedLimitKPH = auth.SpeedLimitKPH;
+				else
+					return false;
 
 				return true;
 			}
@@ -165,24 +165,68 @@ namespace TrackControlLib
 						{
 							UpdateSpeedAuthoritySignal(t, i);
 						}
+
+						// switching logic
+						if (i <= AUTH_THRESH_SWITCH && t.Status.TrainPresent)
+						{
+							if (m_next != null)
+							{
+								if (!IsTrainApproaching(m_next))
+								{
+									if (b.HasSwitch)
+									{
+										TrackSwitchState newState;
+										string newId;
+
+										if (b.Switch.State == TrackSwitchState.Closed)
+										{
+											newState = TrackSwitchState.Open;
+											newId = b.Switch.BranchOpenId;
+										}
+										else
+										{
+											newState = TrackSwitchState.Closed;
+											newId = b.Switch.BranchClosedId;
+										}
+
+										b.Switch.State = newState;
+
+										if (m_trackBlocks.ContainsKey(newId))
+										{
+											b.NextBlock = m_trackBlocks[newId];
+
+											if (m_trackBlocks[newId].NextBlock.HasSwitch)
+												UpdateBlockDirection(b, m_trackBlocks[newId]); //some other stuff
+										}
+										else
+											throw new Exception("Track Controller blocks did not contain switch block");
+									}
+									else
+									{
+										throw new Exception("A switch was not found");
+									}
+								}
+							}
+						}
 					}
 				}
 
-				// update block to suggested auth if safe
-				if (m_currBlockId != string.Empty && m_suggAuth != null)
-				{
-					if (m_suggAuth.Authority < m_trackBlocks[m_currBlockId].Authority.Authority)
-						UpdateSpeedAuthoritySignal(m_trackBlocks[m_currBlockId], m_suggAuth.Authority);
-					if (m_suggAuth.SpeedLimitKPH < m_trackBlocks[m_currBlockId].Authority.SpeedLimitKPH)
-						m_trackBlocks[m_currBlockId].Authority.SpeedLimitKPH = m_suggAuth.SpeedLimitKPH;
+			}
 
-					m_currBlockId = string.Empty;
-					m_suggAuth = null;
-				}
+			private void UpdateBlockDirection(TrackBlock prev, TrackBlock curr)
+			{
+				curr.NextBlock = curr.PreviousBlock;
+				curr.PreviousBlock = prev;
+				// need to continue updating here
+
+				//throw new NotImplementedException();
 			}
 
 			private void UpdateSpeedAuthoritySignal(TrackBlock block, int authority)
 			{
+				if (block == null) throw new ArgumentNullException();
+				if (authority < 0) throw new ArgumentOutOfRangeException();
+
 				double t = 1.0 / (double) AUTH_THRESH_SUPERGREEN * (double) authority;
 				double speedScalar = (t > 1.0) ? 1.0 : t;
 
@@ -205,6 +249,27 @@ namespace TrackControlLib
 				{
 					block.Status.SignalState = TrackSignalState.Red;
 				}
+			}
+
+			private bool IsTrainApproaching(TrackController from)
+			{
+				if (from == null) throw new ArgumentNullException();
+
+				foreach (TrackBlock b in from.m_trackBlocks.Values)
+				{
+					if (b.Status.TrainPresent)
+					{
+						for (TrackBlock t = b.NextBlock;
+							t != null && !t.Status.TrainPresent &&
+							t.Status.IsOpen && from.m_trackBlocks.ContainsKey(t.Name);
+							t = t.NextBlock)
+						{
+							if (m_trackBlocks.ContainsKey(t.Name))
+								return true;
+						}
+					}
+				}
+				return false;
 			}
 		}
 	}
