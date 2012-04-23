@@ -112,11 +112,35 @@ namespace TrainControllerTest
         }
 
         /// <summary>
-        ///A test for ControlLaw
-        ///</summary>
+        /// A test for ControlLaw with all parameters set to zero
+        /// </summary>
         [TestMethod()]
         [DeploymentItem("TrainControllerLib.dll")]
-        public void ControlLawTest()
+        public void ControlLawAllZerosTest()
+        {
+            TrackBlock startingBlock = new TrackBlock("Block1", TrackOrientation.EastWest, new Point(123, 456), 100, 50, 1, true, false, 70, TrackAllowedDirection.Both, null, "controller1", "controller2", "previousBlock", "nextBlock");
+            ITrain myTrain = new Train.Train("train1", startingBlock, Direction.East);
+            TrainController myTrainController = new TrainController(myTrain);
+            PrivateObject param0 = new PrivateObject(myTrainController);
+            TrainController_Accessor target = new TrainController_Accessor(param0);
+
+            target.m_powerCommand = 0;
+            target.m_samplePeriod = 0;
+            target.m_currentSample = 0;
+            target.m_lastSample = 0;
+            target.m_currentSample = 0;
+            target.m_lastIntegral = 0;
+
+            target.ControlLaw();
+            Assert.AreEqual(0, target.m_powerCommand);
+        }
+
+        /// <summary>
+        /// A test for ControlLaw to test that negative power is set to zero
+        /// </summary>
+        [TestMethod()]
+        [DeploymentItem("TrainControllerLib.dll")]
+        public void ControlLawNegativePowerTest()
         {
             TrackBlock startingBlock = new TrackBlock("Block1", TrackOrientation.EastWest, new Point(123, 456), 100, 50, 1, true, false, 70, TrackAllowedDirection.Both, null, "controller1", "controller2", "previousBlock", "nextBlock");
             ITrain myTrain = new Train.Train("train1", startingBlock, Direction.East);
@@ -128,34 +152,127 @@ namespace TrainControllerTest
             target.m_samplePeriod = 0.001;
             target.m_currentSample = 0;
             target.m_lastSample = 0;
-            target.m_currentSample = 0;
-            target.m_lastIntegral = 0;
-            target.ControlLaw();
-            Assert.AreEqual(0, target.m_powerCommand);
-
             target.m_currentSample = -100000000;
+            target.m_lastIntegral = 0;
+
             target.ControlLaw();
             Assert.AreEqual(0, target.m_powerCommand);
+        }
 
-            target.m_currentSample = 100000000;
-            target.ControlLaw();
-            Assert.AreEqual(120000, target.m_powerCommand);
-
-            target.m_currentSample = 0.1;
-            target.ControlLaw();
-            Assert.AreEqual(100000, target.m_powerCommand);
-
-            target.m_powerCommand = 120000;
-            target.m_currentSample = 0;
-            target.m_lastIntegral = 1;
-            target.ControlLaw();
-            Assert.AreEqual(10000, target.m_powerCommand);
+        /// <summary>
+        /// A test for ControlLaw to test that power commands cannot be above the max power
+        /// </summary>
+        [TestMethod()]
+        [DeploymentItem("TrainControllerLib.dll")]
+        public void ControlLawSaturationTest()
+        {
+            TrackBlock startingBlock = new TrackBlock("Block1", TrackOrientation.EastWest, new Point(123, 456), 100, 50, 1, true, false, 70, TrackAllowedDirection.Both, null, "controller1", "controller2", "previousBlock", "nextBlock");
+            ITrain myTrain = new Train.Train("train1", startingBlock, Direction.East);
+            TrainController myTrainController = new TrainController(myTrain);
+            PrivateObject param0 = new PrivateObject(myTrainController);
+            TrainController_Accessor target = new TrainController_Accessor(param0);
 
             target.m_powerCommand = 0;
+            target.m_samplePeriod = 0.001;
             target.m_currentSample = 0;
+            target.m_lastSample = 0;
+            target.m_currentSample = 100000000;
+            target.m_lastIntegral = 0;
+
+            target.ControlLaw();
+            Assert.AreEqual(120000, target.m_powerCommand);
+        }
+
+        /// <summary>
+        /// A test for ControlLaw to test the Proportional Gain
+        /// </summary>
+        [TestMethod()]
+        [DeploymentItem("TrainControllerLib.dll")]
+        public void ControlLawProportionalGainOnlyTest()
+        {
+            TrackBlock startingBlock = new TrackBlock("Block1", TrackOrientation.EastWest, new Point(123, 456), 100, 50, 1, true, false, 70, TrackAllowedDirection.Both, null, "controller1", "controller2", "previousBlock", "nextBlock");
+            ITrain myTrain = new Train.Train("train1", startingBlock, Direction.East);
+            TrainController myTrainController = new TrainController(myTrain);
+            PrivateObject param0 = new PrivateObject(myTrainController);
+            TrainController_Accessor target = new TrainController_Accessor(param0);
+
+            target.m_powerCommand = 120000;
+            target.m_samplePeriod = 0.001;
+            target.m_lastSample = 0;
+            target.m_currentSample = 0.1;
+            target.m_lastIntegral = 0;
+
+            target.ControlLaw();
+            Assert.AreEqual(100000, target.m_powerCommand);
+        }
+
+        /// <summary>
+        /// A test for ControlLaw to test the integral gain
+        /// </summary>
+        [TestMethod()]
+        [DeploymentItem("TrainControllerLib.dll")]
+        public void ControlLawIntegralGainOnlyTest()
+        {
+            TrackBlock startingBlock = new TrackBlock("Block1", TrackOrientation.EastWest, new Point(123, 456), 100, 50, 1, true, false, 70, TrackAllowedDirection.Both, null, "controller1", "controller2", "previousBlock", "nextBlock");
+            ITrain myTrain = new Train.Train("train1", startingBlock, Direction.East);
+            TrainController myTrainController = new TrainController(myTrain);
+            PrivateObject param0 = new PrivateObject(myTrainController);
+            TrainController_Accessor target = new TrainController_Accessor(param0);
+
+            target.m_powerCommand = 0;
+            target.m_samplePeriod = 0.001;
             target.m_lastSample = 2000;
+            target.m_currentSample = 0;
+            target.m_lastIntegral = 1;
+
             target.ControlLaw();
             Assert.AreEqual(20000, target.m_powerCommand);
+        }
+
+        /// <summary>
+        /// A test for ControlLaw to test the integral gain when the power is already at the max
+        /// </summary>
+        [TestMethod()]
+        [DeploymentItem("TrainControllerLib.dll")]
+        public void ControlLawIntegralGainWithMaxPowerTest()
+        {
+            TrackBlock startingBlock = new TrackBlock("Block1", TrackOrientation.EastWest, new Point(123, 456), 100, 50, 1, true, false, 70, TrackAllowedDirection.Both, null, "controller1", "controller2", "previousBlock", "nextBlock");
+            ITrain myTrain = new Train.Train("train1", startingBlock, Direction.East);
+            TrainController myTrainController = new TrainController(myTrain);
+            PrivateObject param0 = new PrivateObject(myTrainController);
+            TrainController_Accessor target = new TrainController_Accessor(param0);
+
+            target.m_powerCommand = 120000;
+            target.m_samplePeriod = 0.001;
+            target.m_lastSample = 0;
+            target.m_currentSample = 0;
+            target.m_lastIntegral = 1;
+
+            target.ControlLaw();
+            Assert.AreEqual(10000, target.m_powerCommand);
+        }
+
+        /// <summary>
+        /// A test for ControlLaw to test the proportional and integral gain
+        /// </summary>
+        [TestMethod()]
+        [DeploymentItem("TrainControllerLib.dll")]
+        public void ControlLawProportionalAndIntegralGain()
+        {
+            TrackBlock startingBlock = new TrackBlock("Block1", TrackOrientation.EastWest, new Point(123, 456), 100, 50, 1, true, false, 70, TrackAllowedDirection.Both, null, "controller1", "controller2", "previousBlock", "nextBlock");
+            ITrain myTrain = new Train.Train("train1", startingBlock, Direction.East);
+            TrainController myTrainController = new TrainController(myTrain);
+            PrivateObject param0 = new PrivateObject(myTrainController);
+            TrainController_Accessor target = new TrainController_Accessor(param0);
+
+            target.m_powerCommand = 0;
+            target.m_samplePeriod = 0.001;
+            target.m_lastSample = 1999.999; 
+            target.m_currentSample = 0.001;
+            target.m_lastIntegral = 1;
+
+            target.ControlLaw();
+            Assert.AreEqual(21000, target.m_powerCommand);
         }
 
         /// <summary>
@@ -508,7 +625,7 @@ namespace TrainControllerTest
             target.m_atStation = false;
             target.m_timePassed = 1;
             target.m_doorsOpen = false;
-            target.m_currentState.Passengers = -1;
+            target.m_currentState.Passengers = 0;
 
             target.StationController();
 
@@ -518,7 +635,7 @@ namespace TrainControllerTest
             Assert.AreEqual(1.0, target.m_timePassed);
             Assert.IsFalse(target.m_doorsOpen);
             Assert.AreEqual("stationABC", target.m_nextStationInfo.StationName);
-            Assert.AreEqual(-1, target.m_currentState.Passengers);
+            Assert.AreEqual(0, target.m_currentState.Passengers);
 
             target.m_currentBlock.Transponder = new Transponder("station456", 1);
 
@@ -530,7 +647,7 @@ namespace TrainControllerTest
             Assert.AreEqual(1.0, target.m_timePassed);
             Assert.IsFalse(target.m_doorsOpen);
             Assert.AreEqual("stationABC", target.m_nextStationInfo.StationName);
-            Assert.AreEqual(-1, target.m_currentState.Passengers);
+            Assert.AreEqual(0, target.m_currentState.Passengers);
 
             target.m_currentBlock.Transponder = new Transponder("station456", 0);
             target.m_approachingStation = true;
@@ -780,6 +897,136 @@ namespace TrainControllerTest
             target.m_currentState.Speed = 10.0;
 
             Assert.AreEqual(36.0, target.Speed);
+        }
+
+        /// <summary>
+        ///A test for SystemController
+        ///</summary>
+        [TestMethod()]
+        [DeploymentItem("TrainControllerLib.dll")]
+        public void SystemControllerTest2()
+        {
+            TrackBlock startingBlock = new TrackBlock("Block1", TrackOrientation.EastWest, new Point(0, 0), 100, 0, 0, true, false, 70, TrackAllowedDirection.Both, null, "controller1", "controller2", "Block0", "Block2");
+            startingBlock.NextBlock = new TrackBlock("Block2", TrackOrientation.EastWest, new Point(100, 0), 100, 0, 0, true, false, 70, TrackAllowedDirection.Both, null, "controller1", "controller2", "Block1", "Block3");
+            startingBlock.Authority = new BlockAuthority(50, 1);
+            startingBlock.NextBlock.Authority = new BlockAuthority(50, 0);
+            startingBlock.NextBlock.NextBlock = new TrackBlock("Block3", TrackOrientation.EastWest, new Point(200, 0), 100, 0, 0, true, false, 70, TrackAllowedDirection.Both, null, "controller1", "controller2", "Block2", "Block4");
+
+            startingBlock.Transponder = new Transponder("station1", 1);
+            startingBlock.NextBlock.Transponder = new Transponder("station1", 0);
+
+            ITrain myTrain = new Train.Train("train1", startingBlock, Direction.East);
+            TrainController myTrainController = new TrainController(myTrain);
+
+            PrivateObject param0 = new PrivateObject(myTrainController);
+            TrainController_Accessor target = new TrainController_Accessor(param0);
+
+            Queue<ScheduleInfo> routeInfo = new Queue<ScheduleInfo>();
+            routeInfo.Enqueue(new ScheduleInfo("station123", 1));
+            target.m_routeInfo = routeInfo;
+
+            int BRAKE = 2;
+            int POWER = 3;
+            int NONE = 0;
+
+            target.m_setPoint = 50;
+            target.m_currentState.Speed = Double.MinValue;
+            target.SystemController(0.001);
+            Assert.AreEqual(POWER, target.m_lastCommand);
+
+            target.m_setPoint = 50;
+            target.m_currentState.Speed = -25/3.6;
+            target.SystemController(0.001);
+            Assert.AreEqual(POWER, target.m_lastCommand);
+
+            target.m_setPoint = 50;
+            target.m_currentState.Speed = 0;
+            target.SystemController(0.001);
+            Assert.AreEqual(POWER, target.m_lastCommand);
+
+            target.m_setPoint = 50;
+            target.m_currentState.Speed = 25/3.6;
+            target.SystemController(0.001);
+            Assert.AreEqual(POWER, target.m_lastCommand);
+
+            target.m_setPoint = 50;
+            target.m_currentState.Speed = 50/3.6;
+            target.SystemController(0.001);
+            Assert.AreEqual(NONE, target.m_lastCommand);
+
+            target.m_setPoint = 50;
+            target.m_currentState.Speed = 75/3.6;
+            target.SystemController(0.001);
+            Assert.AreEqual(BRAKE, target.m_lastCommand);
+
+            target.m_setPoint = 50;
+            target.m_currentState.Speed = Double.MaxValue;
+            target.SystemController(0.001);
+            Assert.AreEqual(BRAKE, target.m_lastCommand);
+        }
+
+        /// <summary>
+        ///A test for SystemController
+        ///</summary>
+        [TestMethod()]
+        [DeploymentItem("TrainControllerLib.dll")]
+        public void SystemControllerTest3()
+        {
+            TrackBlock startingBlock = new TrackBlock("Block1", TrackOrientation.EastWest, new Point(0, 0), 100, 0, 0, true, false, 70, TrackAllowedDirection.Both, null, "controller1", "controller2", "Block0", "Block2");
+            startingBlock.NextBlock = new TrackBlock("Block2", TrackOrientation.EastWest, new Point(100, 0), 100, 0, 0, true, false, 70, TrackAllowedDirection.Both, null, "controller1", "controller2", "Block1", "Block3");
+            startingBlock.Authority = new BlockAuthority(70, 1);
+            startingBlock.NextBlock.Authority = new BlockAuthority(70, 0);
+            startingBlock.NextBlock.NextBlock = new TrackBlock("Block3", TrackOrientation.EastWest, new Point(200, 0), 100, 0, 0, true, false, 70, TrackAllowedDirection.Both, null, "controller1", "controller2", "Block2", "Block4");
+
+            startingBlock.Transponder = new Transponder("station1", 1);
+            startingBlock.NextBlock.Transponder = new Transponder("station1", 0);
+
+            ITrain myTrain = new Train.Train("train1", startingBlock, Direction.East);
+            TrainController myTrainController = new TrainController(myTrain);
+
+            PrivateObject param0 = new PrivateObject(myTrainController);
+            TrainController_Accessor target = new TrainController_Accessor(param0);
+
+            Queue<ScheduleInfo> routeInfo = new Queue<ScheduleInfo>();
+            routeInfo.Enqueue(new ScheduleInfo("station123", 1));
+            target.m_routeInfo = routeInfo;
+
+            target.m_currentBlock.Authority = new BlockAuthority(50, Int32.MinValue);
+            target.SystemController(0.001);
+            Assert.AreEqual(0.0, target.m_setPoint);
+
+            target.m_currentBlock.Authority = new BlockAuthority(50, -5);
+            target.SystemController(0.001);
+            Assert.AreEqual(0.0, target.m_setPoint);
+
+            target.m_currentBlock.Authority = new BlockAuthority(50, -1);
+            target.SystemController(0.001);
+            Assert.AreEqual(0.0, target.m_setPoint);
+
+            // If the authority is zero but the train has more than enough stopping distance,
+            // the setpoint should not be set to zero
+            target.m_currentBlock.Authority = new BlockAuthority(50, 0);
+            target.SystemController(0.001);
+            Assert.AreEqual(50.0/3.6, target.m_setPoint);
+
+            // If the authority is zero and the train does not have enough stopping distance,
+            // the setpoint should be set to zero
+            target.m_currentState.Speed = 70 / 3.6;
+            target.m_currentBlock.LengthMeters = 10;
+            target.SystemController(0.001);
+            Assert.AreEqual(0.0, target.m_setPoint);
+
+            target.m_currentBlock.Authority = new BlockAuthority(50, 1);
+            target.SystemController(0.001);
+            Assert.AreEqual(50.0/3.6, target.m_setPoint);
+
+            target.m_currentBlock.Authority = new BlockAuthority(50, 5);
+            target.SystemController(0.001);
+            Assert.AreEqual(50.0/3.6, target.m_setPoint);
+
+            target.m_currentBlock.Authority = new BlockAuthority(50, Int32.MaxValue);
+            target.SystemController(0.001);
+            Assert.AreEqual(50.0/3.6, target.m_setPoint);
         }
     }
 }

@@ -11,10 +11,21 @@ namespace TrackControlLib
 	namespace Sean
 	{
 		public class TrackController : ITrackController
-		{
+		{		
+			private const double SPEED_SCALAR_RED = 0.0;
+			private const double SPEED_SCALAR_YELLOW = 0.45;
+			private const double SPEED_SCALAR_GREEN = 0.95;
+			private const double SPEED_SCALAR_SUPERGREEN = 1.0;
+
+			private const int AUTH_THRESH_SWITCH = 2;
+			private const int AUTH_THRESH_YELLOW = 1;
+			private const int AUTH_THRESH_GREEN = 10;
+			private const int AUTH_THRESH_SUPERGREEN = 20;
+
 			private Dictionary<string, TrackBlock> m_trackBlocks;
 			private TrackController m_next;
 			private TrackController m_prev;
+			private TrackBlock m_switch;
 
 			private BlockAuthority m_suggAuth;
 			private string m_currBlockId;
@@ -35,6 +46,7 @@ namespace TrackControlLib
 					return false;
 				
 				m_trackBlocks.Add(block.Name, block);
+				if (block.HasSwitch) m_switch = block;
 				return true;
 			}
 
@@ -100,14 +112,6 @@ namespace TrackControlLib
 					return false;
 			}
 
-			public bool IsTrackClosed(string trackId)
-			{
-				if (m_trackBlocks.ContainsKey(trackId))
-					return !((TrackBlock)m_trackBlocks[trackId]).Status.IsOpen;
-				else
-					throw new KeyNotFoundException();
-			}
-
 			public TrackStatus GetTrackStatus(string trackId)
 			{
 				if (m_trackBlocks.ContainsKey(trackId))
@@ -126,18 +130,90 @@ namespace TrackControlLib
 
 			public void Update()
 			{
+				// check for track block errors
 				foreach (TrackBlock b in m_trackBlocks.Values)
 				{
-					// check for track block errors
-					if (b.Status.BrokenRail)
+					if (b.Status.BrokenRail || b.Status.CircuitFail || b.Status.PowerFail)
 					{
-						if (!IsTrackClosed(b.Name)) CloseTrack(b.Name);
+						if (b.Status.IsOpen) CloseTrack(b.Name);
 					}
-					// take suggested authority and determine if safe
-					// if safe, execute it
-					// if not 
-
 				}
+
+				// update switching
+
+				// update track block authorites
+				foreach (TrackBlock b in m_trackBlocks.Values)
+				{
+					if (b.Status.TrainPresent)
+					{
+						TrackBlock t;
+						int i;
+
+						for (t = b.PreviousBlock, i = 0;
+							t != null && !t.Status.TrainPresent &&
+							t.Status.IsOpen && m_trackBlocks.ContainsKey(t.Name);
+							++i, t = t.PreviousBlock)
+						{
+							UpdateSpeedAuthoritySignal(t, i);
+						}
+					}
+
+					if (b.NextBlock == null)
+					{
+						TrackBlock t;
+						int i;
+
+						// update the authorites
+						for (t = b, i = 0;
+							t != null && !t.Status.TrainPresent &&
+							t.Status.IsOpen && m_trackBlocks.ContainsKey(t.Name);
+							++i, t = t.PreviousBlock)
+						{
+							UpdateSpeedAuthoritySignal(t, i);
+						}
+					}
+				}
+
+				// update block to suggested auth if safe
+				if (m_currBlockId != string.Empty && m_suggAuth != null)
+				{
+					if (m_suggAuth.Authority < m_trackBlocks[m_currBlockId].Authority.Authority)
+						UpdateSpeedAuthoritySignal(m_trackBlocks[m_currBlockId], m_suggAuth.Authority);
+					if (m_suggAuth.SpeedLimitKPH < m_trackBlocks[m_currBlockId].Authority.SpeedLimitKPH)
+						m_trackBlocks[m_currBlockId].Authority.SpeedLimitKPH = m_suggAuth.SpeedLimitKPH;
+
+					m_currBlockId = string.Empty;
+					m_suggAuth = null;
+				}
+			}
+
+			private void UpdateSpeedAuthoritySignal(TrackBlock block, int authority)
+			{
+				double speedScalar;
+				block.Authority.Authority = authority;
+
+				if (authority > AUTH_THRESH_SUPERGREEN)
+				{
+					block.Status.SignalState = TrackSignalState.SuperGreen;
+					speedScalar = SPEED_SCALAR_SUPERGREEN;
+				}
+				else if (authority > AUTH_THRESH_GREEN)
+				{
+					block.Status.SignalState = TrackSignalState.Green;
+					speedScalar = SPEED_SCALAR_GREEN;
+				}
+				else if (authority > AUTH_THRESH_YELLOW)
+				{
+					block.Status.SignalState = TrackSignalState.Yellow;
+					speedScalar = SPEED_SCALAR_YELLOW;
+				}
+				else
+				{
+					block.Status.SignalState = TrackSignalState.Red;
+					speedScalar = SPEED_SCALAR_RED;
+				}
+
+				block.Authority.SpeedLimitKPH = System.Convert.ToInt32(block.StaticSpeedLimit * speedScalar);
 			}
 		}
 	}

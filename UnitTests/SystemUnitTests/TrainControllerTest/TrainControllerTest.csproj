@@ -58,7 +58,7 @@
     <Shadow Include="Test References\TrainControllerLib.accessor" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CommonLib\CommonLib.csproj">
+    <ProjectReference Include="..\..\..\CommonLib\CommonLib.csproj">
       <Project>{F84DC4AD-4D0C-4F6F-9576-AF656EB63D77}</Project>
       <Name>CommonLib</Name>
     </ProjectReference>
@@ -66,11 +66,11 @@
       <Project>{9FD33000-B6F5-4F4E-9D70-C7F95569AF33}</Project>
       <Name>TrackLib</Name>
     </ProjectReference>
-    <ProjectReference Include="..\TrainControlLib\TrainControlLib.csproj">
+    <ProjectReference Include="..\..\..\TrainControlLib\TrainControlLib.csproj">
       <Project>{A22B83AF-C52B-4CBB-AB3B-4DDF897905FA}</Project>
       <Name>TrainControlLib</Name>
     </ProjectReference>
-    <ProjectReference Include="..\TrainLib\TrainLib.csproj">
+    <ProjectReference Include="..\..\..\TrainLib\TrainLib.csproj">
       <Project>{69FA46C5-B2BD-45DA-A60A-022932F30C1E}</Project>
       <Name>TrainLib</Name>
     </ProjectReference>
