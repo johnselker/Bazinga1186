@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading;
 using CommonLib;
 
 namespace TrackControlLib
@@ -12,11 +11,6 @@ namespace TrackControlLib
 	{
 		public class TrackController : ITrackController
 		{		
-			private const double SPEED_SCALAR_RED = 0.0;
-			private const double SPEED_SCALAR_YELLOW = 0.45;
-			private const double SPEED_SCALAR_GREEN = 0.95;
-			private const double SPEED_SCALAR_SUPERGREEN = 1.0;
-
 			private const int AUTH_THRESH_SWITCH = 2;
 			private const int AUTH_THRESH_YELLOW = 1;
 			private const int AUTH_THRESH_GREEN = 10;
@@ -189,31 +183,28 @@ namespace TrackControlLib
 
 			private void UpdateSpeedAuthoritySignal(TrackBlock block, int authority)
 			{
-				double speedScalar;
+				double t = 1.0 / (double) AUTH_THRESH_SUPERGREEN * (double) authority;
+				double speedScalar = (t > 1.0) ? 1.0 : t;
+
+				block.Authority.SpeedLimitKPH = System.Convert.ToInt32(block.StaticSpeedLimit * speedScalar);
 				block.Authority.Authority = authority;
 
 				if (authority > AUTH_THRESH_SUPERGREEN)
 				{
 					block.Status.SignalState = TrackSignalState.SuperGreen;
-					speedScalar = SPEED_SCALAR_SUPERGREEN;
 				}
 				else if (authority > AUTH_THRESH_GREEN)
 				{
 					block.Status.SignalState = TrackSignalState.Green;
-					speedScalar = SPEED_SCALAR_GREEN;
 				}
 				else if (authority > AUTH_THRESH_YELLOW)
 				{
 					block.Status.SignalState = TrackSignalState.Yellow;
-					speedScalar = SPEED_SCALAR_YELLOW;
 				}
 				else
 				{
 					block.Status.SignalState = TrackSignalState.Red;
-					speedScalar = SPEED_SCALAR_RED;
 				}
-
-				block.Authority.SpeedLimitKPH = System.Convert.ToInt32(block.StaticSpeedLimit * speedScalar);
 			}
 		}
 	}
