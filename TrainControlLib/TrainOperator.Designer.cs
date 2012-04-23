@@ -36,6 +36,8 @@
             this.label2 = new System.Windows.Forms.Label();
             this.currentPosition = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
+            this.timePassed = new System.Windows.Forms.TextBox();
+            this.textBox1 = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // createTrain
@@ -52,6 +54,7 @@
             // 
             this.currentSpeed.Location = new System.Drawing.Point(189, 13);
             this.currentSpeed.Name = "currentSpeed";
+            this.currentSpeed.ReadOnly = true;
             this.currentSpeed.Size = new System.Drawing.Size(100, 20);
             this.currentSpeed.TabIndex = 1;
             // 
@@ -94,6 +97,7 @@
             // 
             this.currentPosition.Location = new System.Drawing.Point(189, 65);
             this.currentPosition.Name = "currentPosition";
+            this.currentPosition.ReadOnly = true;
             this.currentPosition.Size = new System.Drawing.Size(100, 20);
             this.currentPosition.TabIndex = 6;
             // 
@@ -106,11 +110,29 @@
             this.label3.TabIndex = 7;
             this.label3.Text = "Current Position";
             // 
+            // timePassed
+            // 
+            this.timePassed.Location = new System.Drawing.Point(189, 91);
+            this.timePassed.Name = "timePassed";
+            this.timePassed.ReadOnly = true;
+            this.timePassed.Size = new System.Drawing.Size(100, 20);
+            this.timePassed.TabIndex = 8;
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(189, 117);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.ReadOnly = true;
+            this.textBox1.Size = new System.Drawing.Size(100, 20);
+            this.textBox1.TabIndex = 9;
+            // 
             // TrainOperator
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(334, 197);
+            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.timePassed);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.currentPosition);
             this.Controls.Add(this.label2);
@@ -136,5 +158,7 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox currentPosition;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.TextBox timePassed;
+        private System.Windows.Forms.TextBox textBox1;
     }
 }
