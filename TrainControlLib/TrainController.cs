@@ -19,6 +19,7 @@ namespace TrainControllerLib
 
         private double m_samplePeriod = 0.0;
         private double m_timePassed = 0;
+        private double m_arrivalTime = 0;
         private double m_currentSample = 0;
         private double m_lastSample = 0;
         private double m_currentIntegral = 0;
@@ -41,7 +42,6 @@ namespace TrainControllerLib
         private bool m_brakeFailure = false;
         private bool m_engineFailure = false;
         private bool m_run = true;
-        private bool m_stoppingTheTrain = false;
         private ScheduleInfo m_nextStationInfo;
         private Random m_passengerGenerator;
 
@@ -224,7 +224,7 @@ namespace TrainControllerLib
             // If the Track Block has a power failure or a track circuit failure,
             // the train will not be able to pick up the track signal, thus there is a signal pickup failure
             // and the setpoint must be set to zero to engage the brake.
-            if (m_currentState.CurrentBlock.Status.PowerFail || m_currentState.CurrentBlock.Status.CircuitFail)
+            if (m_currentState.CurrentBlock.PowerFailure || m_currentState.CurrentBlock.TrackCircuitFailure)
             {
                 m_setPoint = 0;
             }
@@ -278,11 +278,7 @@ namespace TrainControllerLib
             {
                 m_setPoint = 0;
             }
-            else if (m_stoppingTheTrain && m_currentState.Speed <= 2 && CalculateStoppingDistance(0) >= m_currentBlock.LengthMeters - m_currentState.BlockProgress)
-            {
-                m_setPoint = 0;
-            }
-            else if (m_currentBlock.Authority.Authority == 0 && CalculateStoppingDistance(0) >= m_currentBlock.LengthMeters - m_currentState.BlockProgress)
+            else if (m_currentBlock.Authority.Authority == 0 && (CalculateStoppingDistance(0) >= m_currentBlock.LengthMeters - m_currentState.BlockProgress || (!m_atStation && m_currentState.Speed <= 2)))
             {
                 m_setPoint = 0;
             }
@@ -418,6 +414,7 @@ namespace TrainControllerLib
                 m_approachingStation = false;
                 m_myTrain.SetDoors(TrainState.Door.Open);
                 m_doorsOpen = true;
+                m_arrivalTime = m_timePassed;
 
                 // Simulate passengers getting on and off at the station
                 m_currentState.Passengers = m_passengerGenerator.Next(0, 222);
@@ -430,7 +427,7 @@ namespace TrainControllerLib
             }
 
             // If the train is at the station and the dwell time is up, leave the station
-            if (m_atStation && m_timePassed >= m_nextStationInfo.TimeToStationMinutes * 60)
+            if (m_atStation && m_timePassed >= m_nextStationInfo.TimeToStationMinutes * 60 && m_timePassed - m_arrivalTime >= 60)
             {
                 LeaveStation();
             }

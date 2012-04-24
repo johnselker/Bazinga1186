@@ -21,6 +21,8 @@ namespace TrainControllerLib
         private double time = 0;
         private DateTime start;
         private TimeSpan myTimeSpan;
+        private TrainState myTrainState;
+        private TrackBlock startingBlock;
 
         public TrainOperator()
         {
@@ -32,23 +34,52 @@ namespace TrainControllerLib
             myTrainController.Update(0.08);
             time += 0.01;
             timePassed.Text = myTrainController.TimePassed.ToString(); // time.ToString();
-            myTimeSpan = DateTime.Now - start;
-            textBox1.Text = myTimeSpan.Milliseconds.ToString();
-            start = DateTime.Now;
+            if (myTrainState.Lights == TrainState.Light.Off)
+            {
+                lights.Text = "OFF";
+            }
+            else
+            {
+                lights.Text = "ON";
+            }
+
+            if (myTrainState.Doors == TrainState.Door.Open)
+            {
+                doors.Text = "OPEN";
+            }
+            else
+            {
+                doors.Text = "CLOSED";
+            }
+
+            announcement.Text = myTrainState.Announcement;
+
+            //myTimeSpan = DateTime.Now - start;
+            //lights.Text = myTimeSpan.Milliseconds.ToString();
+            //start = DateTime.Now;
         }
 
         private void createTrain_Click(object sender, EventArgs e)
         {
-            TrackBlock startingBlock = new TrackBlock("Block1", TrackOrientation.EastWest, new Point(0, 0), 100, 0, 0, true, false, 70, TrackAllowedDirection.Both, null, "controller1", "controller2", "Block0", "Block2");
-            startingBlock.NextBlock = new TrackBlock("Block2", TrackOrientation.EastWest, new Point(100, 0), 100, 0, 0, true, false, 70, TrackAllowedDirection.Both, null, "controller1", "controller2", "Block1", "Block3");
-            startingBlock.Authority = new BlockAuthority(70, 1);
-            startingBlock.NextBlock.Authority = new BlockAuthority(70, 0);
-            startingBlock.NextBlock.NextBlock = new TrackBlock("Block3", TrackOrientation.EastWest, new Point(200, 0), 100, 0, 0, true, false, 70, TrackAllowedDirection.Both, null, "controller1", "controller2", "Block2", "Block4");
+            startingBlock = new TrackBlock("Block1", TrackOrientation.EastWest, new Point(0, 0), 1650, 0, 0, false, false, 70, TrackAllowedDirection.Both, null, "controller1", "controller2", "Block0", "Block2");
+            startingBlock.NextBlock = new TrackBlock("Block2", TrackOrientation.EastWest, new Point(1650, 0), 50, 0, 0, true, false, 70, TrackAllowedDirection.Both, null, "controller1", "controller2", "Block1", "Block3");
+            startingBlock.Authority = new BlockAuthority(70, 3);
+            startingBlock.NextBlock.Authority = new BlockAuthority(70, 2);
+            startingBlock.NextBlock.NextBlock = new TrackBlock("Block3", TrackOrientation.EastWest, new Point(1700, 0), 1000, 0, 0, true, false, 70, TrackAllowedDirection.Both, null, "controller1", "controller2", "Block2", "Block4");
+            startingBlock.NextBlock.NextBlock.NextBlock = new TrackBlock("Block4", TrackOrientation.EastWest, new Point(2700, 0), 100, 0, 0, false, false, 70, TrackAllowedDirection.Both, null, "controller1", "controller2", "Block3", "Block5");
+            startingBlock.NextBlock.NextBlock.NextBlock.NextBlock = new TrackBlock("Block5", TrackOrientation.EastWest, new Point(2800, 0), 100, 0, 0, false, false, 70, TrackAllowedDirection.Both, null, "controller1", "controller2", "Block4", "Block6");
+            startingBlock.NextBlock.NextBlock.NextBlock.NextBlock.NextBlock = new TrackBlock("Block6", TrackOrientation.EastWest, new Point(2800, 0), 100, 0, 0, false, false, 70, TrackAllowedDirection.Both, null, "controller1", "controller2", "Block5", "Block7");
+            //startingBlock.NextBlock.NextBlock = startingBlock;
+            startingBlock.NextBlock.NextBlock.Authority = new BlockAuthority(70, 1);
+            startingBlock.NextBlock.NextBlock.NextBlock.Authority = new BlockAuthority(40, 0);
+            startingBlock.NextBlock.NextBlock.NextBlock.NextBlock.Authority = new BlockAuthority(40, 0);
+            startingBlock.NextBlock.NextBlock.NextBlock.NextBlock.NextBlock.Authority = new BlockAuthority(40, 0);
 
-            startingBlock.Transponder = new Transponder("station1", 1);
-            startingBlock.NextBlock.Transponder = new Transponder("station1", 0);
+            startingBlock.Transponder = new Transponder("SHADYSIDE", 1);
+            startingBlock.NextBlock.Transponder = new Transponder("SHADYSIDE", 0);
 
             myTrain = new Train.Train("train1", startingBlock, Direction.East);
+            myTrainState = myTrain.GetState();
             myTrainController = new TrainController(myTrain);
             myTrainController.SetSchedule(GetRedlineSchedule());
 
@@ -107,6 +138,36 @@ namespace TrainControllerLib
             redline.Enqueue(info);
 
             return redline;
+        }
+
+        private void engineFailure_Click(object sender, EventArgs e)
+        {
+            myTrainState.EngineFailure = !myTrainState.EngineFailure;
+        }
+
+        private void brakeFailure_Click(object sender, EventArgs e)
+        {
+            myTrainState.BrakeFailure = !myTrainState.BrakeFailure;
+        }
+
+        private void powerFailure_Click(object sender, EventArgs e)
+        {
+            startingBlock.PowerFailure = !startingBlock.PowerFailure;
+            startingBlock.NextBlock.PowerFailure = startingBlock.PowerFailure;
+            startingBlock.NextBlock.NextBlock.PowerFailure = startingBlock.PowerFailure;
+            startingBlock.NextBlock.NextBlock.NextBlock.PowerFailure = startingBlock.PowerFailure;
+            startingBlock.NextBlock.NextBlock.NextBlock.NextBlock.PowerFailure = startingBlock.PowerFailure;
+            startingBlock.NextBlock.NextBlock.NextBlock.NextBlock.NextBlock.PowerFailure = startingBlock.PowerFailure;
+        }
+
+        private void circuitFailure_Click(object sender, EventArgs e)
+        {
+            startingBlock.TrackCircuitFailure = !startingBlock.TrackCircuitFailure;
+            startingBlock.NextBlock.PowerFailure = startingBlock.TrackCircuitFailure;
+            startingBlock.NextBlock.NextBlock.PowerFailure = startingBlock.TrackCircuitFailure;
+            startingBlock.NextBlock.NextBlock.NextBlock.PowerFailure = startingBlock.TrackCircuitFailure;
+            startingBlock.NextBlock.NextBlock.NextBlock.NextBlock.PowerFailure = startingBlock.TrackCircuitFailure;
+            startingBlock.NextBlock.NextBlock.NextBlock.NextBlock.NextBlock.PowerFailure = startingBlock.TrackCircuitFailure;
         }
     }
 }

@@ -37,7 +37,17 @@
             this.currentPosition = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.timePassed = new System.Windows.Forms.TextBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.lights = new System.Windows.Forms.TextBox();
+            this.doors = new System.Windows.Forms.TextBox();
+            this.announcement = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.engineFailure = new System.Windows.Forms.Button();
+            this.brakeFailure = new System.Windows.Forms.Button();
+            this.powerFailure = new System.Windows.Forms.Button();
+            this.circuitFailure = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // createTrain
@@ -118,20 +128,122 @@
             this.timePassed.Size = new System.Drawing.Size(100, 20);
             this.timePassed.TabIndex = 8;
             // 
-            // textBox1
+            // lights
             // 
-            this.textBox1.Location = new System.Drawing.Point(189, 117);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.ReadOnly = true;
-            this.textBox1.Size = new System.Drawing.Size(100, 20);
-            this.textBox1.TabIndex = 9;
+            this.lights.Location = new System.Drawing.Point(189, 117);
+            this.lights.Name = "lights";
+            this.lights.ReadOnly = true;
+            this.lights.Size = new System.Drawing.Size(100, 20);
+            this.lights.TabIndex = 9;
+            // 
+            // doors
+            // 
+            this.doors.Location = new System.Drawing.Point(189, 143);
+            this.doors.Name = "doors";
+            this.doors.ReadOnly = true;
+            this.doors.Size = new System.Drawing.Size(100, 20);
+            this.doors.TabIndex = 10;
+            // 
+            // announcement
+            // 
+            this.announcement.Location = new System.Drawing.Point(189, 169);
+            this.announcement.Name = "announcement";
+            this.announcement.ReadOnly = true;
+            this.announcement.Size = new System.Drawing.Size(100, 20);
+            this.announcement.TabIndex = 11;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(110, 120);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(35, 13);
+            this.label4.TabIndex = 12;
+            this.label4.Text = "Lights";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(110, 146);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(35, 13);
+            this.label5.TabIndex = 13;
+            this.label5.Text = "Doors";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(110, 172);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(79, 13);
+            this.label6.TabIndex = 14;
+            this.label6.Text = "Announcement";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(72, 94);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(119, 13);
+            this.label7.TabIndex = 15;
+            this.label7.Text = "Time Since Last Station";
+            // 
+            // engineFailure
+            // 
+            this.engineFailure.Location = new System.Drawing.Point(10, 68);
+            this.engineFailure.Name = "engineFailure";
+            this.engineFailure.Size = new System.Drawing.Size(94, 23);
+            this.engineFailure.TabIndex = 16;
+            this.engineFailure.Text = "Engine Failure";
+            this.engineFailure.UseVisualStyleBackColor = true;
+            this.engineFailure.Click += new System.EventHandler(this.engineFailure_Click);
+            // 
+            // brakeFailure
+            // 
+            this.brakeFailure.Location = new System.Drawing.Point(10, 110);
+            this.brakeFailure.Name = "brakeFailure";
+            this.brakeFailure.Size = new System.Drawing.Size(94, 23);
+            this.brakeFailure.TabIndex = 17;
+            this.brakeFailure.Text = "Brake Failure";
+            this.brakeFailure.UseVisualStyleBackColor = true;
+            this.brakeFailure.Click += new System.EventHandler(this.brakeFailure_Click);
+            // 
+            // powerFailure
+            // 
+            this.powerFailure.Location = new System.Drawing.Point(10, 139);
+            this.powerFailure.Name = "powerFailure";
+            this.powerFailure.Size = new System.Drawing.Size(101, 23);
+            this.powerFailure.TabIndex = 18;
+            this.powerFailure.Text = "Track Power Fail";
+            this.powerFailure.UseVisualStyleBackColor = true;
+            this.powerFailure.Click += new System.EventHandler(this.powerFailure_Click);
+            // 
+            // circuitFailure
+            // 
+            this.circuitFailure.Location = new System.Drawing.Point(10, 166);
+            this.circuitFailure.Name = "circuitFailure";
+            this.circuitFailure.Size = new System.Drawing.Size(94, 23);
+            this.circuitFailure.TabIndex = 19;
+            this.circuitFailure.Text = "Track Circuit Fail";
+            this.circuitFailure.UseVisualStyleBackColor = true;
+            this.circuitFailure.Click += new System.EventHandler(this.circuitFailure_Click);
             // 
             // TrainOperator
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(334, 197);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.circuitFailure);
+            this.Controls.Add(this.powerFailure);
+            this.Controls.Add(this.brakeFailure);
+            this.Controls.Add(this.engineFailure);
+            this.Controls.Add(this.label7);
+            this.Controls.Add(this.label6);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.announcement);
+            this.Controls.Add(this.doors);
+            this.Controls.Add(this.lights);
             this.Controls.Add(this.timePassed);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.currentPosition);
@@ -159,6 +271,16 @@
         private System.Windows.Forms.TextBox currentPosition;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox timePassed;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox lights;
+        private System.Windows.Forms.TextBox doors;
+        private System.Windows.Forms.TextBox announcement;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Button engineFailure;
+        private System.Windows.Forms.Button brakeFailure;
+        private System.Windows.Forms.Button powerFailure;
+        private System.Windows.Forms.Button circuitFailure;
     }
 }
