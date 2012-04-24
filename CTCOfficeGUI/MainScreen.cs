@@ -26,7 +26,7 @@ namespace CTCOfficeGUI
             m_ctcController.Subscribe(trackDisplayPanel.UpdateDisplay);
             m_ctcController.Subscribe(infoPanel.UpdateDisplay);
 
-#if DEBUG
+#if !DEBUG
             m_login = new LoginChecker();
             m_login.ShowLogin(OnLoginSuccessful, OnExitClicked);
 #endif
