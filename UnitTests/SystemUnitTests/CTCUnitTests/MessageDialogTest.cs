@@ -281,5 +281,223 @@ namespace CTCUnitTests
             Assert.AreEqual(expected, actual);
             Assert.Inconclusive("Verify the correctness of this test method.");
         }
+
+        /// <summary>
+        ///A test for MessageDialog Constructor
+        ///</summary>
+        [TestMethod()]
+        public void MessageDialogConstructorTest5()
+        {
+            string prompt = string.Empty; // TODO: Initialize to an appropriate value
+            string buttonOneText = string.Empty; // TODO: Initialize to an appropriate value
+            string buttonTwoText = string.Empty; // TODO: Initialize to an appropriate value
+            EventHandler buttonOneClickHandler = null; // TODO: Initialize to an appropriate value
+            EventHandler buttonTwoClickHandler = null; // TODO: Initialize to an appropriate value
+            MessageDialog target = new MessageDialog(prompt, buttonOneText, buttonTwoText, buttonOneClickHandler, buttonTwoClickHandler);
+            Assert.Inconclusive("TODO: Implement code to verify target");
+        }
+
+        /// <summary>
+        ///A test for MessageDialog Constructor
+        ///</summary>
+        [TestMethod()]
+        public void MessageDialogConstructorTest6()
+        {
+            string prompt = string.Empty; // TODO: Initialize to an appropriate value
+            string buttonOneText = string.Empty; // TODO: Initialize to an appropriate value
+            EventHandler buttonOneClickHandler = null; // TODO: Initialize to an appropriate value
+            MessageDialog target = new MessageDialog(prompt, buttonOneText, buttonOneClickHandler);
+            Assert.Inconclusive("TODO: Implement code to verify target");
+        }
+
+        /// <summary>
+        ///A test for MessageDialog Constructor
+        ///</summary>
+        [TestMethod()]
+        public void MessageDialogConstructorTest7()
+        {
+            string prompt = string.Empty; // TODO: Initialize to an appropriate value
+            string buttonOneText = string.Empty; // TODO: Initialize to an appropriate value
+            MessageDialog target = new MessageDialog(prompt, buttonOneText);
+            Assert.Inconclusive("TODO: Implement code to verify target");
+        }
+
+        /// <summary>
+        ///A test for MessageDialog Constructor
+        ///</summary>
+        [TestMethod()]
+        public void MessageDialogConstructorTest8()
+        {
+            MessageDialog target = new MessageDialog();
+            Assert.Inconclusive("TODO: Implement code to verify target");
+        }
+
+        /// <summary>
+        ///A test for MessageDialog Constructor
+        ///</summary>
+        [TestMethod()]
+        public void MessageDialogConstructorTest9()
+        {
+            string prompt = string.Empty; // TODO: Initialize to an appropriate value
+            string buttonOneText = string.Empty; // TODO: Initialize to an appropriate value
+            string buttonTwoText = string.Empty; // TODO: Initialize to an appropriate value
+            MessageDialog target = new MessageDialog(prompt, buttonOneText, buttonTwoText);
+            Assert.Inconclusive("TODO: Implement code to verify target");
+        }
+
+        /// <summary>
+        ///A test for AdjustButtonLocations
+        ///</summary>
+        [TestMethod()]
+        [DeploymentItem("CTCOfficeGUI.exe")]
+        public void AdjustButtonLocationsTest1()
+        {
+            MessageDialog_Accessor target = new MessageDialog_Accessor(); // TODO: Initialize to an appropriate value
+            target.AdjustButtonLocations();
+            Assert.Inconclusive("A method that does not return a value cannot be verified.");
+        }
+
+        /// <summary>
+        ///A test for Dispose
+        ///</summary>
+        [TestMethod()]
+        [DeploymentItem("CTCOfficeGUI.exe")]
+        public void DisposeTest1()
+        {
+            MessageDialog_Accessor target = new MessageDialog_Accessor(); // TODO: Initialize to an appropriate value
+            bool disposing = false; // TODO: Initialize to an appropriate value
+            target.Dispose(disposing);
+            Assert.Inconclusive("A method that does not return a value cannot be verified.");
+        }
+
+        /// <summary>
+        ///A test for InitializeComponent
+        ///</summary>
+        [TestMethod()]
+        [DeploymentItem("CTCOfficeGUI.exe")]
+        public void InitializeComponentTest1()
+        {
+            MessageDialog_Accessor target = new MessageDialog_Accessor(); // TODO: Initialize to an appropriate value
+            target.InitializeComponent();
+            Assert.Inconclusive("A method that does not return a value cannot be verified.");
+        }
+
+        /// <summary>
+        ///A test for OnButtonOneClicked
+        ///</summary>
+        [TestMethod()]
+        [DeploymentItem("CTCOfficeGUI.exe")]
+        public void OnButtonOneClickedTest1()
+        {
+            MessageDialog_Accessor target = new MessageDialog_Accessor(); // TODO: Initialize to an appropriate value
+            object sender = null; // TODO: Initialize to an appropriate value
+            EventArgs e = null; // TODO: Initialize to an appropriate value
+            target.OnButtonOneClicked(sender, e);
+            Assert.Inconclusive("A method that does not return a value cannot be verified.");
+        }
+
+        /// <summary>
+        ///A test for OnButtonTwoClicked
+        ///</summary>
+        [TestMethod()]
+        [DeploymentItem("CTCOfficeGUI.exe")]
+        public void OnButtonTwoClickedTest1()
+        {
+            MessageDialog_Accessor target = new MessageDialog_Accessor(); // TODO: Initialize to an appropriate value
+            object sender = null; // TODO: Initialize to an appropriate value
+            EventArgs e = null; // TODO: Initialize to an appropriate value
+            target.OnButtonTwoClicked(sender, e);
+            Assert.Inconclusive("A method that does not return a value cannot be verified.");
+        }
+
+        /// <summary>
+        ///A test for ButtonCount
+        ///</summary>
+        [TestMethod()]
+        public void ButtonCountTest1()
+        {
+            MessageDialog target = new MessageDialog(); // TODO: Initialize to an appropriate value
+            int expected = 0; // TODO: Initialize to an appropriate value
+            int actual;
+            target.ButtonCount = expected;
+            actual = target.ButtonCount;
+            Assert.AreEqual(expected, actual);
+            Assert.Inconclusive("Verify the correctness of this test method.");
+        }
+
+        /// <summary>
+        ///A test for ButtonOneText
+        ///</summary>
+        [TestMethod()]
+        public void ButtonOneTextTest1()
+        {
+            MessageDialog target = new MessageDialog(); // TODO: Initialize to an appropriate value
+            string expected = string.Empty; // TODO: Initialize to an appropriate value
+            string actual;
+            target.ButtonOneText = expected;
+            actual = target.ButtonOneText;
+            Assert.AreEqual(expected, actual);
+            Assert.Inconclusive("Verify the correctness of this test method.");
+        }
+
+        /// <summary>
+        ///A test for ButtonSpacing
+        ///</summary>
+        [TestMethod()]
+        public void ButtonSpacingTest1()
+        {
+            MessageDialog target = new MessageDialog(); // TODO: Initialize to an appropriate value
+            int expected = 0; // TODO: Initialize to an appropriate value
+            int actual;
+            target.ButtonSpacing = expected;
+            actual = target.ButtonSpacing;
+            Assert.AreEqual(expected, actual);
+            Assert.Inconclusive("Verify the correctness of this test method.");
+        }
+
+        /// <summary>
+        ///A test for ButtonTwoText
+        ///</summary>
+        [TestMethod()]
+        public void ButtonTwoTextTest1()
+        {
+            MessageDialog target = new MessageDialog(); // TODO: Initialize to an appropriate value
+            string expected = string.Empty; // TODO: Initialize to an appropriate value
+            string actual;
+            target.ButtonTwoText = expected;
+            actual = target.ButtonTwoText;
+            Assert.AreEqual(expected, actual);
+            Assert.Inconclusive("Verify the correctness of this test method.");
+        }
+
+        /// <summary>
+        ///A test for PromptText
+        ///</summary>
+        [TestMethod()]
+        public void PromptTextTest1()
+        {
+            MessageDialog target = new MessageDialog(); // TODO: Initialize to an appropriate value
+            string expected = string.Empty; // TODO: Initialize to an appropriate value
+            string actual;
+            target.PromptText = expected;
+            actual = target.PromptText;
+            Assert.AreEqual(expected, actual);
+            Assert.Inconclusive("Verify the correctness of this test method.");
+        }
+
+        /// <summary>
+        ///A test for TitleBarText
+        ///</summary>
+        [TestMethod()]
+        public void TitleBarTextTest1()
+        {
+            MessageDialog target = new MessageDialog(); // TODO: Initialize to an appropriate value
+            string expected = string.Empty; // TODO: Initialize to an appropriate value
+            string actual;
+            target.TitleBarText = expected;
+            actual = target.TitleBarText;
+            Assert.AreEqual(expected, actual);
+            Assert.Inconclusive("Verify the correctness of this test method.");
+        }
     }
 }

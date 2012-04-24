@@ -112,5 +112,54 @@ namespace CTCUnitTests
             target.InitializeComponent();
             Assert.Inconclusive("A method that does not return a value cannot be verified.");
         }
+
+        /// <summary>
+        ///A test for SchedulingScreen Constructor
+        ///</summary>
+        [TestMethod()]
+        [DeploymentItem("CTCOfficeGUI.exe")]
+        public void SchedulingScreenConstructorTest1()
+        {
+            SchedulingScreen_Accessor target = new SchedulingScreen_Accessor();
+            Assert.Inconclusive("TODO: Implement code to verify target");
+        }
+
+        /// <summary>
+        ///A test for Dispose
+        ///</summary>
+        [TestMethod()]
+        [DeploymentItem("CTCOfficeGUI.exe")]
+        public void DisposeTest1()
+        {
+            SchedulingScreen_Accessor target = new SchedulingScreen_Accessor(); // TODO: Initialize to an appropriate value
+            bool disposing = false; // TODO: Initialize to an appropriate value
+            target.Dispose(disposing);
+            Assert.Inconclusive("A method that does not return a value cannot be verified.");
+        }
+
+        /// <summary>
+        ///A test for GetSchedulingScreen
+        ///</summary>
+        [TestMethod()]
+        public void GetSchedulingScreenTest1()
+        {
+            SchedulingScreen expected = null; // TODO: Initialize to an appropriate value
+            SchedulingScreen actual;
+            actual = SchedulingScreen.GetSchedulingScreen();
+            Assert.AreEqual(expected, actual);
+            Assert.Inconclusive("Verify the correctness of this test method.");
+        }
+
+        /// <summary>
+        ///A test for InitializeComponent
+        ///</summary>
+        [TestMethod()]
+        [DeploymentItem("CTCOfficeGUI.exe")]
+        public void InitializeComponentTest1()
+        {
+            SchedulingScreen_Accessor target = new SchedulingScreen_Accessor(); // TODO: Initialize to an appropriate value
+            target.InitializeComponent();
+            Assert.Inconclusive("A method that does not return a value cannot be verified.");
+        }
     }
 }

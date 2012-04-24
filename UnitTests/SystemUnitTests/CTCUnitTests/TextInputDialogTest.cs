@@ -167,5 +167,109 @@ namespace CTCUnitTests
             Assert.AreEqual(expected, actual);
             Assert.Inconclusive("Verify the correctness of this test method.");
         }
+
+        /// <summary>
+        ///A test for TextInputDialog Constructor
+        ///</summary>
+        [TestMethod()]
+        public void TextInputDialogConstructorTest2()
+        {
+            string prompt = string.Empty; // TODO: Initialize to an appropriate value
+            TextInputDialog target = new TextInputDialog(prompt);
+            Assert.Inconclusive("TODO: Implement code to verify target");
+        }
+
+        /// <summary>
+        ///A test for TextInputDialog Constructor
+        ///</summary>
+        [TestMethod()]
+        public void TextInputDialogConstructorTest3()
+        {
+            TextInputDialog target = new TextInputDialog();
+            Assert.Inconclusive("TODO: Implement code to verify target");
+        }
+
+        /// <summary>
+        ///A test for Dispose
+        ///</summary>
+        [TestMethod()]
+        [DeploymentItem("CTCOfficeGUI.exe")]
+        public void DisposeTest1()
+        {
+            TextInputDialog_Accessor target = new TextInputDialog_Accessor(); // TODO: Initialize to an appropriate value
+            bool disposing = false; // TODO: Initialize to an appropriate value
+            target.Dispose(disposing);
+            Assert.Inconclusive("A method that does not return a value cannot be verified.");
+        }
+
+        /// <summary>
+        ///A test for InitializeComponent
+        ///</summary>
+        [TestMethod()]
+        [DeploymentItem("CTCOfficeGUI.exe")]
+        public void InitializeComponentTest1()
+        {
+            TextInputDialog_Accessor target = new TextInputDialog_Accessor(); // TODO: Initialize to an appropriate value
+            target.InitializeComponent();
+            Assert.Inconclusive("A method that does not return a value cannot be verified.");
+        }
+
+        /// <summary>
+        ///A test for OnCancelClicked
+        ///</summary>
+        [TestMethod()]
+        [DeploymentItem("CTCOfficeGUI.exe")]
+        public void OnCancelClickedTest1()
+        {
+            TextInputDialog_Accessor target = new TextInputDialog_Accessor(); // TODO: Initialize to an appropriate value
+            object sender = null; // TODO: Initialize to an appropriate value
+            EventArgs e = null; // TODO: Initialize to an appropriate value
+            target.OnCancelClicked(sender, e);
+            Assert.Inconclusive("A method that does not return a value cannot be verified.");
+        }
+
+        /// <summary>
+        ///A test for OnOKClicked
+        ///</summary>
+        [TestMethod()]
+        [DeploymentItem("CTCOfficeGUI.exe")]
+        public void OnOKClickedTest1()
+        {
+            TextInputDialog_Accessor target = new TextInputDialog_Accessor(); // TODO: Initialize to an appropriate value
+            object sender = null; // TODO: Initialize to an appropriate value
+            EventArgs e = null; // TODO: Initialize to an appropriate value
+            target.OnOKClicked(sender, e);
+            Assert.Inconclusive("A method that does not return a value cannot be verified.");
+        }
+
+        /// <summary>
+        ///A test for PromptText
+        ///</summary>
+        [TestMethod()]
+        public void PromptTextTest1()
+        {
+            TextInputDialog target = new TextInputDialog(); // TODO: Initialize to an appropriate value
+            string expected = string.Empty; // TODO: Initialize to an appropriate value
+            string actual;
+            target.PromptText = expected;
+            actual = target.PromptText;
+            Assert.AreEqual(expected, actual);
+            Assert.Inconclusive("Verify the correctness of this test method.");
+        }
+
+        /// <summary>
+        ///A test for TextValue
+        ///</summary>
+        [TestMethod()]
+        public void TextValueTest1()
+        {
+            TextInputDialog target = new TextInputDialog(); // TODO: Initialize to an appropriate value
+            string expected = string.Empty; // TODO: Initialize to an appropriate value
+            string actual;
+            target.TextValue = expected;
+            actual = target.TextValue;
+            Assert.AreEqual(expected, actual);
+            Assert.Inconclusive("Verify the correctness of this test method.");
+        }
     }
 }

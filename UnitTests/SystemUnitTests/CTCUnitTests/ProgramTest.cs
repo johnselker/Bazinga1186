@@ -87,5 +87,29 @@ namespace CTCUnitTests
             Program_Accessor.OnUnhandledException(sender, e);
             Assert.Inconclusive("A method that does not return a value cannot be verified.");
         }
+
+        /// <summary>
+        ///A test for Main
+        ///</summary>
+        [TestMethod()]
+        [DeploymentItem("CTCOfficeGUI.exe")]
+        public void MainTest1()
+        {
+            Program_Accessor.Main();
+            Assert.Inconclusive("A method that does not return a value cannot be verified.");
+        }
+
+        /// <summary>
+        ///A test for OnUnhandledException
+        ///</summary>
+        [TestMethod()]
+        [DeploymentItem("CTCOfficeGUI.exe")]
+        public void OnUnhandledExceptionTest1()
+        {
+            object sender = null; // TODO: Initialize to an appropriate value
+            UnhandledExceptionEventArgs e = null; // TODO: Initialize to an appropriate value
+            Program_Accessor.OnUnhandledException(sender, e);
+            Assert.Inconclusive("A method that does not return a value cannot be verified.");
+        }
     }
 }

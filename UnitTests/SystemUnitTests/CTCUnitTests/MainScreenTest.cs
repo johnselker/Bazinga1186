@@ -2,7 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using CommonLib;
-using Train;
+using TrainLib;
 
 namespace CTCUnitTests
 {
@@ -296,6 +296,244 @@ namespace CTCUnitTests
         [TestMethod()]
         [DeploymentItem("CTCOfficeGUI.exe")]
         public void OnViewSimulatorWindowClickedTest()
+        {
+            MainScreen_Accessor target = new MainScreen_Accessor(); // TODO: Initialize to an appropriate value
+            object sender = null; // TODO: Initialize to an appropriate value
+            EventArgs e = null; // TODO: Initialize to an appropriate value
+            target.OnViewSimulatorWindowClicked(sender, e);
+            Assert.Inconclusive("A method that does not return a value cannot be verified.");
+        }
+
+        /// <summary>
+        ///A test for MainScreen Constructor
+        ///</summary>
+        [TestMethod()]
+        public void MainScreenConstructorTest1()
+        {
+            MainScreen target = new MainScreen();
+            Assert.Inconclusive("TODO: Implement code to verify target");
+        }
+
+        /// <summary>
+        ///A test for CloseOpenPopups
+        ///</summary>
+        [TestMethod()]
+        [DeploymentItem("CTCOfficeGUI.exe")]
+        public void CloseOpenPopupsTest1()
+        {
+            MainScreen_Accessor target = new MainScreen_Accessor(); // TODO: Initialize to an appropriate value
+            target.CloseOpenPopups();
+            Assert.Inconclusive("A method that does not return a value cannot be verified.");
+        }
+
+        /// <summary>
+        ///A test for Dispose
+        ///</summary>
+        [TestMethod()]
+        [DeploymentItem("CTCOfficeGUI.exe")]
+        public void DisposeTest1()
+        {
+            MainScreen_Accessor target = new MainScreen_Accessor(); // TODO: Initialize to an appropriate value
+            bool disposing = false; // TODO: Initialize to an appropriate value
+            target.Dispose(disposing);
+            Assert.Inconclusive("A method that does not return a value cannot be verified.");
+        }
+
+        /// <summary>
+        ///A test for GetCommandInput
+        ///</summary>
+        [TestMethod()]
+        [DeploymentItem("CTCOfficeGUI.exe")]
+        public void GetCommandInputTest1()
+        {
+            MainScreen_Accessor target = new MainScreen_Accessor(); // TODO: Initialize to an appropriate value
+            object tag = null; // TODO: Initialize to an appropriate value
+            target.GetCommandInput(tag);
+            Assert.Inconclusive("A method that does not return a value cannot be verified.");
+        }
+
+        /// <summary>
+        ///A test for Initialize
+        ///</summary>
+        [TestMethod()]
+        [DeploymentItem("CTCOfficeGUI.exe")]
+        public void InitializeTest1()
+        {
+            MainScreen_Accessor target = new MainScreen_Accessor(); // TODO: Initialize to an appropriate value
+            string filename = string.Empty; // TODO: Initialize to an appropriate value
+            bool expected = false; // TODO: Initialize to an appropriate value
+            bool actual;
+            actual = target.Initialize(filename);
+            Assert.AreEqual(expected, actual);
+            Assert.Inconclusive("Verify the correctness of this test method.");
+        }
+
+        /// <summary>
+        ///A test for InitializeComponent
+        ///</summary>
+        [TestMethod()]
+        [DeploymentItem("CTCOfficeGUI.exe")]
+        public void InitializeComponentTest1()
+        {
+            MainScreen_Accessor target = new MainScreen_Accessor(); // TODO: Initialize to an appropriate value
+            target.InitializeComponent();
+            Assert.Inconclusive("A method that does not return a value cannot be verified.");
+        }
+
+        /// <summary>
+        ///A test for OnAuthorityEntered
+        ///</summary>
+        [TestMethod()]
+        [DeploymentItem("CTCOfficeGUI.exe")]
+        public void OnAuthorityEnteredTest1()
+        {
+            MainScreen_Accessor target = new MainScreen_Accessor(); // TODO: Initialize to an appropriate value
+            string value = string.Empty; // TODO: Initialize to an appropriate value
+            target.OnAuthorityEntered(value);
+            Assert.Inconclusive("A method that does not return a value cannot be verified.");
+        }
+
+        /// <summary>
+        ///A test for OnCommandClicked
+        ///</summary>
+        [TestMethod()]
+        [DeploymentItem("CTCOfficeGUI.exe")]
+        public void OnCommandClickedTest1()
+        {
+            MainScreen_Accessor target = new MainScreen_Accessor(); // TODO: Initialize to an appropriate value
+            object tag = null; // TODO: Initialize to an appropriate value
+            target.OnCommandClicked(tag);
+            Assert.Inconclusive("A method that does not return a value cannot be verified.");
+        }
+
+        /// <summary>
+        ///A test for OnExitClicked
+        ///</summary>
+        [TestMethod()]
+        [DeploymentItem("CTCOfficeGUI.exe")]
+        public void OnExitClickedTest1()
+        {
+            MainScreen_Accessor target = new MainScreen_Accessor(); // TODO: Initialize to an appropriate value
+            object sender = null; // TODO: Initialize to an appropriate value
+            EventArgs e = null; // TODO: Initialize to an appropriate value
+            target.OnExitClicked(sender, e);
+            Assert.Inconclusive("A method that does not return a value cannot be verified.");
+        }
+
+        /// <summary>
+        ///A test for OnLoadTrackLayoutClicked
+        ///</summary>
+        [TestMethod()]
+        [DeploymentItem("CTCOfficeGUI.exe")]
+        public void OnLoadTrackLayoutClickedTest1()
+        {
+            MainScreen_Accessor target = new MainScreen_Accessor(); // TODO: Initialize to an appropriate value
+            object sender = null; // TODO: Initialize to an appropriate value
+            EventArgs e = null; // TODO: Initialize to an appropriate value
+            target.OnLoadTrackLayoutClicked(sender, e);
+            Assert.Inconclusive("A method that does not return a value cannot be verified.");
+        }
+
+        /// <summary>
+        ///A test for OnLoginSuccessful
+        ///</summary>
+        [TestMethod()]
+        [DeploymentItem("CTCOfficeGUI.exe")]
+        public void OnLoginSuccessfulTest1()
+        {
+            MainScreen_Accessor target = new MainScreen_Accessor(); // TODO: Initialize to an appropriate value
+            object sender = null; // TODO: Initialize to an appropriate value
+            EventArgs e = null; // TODO: Initialize to an appropriate value
+            target.OnLoginSuccessful(sender, e);
+            Assert.Inconclusive("A method that does not return a value cannot be verified.");
+        }
+
+        /// <summary>
+        ///A test for OnPopupAcknowledged
+        ///</summary>
+        [TestMethod()]
+        [DeploymentItem("CTCOfficeGUI.exe")]
+        public void OnPopupAcknowledgedTest1()
+        {
+            MainScreen_Accessor target = new MainScreen_Accessor(); // TODO: Initialize to an appropriate value
+            object sender = null; // TODO: Initialize to an appropriate value
+            EventArgs e = null; // TODO: Initialize to an appropriate value
+            target.OnPopupAcknowledged(sender, e);
+            Assert.Inconclusive("A method that does not return a value cannot be verified.");
+        }
+
+        /// <summary>
+        ///A test for OnSpeedLimitEntered
+        ///</summary>
+        [TestMethod()]
+        [DeploymentItem("CTCOfficeGUI.exe")]
+        public void OnSpeedLimitEnteredTest1()
+        {
+            MainScreen_Accessor target = new MainScreen_Accessor(); // TODO: Initialize to an appropriate value
+            string value = string.Empty; // TODO: Initialize to an appropriate value
+            target.OnSpeedLimitEntered(value);
+            Assert.Inconclusive("A method that does not return a value cannot be verified.");
+        }
+
+        /// <summary>
+        ///A test for OnTableViewClicked
+        ///</summary>
+        [TestMethod()]
+        [DeploymentItem("CTCOfficeGUI.exe")]
+        public void OnTableViewClickedTest1()
+        {
+            MainScreen_Accessor target = new MainScreen_Accessor(); // TODO: Initialize to an appropriate value
+            object sender = null; // TODO: Initialize to an appropriate value
+            EventArgs e = null; // TODO: Initialize to an appropriate value
+            target.OnTableViewClicked(sender, e);
+            Assert.Inconclusive("A method that does not return a value cannot be verified.");
+        }
+
+        /// <summary>
+        ///A test for OnTrackBlockClicked
+        ///</summary>
+        [TestMethod()]
+        [DeploymentItem("CTCOfficeGUI.exe")]
+        public void OnTrackBlockClickedTest1()
+        {
+            MainScreen_Accessor target = new MainScreen_Accessor(); // TODO: Initialize to an appropriate value
+            TrackBlock b = null; // TODO: Initialize to an appropriate value
+            target.OnTrackBlockClicked(b);
+            Assert.Inconclusive("A method that does not return a value cannot be verified.");
+        }
+
+        /// <summary>
+        ///A test for OnTrainClicked
+        ///</summary>
+        [TestMethod()]
+        [DeploymentItem("CTCOfficeGUI.exe")]
+        public void OnTrainClickedTest1()
+        {
+            MainScreen_Accessor target = new MainScreen_Accessor(); // TODO: Initialize to an appropriate value
+            ITrain train = null; // TODO: Initialize to an appropriate value
+            target.OnTrainClicked(train);
+            Assert.Inconclusive("A method that does not return a value cannot be verified.");
+        }
+
+        /// <summary>
+        ///A test for OnTrainNameEntered
+        ///</summary>
+        [TestMethod()]
+        [DeploymentItem("CTCOfficeGUI.exe")]
+        public void OnTrainNameEnteredTest1()
+        {
+            MainScreen_Accessor target = new MainScreen_Accessor(); // TODO: Initialize to an appropriate value
+            string value = string.Empty; // TODO: Initialize to an appropriate value
+            target.OnTrainNameEntered(value);
+            Assert.Inconclusive("A method that does not return a value cannot be verified.");
+        }
+
+        /// <summary>
+        ///A test for OnViewSimulatorWindowClicked
+        ///</summary>
+        [TestMethod()]
+        [DeploymentItem("CTCOfficeGUI.exe")]
+        public void OnViewSimulatorWindowClickedTest1()
         {
             MainScreen_Accessor target = new MainScreen_Accessor(); // TODO: Initialize to an appropriate value
             object sender = null; // TODO: Initialize to an appropriate value

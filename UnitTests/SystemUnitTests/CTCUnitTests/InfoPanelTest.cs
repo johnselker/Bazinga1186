@@ -3,7 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using CommonLib;
 using System.Collections.Generic;
-using Train;
+using TrainLib;
 
 namespace CTCUnitTests
 {
@@ -195,6 +195,142 @@ namespace CTCUnitTests
         ///</summary>
         [TestMethod()]
         public void UpdateDisplayTest()
+        {
+            InfoPanel target = new InfoPanel(); // TODO: Initialize to an appropriate value
+            List<TrackBlock> blocks = null; // TODO: Initialize to an appropriate value
+            List<ITrain> trains = null; // TODO: Initialize to an appropriate value
+            target.UpdateDisplay(blocks, trains);
+            Assert.Inconclusive("A method that does not return a value cannot be verified.");
+        }
+
+        /// <summary>
+        ///A test for InfoPanel Constructor
+        ///</summary>
+        [TestMethod()]
+        public void InfoPanelConstructorTest1()
+        {
+            InfoPanel target = new InfoPanel();
+            Assert.Inconclusive("TODO: Implement code to verify target");
+        }
+
+        /// <summary>
+        ///A test for AdjustLabelPositions
+        ///</summary>
+        [TestMethod()]
+        [DeploymentItem("CTCOfficeGUI.exe")]
+        public void AdjustLabelPositionsTest1()
+        {
+            InfoPanel_Accessor target = new InfoPanel_Accessor(); // TODO: Initialize to an appropriate value
+            target.AdjustLabelPositions();
+            Assert.Inconclusive("A method that does not return a value cannot be verified.");
+        }
+
+        /// <summary>
+        ///A test for ClearInfo
+        ///</summary>
+        [TestMethod()]
+        public void ClearInfoTest1()
+        {
+            InfoPanel target = new InfoPanel(); // TODO: Initialize to an appropriate value
+            target.ClearInfo();
+            Assert.Inconclusive("A method that does not return a value cannot be verified.");
+        }
+
+        /// <summary>
+        ///A test for Dispose
+        ///</summary>
+        [TestMethod()]
+        [DeploymentItem("CTCOfficeGUI.exe")]
+        public void DisposeTest1()
+        {
+            InfoPanel_Accessor target = new InfoPanel_Accessor(); // TODO: Initialize to an appropriate value
+            bool disposing = false; // TODO: Initialize to an appropriate value
+            target.Dispose(disposing);
+            Assert.Inconclusive("A method that does not return a value cannot be verified.");
+        }
+
+        /// <summary>
+        ///A test for GetBlockFailureStateString
+        ///</summary>
+        [TestMethod()]
+        [DeploymentItem("CTCOfficeGUI.exe")]
+        public void GetBlockFailureStateStringTest1()
+        {
+            InfoPanel_Accessor target = new InfoPanel_Accessor(); // TODO: Initialize to an appropriate value
+            TrackBlock block = null; // TODO: Initialize to an appropriate value
+            KeyValuePair<string, string> expected = new KeyValuePair<string, string>(); // TODO: Initialize to an appropriate value
+            KeyValuePair<string, string> actual;
+            actual = target.GetBlockFailureStateString(block);
+            Assert.AreEqual(expected, actual);
+            Assert.Inconclusive("Verify the correctness of this test method.");
+        }
+
+        /// <summary>
+        ///A test for InitializeComponent
+        ///</summary>
+        [TestMethod()]
+        [DeploymentItem("CTCOfficeGUI.exe")]
+        public void InitializeComponentTest1()
+        {
+            InfoPanel_Accessor target = new InfoPanel_Accessor(); // TODO: Initialize to an appropriate value
+            target.InitializeComponent();
+            Assert.Inconclusive("A method that does not return a value cannot be verified.");
+        }
+
+        /// <summary>
+        ///A test for SetInfo
+        ///</summary>
+        [TestMethod()]
+        public void SetInfoTest1()
+        {
+            InfoPanel target = new InfoPanel(); // TODO: Initialize to an appropriate value
+            string name = string.Empty; // TODO: Initialize to an appropriate value
+            Dictionary<string, string> information = null; // TODO: Initialize to an appropriate value
+            target.SetInfo(name, information);
+            Assert.Inconclusive("A method that does not return a value cannot be verified.");
+        }
+
+        /// <summary>
+        ///A test for SetTrackBlockInfo
+        ///</summary>
+        [TestMethod()]
+        public void SetTrackBlockInfoTest1()
+        {
+            InfoPanel target = new InfoPanel(); // TODO: Initialize to an appropriate value
+            TrackBlock block = null; // TODO: Initialize to an appropriate value
+            target.SetTrackBlockInfo(block);
+            Assert.Inconclusive("A method that does not return a value cannot be verified.");
+        }
+
+        /// <summary>
+        ///A test for SetTrainInfo
+        ///</summary>
+        [TestMethod()]
+        public void SetTrainInfoTest1()
+        {
+            InfoPanel target = new InfoPanel(); // TODO: Initialize to an appropriate value
+            ITrain train = null; // TODO: Initialize to an appropriate value
+            target.SetTrainInfo(train);
+            Assert.Inconclusive("A method that does not return a value cannot be verified.");
+        }
+
+        /// <summary>
+        ///A test for SetTrainYardInfo
+        ///</summary>
+        [TestMethod()]
+        public void SetTrainYardInfoTest1()
+        {
+            InfoPanel target = new InfoPanel(); // TODO: Initialize to an appropriate value
+            TrackBlock b = null; // TODO: Initialize to an appropriate value
+            target.SetTrainYardInfo(b);
+            Assert.Inconclusive("A method that does not return a value cannot be verified.");
+        }
+
+        /// <summary>
+        ///A test for UpdateDisplay
+        ///</summary>
+        [TestMethod()]
+        public void UpdateDisplayTest1()
         {
             InfoPanel target = new InfoPanel(); // TODO: Initialize to an appropriate value
             List<TrackBlock> blocks = null; // TODO: Initialize to an appropriate value

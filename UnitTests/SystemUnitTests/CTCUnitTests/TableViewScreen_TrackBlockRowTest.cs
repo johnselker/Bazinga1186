@@ -98,5 +98,40 @@ namespace CTCUnitTests
             target.ShowLabels();
             Assert.Inconclusive("A method that does not return a value cannot be verified.");
         }
+
+        /// <summary>
+        ///A test for TrackBlockRow Constructor
+        ///</summary>
+        [TestMethod()]
+        [DeploymentItem("CTCOfficeGUI.exe")]
+        public void TableViewScreen_TrackBlockRowConstructorTest1()
+        {
+            TableViewScreen_Accessor.TrackBlockRow target = new TableViewScreen_Accessor.TrackBlockRow();
+            Assert.Inconclusive("TODO: Implement code to verify target");
+        }
+
+        /// <summary>
+        ///A test for HideLabels
+        ///</summary>
+        [TestMethod()]
+        [DeploymentItem("CTCOfficeGUI.exe")]
+        public void HideLabelsTest1()
+        {
+            TableViewScreen_Accessor.TrackBlockRow target = new TableViewScreen_Accessor.TrackBlockRow(); // TODO: Initialize to an appropriate value
+            target.HideLabels();
+            Assert.Inconclusive("A method that does not return a value cannot be verified.");
+        }
+
+        /// <summary>
+        ///A test for ShowLabels
+        ///</summary>
+        [TestMethod()]
+        [DeploymentItem("CTCOfficeGUI.exe")]
+        public void ShowLabelsTest1()
+        {
+            TableViewScreen_Accessor.TrackBlockRow target = new TableViewScreen_Accessor.TrackBlockRow(); // TODO: Initialize to an appropriate value
+            target.ShowLabels();
+            Assert.Inconclusive("A method that does not return a value cannot be verified.");
+        }
     }
 }

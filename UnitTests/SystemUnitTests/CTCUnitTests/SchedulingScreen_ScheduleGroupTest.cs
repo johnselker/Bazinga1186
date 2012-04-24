@@ -135,5 +135,76 @@ namespace CTCUnitTests
             actual = target.StationDropdown;
             Assert.Inconclusive("Verify the correctness of this test method.");
         }
+
+        /// <summary>
+        ///A test for ScheduleGroup Constructor
+        ///</summary>
+        [TestMethod()]
+        [DeploymentItem("CTCOfficeGUI.exe")]
+        public void SchedulingScreen_ScheduleGroupConstructorTest1()
+        {
+            ComboBox stationDropdown = null; // TODO: Initialize to an appropriate value
+            TextBox arrivalTextBox = null; // TODO: Initialize to an appropriate value
+            Button editButton = null; // TODO: Initialize to an appropriate value
+            Button deleteButton = null; // TODO: Initialize to an appropriate value
+            SchedulingScreen_Accessor.ScheduleGroup target = new SchedulingScreen_Accessor.ScheduleGroup(stationDropdown, arrivalTextBox, editButton, deleteButton);
+            Assert.Inconclusive("TODO: Implement code to verify target");
+        }
+
+        /// <summary>
+        ///A test for ArrivalTextBox
+        ///</summary>
+        [TestMethod()]
+        [DeploymentItem("CTCOfficeGUI.exe")]
+        public void ArrivalTextBoxTest1()
+        {
+            PrivateObject param0 = null; // TODO: Initialize to an appropriate value
+            SchedulingScreen_Accessor.ScheduleGroup target = new SchedulingScreen_Accessor.ScheduleGroup(param0); // TODO: Initialize to an appropriate value
+            TextBox actual;
+            actual = target.ArrivalTextBox;
+            Assert.Inconclusive("Verify the correctness of this test method.");
+        }
+
+        /// <summary>
+        ///A test for DeleteButton
+        ///</summary>
+        [TestMethod()]
+        [DeploymentItem("CTCOfficeGUI.exe")]
+        public void DeleteButtonTest1()
+        {
+            PrivateObject param0 = null; // TODO: Initialize to an appropriate value
+            SchedulingScreen_Accessor.ScheduleGroup target = new SchedulingScreen_Accessor.ScheduleGroup(param0); // TODO: Initialize to an appropriate value
+            Button actual;
+            actual = target.DeleteButton;
+            Assert.Inconclusive("Verify the correctness of this test method.");
+        }
+
+        /// <summary>
+        ///A test for EditButton
+        ///</summary>
+        [TestMethod()]
+        [DeploymentItem("CTCOfficeGUI.exe")]
+        public void EditButtonTest1()
+        {
+            PrivateObject param0 = null; // TODO: Initialize to an appropriate value
+            SchedulingScreen_Accessor.ScheduleGroup target = new SchedulingScreen_Accessor.ScheduleGroup(param0); // TODO: Initialize to an appropriate value
+            Button actual;
+            actual = target.EditButton;
+            Assert.Inconclusive("Verify the correctness of this test method.");
+        }
+
+        /// <summary>
+        ///A test for StationDropdown
+        ///</summary>
+        [TestMethod()]
+        [DeploymentItem("CTCOfficeGUI.exe")]
+        public void StationDropdownTest1()
+        {
+            PrivateObject param0 = null; // TODO: Initialize to an appropriate value
+            SchedulingScreen_Accessor.ScheduleGroup target = new SchedulingScreen_Accessor.ScheduleGroup(param0); // TODO: Initialize to an appropriate value
+            ComboBox actual;
+            actual = target.StationDropdown;
+            Assert.Inconclusive("Verify the correctness of this test method.");
+        }
     }
 }
