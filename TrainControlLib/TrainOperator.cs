@@ -152,22 +152,22 @@ namespace TrainControllerLib
 
         private void powerFailure_Click(object sender, EventArgs e)
         {
-            startingBlock.PowerFailure = !startingBlock.PowerFailure;
-            startingBlock.NextBlock.PowerFailure = startingBlock.PowerFailure;
-            startingBlock.NextBlock.NextBlock.PowerFailure = startingBlock.PowerFailure;
-            startingBlock.NextBlock.NextBlock.NextBlock.PowerFailure = startingBlock.PowerFailure;
-            startingBlock.NextBlock.NextBlock.NextBlock.NextBlock.PowerFailure = startingBlock.PowerFailure;
-            startingBlock.NextBlock.NextBlock.NextBlock.NextBlock.NextBlock.PowerFailure = startingBlock.PowerFailure;
+            startingBlock.Status.PowerFail = !startingBlock.Status.PowerFail;
+            startingBlock.NextBlock.Status.PowerFail = startingBlock.Status.PowerFail;
+            startingBlock.NextBlock.NextBlock.Status.PowerFail = startingBlock.Status.PowerFail;
+            startingBlock.NextBlock.NextBlock.NextBlock.Status.PowerFail = startingBlock.Status.PowerFail;
+            startingBlock.NextBlock.NextBlock.NextBlock.NextBlock.Status.PowerFail = startingBlock.Status.PowerFail;
+            startingBlock.NextBlock.NextBlock.NextBlock.NextBlock.NextBlock.Status.PowerFail = startingBlock.Status.PowerFail;
         }
 
         private void circuitFailure_Click(object sender, EventArgs e)
         {
-            startingBlock.TrackCircuitFailure = !startingBlock.TrackCircuitFailure;
-            startingBlock.NextBlock.PowerFailure = startingBlock.TrackCircuitFailure;
-            startingBlock.NextBlock.NextBlock.PowerFailure = startingBlock.TrackCircuitFailure;
-            startingBlock.NextBlock.NextBlock.NextBlock.PowerFailure = startingBlock.TrackCircuitFailure;
-            startingBlock.NextBlock.NextBlock.NextBlock.NextBlock.PowerFailure = startingBlock.TrackCircuitFailure;
-            startingBlock.NextBlock.NextBlock.NextBlock.NextBlock.NextBlock.PowerFailure = startingBlock.TrackCircuitFailure;
+            startingBlock.Status.CircuitFail = !startingBlock.Status.CircuitFail;
+            startingBlock.NextBlock.Status.PowerFail = startingBlock.Status.CircuitFail;
+            startingBlock.NextBlock.NextBlock.Status.PowerFail = startingBlock.Status.CircuitFail;
+            startingBlock.NextBlock.NextBlock.NextBlock.Status.PowerFail = startingBlock.Status.CircuitFail;
+            startingBlock.NextBlock.NextBlock.NextBlock.NextBlock.Status.PowerFail = startingBlock.Status.CircuitFail;
+            startingBlock.NextBlock.NextBlock.NextBlock.NextBlock.NextBlock.Status.PowerFail = startingBlock.Status.CircuitFail;
         }
     }
 }
