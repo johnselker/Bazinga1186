@@ -7,7 +7,6 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Diagnostics;
-using System.Timers;
 
 namespace Train
 {
@@ -15,14 +14,14 @@ namespace Train
 	{
 		private ITrain train;
 		private string validPower = "0";
-		private System.Timers.Timer clock = new System.Timers.Timer();
+		private Timer clock = new Timer();
 
 		public TrainForm(ITrain train)
 		{
 			InitializeComponent();
 			this.train = train;
 			// Add the event and the event handler for the method that will process the timer event to the timer.
-			clock.Elapsed += new ElapsedEventHandler(Updater);
+			clock.Tick += UpdateState;
 			// Set the timer interval to 100 ms.
 			clock.Interval = 100;
 			clock.Start();
@@ -69,13 +68,9 @@ namespace Train
 			}
 		}
 
-		private void Updater(object sender, EventArgs e)
+		private void UpdateState(object sender, EventArgs e)
 		{
-			this.Invoke((MethodInvoker)delegate() { UpdateState(); });
-		}
-		private void UpdateState()
-		{
-			//train.Update(0.1);
+			train.Update(clock.Interval / 1000.0);
 			TrainState ts = train.GetState();
 			brakeBox.Checked = train.GetBrake();
 			emergencyBrakeBox.Checked = train.GetEmergencyBrake();
