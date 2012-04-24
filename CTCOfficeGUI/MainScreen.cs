@@ -26,6 +26,11 @@ namespace CTCOfficeGUI
             m_ctcController.Subscribe(trackDisplayPanel.UpdateDisplay);
             m_ctcController.Subscribe(infoPanel.UpdateDisplay);
 
+#if DEBUG
+            m_login = new LoginChecker();
+            m_login.ShowLogin(OnLoginSuccessful, OnExitClicked);
+#endif
+
             m_simulatorWindow.Show();
         }
 
@@ -157,6 +162,16 @@ namespace CTCOfficeGUI
         #endregion
 
         #region Event Handlers
+
+        /// <summary>
+        /// Successfully logged in
+        /// </summary>
+        /// <param name="sender">Sender of the event</param>
+        /// <param name="e">Event arguments</param>
+        private void OnLoginSuccessful(object sender, EventArgs e)
+        {
+            m_login.CloseLogin();
+        }
 
         /// <summary>
         /// Event handler for the track block clicked event
@@ -381,6 +396,7 @@ namespace CTCOfficeGUI
         private CTCController m_ctcController = CTCController.GetCTCController();
         private SimulatorWindow m_simulatorWindow = new SimulatorWindow();
         private TableViewScreen m_tableViewWindow = new TableViewScreen();
+        private LoginChecker m_login;
 
         #endregion
     }
