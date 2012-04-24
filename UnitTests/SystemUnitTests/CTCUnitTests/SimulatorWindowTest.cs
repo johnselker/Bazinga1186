@@ -2,20 +2,17 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using CommonLib;
-using System.Drawing;
-using System.Collections.Generic;
-using Train;
 
 namespace CTCUnitTests
 {
     
     
     /// <summary>
-    ///This is a test class for TrackDisplayPanelTest and is intended
-    ///to contain all TrackDisplayPanelTest Unit Tests
+    ///This is a test class for SimulatorWindowTest and is intended
+    ///to contain all SimulatorWindowTest Unit Tests
     ///</summary>
     [TestClass()]
-    public class TrackDisplayPanelTest
+    public class SimulatorWindowTest
     {
 
 
@@ -69,44 +66,13 @@ namespace CTCUnitTests
 
 
         /// <summary>
-        ///A test for TrackDisplayPanel Constructor
+        ///A test for SimulatorWindow Constructor
         ///</summary>
         [TestMethod()]
-        public void TrackDisplayPanelConstructorTest()
+        public void SimulatorWindowConstructorTest()
         {
-            TrackDisplayPanel target = new TrackDisplayPanel();
+            SimulatorWindow target = new SimulatorWindow();
             Assert.Inconclusive("TODO: Implement code to verify target");
-        }
-
-        /// <summary>
-        ///A test for CalculateBlockPosition
-        ///</summary>
-        [TestMethod()]
-        [DeploymentItem("CTCOfficeGUI.exe")]
-        public void CalculateBlockPositionTest()
-        {
-            TrackDisplayPanel_Accessor target = new TrackDisplayPanel_Accessor(); // TODO: Initialize to an appropriate value
-            TrackBlock block = null; // TODO: Initialize to an appropriate value
-            Point layoutPosition = new Point(); // TODO: Initialize to an appropriate value
-            int arrowLength = 0; // TODO: Initialize to an appropriate value
-            Point expected = new Point(); // TODO: Initialize to an appropriate value
-            Point actual;
-            actual = target.CalculateBlockPosition(block, layoutPosition, arrowLength);
-            Assert.AreEqual(expected, actual);
-            Assert.Inconclusive("Verify the correctness of this test method.");
-        }
-
-        /// <summary>
-        ///A test for CalculateScale
-        ///</summary>
-        [TestMethod()]
-        [DeploymentItem("CTCOfficeGUI.exe")]
-        public void CalculateScaleTest()
-        {
-            TrackDisplayPanel_Accessor target = new TrackDisplayPanel_Accessor(); // TODO: Initialize to an appropriate value
-            Size layoutSize = new Size(); // TODO: Initialize to an appropriate value
-            target.CalculateScale(layoutSize);
-            Assert.Inconclusive("A method that does not return a value cannot be verified.");
         }
 
         /// <summary>
@@ -116,7 +82,7 @@ namespace CTCUnitTests
         [DeploymentItem("CTCOfficeGUI.exe")]
         public void DisposeTest()
         {
-            TrackDisplayPanel_Accessor target = new TrackDisplayPanel_Accessor(); // TODO: Initialize to an appropriate value
+            SimulatorWindow_Accessor target = new SimulatorWindow_Accessor(); // TODO: Initialize to an appropriate value
             bool disposing = false; // TODO: Initialize to an appropriate value
             target.Dispose(disposing);
             Assert.Inconclusive("A method that does not return a value cannot be verified.");
@@ -129,102 +95,104 @@ namespace CTCUnitTests
         [DeploymentItem("CTCOfficeGUI.exe")]
         public void InitializeComponentTest()
         {
-            TrackDisplayPanel_Accessor target = new TrackDisplayPanel_Accessor(); // TODO: Initialize to an appropriate value
+            SimulatorWindow_Accessor target = new SimulatorWindow_Accessor(); // TODO: Initialize to an appropriate value
             target.InitializeComponent();
             Assert.Inconclusive("A method that does not return a value cannot be verified.");
         }
 
         /// <summary>
-        ///A test for OnBlinkTimerTick
+        ///A test for OnBrokenRailClicked
         ///</summary>
         [TestMethod()]
         [DeploymentItem("CTCOfficeGUI.exe")]
-        public void OnBlinkTimerTickTest()
+        public void OnBrokenRailClickedTest()
         {
-            TrackDisplayPanel_Accessor target = new TrackDisplayPanel_Accessor(); // TODO: Initialize to an appropriate value
+            SimulatorWindow_Accessor target = new SimulatorWindow_Accessor(); // TODO: Initialize to an appropriate value
             object sender = null; // TODO: Initialize to an appropriate value
             EventArgs e = null; // TODO: Initialize to an appropriate value
-            target.OnBlinkTimerTick(sender, e);
+            target.OnBrokenRailClicked(sender, e);
             Assert.Inconclusive("A method that does not return a value cannot be verified.");
         }
 
         /// <summary>
-        ///A test for OnBlockClicked
+        ///A test for OnCircuitFailureClicked
         ///</summary>
         [TestMethod()]
         [DeploymentItem("CTCOfficeGUI.exe")]
-        public void OnBlockClickedTest()
+        public void OnCircuitFailureClickedTest()
         {
-            TrackDisplayPanel_Accessor target = new TrackDisplayPanel_Accessor(); // TODO: Initialize to an appropriate value
+            SimulatorWindow_Accessor target = new SimulatorWindow_Accessor(); // TODO: Initialize to an appropriate value
             object sender = null; // TODO: Initialize to an appropriate value
             EventArgs e = null; // TODO: Initialize to an appropriate value
-            target.OnBlockClicked(sender, e);
+            target.OnCircuitFailureClicked(sender, e);
             Assert.Inconclusive("A method that does not return a value cannot be verified.");
         }
 
         /// <summary>
-        ///A test for OnTrainDisposed
+        ///A test for OnPopupAcknowledged
         ///</summary>
         [TestMethod()]
         [DeploymentItem("CTCOfficeGUI.exe")]
-        public void OnTrainDisposedTest()
+        public void OnPopupAcknowledgedTest()
         {
-            TrackDisplayPanel_Accessor target = new TrackDisplayPanel_Accessor(); // TODO: Initialize to an appropriate value
+            SimulatorWindow_Accessor target = new SimulatorWindow_Accessor(); // TODO: Initialize to an appropriate value
             object sender = null; // TODO: Initialize to an appropriate value
             EventArgs e = null; // TODO: Initialize to an appropriate value
-            target.OnTrainDisposed(sender, e);
+            target.OnPopupAcknowledged(sender, e);
             Assert.Inconclusive("A method that does not return a value cannot be verified.");
         }
 
         /// <summary>
-        ///A test for OnTrainGraphicClicked
+        ///A test for OnPowerFailureClicked
         ///</summary>
         [TestMethod()]
         [DeploymentItem("CTCOfficeGUI.exe")]
-        public void OnTrainGraphicClickedTest()
+        public void OnPowerFailureClickedTest()
         {
-            TrackDisplayPanel_Accessor target = new TrackDisplayPanel_Accessor(); // TODO: Initialize to an appropriate value
+            SimulatorWindow_Accessor target = new SimulatorWindow_Accessor(); // TODO: Initialize to an appropriate value
             object sender = null; // TODO: Initialize to an appropriate value
             EventArgs e = null; // TODO: Initialize to an appropriate value
-            target.OnTrainGraphicClicked(sender, e);
+            target.OnPowerFailureClicked(sender, e);
             Assert.Inconclusive("A method that does not return a value cannot be verified.");
         }
 
         /// <summary>
-        ///A test for SetTrackLayout
+        ///A test for OnRunSimulationClicked
         ///</summary>
         [TestMethod()]
-        public void SetTrackLayoutTest()
+        [DeploymentItem("CTCOfficeGUI.exe")]
+        public void OnRunSimulationClickedTest()
         {
-            TrackDisplayPanel target = new TrackDisplayPanel(); // TODO: Initialize to an appropriate value
-            List<TrackBlock> blocks = null; // TODO: Initialize to an appropriate value
-            Size layoutSize = new Size(); // TODO: Initialize to an appropriate value
-            Point layoutPosition = new Point(); // TODO: Initialize to an appropriate value
-            target.SetTrackLayout(blocks, layoutSize, layoutPosition);
+            SimulatorWindow_Accessor target = new SimulatorWindow_Accessor(); // TODO: Initialize to an appropriate value
+            object sender = null; // TODO: Initialize to an appropriate value
+            EventArgs e = null; // TODO: Initialize to an appropriate value
+            target.OnRunSimulationClicked(sender, e);
             Assert.Inconclusive("A method that does not return a value cannot be verified.");
         }
 
         /// <summary>
-        ///A test for UnselectAll
+        ///A test for OnSetSimulationSpeedClicked
         ///</summary>
         [TestMethod()]
-        public void UnselectAllTest()
+        [DeploymentItem("CTCOfficeGUI.exe")]
+        public void OnSetSimulationSpeedClickedTest()
         {
-            TrackDisplayPanel target = new TrackDisplayPanel(); // TODO: Initialize to an appropriate value
-            target.UnselectAll();
+            SimulatorWindow_Accessor target = new SimulatorWindow_Accessor(); // TODO: Initialize to an appropriate value
+            object sender = null; // TODO: Initialize to an appropriate value
+            EventArgs e = null; // TODO: Initialize to an appropriate value
+            target.OnSetSimulationSpeedClicked(sender, e);
             Assert.Inconclusive("A method that does not return a value cannot be verified.");
         }
 
         /// <summary>
-        ///A test for UpdateDisplay
+        ///A test for SetSelectedTrackBlock
         ///</summary>
         [TestMethod()]
-        public void UpdateDisplayTest()
+        public void SetSelectedTrackBlockTest()
         {
-            TrackDisplayPanel target = new TrackDisplayPanel(); // TODO: Initialize to an appropriate value
-            List<TrackBlock> updatedBlocks = null; // TODO: Initialize to an appropriate value
-            List<ITrain> trains = null; // TODO: Initialize to an appropriate value
-            target.UpdateDisplay(updatedBlocks, trains);
+            SimulatorWindow target = new SimulatorWindow(); // TODO: Initialize to an appropriate value
+            TrackBlock block = null; // TODO: Initialize to an appropriate value
+            target.SetSelectedTrackBlock(block);
             Assert.Inconclusive("A method that does not return a value cannot be verified.");
         }
     }

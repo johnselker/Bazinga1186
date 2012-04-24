@@ -7,11 +7,11 @@ namespace CTCUnitTests
     
     
     /// <summary>
-    ///This is a test class for ProgramTest and is intended
-    ///to contain all ProgramTest Unit Tests
+    ///This is a test class for TableViewScreen_TrackBlockRowTest and is intended
+    ///to contain all TableViewScreen_TrackBlockRowTest Unit Tests
     ///</summary>
     [TestClass()]
-    public class ProgramTest
+    public class TableViewScreen_TrackBlockRowTest
     {
 
 
@@ -65,26 +65,37 @@ namespace CTCUnitTests
 
 
         /// <summary>
-        ///A test for Main
+        ///A test for TrackBlockRow Constructor
         ///</summary>
         [TestMethod()]
         [DeploymentItem("CTCOfficeGUI.exe")]
-        public void MainTest()
+        public void TableViewScreen_TrackBlockRowConstructorTest()
         {
-            Program_Accessor.Main();
+            TableViewScreen_Accessor.TrackBlockRow target = new TableViewScreen_Accessor.TrackBlockRow();
+            Assert.Inconclusive("TODO: Implement code to verify target");
+        }
+
+        /// <summary>
+        ///A test for HideLabels
+        ///</summary>
+        [TestMethod()]
+        [DeploymentItem("CTCOfficeGUI.exe")]
+        public void HideLabelsTest()
+        {
+            TableViewScreen_Accessor.TrackBlockRow target = new TableViewScreen_Accessor.TrackBlockRow(); // TODO: Initialize to an appropriate value
+            target.HideLabels();
             Assert.Inconclusive("A method that does not return a value cannot be verified.");
         }
 
         /// <summary>
-        ///A test for OnUnhandledException
+        ///A test for ShowLabels
         ///</summary>
         [TestMethod()]
         [DeploymentItem("CTCOfficeGUI.exe")]
-        public void OnUnhandledExceptionTest()
+        public void ShowLabelsTest()
         {
-            object sender = null; // TODO: Initialize to an appropriate value
-            UnhandledExceptionEventArgs e = null; // TODO: Initialize to an appropriate value
-            Program_Accessor.OnUnhandledException(sender, e);
+            TableViewScreen_Accessor.TrackBlockRow target = new TableViewScreen_Accessor.TrackBlockRow(); // TODO: Initialize to an appropriate value
+            target.ShowLabels();
             Assert.Inconclusive("A method that does not return a value cannot be verified.");
         }
     }

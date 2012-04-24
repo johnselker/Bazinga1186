@@ -7,11 +7,11 @@ namespace CTCUnitTests
     
     
     /// <summary>
-    ///This is a test class for TextInputDialogTest and is intended
-    ///to contain all TextInputDialogTest Unit Tests
+    ///This is a test class for LoginCheckerTest and is intended
+    ///to contain all LoginCheckerTest Unit Tests
     ///</summary>
     [TestClass()]
-    public class TextInputDialogTest
+    public class LoginCheckerTest
     {
 
 
@@ -65,107 +65,93 @@ namespace CTCUnitTests
 
 
         /// <summary>
-        ///A test for TextInputDialog Constructor
+        ///A test for LoginChecker Constructor
         ///</summary>
         [TestMethod()]
-        public void TextInputDialogConstructorTest()
+        public void LoginCheckerConstructorTest()
         {
-            string prompt = string.Empty; // TODO: Initialize to an appropriate value
-            TextInputDialog target = new TextInputDialog(prompt);
+            LoginChecker target = new LoginChecker();
             Assert.Inconclusive("TODO: Implement code to verify target");
         }
 
         /// <summary>
-        ///A test for TextInputDialog Constructor
+        ///A test for CloseLogin
         ///</summary>
         [TestMethod()]
-        public void TextInputDialogConstructorTest1()
+        public void CloseLoginTest()
         {
-            TextInputDialog target = new TextInputDialog();
-            Assert.Inconclusive("TODO: Implement code to verify target");
-        }
-
-        /// <summary>
-        ///A test for Dispose
-        ///</summary>
-        [TestMethod()]
-        [DeploymentItem("CTCOfficeGUI.exe")]
-        public void DisposeTest()
-        {
-            TextInputDialog_Accessor target = new TextInputDialog_Accessor(); // TODO: Initialize to an appropriate value
-            bool disposing = false; // TODO: Initialize to an appropriate value
-            target.Dispose(disposing);
+            LoginChecker target = new LoginChecker(); // TODO: Initialize to an appropriate value
+            target.CloseLogin();
             Assert.Inconclusive("A method that does not return a value cannot be verified.");
         }
 
         /// <summary>
-        ///A test for InitializeComponent
+        ///A test for OnLoginAttempt
         ///</summary>
         [TestMethod()]
         [DeploymentItem("CTCOfficeGUI.exe")]
-        public void InitializeComponentTest()
+        public void OnLoginAttemptTest()
         {
-            TextInputDialog_Accessor target = new TextInputDialog_Accessor(); // TODO: Initialize to an appropriate value
-            target.InitializeComponent();
+            LoginChecker_Accessor target = new LoginChecker_Accessor(); // TODO: Initialize to an appropriate value
+            string username = string.Empty; // TODO: Initialize to an appropriate value
+            string password = string.Empty; // TODO: Initialize to an appropriate value
+            target.OnLoginAttempt(username, password);
             Assert.Inconclusive("A method that does not return a value cannot be verified.");
         }
 
         /// <summary>
-        ///A test for OnCancelClicked
+        ///A test for OnLoginCancel
         ///</summary>
         [TestMethod()]
         [DeploymentItem("CTCOfficeGUI.exe")]
-        public void OnCancelClickedTest()
+        public void OnLoginCancelTest()
         {
-            TextInputDialog_Accessor target = new TextInputDialog_Accessor(); // TODO: Initialize to an appropriate value
+            LoginChecker_Accessor target = new LoginChecker_Accessor(); // TODO: Initialize to an appropriate value
             object sender = null; // TODO: Initialize to an appropriate value
             EventArgs e = null; // TODO: Initialize to an appropriate value
-            target.OnCancelClicked(sender, e);
+            target.OnLoginCancel(sender, e);
             Assert.Inconclusive("A method that does not return a value cannot be verified.");
         }
 
         /// <summary>
-        ///A test for OnOKClicked
+        ///A test for OnPopupAcknowledged
         ///</summary>
         [TestMethod()]
         [DeploymentItem("CTCOfficeGUI.exe")]
-        public void OnOKClickedTest()
+        public void OnPopupAcknowledgedTest()
         {
-            TextInputDialog_Accessor target = new TextInputDialog_Accessor(); // TODO: Initialize to an appropriate value
+            LoginChecker_Accessor target = new LoginChecker_Accessor(); // TODO: Initialize to an appropriate value
             object sender = null; // TODO: Initialize to an appropriate value
             EventArgs e = null; // TODO: Initialize to an appropriate value
-            target.OnOKClicked(sender, e);
+            target.OnPopupAcknowledged(sender, e);
             Assert.Inconclusive("A method that does not return a value cannot be verified.");
         }
 
         /// <summary>
-        ///A test for PromptText
+        ///A test for ShowLogin
         ///</summary>
         [TestMethod()]
-        public void PromptTextTest()
+        public void ShowLoginTest()
         {
-            TextInputDialog target = new TextInputDialog(); // TODO: Initialize to an appropriate value
-            string expected = string.Empty; // TODO: Initialize to an appropriate value
-            string actual;
-            target.PromptText = expected;
-            actual = target.PromptText;
-            Assert.AreEqual(expected, actual);
-            Assert.Inconclusive("Verify the correctness of this test method.");
+            LoginChecker target = new LoginChecker(); // TODO: Initialize to an appropriate value
+            EventHandler successHandler = null; // TODO: Initialize to an appropriate value
+            EventHandler cancelHandler = null; // TODO: Initialize to an appropriate value
+            target.ShowLogin(successHandler, cancelHandler);
+            Assert.Inconclusive("A method that does not return a value cannot be verified.");
         }
 
         /// <summary>
-        ///A test for TextValue
+        ///A test for ShowOKPopup
         ///</summary>
         [TestMethod()]
-        public void TextValueTest()
+        [DeploymentItem("CTCOfficeGUI.exe")]
+        public void ShowOKPopupTest()
         {
-            TextInputDialog target = new TextInputDialog(); // TODO: Initialize to an appropriate value
-            string expected = string.Empty; // TODO: Initialize to an appropriate value
-            string actual;
-            target.TextValue = expected;
-            actual = target.TextValue;
-            Assert.AreEqual(expected, actual);
-            Assert.Inconclusive("Verify the correctness of this test method.");
+            LoginChecker_Accessor target = new LoginChecker_Accessor(); // TODO: Initialize to an appropriate value
+            string title = string.Empty; // TODO: Initialize to an appropriate value
+            string text = string.Empty; // TODO: Initialize to an appropriate value
+            target.ShowOKPopup(title, text);
+            Assert.Inconclusive("A method that does not return a value cannot be verified.");
         }
     }
 }

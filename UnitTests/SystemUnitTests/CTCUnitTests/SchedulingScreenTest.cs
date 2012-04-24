@@ -7,11 +7,11 @@ namespace CTCUnitTests
     
     
     /// <summary>
-    ///This is a test class for ProgramTest and is intended
-    ///to contain all ProgramTest Unit Tests
+    ///This is a test class for SchedulingScreenTest and is intended
+    ///to contain all SchedulingScreenTest Unit Tests
     ///</summary>
     [TestClass()]
-    public class ProgramTest
+    public class SchedulingScreenTest
     {
 
 
@@ -65,26 +65,51 @@ namespace CTCUnitTests
 
 
         /// <summary>
-        ///A test for Main
+        ///A test for SchedulingScreen Constructor
         ///</summary>
         [TestMethod()]
         [DeploymentItem("CTCOfficeGUI.exe")]
-        public void MainTest()
+        public void SchedulingScreenConstructorTest()
         {
-            Program_Accessor.Main();
+            SchedulingScreen_Accessor target = new SchedulingScreen_Accessor();
+            Assert.Inconclusive("TODO: Implement code to verify target");
+        }
+
+        /// <summary>
+        ///A test for Dispose
+        ///</summary>
+        [TestMethod()]
+        [DeploymentItem("CTCOfficeGUI.exe")]
+        public void DisposeTest()
+        {
+            SchedulingScreen_Accessor target = new SchedulingScreen_Accessor(); // TODO: Initialize to an appropriate value
+            bool disposing = false; // TODO: Initialize to an appropriate value
+            target.Dispose(disposing);
             Assert.Inconclusive("A method that does not return a value cannot be verified.");
         }
 
         /// <summary>
-        ///A test for OnUnhandledException
+        ///A test for GetSchedulingScreen
+        ///</summary>
+        [TestMethod()]
+        public void GetSchedulingScreenTest()
+        {
+            SchedulingScreen expected = null; // TODO: Initialize to an appropriate value
+            SchedulingScreen actual;
+            actual = SchedulingScreen.GetSchedulingScreen();
+            Assert.AreEqual(expected, actual);
+            Assert.Inconclusive("Verify the correctness of this test method.");
+        }
+
+        /// <summary>
+        ///A test for InitializeComponent
         ///</summary>
         [TestMethod()]
         [DeploymentItem("CTCOfficeGUI.exe")]
-        public void OnUnhandledExceptionTest()
+        public void InitializeComponentTest()
         {
-            object sender = null; // TODO: Initialize to an appropriate value
-            UnhandledExceptionEventArgs e = null; // TODO: Initialize to an appropriate value
-            Program_Accessor.OnUnhandledException(sender, e);
+            SchedulingScreen_Accessor target = new SchedulingScreen_Accessor(); // TODO: Initialize to an appropriate value
+            target.InitializeComponent();
             Assert.Inconclusive("A method that does not return a value cannot be verified.");
         }
     }

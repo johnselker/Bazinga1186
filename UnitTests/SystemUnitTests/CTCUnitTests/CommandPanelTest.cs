@@ -1,17 +1,22 @@
 ﻿using CTCOfficeGUI;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using CommonLib;
 using System.Collections.Generic;
+using CommonLib;
 
 namespace CTCUnitTests
 {
+    
+    
     /// <summary>
-    ///Test cases for the CommandPanel control
+    ///This is a test class for CommandPanelTest and is intended
+    ///to contain all CommandPanelTest Unit Tests
     ///</summary>
     [TestClass()]
     public class CommandPanelTest
     {
+
+
         private TestContext testContextInstance;
 
         /// <summary>
@@ -62,62 +67,50 @@ namespace CTCUnitTests
 
 
         /// <summary>
-        ///A test for ShowTrainCommands
+        ///A test for CommandPanel Constructor
         ///</summary>
         [TestMethod()]
-        public void ShowTrainCommandsTest()
+        public void CommandPanelConstructorTest()
         {
             CommandPanel target = new CommandPanel();
-            target.ShowTrainCommands();
+            Assert.Inconclusive("TODO: Implement code to verify target");
         }
 
         /// <summary>
-        ///A test for ShowTrackBlockCommands
-        ///</summary>
-        [TestMethod()]
-        public void ShowTrackBlockCommandsTest()
-        {
-            CommandPanel target = new CommandPanel(); // TODO: Initialize to an appropriate value
-            TrackBlock block = null; // TODO: Initialize to an appropriate value
-            target.ShowTrackBlockCommands(block);
-            Assert.Inconclusive("A method that does not return a value cannot be verified.");
-        }
-
-        /// <summary>
-        ///A test for SetCommands
-        ///</summary>
-        [TestMethod()]
-        public void SetCommandsTest()
-        {
-            CommandPanel target = new CommandPanel(); // TODO: Initialize to an appropriate value
-            Dictionary<object, string> commands = null; // TODO: Initialize to an appropriate value
-            target.SetCommands(commands);
-            Assert.Inconclusive("A method that does not return a value cannot be verified.");
-        }
-
-        /// <summary>
-        ///A test for OnButtonClicked
+        ///A test for AddButton
         ///</summary>
         [TestMethod()]
         [DeploymentItem("CTCOfficeGUI.exe")]
-        public void OnButtonClickedTest()
+        public void AddButtonTest()
         {
             CommandPanel_Accessor target = new CommandPanel_Accessor(); // TODO: Initialize to an appropriate value
-            object sender = null; // TODO: Initialize to an appropriate value
-            EventArgs e = null; // TODO: Initialize to an appropriate value
-            target.OnButtonClicked(sender, e);
+            object tag = null; // TODO: Initialize to an appropriate value
+            string text = string.Empty; // TODO: Initialize to an appropriate value
+            target.AddButton(tag, text);
             Assert.Inconclusive("A method that does not return a value cannot be verified.");
         }
 
         /// <summary>
-        ///A test for InitializeComponent
+        ///A test for ClearButtons
+        ///</summary>
+        [TestMethod()]
+        public void ClearButtonsTest()
+        {
+            CommandPanel target = new CommandPanel(); // TODO: Initialize to an appropriate value
+            target.ClearButtons();
+            Assert.Inconclusive("A method that does not return a value cannot be verified.");
+        }
+
+        /// <summary>
+        ///A test for Dispose
         ///</summary>
         [TestMethod()]
         [DeploymentItem("CTCOfficeGUI.exe")]
-        public void InitializeComponentTest()
+        public void DisposeTest()
         {
             CommandPanel_Accessor target = new CommandPanel_Accessor(); // TODO: Initialize to an appropriate value
-            target.InitializeComponent();
+            bool disposing = false; // TODO: Initialize to an appropriate value
+            target.Dispose(disposing);
             Assert.Inconclusive("A method that does not return a value cannot be verified.");
         }
 
@@ -137,51 +130,75 @@ namespace CTCUnitTests
         }
 
         /// <summary>
-        ///A test for Dispose
+        ///A test for InitializeComponent
         ///</summary>
         [TestMethod()]
         [DeploymentItem("CTCOfficeGUI.exe")]
-        public void DisposeTest()
+        public void InitializeComponentTest()
         {
             CommandPanel_Accessor target = new CommandPanel_Accessor(); // TODO: Initialize to an appropriate value
-            bool disposing = false; // TODO: Initialize to an appropriate value
-            target.Dispose(disposing);
+            target.InitializeComponent();
             Assert.Inconclusive("A method that does not return a value cannot be verified.");
         }
 
         /// <summary>
-        ///A test for ClearButtons
+        ///A test for OnButtonClicked
         ///</summary>
         [TestMethod()]
-        public void ClearButtonsTest()
+        [DeploymentItem("CTCOfficeGUI.exe")]
+        public void OnButtonClickedTest()
+        {
+            CommandPanel_Accessor target = new CommandPanel_Accessor(); // TODO: Initialize to an appropriate value
+            object sender = null; // TODO: Initialize to an appropriate value
+            EventArgs e = null; // TODO: Initialize to an appropriate value
+            target.OnButtonClicked(sender, e);
+            Assert.Inconclusive("A method that does not return a value cannot be verified.");
+        }
+
+        /// <summary>
+        ///A test for SetCommands
+        ///</summary>
+        [TestMethod()]
+        public void SetCommandsTest()
         {
             CommandPanel target = new CommandPanel(); // TODO: Initialize to an appropriate value
-            target.ClearButtons();
+            Dictionary<object, string> commands = null; // TODO: Initialize to an appropriate value
+            target.SetCommands(commands);
             Assert.Inconclusive("A method that does not return a value cannot be verified.");
         }
 
         /// <summary>
-        ///A test for AddButton
+        ///A test for ShowTrackBlockCommands
         ///</summary>
         [TestMethod()]
-        [DeploymentItem("CTCOfficeGUI.exe")]
-        public void AddButtonTest()
+        public void ShowTrackBlockCommandsTest()
         {
-            CommandPanel_Accessor target = new CommandPanel_Accessor(); // TODO: Initialize to an appropriate value
-            object tag = null; // TODO: Initialize to an appropriate value
-            string text = string.Empty; // TODO: Initialize to an appropriate value
-            target.AddButton(tag, text);
+            CommandPanel target = new CommandPanel(); // TODO: Initialize to an appropriate value
+            TrackBlock block = null; // TODO: Initialize to an appropriate value
+            target.ShowTrackBlockCommands(block);
             Assert.Inconclusive("A method that does not return a value cannot be verified.");
         }
 
         /// <summary>
-        ///A test for CommandPanel Constructor
+        ///A test for ShowTrainCommands
         ///</summary>
         [TestMethod()]
-        public void CommandPanelConstructorTest()
+        public void ShowTrainCommandsTest()
         {
-            CommandPanel target = new CommandPanel();
-            Assert.Inconclusive("TODO: Implement code to verify target");
+            CommandPanel target = new CommandPanel(); // TODO: Initialize to an appropriate value
+            target.ShowTrainCommands();
+            Assert.Inconclusive("A method that does not return a value cannot be verified.");
+        }
+
+        /// <summary>
+        ///A test for ShowTrainYardCommands
+        ///</summary>
+        [TestMethod()]
+        public void ShowTrainYardCommandsTest()
+        {
+            CommandPanel target = new CommandPanel(); // TODO: Initialize to an appropriate value
+            target.ShowTrainYardCommands();
+            Assert.Inconclusive("A method that does not return a value cannot be verified.");
         }
     }
 }

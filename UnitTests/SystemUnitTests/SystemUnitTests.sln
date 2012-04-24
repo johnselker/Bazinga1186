@@ -28,6 +28,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrackControlLib-Sean", "..\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrackController-SeanTest", "TrackController-SeanTest\TrackController-SeanTest.csproj", "{C556CA2B-E123-47B3-A8B8-68E8583F4975}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClassStubs", "ClassStubs\ClassStubs.csproj", "{AE4E0B9D-816C-4716-A843-099562EACED4}"
+EndProject
 Global
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = SystemUnitTests2.vsmdi
@@ -141,6 +143,16 @@ Global
 		{C556CA2B-E123-47B3-A8B8-68E8583F4975}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{C556CA2B-E123-47B3-A8B8-68E8583F4975}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{C556CA2B-E123-47B3-A8B8-68E8583F4975}.Release|x86.ActiveCfg = Release|Any CPU
+		{AE4E0B9D-816C-4716-A843-099562EACED4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AE4E0B9D-816C-4716-A843-099562EACED4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AE4E0B9D-816C-4716-A843-099562EACED4}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{AE4E0B9D-816C-4716-A843-099562EACED4}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{AE4E0B9D-816C-4716-A843-099562EACED4}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{AE4E0B9D-816C-4716-A843-099562EACED4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AE4E0B9D-816C-4716-A843-099562EACED4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AE4E0B9D-816C-4716-A843-099562EACED4}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{AE4E0B9D-816C-4716-A843-099562EACED4}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{AE4E0B9D-816C-4716-A843-099562EACED4}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

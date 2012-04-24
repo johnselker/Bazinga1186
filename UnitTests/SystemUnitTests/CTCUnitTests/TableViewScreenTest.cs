@@ -10,11 +10,11 @@ namespace CTCUnitTests
     
     
     /// <summary>
-    ///This is a test class for InfoPanelTest and is intended
-    ///to contain all InfoPanelTest Unit Tests
+    ///This is a test class for TableViewScreenTest and is intended
+    ///to contain all TableViewScreenTest Unit Tests
     ///</summary>
     [TestClass()]
-    public class InfoPanelTest
+    public class TableViewScreenTest
     {
 
 
@@ -68,36 +68,13 @@ namespace CTCUnitTests
 
 
         /// <summary>
-        ///A test for InfoPanel Constructor
+        ///A test for TableViewScreen Constructor
         ///</summary>
         [TestMethod()]
-        public void InfoPanelConstructorTest()
+        public void TableViewScreenConstructorTest()
         {
-            InfoPanel target = new InfoPanel();
+            TableViewScreen target = new TableViewScreen();
             Assert.Inconclusive("TODO: Implement code to verify target");
-        }
-
-        /// <summary>
-        ///A test for AdjustLabelPositions
-        ///</summary>
-        [TestMethod()]
-        [DeploymentItem("CTCOfficeGUI.exe")]
-        public void AdjustLabelPositionsTest()
-        {
-            InfoPanel_Accessor target = new InfoPanel_Accessor(); // TODO: Initialize to an appropriate value
-            target.AdjustLabelPositions();
-            Assert.Inconclusive("A method that does not return a value cannot be verified.");
-        }
-
-        /// <summary>
-        ///A test for ClearInfo
-        ///</summary>
-        [TestMethod()]
-        public void ClearInfoTest()
-        {
-            InfoPanel target = new InfoPanel(); // TODO: Initialize to an appropriate value
-            target.ClearInfo();
-            Assert.Inconclusive("A method that does not return a value cannot be verified.");
         }
 
         /// <summary>
@@ -107,7 +84,7 @@ namespace CTCUnitTests
         [DeploymentItem("CTCOfficeGUI.exe")]
         public void DisposeTest()
         {
-            InfoPanel_Accessor target = new InfoPanel_Accessor(); // TODO: Initialize to an appropriate value
+            TableViewScreen_Accessor target = new TableViewScreen_Accessor(); // TODO: Initialize to an appropriate value
             bool disposing = false; // TODO: Initialize to an appropriate value
             target.Dispose(disposing);
             Assert.Inconclusive("A method that does not return a value cannot be verified.");
@@ -120,10 +97,10 @@ namespace CTCUnitTests
         [DeploymentItem("CTCOfficeGUI.exe")]
         public void GetBlockFailureStateStringTest()
         {
-            InfoPanel_Accessor target = new InfoPanel_Accessor(); // TODO: Initialize to an appropriate value
+            TableViewScreen_Accessor target = new TableViewScreen_Accessor(); // TODO: Initialize to an appropriate value
             TrackBlock block = null; // TODO: Initialize to an appropriate value
-            KeyValuePair<string, string> expected = new KeyValuePair<string, string>(); // TODO: Initialize to an appropriate value
-            KeyValuePair<string, string> actual;
+            string expected = string.Empty; // TODO: Initialize to an appropriate value
+            string actual;
             actual = target.GetBlockFailureStateString(block);
             Assert.AreEqual(expected, actual);
             Assert.Inconclusive("Verify the correctness of this test method.");
@@ -136,57 +113,20 @@ namespace CTCUnitTests
         [DeploymentItem("CTCOfficeGUI.exe")]
         public void InitializeComponentTest()
         {
-            InfoPanel_Accessor target = new InfoPanel_Accessor(); // TODO: Initialize to an appropriate value
+            TableViewScreen_Accessor target = new TableViewScreen_Accessor(); // TODO: Initialize to an appropriate value
             target.InitializeComponent();
             Assert.Inconclusive("A method that does not return a value cannot be verified.");
         }
 
         /// <summary>
-        ///A test for SetInfo
+        ///A test for InitializeTables
         ///</summary>
         [TestMethod()]
-        public void SetInfoTest()
+        [DeploymentItem("CTCOfficeGUI.exe")]
+        public void InitializeTablesTest()
         {
-            InfoPanel target = new InfoPanel(); // TODO: Initialize to an appropriate value
-            string name = string.Empty; // TODO: Initialize to an appropriate value
-            Dictionary<string, string> information = null; // TODO: Initialize to an appropriate value
-            target.SetInfo(name, information);
-            Assert.Inconclusive("A method that does not return a value cannot be verified.");
-        }
-
-        /// <summary>
-        ///A test for SetTrackBlockInfo
-        ///</summary>
-        [TestMethod()]
-        public void SetTrackBlockInfoTest()
-        {
-            InfoPanel target = new InfoPanel(); // TODO: Initialize to an appropriate value
-            TrackBlock block = null; // TODO: Initialize to an appropriate value
-            target.SetTrackBlockInfo(block);
-            Assert.Inconclusive("A method that does not return a value cannot be verified.");
-        }
-
-        /// <summary>
-        ///A test for SetTrainInfo
-        ///</summary>
-        [TestMethod()]
-        public void SetTrainInfoTest()
-        {
-            InfoPanel target = new InfoPanel(); // TODO: Initialize to an appropriate value
-            ITrain train = null; // TODO: Initialize to an appropriate value
-            target.SetTrainInfo(train);
-            Assert.Inconclusive("A method that does not return a value cannot be verified.");
-        }
-
-        /// <summary>
-        ///A test for SetTrainYardInfo
-        ///</summary>
-        [TestMethod()]
-        public void SetTrainYardInfoTest()
-        {
-            InfoPanel target = new InfoPanel(); // TODO: Initialize to an appropriate value
-            TrackBlock b = null; // TODO: Initialize to an appropriate value
-            target.SetTrainYardInfo(b);
+            TableViewScreen_Accessor target = new TableViewScreen_Accessor(); // TODO: Initialize to an appropriate value
+            target.InitializeTables();
             Assert.Inconclusive("A method that does not return a value cannot be verified.");
         }
 
@@ -196,7 +136,7 @@ namespace CTCUnitTests
         [TestMethod()]
         public void UpdateDisplayTest()
         {
-            InfoPanel target = new InfoPanel(); // TODO: Initialize to an appropriate value
+            TableViewScreen target = new TableViewScreen(); // TODO: Initialize to an appropriate value
             List<TrackBlock> blocks = null; // TODO: Initialize to an appropriate value
             List<ITrain> trains = null; // TODO: Initialize to an appropriate value
             target.UpdateDisplay(blocks, trains);
