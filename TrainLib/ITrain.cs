@@ -6,7 +6,7 @@ using System.Timers;
 using System.Drawing;
 using CommonLib;
 
-namespace Train
+namespace TrainLib
 {
 	public interface ITrain
 	{

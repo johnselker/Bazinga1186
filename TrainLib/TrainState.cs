@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using CommonLib;
 
-namespace Train
+namespace TrainLib
 {
     public class TrainState
     {

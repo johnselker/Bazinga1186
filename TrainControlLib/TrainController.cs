@@ -5,7 +5,7 @@ using System.Text;
 using System.Timers;
 using CommonLib;
 using TrackLib;
-using Train;
+using TrainLib;
 
 namespace TrainControllerLib
 {

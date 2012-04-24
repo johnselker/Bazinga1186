@@ -6,7 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using Train;
+using TrainLib;
 using CommonLib;
 
 namespace TrainControllerLib
@@ -78,7 +78,7 @@ namespace TrainControllerLib
             startingBlock.Transponder = new Transponder("SHADYSIDE", 1);
             startingBlock.NextBlock.Transponder = new Transponder("SHADYSIDE", 0);
 
-            myTrain = new Train.Train("train1", startingBlock, Direction.East);
+            myTrain = new TrainLib.Train("train1", startingBlock, Direction.East);
             myTrainState = myTrain.GetState();
             myTrainController = new TrainController(myTrain);
             myTrainController.SetSchedule(GetRedlineSchedule());

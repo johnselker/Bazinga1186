@@ -8,7 +8,7 @@ using CommonLib;
 using System.Reflection;
 using TrackControlLib.Sean;
 using TrainControllerLib;
-using Train;
+using TrainLib;
 
 namespace CTCOfficeGUI
 {
@@ -254,7 +254,7 @@ namespace CTCOfficeGUI
                         {
                             m_log.LogInfoFormat("Spawning new train \"{0}\" at start {1}", name, start); 
                             //Create the new train and train controller
-                            ITrain train = new Train.Train(name, initialBlock, m_startingDirections[start]);
+                            ITrain train = new TrainLib.Train(name, initialBlock, m_startingDirections[start]);
                             ITrainController trainController = new TrainController(train);
                             m_trainControllerList.Add(trainController);
                             CTCController.GetCTCController().AddTrainToList(train); 

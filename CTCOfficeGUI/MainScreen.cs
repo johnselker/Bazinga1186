@@ -8,7 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.Reflection;
 using CommonLib;
-using Train;
+using TrainLib;
 
 namespace CTCOfficeGUI
 {

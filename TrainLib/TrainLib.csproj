@@ -8,7 +8,7 @@
     <ProjectGuid>{69FA46C5-B2BD-45DA-A60A-022932F30C1E}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Train</RootNamespace>
+    <RootNamespace>TrainLib</RootNamespace>
     <AssemblyName>Train</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

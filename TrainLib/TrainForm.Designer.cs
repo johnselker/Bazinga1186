@@ -1,4 +1,4 @@
-﻿namespace Train
+﻿namespace TrainLib
 {
 	partial class TrainForm
 	{

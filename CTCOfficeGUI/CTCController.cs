@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using CommonLib;
 using TrackLib;
-using Train;
+using TrainLib;
 using TrackControlLib.Sean;
 using System.Reflection;
 using System.Drawing;

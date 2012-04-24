@@ -8,7 +8,7 @@ using System.Threading;
 using CommonLib;
 using System.Diagnostics;
 
-namespace Train
+namespace TrainLib
 {
 	public class Train : ITrain
 	{
@@ -28,6 +28,15 @@ namespace Train
 		private TrainState state = new TrainState();
 		private DateTime lastUpdate;
 
+		/// <summary>
+		/// Creates a new Train which can be used to create a TrainController.
+		/// </summary>
+		/// <param name="trainID">Unique identifier for the Train.</param>
+		/// <param name="block">TrackBlock on which the Train is located.</param>
+		/// <param name="direction">Direction which the Train is facing.</param>
+		/// <param name="cars">Number of cars making up the Train. Default is 1.</param>
+		/// <param name="crew">Number of crew members on board the Train. Default is 0.</param>
+		/// <param name="passengers">Number of passengers on board the Train. Default is 0.</param>
 		public Train(string trainID, TrackBlock block, Direction direction, int cars = 1, int crew = 0, int passengers = 0)
 		{
 			state.TrainID = trainID;
@@ -65,6 +74,10 @@ namespace Train
 			lastUpdate = DateTime.Now;
 		}
 
+		/// <summary>
+		/// Updates the speed and position of the Train.
+		/// </summary>
+		/// <param name="deltaTime">The number of seconds elapsed since last update.</param>
 		public void Update(double deltaTime)
 		{
 			UpdateSpeed(deltaTime);
@@ -72,6 +85,10 @@ namespace Train
 			lastUpdate = DateTime.Now;
 		}
 
+		/// <summary>
+		/// Updates the speed of the Train.
+		/// </summary>
+		/// <param name="deltaTime">The number of seconds elapsed since last update.</param>
 		private void UpdateSpeed(double deltaTime)
 		{
             //double timestep = DateTime.Now.Subtract(lastUpdate).Duration().TotalSeconds;
@@ -118,6 +135,10 @@ namespace Train
 			}
 		}
 
+		/// <summary>
+		/// Updates the position of the Train.
+		/// </summary>
+		/// <param name="deltaTime">The number of seconds elapsed since last update.</param>
 		private void UpdatePosition(double deltaTime)
 		{
             //double timestep = DateTime.Now.Subtract(lastUpdate).Duration().TotalSeconds;
@@ -256,11 +277,19 @@ namespace Train
             //state.BlockProgress *= length;
 		}
 
+		/// <summary>
+		/// Returns the speed of the TrainState.
+		/// </summary>
+		/// <returns>Speed of the TrainState.</returns>
 		public double GetSpeed()
 		{
 			return state.Speed;
 		}
 
+		/// <summary>
+		/// Returns the acceleration of the Train.
+		/// </summary>
+		/// <returns>Acceleration calculated using the following equation: power / (speed * mass).</returns>
 		public double GetAcceleration()
 		{
 			if (state.Speed < 0.1)
@@ -273,31 +302,56 @@ namespace Train
 			}
 		}
 
+		/// <summary>
+		/// Returns the state of the brake.
+		/// </summary>
+		/// <returns>Whether or not the brake is applied.</returns>
 		public bool GetBrake()
 		{
 			return brake;
 		}
 
+		/// <summary>
+		/// Returns the state of the emergency brake.
+		/// </summary>
+		/// <returns>Whether or not the emergency brake is applied.</returns>
 		public bool GetEmergencyBrake()
 		{
 			return emergencyBrake;
 		}
 
+		/// <summary>
+		/// Returns the direction stored in the TrainState.
+		/// </summary>
+		/// <returns>Direction which the Train is facing.</returns>
 		public Direction GetDirection()
 		{
 			return state.Direction;
 		}
 
+		/// <summary>
+		/// Returns the position of the Train.
+		/// </summary>
+		/// <returns>The X and Y coordinates of the TrainState as a Point.</returns>
 		public Point GetPosition()
 		{
 			return new Point(System.Convert.ToInt32(state.X), System.Convert.ToInt32(state.Y));
 		}
 
+		/// <summary>
+		/// Returns the TrainState.
+		/// </summary>
+		/// <returns>The TrainState which stores pertinent information about the Train.</returns>
 		public TrainState GetState()
 		{
 			return state;
 		}
 
+		/// <summary>
+		/// Sets the state of the brake.
+		/// </summary>
+		/// <param name="brake">Whether or not the brake should be applied.</param>
+		/// <param name="deltaTime">Amount of time since last update.</param>
 		public void SetBrake(bool brake, double deltaTime)
 		{
 			this.brake = brake;
@@ -308,6 +362,11 @@ namespace Train
             Update(deltaTime);
 		}
 
+		/// <summary>
+		/// Sets the state of the emergency brake.
+		/// </summary>
+		/// <param name="brake">Whether or not the emergency brake should be applied.</param>
+		/// <param name="deltaTime">Amount of time since last update.</param>
         public void SetEmergencyBrake(bool brake, double deltaTime)
 		{
 			emergencyBrake = brake;
@@ -318,21 +377,38 @@ namespace Train
             Update(deltaTime);
 		}
 
+		/// <summary>
+		/// Sets the state of the doors.
+		/// </summary>
+		/// <param name="doors">Whether or not the doors are open.</param>
 		public void SetDoors(TrainState.Door doors)
 		{
 			state.Doors = doors;
 		}
 
+		/// <summary>
+		/// Sets the state of the lights.
+		/// </summary>
+		/// <param name="lights">Whether or not the lights are on.</param>
 		public void SetLights(TrainState.Light lights)
 		{
 			state.Lights = lights;
 		}
 
+		/// <summary>
+		/// Sets the announcement of the next stop.
+		/// </summary>
+		/// <param name="announcement">Announcement message.</param>
 		public void SetAnnouncement(string announcement)
 		{
 			state.Announcement = announcement;
 		}
 
+		/// <summary>
+		/// Sets the slope of the current Track.
+		/// </summary>
+		/// <param name="slope">The slope of the Track in radians. Slopes greater than pi/2 or less than -pi/2 are invalid.</param>
+		/// <returns>Whether or not the slope was valid. Invalid slopes are ignored.</returns>
 		public bool SetSlope(double slope)
 		{
 			if (slope > Math.PI / 2 || slope < -Math.PI / 2)
@@ -346,6 +422,11 @@ namespace Train
 			}
 		}
 
+		/// <summary>
+		/// Sets the friction of the current Track.
+		/// </summary>
+		/// <param name="friction">The coefficient of friction of the current track. Coefficients greater than 1 or less than 0 are invalid.</param>
+		/// <returns>Whether or not the coefficient of friction was valid. Invalid coefficients are ignored.</returns>
 		public bool SetFriction(double friction)
 		{
 			if (friction > 1 || friction < 0)
@@ -359,11 +440,20 @@ namespace Train
 			}
 		}
 
+		/// <summary>
+		/// Returns the power of the Train's engine.
+		/// </summary>
+		/// <returns>The power in Watts.</returns>
 		public double GetPower()
 		{
 			return power;
 		}
 
+		/// <summary>
+		/// Sets the power of the Train's engine.
+		/// </summary>
+		/// <param name="power">The power in Watts. Negative powers are ignored.</param>
+		/// <param name="deltaTime">The time in seconds since the last update.</param>
         public void SetPower(double power, double deltaTime)
 		{
 			if (power < 0)
@@ -377,16 +467,28 @@ namespace Train
 			Update(deltaTime);
 		}
 
+		/// <summary>
+		/// Sets the state of the brake failure.
+		/// </summary>
+		/// <param name="failure">Whether or not the brakes have failed.</param>
 		public void SetBrakeFailure(bool failure)
 		{
 			state.BrakeFailure = failure;
 		}
 
+		/// <summary>
+		/// Sets the state of the signal pickup failure.
+		/// </summary>
+		/// <param name="failure">Whether or not the signal pickup failure has occurred.</param>
 		public void SetSignalPickupFailure(bool failure)
 		{
 			state.SignalPickupFailure = failure;
 		}
 
+		/// <summary>
+		/// Sets the state of the engine failure.
+		/// </summary>
+		/// <param name="failure">Whether or not the engine has failed.</param>
 		public void SetEngineFailure(bool failure)
 		{
 			state.EngineFailure = failure;
