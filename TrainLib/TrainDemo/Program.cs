@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 using System.Drawing;
-using Train;
+using TrainLib;
 using CommonLib;
 
 namespace TrainDemo
@@ -40,10 +40,10 @@ namespace TrainDemo
 			redBlock6.NextBlock = redBlock7;
 			redBlock7.NextBlock = redBlock8;
 			redBlock8.NextBlock = redBlock1;
-			ITrain t = new Train.Train("Train1", redBlock1, Direction.East);
+			ITrain t = new Train("Train1", redBlock1, Direction.East);
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);
-			Application.Run(new Train.TrainForm(t));
+			Application.Run(new TrainForm(t));
 			System.AppDomain.CurrentDomain.UnhandledException += OnUnhandledException;
 		}
 
