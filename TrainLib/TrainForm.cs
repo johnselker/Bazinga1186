@@ -104,7 +104,7 @@ namespace TrainLib
 				default:
 					break; // Unreachable
 			}
-			progressTextBox.Text = String.Format("{0:F0}", ts.BlockProgress * 100);
+			progressTextBox.Text = String.Format("{0:F0}", (ts.BlockProgress / ts.CurrentBlock.LengthMeters) * 100);
 			speedTextBox.Text = String.Format("{0:F3}", ts.Speed);
 			accelerationTextBox.Text = String.Format("{0:F3}", train.GetAcceleration());
 		}

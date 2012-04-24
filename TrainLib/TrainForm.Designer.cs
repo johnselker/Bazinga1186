@@ -146,9 +146,9 @@
 			this.accelerationLabel.AutoSize = true;
 			this.accelerationLabel.Location = new System.Drawing.Point(186, 41);
 			this.accelerationLabel.Name = "accelerationLabel";
-			this.accelerationLabel.Size = new System.Drawing.Size(69, 13);
+			this.accelerationLabel.Size = new System.Drawing.Size(65, 13);
 			this.accelerationLabel.TabIndex = 10;
-			this.accelerationLabel.Text = "Acceleration:";
+			this.accelerationLabel.Text = "Engine Acc:";
 			// 
 			// accelerationTextBox
 			// 
@@ -211,9 +211,9 @@
 			this.accelerationUnitLabel.AutoSize = true;
 			this.accelerationUnitLabel.Location = new System.Drawing.Point(311, 41);
 			this.accelerationUnitLabel.Name = "accelerationUnitLabel";
-			this.accelerationUnitLabel.Size = new System.Drawing.Size(25, 13);
+			this.accelerationUnitLabel.Size = new System.Drawing.Size(28, 13);
 			this.accelerationUnitLabel.TabIndex = 17;
-			this.accelerationUnitLabel.Text = "m/s";
+			this.accelerationUnitLabel.Text = "m/s²";
 			// 
 			// progressTextBox
 			// 

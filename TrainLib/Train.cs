@@ -91,7 +91,6 @@ namespace TrainLib
 		/// <param name="deltaTime">The number of seconds elapsed since last update.</param>
 		private void UpdateSpeed(double deltaTime)
 		{
-            //double timestep = DateTime.Now.Subtract(lastUpdate).Duration().TotalSeconds;
             double timestep = deltaTime; 
             double acceleration = GetAcceleration();
 
@@ -141,7 +140,6 @@ namespace TrainLib
 		/// <param name="deltaTime">The number of seconds elapsed since last update.</param>
 		private void UpdatePosition(double deltaTime)
 		{
-            //double timestep = DateTime.Now.Subtract(lastUpdate).Duration().TotalSeconds;
             double timestep = deltaTime;
 			double distance = timestep * state.Speed;
 			TrackBlock block = state.CurrentBlock;
@@ -151,48 +149,47 @@ namespace TrainLib
 			int endY = block.EndPoint.Y;
 			double length = block.LengthMeters;
 
-			double previousProgress = state.BlockProgress;
 			switch (state.Direction)
 			{
 				case Direction.East:
 					state.X += distance;
-					state.BlockProgress = (state.X - startX) / length;
+					state.BlockProgress = (state.X - startX);
 					break;
 				case Direction.North:
 					state.Y -= distance;
-					state.BlockProgress = (state.Y - startY) / length;
+					state.BlockProgress = (state.Y - startY);
 					break;
 				case Direction.Northeast:
 					distance /= Math.Sqrt(2);
 					state.X += distance;
 					state.Y -= distance;
-					state.BlockProgress = Math.Sqrt(Math.Pow(state.Y - startY, 2) + Math.Pow(state.X - startX, 2)) / length;
+					state.BlockProgress = Math.Sqrt(Math.Pow(state.Y - startY, 2) + Math.Pow(state.X - startX, 2));
 					break;
 				case Direction.Northwest:
 					distance /= Math.Sqrt(2);
 					state.X -= distance;
 					state.Y -= distance;
-					state.BlockProgress = Math.Sqrt(Math.Pow(state.Y - endY, 2) + Math.Pow(state.X - endX, 2)) / length;
+					state.BlockProgress = Math.Sqrt(Math.Pow(state.Y - endY, 2) + Math.Pow(state.X - endX, 2));
 					break;
 				case Direction.South:
 					state.Y += distance;
-					state.BlockProgress = (state.Y - endY) / length;
+					state.BlockProgress = (state.Y - endY);
 					break;
 				case Direction.Southeast:
 					distance /= Math.Sqrt(2);
 					state.X += distance;
 					state.Y += distance;
-					state.BlockProgress = Math.Sqrt(Math.Pow(state.Y - startY, 2) + Math.Pow(state.X - startX, 2)) / length;
+					state.BlockProgress = Math.Sqrt(Math.Pow(state.Y - startY, 2) + Math.Pow(state.X - startX, 2));
 					break;
 				case Direction.Southwest:
 					distance /= Math.Sqrt(2);
 					state.X -= distance;
 					state.Y += distance;
-					state.BlockProgress = Math.Sqrt(Math.Pow(state.Y - endY, 2) + Math.Pow(state.X - endX, 2)) / length;
+					state.BlockProgress = Math.Sqrt(Math.Pow(state.Y - endY, 2) + Math.Pow(state.X - endX, 2));
 					break;
 				case Direction.West:
 					state.X -= distance;
-					state.BlockProgress = (state.X - endX) / length;
+					state.BlockProgress = (state.X - endX);
 					break;
 				default:
 					break; // Unreachable
@@ -200,15 +197,17 @@ namespace TrainLib
 			state.BlockProgress = Math.Abs(state.BlockProgress);
 
 			// Move to next block
-			if (state.BlockProgress > 1)
+			if (state.BlockProgress > length)
 			{
-				// TODO: Remove assumption that all blocks are same length
-				Debug.Assert(block.NextBlock.LengthMeters == length);
-				state.BlockProgress--;
+				// Subtract length of previous block from progress
+				state.BlockProgress -= length;
 
+				// Move train's presence to next block
 				state.CurrentBlock.Status.TrainPresent = false;
 				state.CurrentBlock = block.NextBlock;
 				state.CurrentBlock.Status.TrainPresent = true;
+
+				// Set the train's direction according to new block
 				switch (state.CurrentBlock.Orientation)
 				{
 					case TrackOrientation.EastWest:
@@ -270,11 +269,11 @@ namespace TrainLib
 					default:
 						break; // Unreachable
 				}
+				// Set the train's direction in the TrainBlock
 				state.CurrentBlock.Status.TrainDirection = state.Direction;
+				// Update the slope according to the new block
 				slope = Math.Atan(block.Grade / 100.0);
 			}
-
-            //state.BlockProgress *= length;
 		}
 
 		/// <summary>
