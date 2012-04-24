@@ -56,12 +56,12 @@ namespace TrackControlLib
 				if (!m_trackBlocks.ContainsKey(trackId)) return false;
 				if (auth == null) return false;
 
-				if (auth.Authority < m_trackBlocks[trackId].Authority.Authority)
+				if (auth.Authority <= m_trackBlocks[trackId].Authority.Authority)
 					UpdateSpeedAuthoritySignal(m_trackBlocks[trackId], auth.Authority);
 				else
 					return false;
 
-				if (auth.SpeedLimitKPH < m_trackBlocks[trackId].Authority.SpeedLimitKPH)
+				if (auth.SpeedLimitKPH <= m_trackBlocks[trackId].Authority.SpeedLimitKPH)
 					m_trackBlocks[trackId].Authority.SpeedLimitKPH = auth.SpeedLimitKPH;
 				else
 					return false;
