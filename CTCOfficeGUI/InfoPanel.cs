@@ -14,7 +14,7 @@ namespace CTCOfficeGUI
     /// <summary>
     /// Class for displaying text information to the user
     /// </summary>
-    public partial class InfoPanel : UserControl, ITrainSystemWatcher
+    public partial class InfoPanel : UserControl
     {
         #region Public Methods
 
@@ -57,6 +57,8 @@ namespace CTCOfficeGUI
             m_valueLabels.Add(lblValue12);
             m_valueLabels.Add(lblValue13);
             m_valueLabels.Add(lblValue14);
+
+            m_updateDelegate = new CTCController.UpdateDisplay(UpdateDisplay);
         }
 
         /// <summary>
@@ -270,14 +272,21 @@ namespace CTCOfficeGUI
         /// <param name="trains">List of trains</param>
         public void UpdateDisplay(List<TrackBlock> blocks, List<ITrain> trains)
         {
-            //No reason to check if the block or train is in the list, faster to just update anyway
-            if (m_displayedBlock != null)
+            if (InvokeRequired)
             {
-                SetTrackBlockInfo(m_displayedBlock);
+                Invoke(m_updateDelegate, blocks, trains);
             }
-            else if (m_displayedTrain != null)
+            else
             {
-                SetTrainInfo(m_displayedTrain);
+                //No reason to check if the block or train is in the list, faster to just update anyway
+                if (m_displayedBlock != null)
+                {
+                    SetTrackBlockInfo(m_displayedBlock);
+                }
+                else if (m_displayedTrain != null)
+                {
+                    SetTrainInfo(m_displayedTrain);
+                }
             }
         }
 
@@ -362,6 +371,7 @@ namespace CTCOfficeGUI
         private const string UNKNOWN_TEXT = "Unknown";
         private const string METERS = "m";
         private const string KPH = "km/h";
+        private CTCController.UpdateDisplay m_updateDelegate;
 
         #endregion
     }

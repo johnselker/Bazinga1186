@@ -8,12 +8,18 @@ using Train;
 using TrackControlLib.Sean;
 using System.Reflection;
 using System.Drawing;
-using System.Timers;
+using System.Windows.Forms;
 
 namespace CTCOfficeGUI
 {
     public class CTCController
     {
+        #region Delegates
+
+        public delegate void UpdateDisplay(List<TrackBlock> blocks, List<ITrain> trains);
+
+        #endregion
+
         #region Public Methods
 
         /// <summary>
@@ -35,16 +41,19 @@ namespace CTCOfficeGUI
         /// </summary>
         /// <param name="subscriber">Subscriber</param>
         /// <returns>bool success</returns>
-        public bool Subscribe(ITrainSystemWatcher subscriber)
+        public bool Subscribe(UpdateDisplay updateDelegate)
         {
             bool result = false;
-            if (subscriber != null)
+            if (updateDelegate != null)
             {
-                if (!m_subscriberList.Contains(subscriber))
+                lock (m_subscriberList)
                 {
-                    //Add it to the subscriber list
-                    m_subscriberList.Add(subscriber);
-                    result = true;
+                    if (!m_subscriberList.Contains(updateDelegate))
+                    {
+                        //Add it to the subscriber list
+                        m_subscriberList.Add(updateDelegate);
+                        result = true;
+                    }
                 }
             }
             return result;
@@ -63,13 +72,19 @@ namespace CTCOfficeGUI
 
             if (Int32.TryParse(value, out limit)) //Parse the string into an integer
             {
-                if (limit >= 0 && limit <= block.Authority.SpeedLimitKPH)
+                //Let the Wayside controller determine if the speed limit is valid
+
+                //Send speed limit to wayside controller
+                ITrackController controller = GetTrackController(block);
+                if (controller != null)
                 {
-                    //Send speed limit to wayside controller
-                    ITrackController controller = GetTrackController(block);
-                    if (controller != null)
+                    try
                     {
                         result = controller.SuggestAuthority(block.Name, new BlockAuthority(limit, block.Authority.Authority));
+                    }
+                    catch (Exception e)
+                    {
+                        m_log.LogError("Error in setting speed limit", e);
                     }
                 }
             }
@@ -124,6 +139,16 @@ namespace CTCOfficeGUI
             }
             return null;
         }
+
+        /// <summary>
+        /// Gets a copy of the list of track controllers
+        /// </summary>
+        /// <returns>List of track controllers</returns>
+        public List<ITrackController> GetTrackControllerList()
+        {
+            return new List<ITrackController>(m_controllerList);
+        }
+
 
         /// <summary>
         /// Gets a copy of the track block list
@@ -196,24 +221,6 @@ namespace CTCOfficeGUI
         }
 
         /// <summary>
-        /// Suggests a route to a train
-        /// </summary>
-        /// <param name="train">Train to suggest to</param>
-        /// <param name="route">List of track blocks</param>
-        /// <returns>bool success</returns>
-        public bool SuggestTrainRoute(ITrain train, List<TrackBlock> route)
-        {
-            bool result = false;
-
-            if (train != null && route != null)
-            {
-                //Suggest the route
-            }
-
-            return result;
-        }
-
-        /// <summary>
         /// Initializes the track layout from file
         /// </summary>
         /// <param name="filename">File name</param>
@@ -225,7 +232,12 @@ namespace CTCOfficeGUI
                 TrackLayoutSerializer layoutSerializer = new TrackLayoutSerializer(filename);
                 layoutSerializer.Restore();
                 m_blockList = layoutSerializer.BlockList;
-                if (!BuildLayout(m_blockList))
+                if (BuildLayout(m_blockList))
+                {
+                    m_updateTimer.Start();
+                    m_log.LogInfo("Successfully loaded track layout. Starting update timer");
+                }
+                else
                 {
                     m_log.LogError("Error building track layout");
                 }
@@ -375,8 +387,9 @@ namespace CTCOfficeGUI
         /// </summary>
         private CTCController()
         {
-            m_updateTimer = new Timer(200); //Update every 200 ms
-            m_updateTimer.AutoReset = true;
+            m_updateTimer = new Timer();
+            m_updateTimer.Interval = 2000; //Update every 200 ms
+            m_updateTimer.Tick += OnUpdateTimerTick;
         }
 
         #endregion
@@ -404,7 +417,12 @@ namespace CTCOfficeGUI
             double minX = Double.PositiveInfinity;
             double maxX = 0;
             double minY = Double.PositiveInfinity;
-            double maxY = 0; 
+            double maxY = 0;
+
+            //Reset
+            m_controllerList.Clear();
+            m_trainList.Clear();
+            m_trackTable.Clear();
 
             foreach (TrackBlock b in blocks)
             {
@@ -416,6 +434,7 @@ namespace CTCOfficeGUI
                         ITrackController controller = new TrackController();
                         controller.AddTrackBlock(b);
                         m_trackTable[b] = controller;
+                        m_controllerList.Add(controller);
                     }
                     else
                     {
@@ -427,8 +446,8 @@ namespace CTCOfficeGUI
                 }
                 else
                 {
-                    m_log.LogError("Block primary controller ID was null or empty. Not allowed");
-                    return false;
+                    m_log.LogError("Block primary controller ID was null or empty. Skipping block");
+                    continue;
                 }
 
                 if (!string.IsNullOrEmpty(b.SecondaryControllerId))
@@ -438,14 +457,16 @@ namespace CTCOfficeGUI
                         //Create a new track controller
                         ITrackController controller = new TrackController();
                         controller.AddTrackBlock(b);
-                        m_trackTable[b] = controller;
+                        m_controllerList.Add(controller);
+                        //No need to add the controller to the track table. 
                     }
                     else
                     {
                         //Add it to the existing track controller
                         ITrackController controller = trackControllers[b.ControllerId];
                         controller.AddTrackBlock(b);
-                        m_trackTable[b] = controller;
+
+                        //No need to add the controller to the track table. 
                     }
                 }
 
@@ -492,23 +513,6 @@ namespace CTCOfficeGUI
             return true;
         }
 
-        /// <summary>
-        /// Gets the blocks adjacent to this one based on direction
-        /// </summary>
-        /// <param name="block">Track block to check</param>
-        /// <returns>List of adjacent blocks</returns>
-        private List<TrackBlock> GetAdjacentBlocks(TrackBlock block)
-        {
-            List<TrackBlock> blocks = new List<TrackBlock>();
-
-            if (block != null)
-            {
-                
-            }
-
-            return blocks;
-        }
-
         #endregion
 
         #region Event Handlers
@@ -518,14 +522,13 @@ namespace CTCOfficeGUI
         /// </summary>
         /// <param name="sender">Sender of the event</param>
         /// <param name="e">Event arguments</param>
-        private void OnUpdateTimerElapsed(object sender, ElapsedEventArgs e)
+        private void OnUpdateTimerTick(object sender, EventArgs e)
         {
             lock (m_subscriberList)
             {
-                foreach (ITrainSystemWatcher watcher in m_subscriberList)
+                foreach (UpdateDisplay updateDelegate in m_subscriberList)
                 {
-                    //Update the subscribers
-                    watcher.UpdateDisplay(GetBlockList(), GetTrainList());
+                    updateDelegate(GetBlockList(), GetTrainList());
                 }
             }
         }
@@ -537,11 +540,12 @@ namespace CTCOfficeGUI
         private static CTCController m_singleton = null;
         private Dictionary<TrackBlock, ITrackController> m_trackTable = new Dictionary<TrackBlock, ITrackController>();
         private List<TrackBlock> m_blockList;
+        private List<ITrackController> m_controllerList = new List<ITrackController>();
         private List<ITrain> m_trainList = new List<ITrain>();
         private LoggingTool m_log = new LoggingTool(MethodBase.GetCurrentMethod());
         private Size m_layoutSize;
         private Point m_layoutStartPoint;
-        private List<ITrainSystemWatcher> m_subscriberList = new List<ITrainSystemWatcher>();
+        private List<UpdateDisplay> m_subscriberList = new List<UpdateDisplay>();
         private Timer m_updateTimer;
 
         #endregion

@@ -19,6 +19,7 @@ namespace CTCOfficeGUI
         private System.Timers.Timer m_simulationTimer = new System.Timers.Timer(1);
         private static Simulator m_singleton;
         private List<ITrainController> m_trainControllerList = new List<ITrainController>();
+        private List<ITrackController> m_trackControllerList;
         private DateTime m_lastUpdateTime;
         private double m_simulationScale = 1;
         private LoggingTool m_log = new LoggingTool(MethodBase.GetCurrentMethod());
@@ -55,6 +56,8 @@ namespace CTCOfficeGUI
             return m_singleton;
         }
 
+        #region Simulation Methods
+
         /// <summary>
         /// Sets the simulation speed
         /// </summary>
@@ -85,6 +88,7 @@ namespace CTCOfficeGUI
         {
             m_running = true;
             m_simulationTimer.Start();
+            m_trackControllerList = CTCController.GetCTCController().GetTrackControllerList();
         }
 
         /// <summary>
@@ -95,6 +99,21 @@ namespace CTCOfficeGUI
             m_running = false;
             m_simulationTimer.Stop();
         }
+
+        /// <summary>
+        /// Stops the simulation and clears the lists of components to update
+        /// </summary>
+        public void StopSimulation()
+        {
+            m_running = false;
+            m_simulationTimer.Stop();
+            m_trackControllerList.Clear();
+            m_trainControllerList.Clear();
+        }
+
+        #endregion
+
+        #region Train Failure Simulations
 
         /// <summary>
         /// Simulates a train pickup failure
@@ -159,6 +178,10 @@ namespace CTCOfficeGUI
             }
         }
 
+        #endregion
+
+        #region Track Failure Simulations
+
         /// <summary>
         /// Simulates a track broken rail
         /// </summary>
@@ -210,6 +233,8 @@ namespace CTCOfficeGUI
             }
         }
 
+        #endregion
+
         /// <summary>
         /// Creates a new train on the track
         /// 
@@ -220,28 +245,31 @@ namespace CTCOfficeGUI
         {
             if (initialBlock != null)
             {
-                if (initialBlock.HasTransponder)
+                if (initialBlock.HasTransponder) 
                 {
                     string start = initialBlock.Transponder.StationName;
-                    if (m_startingDirections.ContainsKey(start))
+                    if (start.Contains(Constants.TRAINYARD)) //Can only spawn trains from stations
                     {
-                        m_log.LogInfoFormat("Spawning new train \"{0}\" at start {1}", name, start); 
-                        //Create the new train and train controller
-                        ITrain train = new Train.Train(name, initialBlock, m_startingDirections[start]);
-                        ITrainController trainController = new TrainController(train);
-                        m_trainControllerList.Add(trainController);
-                        CTCController.GetCTCController().AddTrainToList(train); 
+                        if (m_startingDirections.ContainsKey(start))
+                        {
+                            m_log.LogInfoFormat("Spawning new train \"{0}\" at start {1}", name, start); 
+                            //Create the new train and train controller
+                            ITrain train = new Train.Train(name, initialBlock, m_startingDirections[start]);
+                            ITrainController trainController = new TrainController(train);
+                            m_trainControllerList.Add(trainController);
+                            CTCController.GetCTCController().AddTrainToList(train); 
 
-                        //Set the train schedule
-                        if (start == Constants.REDYARD)
-                        {
-                            m_log.LogInfoFormat("Setting schedule of {0} to red line", name);
-                            trainController.SetSchedule(CTCController.GetCTCController().GetRedlineSchedule());
-                        }
-                        else if (start == Constants.GREENYARDOUT)
-                        {
-                            m_log.LogInfoFormat("Setting schedule of {0} to green line", name);
-                            trainController.SetSchedule(CTCController.GetCTCController().GetGreenlineSchedule());
+                            //Set the train schedule
+                            if (start == Constants.REDYARD)
+                            {
+                                m_log.LogInfoFormat("Setting schedule of {0} to red line", name);
+                                trainController.SetSchedule(CTCController.GetCTCController().GetRedlineSchedule());
+                            }
+                            else if (start == Constants.GREENYARDOUT)
+                            {
+                                m_log.LogInfoFormat("Setting schedule of {0} to green line", name);
+                                trainController.SetSchedule(CTCController.GetCTCController().GetGreenlineSchedule());
+                            }
                         }
                     }
                 }
@@ -261,8 +289,9 @@ namespace CTCOfficeGUI
             m_simulationTimer.Elapsed += OnSimulationTimerElapsed;
             m_lastUpdateTime = DateTime.Now;
 
+            //Hard-coded starting diretions for spawning trains from the train yard
             m_startingDirections = new Dictionary<string, Direction>(){
-            {Constants.REDYARD, Direction.North}, {Constants.GREENYARDIN, Direction.Southwest}, {Constants.GREENYARDOUT, Direction.South} };
+            {Constants.REDYARD, Direction.North}, {Constants.GREENYARDOUT, Direction.South} };
         }
 
         #endregion
@@ -282,6 +311,15 @@ namespace CTCOfficeGUI
             TimeSpan timeDiff = timeFreeze - m_lastUpdateTime;
             double timeStep = (timeDiff.Ticks / (double)TimeSpan.TicksPerSecond) * m_simulationScale;
             m_lastUpdateTime = timeFreeze;
+
+            lock (m_trackControllerList)
+            {
+                //Update the track controllers first so that they can set safe authorities
+                foreach (ITrackController controller in m_trackControllerList)
+                {
+                    controller.Update();
+                }
+            }
 
             lock (m_trainControllerList)
             {

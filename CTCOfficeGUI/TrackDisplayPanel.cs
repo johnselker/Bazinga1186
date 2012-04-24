@@ -12,7 +12,7 @@ using Train;
 
 namespace CTCOfficeGUI
 {
-    public partial class TrackDisplayPanel : UserControl, ITrainSystemWatcher
+    public partial class TrackDisplayPanel : UserControl
     {
         #region Private Data
 
@@ -22,9 +22,8 @@ namespace CTCOfficeGUI
         private LoggingTool m_log = new LoggingTool(MethodBase.GetCurrentMethod());
         private TrackBlockGraphic m_selectedTrackBlock = null;
         private TrainGraphic m_selectedTrain = null;
-        private bool m_editingMode = false;
-        private List<TrackBlock> m_route;
         private const int m_margin = 10;
+        private CTCController.UpdateDisplay m_updateDelegate;
 
         #endregion
 
@@ -66,6 +65,7 @@ namespace CTCOfficeGUI
         public TrackDisplayPanel()
         {
             InitializeComponent();
+            m_updateDelegate = new CTCController.UpdateDisplay(UpdateDisplay);
         }
 
         #endregion
@@ -106,62 +106,54 @@ namespace CTCOfficeGUI
         }
 
         /// <summary>
-        /// Adds a train to the layout
-        /// </summary>
-        /// <param name="train"></param>
-        public bool AddTrain(ITrain train)
-        {
-            bool result = false;
-            if (train != null)
-            {
-                if (!m_trainTable.ContainsKey(train))
-                {
-                    TrainGraphic graphic = new TrainGraphic(train);
-
-                    graphic.Location = new Point(System.Convert.ToInt32(train.GetPosition().X - graphic.Width / 2),                           
-                                                 System.Convert.ToInt32(train.GetPosition().Y - graphic.Height / 2));
-
-                    graphic.TrainClicked += OnTrainGraphicClicked;
-
-                    Controls.Add(graphic);
-                    graphic.BringToFront();
-                    m_trainTable[train] = graphic;
-                    result = true;
-                }
-            }
-
-            return result;
-        }
-
-        /// <summary>
         /// Updates the display 
         /// </summary>
         /// <param name="blocks">List of track blocks</param>
         /// <param name="trains">List of trains</param>
         public void UpdateDisplay(List<TrackBlock> updatedBlocks, List<ITrain> trains)
         {
-            //Update the block layout
-            if (updatedBlocks != null)
+            if (InvokeRequired)
             {
-                foreach (TrackBlock b in updatedBlocks)
-                {
-                    if (m_blockTable.ContainsKey(b))
-                    {
-                        m_blockTable[b].Invalidate();
-                    }
-                }
+                Invoke(m_updateDelegate, updatedBlocks, trains);
             }
-
-            //Update the train locations
-            if (trains != null)
+            else
             {
-                foreach (ITrain t in trains)
+                //Update the block layout
+                if (updatedBlocks != null)
                 {
-                    if (m_trainTable.ContainsKey(t))
+                    foreach (TrackBlock b in updatedBlocks)
                     {
-                        TrainGraphic g = m_trainTable[t];
-                        m_trainTable[t].Left = System.Convert.ToInt32(t.GetState().X * m_scale);
-                        m_trainTable[t].Top = System.Convert.ToInt32(t.GetState().Y * m_scale);
+                        if (m_blockTable.ContainsKey(b))
+                        {
+                            m_blockTable[b].Invalidate();
+                        }
+                    }
+
+                    //Upate the train locations
+                    foreach (ITrain train in trains)
+                    {
+                        if (m_trainTable.ContainsKey(train))
+                        {
+                            TrainGraphic graphic = m_trainTable[train];
+
+                            graphic.Left = System.Convert.ToInt32(train.GetPosition().X - graphic.Width / 2);
+                            graphic.Top = System.Convert.ToInt32(train.GetPosition().Y - graphic.Height / 2);
+                        }
+                        else
+                        {
+                            //New train, add it to the list
+                            TrainGraphic graphic = new TrainGraphic(train);
+
+                            graphic.Location = new Point(System.Convert.ToInt32(train.GetPosition().X - graphic.Width / 2),
+                                                         System.Convert.ToInt32(train.GetPosition().Y - graphic.Height / 2));
+
+                            graphic.TrainClicked += OnTrainGraphicClicked;
+                            graphic.Disposed += OnTrainDisposed;
+
+                            Controls.Add(graphic);
+                            graphic.BringToFront();
+                            m_trainTable[train] = graphic;
+                        }
                     }
                 }
             }
@@ -178,52 +170,6 @@ namespace CTCOfficeGUI
                 m_selectedTrackBlock = null;
                 blinkTimer.Stop();
             }
-        }
-
-        /// <summary>
-        /// Enters Route editting mode
-        /// </summary>
-        /// <param name="editing">true to edit, false to exit/param>
-        //public void EnterRouteEditMode(ITrainController train)
-        //{
-        //    if (train != null)
-        //    {
-        //        m_editingMode = true;
-        //        if (train.Route != null)
-        //        {
-        //            m_route = train.Route;
-        //            foreach (TrackBlock b in train.Route)
-        //            {
-        //                m_blockTable[b].ShowDot = true;
-        //            }
-        //        }
-        //    }
-        //}
-
-        /// <summary>
-        /// Exits route editing mode
-        /// </summary>
-        //public void ExitRouteEditingMode()
-        //{
-        //    if (m_editingMode)
-        //    {
-        //        foreach (KeyValuePair<TrackBlock, TrackBlockGraphic> pair in m_blockTable)
-        //        {
-        //            pair.Value.ShowDot = false;
-        //        }
-        //
-        //        m_editingMode = false;
-        //        m_route = null;
-        //    }
-        //}
-
-        /// <summary>
-        /// Gets the current train route
-        /// </summary>
-        /// <returns>List of track blocks in the route</returns>
-        public List<TrackBlock> GetCurrentRoute()
-        {
-            return m_route;
         }
 
         #endregion
@@ -296,41 +242,23 @@ namespace CTCOfficeGUI
             {
                 TrackBlockGraphic graphic = (TrackBlockGraphic)sender;
 
-                if (!m_editingMode)
+                if (m_selectedTrackBlock != null && m_selectedTrackBlock != graphic)
                 {
-                    if (m_selectedTrackBlock != null && m_selectedTrackBlock != graphic)
-                    {
-                        m_selectedTrackBlock.StopBlinking();
-                    }
-                    if (m_selectedTrain != null)
-                    {
-                        m_selectedTrain.StopBlinking();
-                    }
-
-                    m_selectedTrain = null;
-                    m_selectedTrackBlock = graphic;
-
-                    blinkTimer.Start();
-
-                    if (TrackBlockClicked != null)
-                    {
-                        TrackBlockClicked(graphic.Block);
-                    }
+                    m_selectedTrackBlock.StopBlinking();
                 }
-                else
+                if (m_selectedTrain != null)
                 {
-                    if (m_route.Contains(graphic.Block))
-                    {
-                        //Remove the block from the route
-                        m_route.Remove(graphic.Block);
-                        graphic.ShowDot = false;
-                    }
-                    else
-                    {
-                        //Add the block to the route
-                        m_route.Add(graphic.Block);
-                        graphic.ShowDot = true;
-                    }
+                    m_selectedTrain.StopBlinking();
+                }
+
+                m_selectedTrain = null;
+                m_selectedTrackBlock = graphic;
+
+                blinkTimer.Start();
+
+                if (TrackBlockClicked != null)
+                {
+                    TrackBlockClicked(graphic.Block);
                 }
             }
             catch (InvalidCastException ex)
@@ -391,6 +319,35 @@ namespace CTCOfficeGUI
             if (m_selectedTrain != null)
             {
                 m_selectedTrain.Blink();
+            }
+        }
+
+        /// <summary>
+        /// A train was disposed. Remove the graphic
+        /// </summary>
+        /// <param name="sender">Sender of the event</param>
+        /// <param name="e">Event arguments</param>
+        private void OnTrainDisposed(object sender, EventArgs e)
+        {
+            try
+            {
+                ITrain train = (ITrain)sender;
+
+                if (m_trainTable.ContainsKey(train))
+                {
+                    //Remove the train graphic from the display
+                    if (m_selectedTrain == m_trainTable[train])
+                    {
+                        m_selectedTrain = null;
+                    }
+
+                    m_trainTable[train].Dispose();
+                    m_trainTable.Remove(train);
+                }
+            }
+            catch (InvalidCastException ex)
+            {
+                m_log.LogError("Received train disposing event but could not cast to train", ex);
             }
         }
 

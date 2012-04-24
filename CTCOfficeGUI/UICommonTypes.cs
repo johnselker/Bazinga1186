@@ -21,16 +21,6 @@ namespace CTCOfficeGUI
     /// </summary>
     public enum TrainCommands
     {
-        SuggestRoute,
-        SetSchedule
-    }
-
-    /// <summary>
-    /// Enums for routing trains
-    /// </summary>
-    public enum RouteCommands
-    {
-        SuggestRoute,
-        CancelRoute
+        ViewSchedule
     }
 }

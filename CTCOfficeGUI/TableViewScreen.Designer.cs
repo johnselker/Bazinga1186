@@ -30,22 +30,19 @@
         {
             this.tableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.lblName = new System.Windows.Forms.Label();
-            this.lblLength = new System.Windows.Forms.Label();
-            this.lblOrientation = new System.Windows.Forms.Label();
             this.lblAuthority = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
             this.lblSpeedLimit = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
             this.lblTrain = new System.Windows.Forms.Label();
             this.lblSignal = new System.Windows.Forms.Label();
-            this.rdbtnTrains = new System.Windows.Forms.RadioButton();
-            this.rdbtnTrackBlocks = new System.Windows.Forms.RadioButton();
-            this.lblStartElevation = new System.Windows.Forms.Label();
-            this.lblEndElevation = new System.Windows.Forms.Label();
             this.lblGrade = new System.Windows.Forms.Label();
+            this.lblLength = new System.Windows.Forms.Label();
             this.lblTunnel = new System.Windows.Forms.Label();
             this.lblRRCrossing = new System.Windows.Forms.Label();
             this.lblTransponder = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
+            this.rdbtnTrains = new System.Windows.Forms.RadioButton();
+            this.rdbtnTrackBlocks = new System.Windows.Forms.RadioButton();
             this.scrollbar = new System.Windows.Forms.VScrollBar();
             this.tableLayoutPanel.SuspendLayout();
             this.SuspendLayout();
@@ -53,10 +50,8 @@
             // tableLayoutPanel
             // 
             this.tableLayoutPanel.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Single;
-            this.tableLayoutPanel.ColumnCount = 14;
+            this.tableLayoutPanel.ColumnCount = 12;
             this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 150F));
-            this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
@@ -74,18 +69,16 @@
             this.tableLayoutPanel.Controls.Add(this.label4, 3, 0);
             this.tableLayoutPanel.Controls.Add(this.lblTrain, 4, 0);
             this.tableLayoutPanel.Controls.Add(this.lblSignal, 5, 0);
-            this.tableLayoutPanel.Controls.Add(this.lblStartElevation, 6, 0);
-            this.tableLayoutPanel.Controls.Add(this.lblEndElevation, 7, 0);
-            this.tableLayoutPanel.Controls.Add(this.lblGrade, 8, 0);
-            this.tableLayoutPanel.Controls.Add(this.lblLength, 9, 0);
-            this.tableLayoutPanel.Controls.Add(this.lblTunnel, 10, 0);
-            this.tableLayoutPanel.Controls.Add(this.lblRRCrossing, 11, 0);
-            this.tableLayoutPanel.Controls.Add(this.lblOrientation, 12, 1);
-            this.tableLayoutPanel.Controls.Add(this.lblTransponder, 12, 0);
-            this.tableLayoutPanel.Controls.Add(this.label1, 13, 0);
+            this.tableLayoutPanel.Controls.Add(this.lblGrade, 6, 0);
+            this.tableLayoutPanel.Controls.Add(this.lblLength, 7, 0);
+            this.tableLayoutPanel.Controls.Add(this.lblTunnel, 8, 0);
+            this.tableLayoutPanel.Controls.Add(this.lblRRCrossing, 9, 0);
+            this.tableLayoutPanel.Controls.Add(this.lblTransponder, 10, 0);
+            this.tableLayoutPanel.Controls.Add(this.label1, 11, 0);
             this.tableLayoutPanel.Location = new System.Drawing.Point(5, 40);
             this.tableLayoutPanel.Name = "tableLayoutPanel";
-            this.tableLayoutPanel.RowCount = 30;
+            this.tableLayoutPanel.RowCount = 31;
+            this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
@@ -129,25 +122,6 @@
             this.lblName.TabIndex = 0;
             this.lblName.Text = "Name";
             // 
-            // lblLength
-            // 
-            this.lblLength.AutoSize = true;
-            this.lblLength.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblLength.Location = new System.Drawing.Point(777, 1);
-            this.lblLength.Name = "lblLength";
-            this.lblLength.Size = new System.Drawing.Size(48, 16);
-            this.lblLength.TabIndex = 0;
-            this.lblLength.Text = "Length";
-            // 
-            // lblOrientation
-            // 
-            this.lblOrientation.AutoSize = true;
-            this.lblOrientation.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblOrientation.Location = new System.Drawing.Point(1007, 22);
-            this.lblOrientation.Name = "lblOrientation";
-            this.lblOrientation.Size = new System.Drawing.Size(0, 16);
-            this.lblOrientation.TabIndex = 0;
-            // 
             // lblAuthority
             // 
             this.lblAuthority.AutoSize = true;
@@ -158,16 +132,6 @@
             this.lblAuthority.TabIndex = 0;
             this.lblAuthority.Text = "Authority";
             // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(307, 1);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(115, 16);
-            this.label4.TabIndex = 0;
-            this.label4.Text = "Static Speed Limit";
-            // 
             // lblSpeedLimit
             // 
             this.lblSpeedLimit.AutoSize = true;
@@ -177,6 +141,16 @@
             this.lblSpeedLimit.Size = new System.Drawing.Size(79, 16);
             this.lblSpeedLimit.TabIndex = 0;
             this.lblSpeedLimit.Text = "Speed Limit";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.Location = new System.Drawing.Point(307, 1);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(115, 16);
+            this.label4.TabIndex = 0;
+            this.label4.Text = "Static Speed Limit";
             // 
             // lblTrain
             // 
@@ -197,6 +171,66 @@
             this.lblSignal.Size = new System.Drawing.Size(46, 16);
             this.lblSignal.TabIndex = 0;
             this.lblSignal.Text = "Signal";
+            // 
+            // lblGrade
+            // 
+            this.lblGrade.AutoSize = true;
+            this.lblGrade.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblGrade.Location = new System.Drawing.Point(528, 1);
+            this.lblGrade.Name = "lblGrade";
+            this.lblGrade.Size = new System.Drawing.Size(46, 16);
+            this.lblGrade.TabIndex = 0;
+            this.lblGrade.Text = "Grade";
+            // 
+            // lblLength
+            // 
+            this.lblLength.AutoSize = true;
+            this.lblLength.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblLength.Location = new System.Drawing.Point(581, 1);
+            this.lblLength.Name = "lblLength";
+            this.lblLength.Size = new System.Drawing.Size(48, 16);
+            this.lblLength.TabIndex = 0;
+            this.lblLength.Text = "Length";
+            // 
+            // lblTunnel
+            // 
+            this.lblTunnel.AutoSize = true;
+            this.lblTunnel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTunnel.Location = new System.Drawing.Point(636, 1);
+            this.lblTunnel.Name = "lblTunnel";
+            this.lblTunnel.Size = new System.Drawing.Size(77, 16);
+            this.lblTunnel.TabIndex = 0;
+            this.lblTunnel.Text = "Has Tunnel";
+            // 
+            // lblRRCrossing
+            // 
+            this.lblRRCrossing.AutoSize = true;
+            this.lblRRCrossing.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblRRCrossing.Location = new System.Drawing.Point(720, 1);
+            this.lblRRCrossing.Name = "lblRRCrossing";
+            this.lblRRCrossing.Size = new System.Drawing.Size(84, 16);
+            this.lblRRCrossing.TabIndex = 0;
+            this.lblRRCrossing.Text = "RR Crossing";
+            // 
+            // lblTransponder
+            // 
+            this.lblTransponder.AutoSize = true;
+            this.lblTransponder.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTransponder.Location = new System.Drawing.Point(811, 1);
+            this.lblTransponder.Name = "lblTransponder";
+            this.lblTransponder.Size = new System.Drawing.Size(86, 16);
+            this.lblTransponder.TabIndex = 2;
+            this.lblTransponder.Text = "Transponder";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(904, 1);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(49, 16);
+            this.label1.TabIndex = 2;
+            this.label1.Text = "Failure";
             // 
             // rdbtnTrains
             // 
@@ -220,76 +254,6 @@
             this.rdbtnTrackBlocks.Text = "Track Blocks";
             this.rdbtnTrackBlocks.UseVisualStyleBackColor = true;
             // 
-            // lblStartElevation
-            // 
-            this.lblStartElevation.AutoSize = true;
-            this.lblStartElevation.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblStartElevation.Location = new System.Drawing.Point(528, 1);
-            this.lblStartElevation.Name = "lblStartElevation";
-            this.lblStartElevation.Size = new System.Drawing.Size(94, 16);
-            this.lblStartElevation.TabIndex = 0;
-            this.lblStartElevation.Text = "Start Elevation";
-            // 
-            // lblEndElevation
-            // 
-            this.lblEndElevation.AutoSize = true;
-            this.lblEndElevation.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblEndElevation.Location = new System.Drawing.Point(629, 1);
-            this.lblEndElevation.Name = "lblEndElevation";
-            this.lblEndElevation.Size = new System.Drawing.Size(88, 16);
-            this.lblEndElevation.TabIndex = 0;
-            this.lblEndElevation.Text = "EndElevation";
-            // 
-            // lblGrade
-            // 
-            this.lblGrade.AutoSize = true;
-            this.lblGrade.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblGrade.Location = new System.Drawing.Point(724, 1);
-            this.lblGrade.Name = "lblGrade";
-            this.lblGrade.Size = new System.Drawing.Size(46, 16);
-            this.lblGrade.TabIndex = 0;
-            this.lblGrade.Text = "Grade";
-            // 
-            // lblTunnel
-            // 
-            this.lblTunnel.AutoSize = true;
-            this.lblTunnel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblTunnel.Location = new System.Drawing.Point(832, 1);
-            this.lblTunnel.Name = "lblTunnel";
-            this.lblTunnel.Size = new System.Drawing.Size(77, 16);
-            this.lblTunnel.TabIndex = 0;
-            this.lblTunnel.Text = "Has Tunnel";
-            // 
-            // lblRRCrossing
-            // 
-            this.lblRRCrossing.AutoSize = true;
-            this.lblRRCrossing.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblRRCrossing.Location = new System.Drawing.Point(916, 1);
-            this.lblRRCrossing.Name = "lblRRCrossing";
-            this.lblRRCrossing.Size = new System.Drawing.Size(84, 16);
-            this.lblRRCrossing.TabIndex = 0;
-            this.lblRRCrossing.Text = "RR Crossing";
-            // 
-            // lblTransponder
-            // 
-            this.lblTransponder.AutoSize = true;
-            this.lblTransponder.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblTransponder.Location = new System.Drawing.Point(1007, 1);
-            this.lblTransponder.Name = "lblTransponder";
-            this.lblTransponder.Size = new System.Drawing.Size(86, 16);
-            this.lblTransponder.TabIndex = 2;
-            this.lblTransponder.Text = "Transponder";
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(1100, 1);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(49, 16);
-            this.label1.TabIndex = 2;
-            this.label1.Text = "Failure";
-            // 
             // scrollbar
             // 
             this.scrollbar.Location = new System.Drawing.Point(1237, 40);
@@ -305,10 +269,12 @@
             this.Controls.Add(this.rdbtnTrains);
             this.Controls.Add(this.tableLayoutPanel);
             this.Controls.Add(this.scrollbar);
+            this.DoubleBuffered = true;
             this.MaximizeBox = false;
             this.Name = "TableViewScreen";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "TableViewScreen";
+            this.WindowState = System.Windows.Forms.FormWindowState.Minimized;
             this.tableLayoutPanel.ResumeLayout(false);
             this.tableLayoutPanel.PerformLayout();
             this.ResumeLayout(false);
@@ -323,14 +289,11 @@
         private System.Windows.Forms.RadioButton rdbtnTrackBlocks;
         private System.Windows.Forms.Label lblName;
         private System.Windows.Forms.Label lblLength;
-        private System.Windows.Forms.Label lblOrientation;
         private System.Windows.Forms.Label lblAuthority;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label lblSpeedLimit;
         private System.Windows.Forms.Label lblTrain;
         private System.Windows.Forms.Label lblSignal;
-        private System.Windows.Forms.Label lblStartElevation;
-        private System.Windows.Forms.Label lblEndElevation;
         private System.Windows.Forms.Label lblGrade;
         private System.Windows.Forms.Label lblTunnel;
         private System.Windows.Forms.Label lblRRCrossing;

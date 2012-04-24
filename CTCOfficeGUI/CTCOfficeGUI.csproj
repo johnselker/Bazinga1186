@@ -57,14 +57,12 @@
       <DependentUpon>CommandPanel.cs</DependentUpon>
     </Compile>
     <Compile Include="CTCController.cs" />
-    <Compile Include="DrawingUtils.cs" />
     <Compile Include="InfoPanel.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="InfoPanel.Designer.cs">
       <DependentUpon>InfoPanel.cs</DependentUpon>
     </Compile>
-    <Compile Include="ITrainSystemWatcher.cs" />
     <Compile Include="MainScreen.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -184,6 +182,10 @@
       <Project>{F84DC4AD-4D0C-4F6F-9576-AF656EB63D77}</Project>
       <Name>CommonLib</Name>
     </ProjectReference>
+    <ProjectReference Include="..\TrackControlLib\TrackControlLib-Sean.csproj">
+      <Project>{3F3F705C-5298-4DF6-AC70-AD493D314D04}</Project>
+      <Name>TrackControlLib</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TrackLib\TrackLib.csproj">
       <Project>{9FD33000-B6F5-4F4E-9D70-C7F95569AF33}</Project>
       <Name>TrackLib</Name>
@@ -198,7 +200,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="train_icon_large.png" />
+    <None Include="Resources\train_icon_large.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\tunnelIcon.png" />

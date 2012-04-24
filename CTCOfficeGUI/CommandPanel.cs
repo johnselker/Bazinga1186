@@ -85,25 +85,12 @@ namespace CTCOfficeGUI
         }
 
         /// <summary>
-        /// Displays commands for routing trains
-        /// </summary>
-        public void ShowTrainRoutingCommands()
-        {
-            Dictionary<object, string> commands = new Dictionary<object, string>();
-            commands.Add(RouteCommands.SuggestRoute, "Suggest Route");
-            commands.Add(RouteCommands.CancelRoute, "Cancel Route");
-
-            SetCommands(commands);
-        }
-
-        /// <summary>
         /// Displays commands for trains
         /// </summary>
         public void ShowTrainCommands()
         {
             Dictionary<object, string> commands = new Dictionary<object, string>();
-            commands.Add(TrainCommands.SuggestRoute, "Suggest Route");
-            commands.Add(TrainCommands.SetSchedule, "Set Schedule");
+            commands.Add(TrainCommands.ViewSchedule, "View Schedule");
 
             SetCommands(commands);
         }

@@ -23,8 +23,8 @@ namespace CTCOfficeGUI
         {
             InitializeComponent();
 
-            m_ctcController.Subscribe(trackDisplayPanel);
-            m_ctcController.Subscribe(infoPanel);
+            m_ctcController.Subscribe(trackDisplayPanel.UpdateDisplay);
+            m_ctcController.Subscribe(infoPanel.UpdateDisplay);
 
             m_simulatorWindow.Show();
         }
@@ -65,33 +65,8 @@ namespace CTCOfficeGUI
             {
                 switch ((TrainCommands)tag)
                 {
-                    case TrainCommands.SetSchedule:
-                        //Launch scheduler
-                        break;
-                    case TrainCommands.SuggestRoute:
-                        commandPanel.ShowTrainRoutingCommands();
-                        //trackDisplayPanel.EnterRouteEditingMode(m_selectedTrain);
-                        break;
-                    default:
-                        //Unreachable
-                        break;
-                }
-            }
-            else if (tag.GetType() == typeof(RouteCommands))
-            {
-                switch ((RouteCommands)tag)
-                {
-                    case RouteCommands.SuggestRoute:
-                        //Suggest train route
-                        if (!m_ctcController.SuggestTrainRoute(m_selectedTrain, trackDisplayPanel.GetCurrentRoute()))
-                        {
-                            ShowOKPopup("Error", "Route is invalid", OnPopupAcknowledged);
-                        }
-                        break;
-                    case RouteCommands.CancelRoute:
-                        //Cancel the route editing
-                        //trackDisplayPanel.ExitRouteEdittingMode();
-                        commandPanel.ShowTrainCommands();
+                    case TrainCommands.ViewSchedule:
+                        //Show scheduling screen
                         break;
                     default:
                         //Unreachable
@@ -203,22 +178,22 @@ namespace CTCOfficeGUI
 
             if (b != null)
             {
+                bool trainYard = false;
                 if (b.HasTransponder)
                 {
-                    if (b.Transponder.StationName.Contains(Constants.TRAINYARD) && b.Transponder.DistanceToStation == 0)
+                    if (!string.IsNullOrEmpty(b.Transponder.StationName))
                     {
-                        //This is a train yard, handle it specially
-                        infoPanel.SetTrainYardInfo(b);
-                        commandPanel.ShowTrainYardCommands();
-                    }
-                    else
-                    {
-                        //Normal track block
-                        infoPanel.SetTrackBlockInfo(b);
-                        commandPanel.ShowTrackBlockCommands(b);
+                        if (b.Transponder.StationName.Contains(Constants.TRAINYARD) && b.Transponder.DistanceToStation == 0)
+                        {
+                            //This is a train yard, handle it specially
+                            infoPanel.SetTrainYardInfo(b);
+                            commandPanel.ShowTrainYardCommands();
+                            trainYard = true;
+                        }
                     }
                 }
-                else
+                
+                if (!trainYard)
                 {
                     //Normal track block
                     infoPanel.SetTrackBlockInfo(b);
@@ -313,6 +288,7 @@ namespace CTCOfficeGUI
         /// <param name="e">Event arguments</param>
         private void OnLoadTrackLayoutClicked(object sender, EventArgs e)
         {
+            //Show file dialog to select the track layout
             OpenFileDialog dialog = new OpenFileDialog();
             dialog.InitialDirectory = System.IO.Directory.GetCurrentDirectory();
             dialog.CheckFileExists = true;
@@ -352,7 +328,13 @@ namespace CTCOfficeGUI
         /// <param name="e">Event arguments</param>
         private void OnTableViewClicked(object sender, EventArgs e)
         {
+            if (m_tableViewWindow == null || m_tableViewWindow.IsDisposed || m_tableViewWindow.Disposing)
+            {
+                m_tableViewWindow = new TableViewScreen();
+            }
 
+            m_tableViewWindow.WindowState = FormWindowState.Normal;
+            m_tableViewWindow.Show();
         }
 
         /// <summary>
@@ -398,6 +380,7 @@ namespace CTCOfficeGUI
         private List<Form> m_openPopups = new List<Form>();
         private CTCController m_ctcController = CTCController.GetCTCController();
         private SimulatorWindow m_simulatorWindow = new SimulatorWindow();
+        private TableViewScreen m_tableViewWindow = new TableViewScreen();
 
         #endregion
     }

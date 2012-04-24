@@ -80,20 +80,4 @@ namespace CommonLib
         RightToLeft,
         Both
     }
-
-    // ENUM: TrainFailureMode
-    //--------------------------------------------------------------------------------------
-    /// <summary>
-    /// Failure modes for a train
-    /// </summary>
-    //-------------------------------------------------------------------------------------- 
-    public enum TrainFailureCommands
-    {
-        EngineFailure,
-        SignalPickupFailure,
-        BrakeFailure,
-        ClearEngineFailure,
-        ClearPickupFailure,
-        ClearBrakeFailure
-    }
 }
