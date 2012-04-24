@@ -449,12 +449,14 @@ namespace TrainLib
 		}
 
 		/// <summary>
-		/// Sets the power of the Train's engine.
+		/// Sets the power of the Train's engine and ensures brakes are not applied.
 		/// </summary>
 		/// <param name="power">The power in Watts. Negative powers are ignored.</param>
 		/// <param name="deltaTime">The time in seconds since the last update.</param>
         public void SetPower(double power, double deltaTime)
 		{
+			brake = false;
+			emergencyBrake = false;
 			if (power < 0)
 			{
 				this.power = 0;
