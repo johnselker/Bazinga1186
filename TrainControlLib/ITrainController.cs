@@ -34,5 +34,13 @@ namespace TrainControllerLib
         /// </summary>
         //--------------------------------------------------------------------------------------
         void SetSchedule(Queue<ScheduleInfo> routeInfo);
+
+        // METHOD: Dispose
+        //--------------------------------------------------------------------------------------
+        /// <summary>
+        /// Dispose of the TrainController
+        /// </summary>
+        //--------------------------------------------------------------------------------------
+        void Dispose();
     }
 }

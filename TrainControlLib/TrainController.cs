@@ -168,6 +168,20 @@ namespace TrainControllerLib
             m_routeInfo = routeInfo;
         }
 
+        // METHOD: Dispose
+        //--------------------------------------------------------------------------------------
+        /// <summary>
+        /// Dispose of the TrainController
+        /// </summary>
+        //--------------------------------------------------------------------------------------
+        public void Dispose()
+        {
+            if (this != null)
+            {
+                this.Dispose();
+            }
+        }
+
         #endregion
 
         #region Private Methods
