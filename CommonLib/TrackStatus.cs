@@ -7,13 +7,12 @@ namespace CommonLib
 {
 	public class TrackStatus
 	{
-		public bool TrainPresent;
-		public Direction TrainDirection;
-		public bool BrokenRail;
-		public bool PowerFail;
-		public bool CircuitFail;
-		public bool IsOpen;
-		public TrackSignalState SignalState;
-		public TrackSwitchState SwitchState;
+        public bool TrainPresent = false;
+        public Direction TrainDirection = Direction.East;
+        public bool BrokenRail = false;
+        public bool PowerFail = false;
+        public bool CircuitFail = false;
+        public bool IsOpen = true;
+        public TrackSignalState SignalState = TrackSignalState.Red;
 	}
 }

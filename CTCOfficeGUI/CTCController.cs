@@ -442,7 +442,7 @@ namespace CTCOfficeGUI
                     {
                         //Create a new track controller
                         ITrackController controller = new TrackController();
-                        controller.AddTrackBlock(b, new LinkedList<TrackBlock>());
+                        controller.AddTrackBlock(b, new TrackBlock[0]);
                         m_trackTable[b] = controller;
                         m_controllerList.Add(controller);
                         trackControllers[b.ControllerId] = controller;
@@ -451,7 +451,7 @@ namespace CTCOfficeGUI
                     {
                         //Add it to the existing track controller
                         ITrackController controller = trackControllers[b.ControllerId];
-						controller.AddTrackBlock(b, new LinkedList<TrackBlock>());
+                        controller.AddTrackBlock(b, new TrackBlock[0]);
                         m_trackTable[b] = controller;
                     }
                 }
@@ -467,7 +467,7 @@ namespace CTCOfficeGUI
                     {
                         //Create a new track controller
                         ITrackController controller = new TrackController();
-						controller.AddTrackBlock(b, new LinkedList<TrackBlock>());
+                        controller.AddTrackBlock(b, new TrackBlock[0]);
                         m_controllerList.Add(controller);
                         trackControllers[b.SecondaryControllerId] = controller;
 
@@ -477,7 +477,7 @@ namespace CTCOfficeGUI
                     {
                         //Add it to the existing track controller
                         ITrackController controller = trackControllers[b.SecondaryControllerId];
-						controller.AddTrackBlock(b, new LinkedList<TrackBlock>());
+                        controller.AddTrackBlock(b, new TrackBlock[0]);
 
                         //No need to add the controller to the track table. 
                     }
@@ -541,11 +541,53 @@ namespace CTCOfficeGUI
             {
                 foreach (UpdateDisplay updateDelegate in m_subscriberList)
                 {
-                    updateDelegate(GetBlockList(), GetTrainList());
+                    updateDelegate(null, null);
+                    //updateDelegate(GetBlockList(), GetTrainList());
                 }
             }
         }
 
+
+        /// <summary>
+        /// Determines a list of track blocks that are adjacent to the given block
+        /// </summary>
+        /// <param name="b">Track block</param>
+        /// <returns>List of adjacent blocks</returns>
+        private List<TrackBlock> GetAdjacentTrackBlocks(TrackBlock b)
+        {
+            List<TrackBlock> adjacentBlocks = new List<TrackBlock>();
+            if (b != null)
+            {
+                //Add the next and previous blocks for starters...
+                if (b.NextBlock != null)
+                {
+                    adjacentBlocks.Add(b.NextBlock);
+                }
+                if (b.PreviousBlock != null)
+                {
+                    adjacentBlocks.Add(b.PreviousBlock);
+                }
+
+                if (b.HasSwitch)
+                {
+                    AddSwitchBlocks(b, adjacentBlocks);
+                }
+            }
+
+            return adjacentBlocks;
+        }
+
+        /// <summary>
+        /// Adds potentially adjacent blocks to the adjacency list
+        /// </summary>
+        /// <param name="b">Track block to check</param>
+        /// <param name="adjacentBlocks"></param>
+        private void AddSwitchBlocks(TrackBlock b, List<TrackBlock> adjacentBlocks)
+        {
+            if (b != null && adjacentBlocks != null)
+            {
+            }
+        }
         #endregion
 
         #region Private Data
