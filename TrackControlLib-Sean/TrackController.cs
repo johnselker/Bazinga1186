@@ -17,29 +17,37 @@ namespace TrackControlLib
 			private const int AUTH_THRESH_SUPERGREEN = 10;
 
 			private Dictionary<string, TrackBlock> m_trackBlocks;
-			private Dictionary<string, HashSet<TrackBlock>> m_adj;
+			private Dictionary<string, TrackBlock> m_updatedBlocks;
+			private TrackSwitch m_switch;
 			private TrackController m_next;
 			private TrackController m_prev;
 
 			public TrackController()
 			{
 				m_trackBlocks = new Dictionary<string, TrackBlock>();
-				m_adj = new Dictionary<string, HashSet<TrackBlock>>();
+				m_switch = null;
 				m_next = m_prev = null;
 			}
 
-			public bool AddTrackBlock(TrackBlock block, IEnumerable<TrackBlock> adj)
+			public bool AddTrackBlock(TrackBlock block)
 			{
 				if (block == null) return false;
-				if (adj == null) return false;
 				if (m_trackBlocks.ContainsKey(block.Name))
 					return false;
 				
 				m_trackBlocks.Add(block.Name, block);
-				m_adj.Add(block.Name, new HashSet<TrackBlock>(adj));
 
 				// always set to max, we will only dynamically update authority
 				block.Authority.SpeedLimitKPH = System.Convert.ToInt32(block.StaticSpeedLimit);
+
+				return true;
+			}
+
+			public bool SetSwitch(TrackSwitch s)
+			{
+				if (s == null) return false;
+
+				m_switch = s;
 
 				return true;
 			}
@@ -143,16 +151,18 @@ namespace TrackControlLib
 					}
 				}
 
-				// update switching
-
-				// update track block authorites, speed and signals
 				foreach (TrackBlock b in m_trackBlocks.Values)
 				{
-					TrackBlock t = b.NextBlock;
+					// update switching
+					if (b.Status.TrainPresent)
+					{
+						
 
-					// work backward from the end of our "control", a swicth, a broken track, or a train present
+					}
+
+					// update track block authorites, speed and signals
+					// work backward from the end of a swicth, a broken track, or a train present
 					if (t == null || 
-						!m_trackBlocks.ContainsKey(t.Name) || 
 						t.Status.TrainPresent ||
 						!t.Status.IsOpen)
 					{
@@ -160,7 +170,7 @@ namespace TrackControlLib
 
 						// update the authorites
 						for (t = b, i = -1;
-							t != null &&t.Status.IsOpen && 
+							t != null && t.Status.IsOpen && 
 							m_trackBlocks.ContainsKey(t.Name);
 							++i, t = t.PreviousBlock)
 						{
@@ -247,32 +257,17 @@ namespace TrackControlLib
 				{
 					if (b.Status.TrainPresent)
 					{
-						for (TrackBlock t = b.NextBlock;
-							t != null && !t.Status.TrainPresent &&
-							t.Status.IsOpen && from.m_trackBlocks.ContainsKey(t.Name);
+						for (TrackBlock t = b;
+							t != null && t.Status.IsOpen;
 							t = t.NextBlock)
 						{
-							if (m_trackBlocks.ContainsKey(t.Name))
+							if (!from.m_trackBlocks.ContainsKey(t.Name) &&
+								m_trackBlocks.ContainsKey(t.Name))
 								return true;
 						}
 					}
 				}
 				return false;
-			}
-
-			private void ReverseTrack(TrackBlock start)
-			{
-				if (start == null) throw new ArgumentNullException();
-
-				for (TrackBlock t = start;
-					t != null && !t.Status.TrainPresent &&
-					t.Status.IsOpen && m_trackBlocks.ContainsKey(t.Name);
-					t = t.NextBlock)
-				{
-					TrackBlock p = t.NextBlock;
-					t.NextBlock = t.PreviousBlock;
-					t.PreviousBlock = p;
-				}
 			}
 		}
 	}
