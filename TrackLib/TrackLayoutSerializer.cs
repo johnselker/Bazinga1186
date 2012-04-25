@@ -234,7 +234,7 @@ namespace TrackLib
             TrackBlock redBlock10 = new TrackBlock("red10", TrackOrientation.NorthWestSouthEast, redBlock9.EndPoint, 75, 4.13, 0,
                                         false, false, 40, TrackAllowedDirection.Both, null, "redController1", "redController2", "red8", "red10");
             TrackBlock YARD = new TrackBlock(Constants.REDYARD, TrackOrientation.NorthWestSouthEast, redBlock10.EndPoint, 150, 0, 0, false, false, 0, TrackAllowedDirection.Both, "YardSwitch", "redController1", "redController1", "red9", null);
-
+            YARD.Transponder = new Transponder(Constants.REDYARD, 0);
             redBlock10.Switch = new TrackSwitch("Yard Switch", "redController1", "redBlock10", "redBlock11", Constants.REDYARD);
             redTrack.Add(redBlock9);
             redTrack.Add(YARD);
