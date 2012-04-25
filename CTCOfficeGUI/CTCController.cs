@@ -442,7 +442,7 @@ namespace CTCOfficeGUI
                     {
                         //Create a new track controller
                         ITrackController controller = new TrackController();
-                        controller.AddTrackBlock(b);
+                        controller.AddTrackBlock(b, new LinkedList<TrackBlock>());
                         m_trackTable[b] = controller;
                         m_controllerList.Add(controller);
                         trackControllers[b.ControllerId] = controller;
@@ -451,7 +451,7 @@ namespace CTCOfficeGUI
                     {
                         //Add it to the existing track controller
                         ITrackController controller = trackControllers[b.ControllerId];
-                        controller.AddTrackBlock(b);
+						controller.AddTrackBlock(b, new LinkedList<TrackBlock>());
                         m_trackTable[b] = controller;
                     }
                 }
@@ -467,7 +467,7 @@ namespace CTCOfficeGUI
                     {
                         //Create a new track controller
                         ITrackController controller = new TrackController();
-                        controller.AddTrackBlock(b);
+						controller.AddTrackBlock(b, new LinkedList<TrackBlock>());
                         m_controllerList.Add(controller);
                         trackControllers[b.SecondaryControllerId] = controller;
 
@@ -477,7 +477,7 @@ namespace CTCOfficeGUI
                     {
                         //Add it to the existing track controller
                         ITrackController controller = trackControllers[b.SecondaryControllerId];
-                        controller.AddTrackBlock(b);
+						controller.AddTrackBlock(b, new LinkedList<TrackBlock>());
 
                         //No need to add the controller to the track table. 
                     }
