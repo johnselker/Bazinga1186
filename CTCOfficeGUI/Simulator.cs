@@ -264,12 +264,12 @@ namespace CTCOfficeGUI
                             if (start == Constants.REDYARD)
                             {
                                 m_log.LogInfoFormat("Setting schedule of {0} to red line", name);
-                                trainController.SetSchedule(CTCController.GetCTCController().GetRedlineSchedule());
+                                trainController.Schedule = CTCController.GetCTCController().GetRedlineSchedule();
                             }
                             else if (start == Constants.GREENYARDOUT)
                             {
                                 m_log.LogInfoFormat("Setting schedule of {0} to green line", name);
-                                trainController.SetSchedule(CTCController.GetCTCController().GetGreenlineSchedule());
+                                trainController.Schedule = CTCController.GetCTCController().GetGreenlineSchedule();
                             }
                         }
                     }
