@@ -17,7 +17,7 @@ namespace TrackControlLib
 			private const int AUTH_THRESH_SUPERGREEN = 10;
 
 			private Dictionary<string, TrackBlock> m_trackBlocks;
-			private Dictionary<string, TrackBlock> m_updatedBlocks;
+			private Dictionary<string, TrackStatus> m_updatedStatuses;
 			private TrackSwitch m_switch;
 			private TrackController m_next;
 			private TrackController m_prev;
@@ -25,6 +25,7 @@ namespace TrackControlLib
 			public TrackController()
 			{
 				m_trackBlocks = new Dictionary<string, TrackBlock>();
+				m_updatedStatuses = new Dictionary<string, TrackStatus>();
 				m_switch = null;
 				m_next = m_prev = null;
 			}
@@ -79,7 +80,7 @@ namespace TrackControlLib
 				else
 					return false;
 
-				if (auth.SpeedLimitKPH <= m_trackBlocks[trackId].Authority.SpeedLimitKPH)
+				if (auth.SpeedLimitKPH <= m_trackBlocks[trackId].StaticSpeedLimit)
 					m_trackBlocks[trackId].Authority.SpeedLimitKPH = auth.SpeedLimitKPH;
 				else
 					return false;
@@ -96,17 +97,6 @@ namespace TrackControlLib
 					m_trackBlocks[trackId].Status.SignalState = TrackSignalState.Red;
 					m_trackBlocks[trackId].Status.IsOpen = false;
 
-					m_trackBlocks[trackId].PreviousBlock.Authority.Authority = 0;
-					m_trackBlocks[trackId].PreviousBlock.Authority.SpeedLimitKPH = 0;
-					m_trackBlocks[trackId].PreviousBlock.Status.SignalState = TrackSignalState.Red;
-
-					if (m_trackBlocks[trackId].AllowedDirection == TrackAllowedDirection.Both)
-					{
-						m_trackBlocks[trackId].NextBlock.Authority.Authority = 0;
-						m_trackBlocks[trackId].NextBlock.Authority.SpeedLimitKPH = 0;
-						m_trackBlocks[trackId].NextBlock.Status.SignalState = TrackSignalState.Red;
-					}
-
 					return true;
 				}
 				else
@@ -117,6 +107,7 @@ namespace TrackControlLib
 			{
 				if (m_trackBlocks.ContainsKey(trackId))
 				{
+					m_trackBlocks[trackId].Authority.SpeedLimitKPH = System.Convert.ToInt32(m_trackBlocks[trackId].StaticSpeedLimit);
 					m_trackBlocks[trackId].Status.IsOpen = true;
 					return true;
 				}
@@ -124,20 +115,13 @@ namespace TrackControlLib
 					return false;
 			}
 
-			public TrackStatus GetTrackStatus(string trackId)
-			{
-				if (m_trackBlocks.ContainsKey(trackId))
-					return ((TrackBlock)m_trackBlocks[trackId]).Status;
-				else
-					throw new KeyNotFoundException();
-			}
-
-			public Dictionary<string, TrackStatus> GetAllTrackStatus()
+			public Dictionary<string, TrackStatus> GetUpdatedTrackStatus()
 			{
 				Dictionary<string, TrackStatus> statuses = new Dictionary<string, TrackStatus>();
-				foreach (KeyValuePair<string, TrackBlock> b in m_trackBlocks)
-					statuses.Add(b.Key, b.Value.Status);
-				return statuses;
+				foreach (KeyValuePair<string, TrackStatus> b in m_updatedStatuses)
+					statuses.Add(b.Key, b.Value);
+				m_updatedStatuses.Clear();
+				return m_updatedStatuses;
 			}
 
 			public void Update()
@@ -147,6 +131,7 @@ namespace TrackControlLib
 				{
 					if (b.Status.BrokenRail || b.Status.CircuitFail || b.Status.PowerFail)
 					{
+						AddUpdatedStatus(b);
 						if (b.Status.IsOpen) CloseTrack(b.Name);
 					}
 				}
@@ -178,50 +163,13 @@ namespace TrackControlLib
 							if (t.Status.TrainPresent) break;
 						}
 					}
-
-					//// switching logic
-					//if (i <= AUTH_THRESH_SWITCH && t.Status.TrainPresent)
-					//{
-					//    if (m_next != null)
-					//    {
-					//        if (!IsTrainApproaching(m_next))
-					//        {
-					//            if (b.HasSwitch)
-					//            {
-					//                TrackSwitchState newState;
-					//                string newId;
-
-					//                if (b.Switch.State == TrackSwitchState.Closed)
-					//                {
-					//                    newState = TrackSwitchState.Open;
-					//                    newId = b.Switch.BranchOpenId;
-					//                }
-					//                else
-					//                {
-					//                    newState = TrackSwitchState.Closed;
-					//                    newId = b.Switch.BranchClosedId;
-					//                }
-
-					//                b.Switch.State = newState;
-
-					//                if (m_trackBlocks.ContainsKey(newId))
-					//                {
-					//                    b.NextBlock = m_trackBlocks[newId];
-
-					//                    if (m_trackBlocks[newId].NextBlock.HasSwitch)
-					//                        UpdateBlockDirection(b, m_trackBlocks[newId]); //some other stuff
-					//                }
-					//                else
-					//                    throw new Exception("Track Controller blocks did not contain switch block");
-					//            }
-					//            else
-					//            {
-					//                throw new Exception("A switch was not found");
-					//            }
-					//        }
-					//    }
-					//}
 				}
+			}
+
+			private void AddUpdatedStatus(TrackBlock b)
+			{
+				if (!m_updatedStatuses.ContainsKey(b.Name))
+					m_updatedStatuses.Add(b.Name, b.Status);
 			}
 
 			private void UpdateAuthoritySignal(TrackBlock block, int authority)
@@ -257,14 +205,20 @@ namespace TrackControlLib
 				{
 					if (b.Status.TrainPresent)
 					{
-						for (TrackBlock t = b;
-							t != null && t.Status.IsOpen;
-							t = t.NextBlock)
+						if (from.m_trackBlocks.ContainsKey(b.Name) &&
+							m_trackBlocks.ContainsKey(b.Name))
 						{
-							if (!from.m_trackBlocks.ContainsKey(t.Name) &&
-								m_trackBlocks.ContainsKey(t.Name))
-								return true;
+							for (TrackBlock t = b.GetNextBlock(b.Status.TrainDirection);
+								t != null && t.Status.IsOpen;
+								t = t.GetNextBlock(b.Status.TrainDirection))
+							{
+								if (!from.m_trackBlocks.ContainsKey(t.Name) &&
+									m_trackBlocks.ContainsKey(t.Name))
+									return true;
+							}
 						}
+						else
+							return false;
 					}
 				}
 				return false;
