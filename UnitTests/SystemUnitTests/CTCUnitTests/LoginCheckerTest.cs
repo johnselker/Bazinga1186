@@ -63,26 +63,15 @@ namespace CTCUnitTests
         //
         #endregion
 
-
-        /// <summary>
-        ///A test for LoginChecker Constructor
-        ///</summary>
-        [TestMethod()]
-        public void LoginCheckerConstructorTest()
-        {
-            LoginChecker target = new LoginChecker();
-            Assert.Inconclusive("TODO: Implement code to verify target");
-        }
-
         /// <summary>
         ///A test for CloseLogin
         ///</summary>
         [TestMethod()]
         public void CloseLoginTest()
         {
-            LoginChecker target = new LoginChecker(); // TODO: Initialize to an appropriate value
+            LoginChecker_Accessor target = new LoginChecker_Accessor(); 
             target.CloseLogin();
-            Assert.Inconclusive("A method that does not return a value cannot be verified.");
+            Assert.IsNull(target.m_window);
         }
 
         /// <summary>
@@ -92,25 +81,42 @@ namespace CTCUnitTests
         [DeploymentItem("CTCOfficeGUI.exe")]
         public void OnLoginAttemptTest()
         {
-            LoginChecker_Accessor target = new LoginChecker_Accessor(); // TODO: Initialize to an appropriate value
-            string username = string.Empty; // TODO: Initialize to an appropriate value
-            string password = string.Empty; // TODO: Initialize to an appropriate value
+            LoginChecker_Accessor target = new LoginChecker_Accessor(); 
+            string username = "admin";
+            string password = "Bazinga!";
             target.OnLoginAttempt(username, password);
-            Assert.Inconclusive("A method that does not return a value cannot be verified.");
+            Assert.IsNull(target.m_okPopup); 
+            //Probably a bad way of checking this. Checking that events were raised is complicated
         }
 
         /// <summary>
-        ///A test for OnLoginCancel
+        ///A test for OnLoginAttempt
         ///</summary>
         [TestMethod()]
         [DeploymentItem("CTCOfficeGUI.exe")]
-        public void OnLoginCancelTest()
+        public void OnLoginAttemptTest_badUser()
         {
-            LoginChecker_Accessor target = new LoginChecker_Accessor(); // TODO: Initialize to an appropriate value
-            object sender = null; // TODO: Initialize to an appropriate value
-            EventArgs e = null; // TODO: Initialize to an appropriate value
-            target.OnLoginCancel(sender, e);
-            Assert.Inconclusive("A method that does not return a value cannot be verified.");
+            LoginChecker_Accessor target = new LoginChecker_Accessor();
+            string username = "badusername";
+            string password = "Bazinga!";
+            target.OnLoginAttempt(username, password);
+            Assert.IsNotNull(target.m_okPopup);
+            //Probably a bad way of checking this. Checking that events were raised is complicated
+        }
+
+        /// <summary>
+        ///A test for OnLoginAttempt
+        ///</summary>
+        [TestMethod()]
+        [DeploymentItem("CTCOfficeGUI.exe")]
+        public void OnLoginAttemptTest_badPassword()
+        {
+            LoginChecker_Accessor target = new LoginChecker_Accessor();
+            string username = "admin";
+            string password = "badpassword";
+            target.OnLoginAttempt(username, password);
+            Assert.IsNotNull(target.m_okPopup);
+            //Probably a bad way of checking this. Checking that events were raised is complicated
         }
 
         /// <summary>
@@ -120,128 +126,11 @@ namespace CTCUnitTests
         [DeploymentItem("CTCOfficeGUI.exe")]
         public void OnPopupAcknowledgedTest()
         {
-            LoginChecker_Accessor target = new LoginChecker_Accessor(); // TODO: Initialize to an appropriate value
-            object sender = null; // TODO: Initialize to an appropriate value
-            EventArgs e = null; // TODO: Initialize to an appropriate value
+            LoginChecker_Accessor target = new LoginChecker_Accessor();
+            object sender = null; 
+            EventArgs e = null; 
             target.OnPopupAcknowledged(sender, e);
-            Assert.Inconclusive("A method that does not return a value cannot be verified.");
-        }
-
-        /// <summary>
-        ///A test for ShowLogin
-        ///</summary>
-        [TestMethod()]
-        public void ShowLoginTest()
-        {
-            LoginChecker target = new LoginChecker(); // TODO: Initialize to an appropriate value
-            EventHandler successHandler = null; // TODO: Initialize to an appropriate value
-            EventHandler cancelHandler = null; // TODO: Initialize to an appropriate value
-            target.ShowLogin(successHandler, cancelHandler);
-            Assert.Inconclusive("A method that does not return a value cannot be verified.");
-        }
-
-        /// <summary>
-        ///A test for ShowOKPopup
-        ///</summary>
-        [TestMethod()]
-        [DeploymentItem("CTCOfficeGUI.exe")]
-        public void ShowOKPopupTest()
-        {
-            LoginChecker_Accessor target = new LoginChecker_Accessor(); // TODO: Initialize to an appropriate value
-            string title = string.Empty; // TODO: Initialize to an appropriate value
-            string text = string.Empty; // TODO: Initialize to an appropriate value
-            target.ShowOKPopup(title, text);
-            Assert.Inconclusive("A method that does not return a value cannot be verified.");
-        }
-
-        /// <summary>
-        ///A test for LoginChecker Constructor
-        ///</summary>
-        [TestMethod()]
-        public void LoginCheckerConstructorTest1()
-        {
-            LoginChecker target = new LoginChecker();
-            Assert.Inconclusive("TODO: Implement code to verify target");
-        }
-
-        /// <summary>
-        ///A test for CloseLogin
-        ///</summary>
-        [TestMethod()]
-        public void CloseLoginTest1()
-        {
-            LoginChecker target = new LoginChecker(); // TODO: Initialize to an appropriate value
-            target.CloseLogin();
-            Assert.Inconclusive("A method that does not return a value cannot be verified.");
-        }
-
-        /// <summary>
-        ///A test for OnLoginAttempt
-        ///</summary>
-        [TestMethod()]
-        [DeploymentItem("CTCOfficeGUI.exe")]
-        public void OnLoginAttemptTest1()
-        {
-            LoginChecker_Accessor target = new LoginChecker_Accessor(); // TODO: Initialize to an appropriate value
-            string username = string.Empty; // TODO: Initialize to an appropriate value
-            string password = string.Empty; // TODO: Initialize to an appropriate value
-            target.OnLoginAttempt(username, password);
-            Assert.Inconclusive("A method that does not return a value cannot be verified.");
-        }
-
-        /// <summary>
-        ///A test for OnLoginCancel
-        ///</summary>
-        [TestMethod()]
-        [DeploymentItem("CTCOfficeGUI.exe")]
-        public void OnLoginCancelTest1()
-        {
-            LoginChecker_Accessor target = new LoginChecker_Accessor(); // TODO: Initialize to an appropriate value
-            object sender = null; // TODO: Initialize to an appropriate value
-            EventArgs e = null; // TODO: Initialize to an appropriate value
-            target.OnLoginCancel(sender, e);
-            Assert.Inconclusive("A method that does not return a value cannot be verified.");
-        }
-
-        /// <summary>
-        ///A test for OnPopupAcknowledged
-        ///</summary>
-        [TestMethod()]
-        [DeploymentItem("CTCOfficeGUI.exe")]
-        public void OnPopupAcknowledgedTest1()
-        {
-            LoginChecker_Accessor target = new LoginChecker_Accessor(); // TODO: Initialize to an appropriate value
-            object sender = null; // TODO: Initialize to an appropriate value
-            EventArgs e = null; // TODO: Initialize to an appropriate value
-            target.OnPopupAcknowledged(sender, e);
-            Assert.Inconclusive("A method that does not return a value cannot be verified.");
-        }
-
-        /// <summary>
-        ///A test for ShowLogin
-        ///</summary>
-        [TestMethod()]
-        public void ShowLoginTest1()
-        {
-            LoginChecker target = new LoginChecker(); // TODO: Initialize to an appropriate value
-            EventHandler successHandler = null; // TODO: Initialize to an appropriate value
-            EventHandler cancelHandler = null; // TODO: Initialize to an appropriate value
-            target.ShowLogin(successHandler, cancelHandler);
-            Assert.Inconclusive("A method that does not return a value cannot be verified.");
-        }
-
-        /// <summary>
-        ///A test for ShowOKPopup
-        ///</summary>
-        [TestMethod()]
-        [DeploymentItem("CTCOfficeGUI.exe")]
-        public void ShowOKPopupTest1()
-        {
-            LoginChecker_Accessor target = new LoginChecker_Accessor(); // TODO: Initialize to an appropriate value
-            string title = string.Empty; // TODO: Initialize to an appropriate value
-            string text = string.Empty; // TODO: Initialize to an appropriate value
-            target.ShowOKPopup(title, text);
-            Assert.Inconclusive("A method that does not return a value cannot be verified.");
+            Assert.IsNull(target.m_okPopup);
         }
     }
 }

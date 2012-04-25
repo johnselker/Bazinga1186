@@ -17,6 +17,10 @@ namespace TrainControllerLib
 
         public event OnTrainAtStation TrainAtStation;
 
+        private ITrain m_myTrain;
+        private TrainState m_currentState;
+        private TrackBlock m_currentBlock;
+
         private double m_samplePeriod = 0.0;
         private double m_timePassed = 0;
         private double m_arrivalTime = 0;
@@ -27,21 +31,11 @@ namespace TrainControllerLib
         private double m_powerCommand = 0;
         private double m_setPoint = 0;
         private string m_trainID;
-        private int m_speedUp = 1;
-        private int m_authority = 0;
-        private int m_stationWaitStartTime;
         private int m_lastCommand = 0;
-        private Queue<ScheduleInfo> m_routeInfo;
-        private ITrain m_myTrain;
-        private TrainState m_currentState;
-        private TrackBlock m_currentBlock;
         private bool m_inTunnel = false;
         private bool m_approachingStation = false;
         private bool m_atStation = false;
-        private bool m_doorsOpen = false;
         private bool m_brakeFailure = false;
-        private bool m_engineFailure = false;
-        private bool m_run = true;
         private ScheduleInfo m_nextStationInfo;
         private Random m_passengerGenerator;
 
@@ -71,11 +65,35 @@ namespace TrainControllerLib
             set;
         }
 
+        // PROPERTY: Schedule
+        //--------------------------------------------------------------------------------------
+        /// <summary>
+        /// The train's schedule
+        /// </summary>
+        //--------------------------------------------------------------------------------------
+        public Queue<ScheduleInfo> Schedule
+        {
+            get;
+            set;
+        }
+
+        // PROPERTY: EmergencyBrake
+        //--------------------------------------------------------------------------------------
+        /// <summary>
+        /// Set the emergency brake
+        /// </summary>
+        //--------------------------------------------------------------------------------------
+        public bool EmergencyBrake
+        {
+            get;
+            set;
+        }
+
         #endregion
 
         #region Accessors
 
-        // PROPERTY: Speed
+        // ACCESSOR: Speed
         //--------------------------------------------------------------------------------------
         /// <summary>
         /// current speed of the train in kilometers per hour
@@ -86,7 +104,7 @@ namespace TrainControllerLib
             get { return m_currentState.Speed * 3.6; }
         }
 
-        // PROPERTY: LocationX
+        // ACCESSOR: LocationX
         //--------------------------------------------------------------------------------------
         /// <summary>
         /// x coordinate of the train
@@ -97,7 +115,7 @@ namespace TrainControllerLib
             get { return m_currentState.X; }
         }
 
-        // PROPERTY: LocationY
+        // ACCESSOR: LocationY
         //--------------------------------------------------------------------------------------
         /// <summary>
         /// y coordinate of the train
@@ -108,7 +126,7 @@ namespace TrainControllerLib
             get { return m_currentState.Y; }
         }
 
-        // PROPERTY: TimePassed
+        // ACCESSOR: TimePassed
         //--------------------------------------------------------------------------------------
         /// <summary>
         /// time passed since the train departed the last station
@@ -155,17 +173,6 @@ namespace TrainControllerLib
         public void Update(double dt)
         {
             SystemController(dt);
-        }
-
-        // METHOD: SetSchedule
-        //--------------------------------------------------------------------------------------
-        /// <summary>
-        /// Set the schedule
-        /// </summary>
-        //--------------------------------------------------------------------------------------
-        public void SetSchedule(Queue<ScheduleInfo> routeInfo)
-        {
-            m_routeInfo = routeInfo;
         }
 
         // METHOD: Dispose
@@ -250,10 +257,7 @@ namespace TrainControllerLib
             }
 
             // If there has been a brake failure, the emergency brake must be engaged.
-            if (m_currentState.BrakeFailure)
-            {
-                m_brakeFailure = true;
-            }
+            m_brakeFailure = m_currentState.BrakeFailure;
         }
 
         // METHOD: DetermineSetPoint
@@ -290,7 +294,7 @@ namespace TrainControllerLib
             // so the setPoint must be set to zero to engage the brake.
             if (m_currentBlock.Authority.Authority < 0)
             {
-                m_setPoint = 0;
+                EmergencyBrake = true;
             }
             else if (m_currentBlock.Authority.Authority == 0 && (CalculateStoppingDistance(0) >= m_currentBlock.LengthMeters - m_currentState.BlockProgress || (!m_atStation && m_currentState.Speed <= 2)))
             {
@@ -323,7 +327,7 @@ namespace TrainControllerLib
         private int VelocityController()
         {
             // If there has been a brake failure, set the emergency brake and do not issue a power command.
-            if (m_brakeFailure)
+            if (EmergencyBrake || m_brakeFailure)
             {
                 m_myTrain.SetEmergencyBrake(true, m_samplePeriod);
                 return 1;
@@ -427,7 +431,6 @@ namespace TrainControllerLib
                 m_atStation = true;
                 m_approachingStation = false;
                 m_myTrain.SetDoors(TrainState.Door.Open);
-                m_doorsOpen = true;
                 m_arrivalTime = m_timePassed;
 
                 // Simulate passengers getting on and off at the station
@@ -457,10 +460,9 @@ namespace TrainControllerLib
         {
             // Close the doors
             m_myTrain.SetDoors(TrainState.Door.Closed);
-            m_doorsOpen = false;
 
             // Announce the next stop
-            m_nextStationInfo = m_routeInfo.Dequeue();
+            m_nextStationInfo = Schedule.Dequeue();
             m_myTrain.SetAnnouncement(m_nextStationInfo.StationName);
 
             // Notify train to leave the station
