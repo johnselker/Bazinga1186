@@ -28,6 +28,8 @@ namespace TrainLib
 		private TrainState state = new TrainState();
 		private DateTime lastUpdate;
 
+		public event OnTrainEnteredNewBlock TrainEnteredNewBlock;
+
 		/// <summary>
 		/// Creates a new Train which can be used to create a TrainController.
 		/// </summary>
@@ -202,6 +204,11 @@ namespace TrainLib
 				// Subtract length of previous block from progress
 				state.BlockProgress -= length;
 
+				// Fire an event to alert the block
+				if (TrainEnteredNewBlock != null)
+				{
+					TrainEnteredNewBlock(state.CurrentBlock, state.CurrentBlock.NextBlock);
+				}
 				// Move train's presence to next block
 				state.CurrentBlock.Status.TrainPresent = false;
 				state.CurrentBlock = block.NextBlock;
