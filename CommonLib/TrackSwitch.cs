@@ -66,6 +66,11 @@ namespace CommonLib
 
         #endregion
 
+        public void Switch()
+        {
+
+        }
+
         #region Accessors
 
         //***NOTE: These only have setters for serialization purposes. The setters should NOT be used during runtime***
