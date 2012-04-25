@@ -81,7 +81,7 @@ namespace TrainControllerLib
             myTrain = new TrainLib.Train("train1", startingBlock, Direction.East);
             myTrainState = myTrain.GetState();
             myTrainController = new TrainController(myTrain);
-            myTrainController.SetSchedule(GetRedlineSchedule());
+            myTrainController.Schedule = GetRedlineSchedule();
 
             start = DateTime.Now;
 
@@ -168,6 +168,11 @@ namespace TrainControllerLib
             startingBlock.NextBlock.NextBlock.NextBlock.Status.PowerFail = startingBlock.Status.CircuitFail;
             startingBlock.NextBlock.NextBlock.NextBlock.NextBlock.Status.PowerFail = startingBlock.Status.CircuitFail;
             startingBlock.NextBlock.NextBlock.NextBlock.NextBlock.NextBlock.Status.PowerFail = startingBlock.Status.CircuitFail;
+        }
+
+        private void emergencyBrake_Click(object sender, EventArgs e)
+        {
+            myTrainController.EmergencyBrake = !myTrainController.EmergencyBrake;
         }
     }
 }
