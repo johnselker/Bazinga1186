@@ -40,7 +40,17 @@ namespace TrackLib
                 m_blockList = value;
             }
         }
-
+        /// <summary>
+        /// List of Switches
+        /// </summary>
+        public List<TrackSwitch> SwitchList
+        {
+            get { return m_switchList; }
+            set
+            {
+                m_switchList = value;
+            }
+        }
         #endregion
 
         #region Public Methods
@@ -189,126 +199,192 @@ namespace TrackLib
             // Controlled by redController1
             // Block Names correspond to number in given list
             //Region redRegion1 = new Region("redRegion1");
-            List<TrackBlock> redRegion1 = new List<TrackBlock>();
-            TrackBlock redBlock1 = new TrackBlock("red1", TrackOrientation.SouthWestNorthEast, new Point(0, 0), 50.0, 0.25, 0.5, 
-                                        false, false, 40, TrackAllowedDirection.Both, null, "redController1", null, null, "red2");
-            redRegion1.Add(redBlock1);
-            TrackBlock redBlock2 = new TrackBlock("red2", TrackOrientation.SouthWestNorthEast, redBlock1.EndPoint, 50.0, 0.75, 1, 
-                                         false, false, 40, TrackAllowedDirection.Both, null, "redController1", null, "red1", "red3");
-            redRegion1.Add(redBlock2);
-            TrackBlock redBlock3 = new TrackBlock("red3", TrackOrientation.SouthWestNorthEast, redBlock2.EndPoint, 50.0, 1.50, 1.5, 
-                                         false, false, 40, TrackAllowedDirection.Both, null, "redController1", null, "red2", "red4");
-            redRegion1.Add(redBlock3);
-            TrackBlock redBlock4 = new TrackBlock("red4", TrackOrientation.EastWest, redBlock3.EndPoint, 50.0, 2.5, 2, 
-                                         false, false, 40, TrackAllowedDirection.Both, null, "redController1", null, "red3", "red5");
-            redRegion1.Add(redBlock4);
-            TrackBlock redBlock5 = new TrackBlock("red5", TrackOrientation.EastWest, redBlock4.EndPoint, 50, 3.25, 1.5, 
-                                        false, false, 40, TrackAllowedDirection.Both, null, "redController1", null, "red4", "red6");
-            redRegion1.Add(redBlock5);
-            TrackBlock redBlock6 = new TrackBlock("red6", TrackOrientation.EastWest, redBlock5.EndPoint, 50, 3.75, 1, 
-                                        false, false, 40, TrackAllowedDirection.Both, null, "redController1", null, "red5", "red7");
-            redBlock6.Transponder = new Transponder("Shadyside", 50);
-            redRegion1.Add(redBlock6);
-            TrackBlock redBlock7 = new TrackBlock("red7", TrackOrientation.NorthWestSouthEast, redBlock6.EndPoint, 75, 4.13, 0.5, 
-                                        false, false, 40, TrackAllowedDirection.Both, null, "redController1", null, "red6", "red8");
-            redBlock7.Transponder = new Transponder("Shadyside", 0);
-            redRegion1.Add(redBlock7);
-            TrackBlock redBlock8 = new TrackBlock("red8", TrackOrientation.NorthWestSouthEast, redBlock7.EndPoint, 75, 4.13, 0, 
-                                        false, false, 40, TrackAllowedDirection.Both, null, "redController1", null, "red7", "red9");
-            redRegion1.Add(redBlock8);
-            TrackBlock redBlock9 = new TrackBlock("red9", TrackOrientation.NorthWestSouthEast, redBlock8.EndPoint, 75, 4.13, 0, 
-                                        false, false, 40, TrackAllowedDirection.Both, "switch1", "redController1", "Yard", "red8", "red10");
-            redRegion1.Add(redBlock9);
+            List<TrackBlock> redTrack = new List<TrackBlock>();
+            List<TrackSwitch> switchList = new List<TrackSwitch>();
+            TrackBlock redBlock1 = new TrackBlock("red1", TrackOrientation.SouthWestNorthEast, new Point(0, 0), 50.0, 0.25, 0.5,
+                                        false, false, 40, TrackAllowedDirection.Both, null, "redController1", "redController2", null, "red2");
+            redTrack.Add(redBlock1);
+            TrackBlock redBlock2 = new TrackBlock("red2", TrackOrientation.SouthWestNorthEast, redBlock1.EndPoint, 50.0, 0.75, 1,
+                                         false, false, 40, TrackAllowedDirection.Both, null, "redController1", "redController2", "red1", "red3");
+            redTrack.Add(redBlock2);
+            TrackBlock redBlock3 = new TrackBlock("red3", TrackOrientation.SouthWestNorthEast, redBlock2.EndPoint, 50.0, 1.50, 1.5,
+                                         false, false, 40, TrackAllowedDirection.Both, null, "redController1", "redController2", "red2", "red4");
+            redTrack.Add(redBlock3);
+            TrackBlock redBlock4 = new TrackBlock("red4", TrackOrientation.SouthWestNorthEast, redBlock3.EndPoint, 50.0, 2.5, 2,
+                                         false, false, 40, TrackAllowedDirection.Both, null, "redController1", "redController2", "red3", "red5");
+            redTrack.Add(redBlock4);
+            TrackBlock redBlock5 = new TrackBlock("red5", TrackOrientation.SouthWestNorthEast, redBlock4.EndPoint, 50, 3.25, 1.5,
+                                        false, false, 40, TrackAllowedDirection.Both, null, "redController1", "redController2", "red4", "red6");
+            redTrack.Add(redBlock5);
+            TrackBlock redBlock6 = new TrackBlock("red6", TrackOrientation.SouthWestNorthEast, redBlock5.EndPoint, 50, 3.75, 1,
+                                        false, false, 40, TrackAllowedDirection.Both, null, "redController1", "redController2", "red5", "red7");
+            redTrack.Add(redBlock6);
+            TrackBlock redBlock7 = new TrackBlock("red7", TrackOrientation.EastWest, redBlock6.EndPoint, 75, 4.13, 0.5,
+                                        false, false, 40, TrackAllowedDirection.Both, null, "redController1", "redController2", "red6", "red8");
+            redBlock7.Transponder = new Transponder("Shadyside", 1);
+            redBlock7.HasTransponder = true;
+            redTrack.Add(redBlock7);
+            TrackBlock redBlock8 = new TrackBlock("red8", TrackOrientation.EastWest, redBlock7.EndPoint, 75, 4.13, 0,
+                                        false, false, 40, TrackAllowedDirection.Both, null, "redController1", "redController2", "red7", "red9");
+            redBlock8.Transponder = new Transponder("Shadyside", 0);
+            redBlock8.HasTransponder = true;
+            redTrack.Add(redBlock8);
+            TrackBlock redBlock9 = new TrackBlock("red9", TrackOrientation.NorthWestSouthEast, redBlock8.EndPoint, 75, 4.13, 0,
+                                        false, false, 40, TrackAllowedDirection.Both, "Yard Switch", "redController1", "redController2", "red8", "red10");
+            TrackBlock redBlock10 = new TrackBlock("red10", TrackOrientation.NorthWestSouthEast, redBlock9.EndPoint, 75, 4.13, 0,
+                                        false, false, 40, TrackAllowedDirection.Both, null, "redController1", "redController2", "red8", "red10");
+            TrackBlock YARD = new TrackBlock(Constants.REDYARD, TrackOrientation.NorthWestSouthEast, redBlock10.EndPoint, 150, 0, 0, false, false, 0, TrackAllowedDirection.Both, "YardSwitch", "redController1", "redController1", "red9", null);
+            redBlock10.HasSwitch = true;
+            redBlock10.Switch = new TrackSwitch("Yard Switch", "redController1", "redBlock10", "redBlock11", Constants.REDYARD);
+            redTrack.Add(redBlock9);
+            redTrack.Add(YARD);
+            redTrack.Add(redBlock10);
+            switchList.Add(redBlock10.Switch);
+            TrackBlock redBlock11 = new TrackBlock("red11", TrackOrientation.NorthSouth, new Point(redBlock10.EndPoint.X, redBlock10.EndPoint.Y + 75), 75, 3.75, -0.5,
+                                        false, false, 40, TrackAllowedDirection.Both, null, "redController1", "redController2", "red9", "red11");
+            redTrack.Add(redBlock11);
+            TrackBlock redBlock12 = new TrackBlock("red12", TrackOrientation.SouthWestNorthEast, new Point(redBlock11.StartPoint.X - Convert.ToInt32(Math.Sqrt((redBlock11.LengthMeters * redBlock11.LengthMeters) / 2)), redBlock11.StartPoint.Y + Convert.ToInt32(Math.Sqrt((redBlock11.LengthMeters * redBlock11.LengthMeters) / 2))), 75, 3.38, -0.5,
+                                        false, false, 40, TrackAllowedDirection.Both, null, "redController1", "redController2", "red11", "red13");
+            redTrack.Add(redBlock12);
+            TrackBlock redBlock13 = new TrackBlock("red13", TrackOrientation.EastWest, new Point(Convert.ToInt32(redBlock12.StartPoint.X - 68.4), redBlock12.StartPoint.Y), 68.4, 2.69, -1,
+                                        false, false, 40, TrackAllowedDirection.Both, null, "redController1", "redController2", "red12", "red14");
+            redTrack.Add(redBlock12);
+            redTrack.Add(redBlock13);
+            TrackBlock redBlock14 = new TrackBlock("red14", TrackOrientation.EastWest, new Point(redBlock13.StartPoint.X - 60, redBlock13.StartPoint.Y), 60, 2.09, -1, false, false, 40, TrackAllowedDirection.Both, null, "redController1", "redController2", "red13", "red15");
+            redTrack.Add(redBlock14);
+            TrackBlock redBlock15 = new TrackBlock("red15", TrackOrientation.EastWest, new Point(redBlock14.StartPoint.X - 60, redBlock14.StartPoint.Y), 60, 1.49, -1, false, false, 40, TrackAllowedDirection.Both, null, "redController2", null, "red14", "red16");
+            redBlock15.HasTransponder = true;
+            redBlock15.Transponder = new Transponder("Herron Ave", 1);
+            // NEED SWITCH
+            redTrack.Add(redBlock15);
+            TrackBlock redBlock16 = new TrackBlock("red16", TrackOrientation.EastWest, new Point(redBlock15.StartPoint.X - 50, redBlock15.StartPoint.Y), 50, 1.24, -0.5, false, false, 40, TrackAllowedDirection.Both, null, "redController3", "redController2", "red15", "red17"); //16
+            redBlock16.HasTransponder = true;
+            redBlock16.Transponder = new Transponder("Herron Ave", 0);
+            redTrack.Add(redBlock16);
+            TrackBlock redBlock17 = new TrackBlock("red17", TrackOrientation.EastWest, new Point(redBlock16.StartPoint.X - 200, redBlock16.StartPoint.Y), 200, 0.24, -0.5, false, false, 55, TrackAllowedDirection.Both, null, "redController3", "redController2", "red16", "red18");
+            redTrack.Add(redBlock17);
+            TrackBlock redBlock18 = new TrackBlock("red18", TrackOrientation.EastWest, new Point(redBlock17.StartPoint.X - 400, redBlock17.StartPoint.Y), 400, 0.0, -0.06025, false, false, 70, TrackAllowedDirection.Both, null, "redController3", "redController2", "red17", "red19");
+            redTrack.Add(redBlock18);
+            TrackBlock redBlock19 = new TrackBlock("red19", TrackOrientation.EastWest, new Point(redBlock18.StartPoint.X - 400, redBlock18.StartPoint.Y), 400, 0.0, 0, false, false, 70, TrackAllowedDirection.Both, null, "redController3", "redController2", "red18", "red20");
+            redTrack.Add(redBlock19);
+            TrackBlock redBlock20 = new TrackBlock("red20", TrackOrientation.EastWest, new Point(redBlock19.StartPoint.X - 200, redBlock17.StartPoint.Y), 200, 0.0, 0, false, false, 70, TrackAllowedDirection.Both, null, "redController3", "redController2", "red19", "red21");
+            redBlock20.HasTransponder = true;
+            redBlock20.Transponder = new Transponder("Swissville", 1);
+            redTrack.Add(redBlock20);
+            TrackBlock redBlock21 = new TrackBlock("red21", TrackOrientation.SouthWestNorthEast, new Point(redBlock20.StartPoint.X - Convert.ToInt32(Math.Sqrt((100 * 100) / 2)) + 1, redBlock20.StartPoint.Y + Convert.ToInt32(Math.Sqrt((100 * 100) / 2)) - 1), 100, 0, 0,
+                                        false, false, 55, TrackAllowedDirection.Both, null, "redController3", "redController2", "red20", "red22");
+            redTrack.Add(redBlock21);
+            TrackBlock redBlock22 = new TrackBlock("red22", TrackOrientation.SouthWestNorthEast, new Point(redBlock21.StartPoint.X - Convert.ToInt32(Math.Sqrt((100 * 100) / 2)) + 1, redBlock21.StartPoint.Y + Convert.ToInt32(Math.Sqrt((100 * 100) / 2)) - 1), 100, 0, 0,
+                                       false, false, 55, TrackAllowedDirection.Both, null, "redController3", "redController2", "red21", "red23");
+            redTrack.Add(redBlock22);
+            TrackBlock redBlock23 = new TrackBlock("red23", TrackOrientation.SouthWestNorthEast, new Point(redBlock22.StartPoint.X - Convert.ToInt32(Math.Sqrt((100 * 100) / 2)) + 1, redBlock22.StartPoint.Y + Convert.ToInt32(Math.Sqrt((100 * 100) / 2)) - 1), 100, 0, 0,
+                                       false, false, 55, TrackAllowedDirection.Both, null, "redController3", "redController2", "red22", "red24");
+            redTrack.Add(redBlock23);
+            TrackBlock redBlock24 = new TrackBlock("red24", TrackOrientation.NorthSouth, new Point(redBlock23.StartPoint.X, redBlock23.StartPoint.Y + 50), 50, 0, 0, true, false, 70, TrackAllowedDirection.Both, null, "redController3", "redController2", "redBlock23", "redBlock25");
+            redBlock24.HasTransponder = true;
+            redBlock24.Transponder = new Transponder("Penn", 1);
+            redTrack.Add(redBlock24);
+            TrackBlock redBlock25 = new TrackBlock("red25", TrackOrientation.NorthSouth, new Point(redBlock24.StartPoint.X, redBlock24.StartPoint.Y + 50), 50, 0, 0, true, false, 70, TrackAllowedDirection.Both, null, "redController3", "redController2", "redBlock24", "redBlock26");
+            redBlock25.HasTransponder = true;
+            redBlock25.Transponder = new Transponder("Penn", 0);
+            redTrack.Add(redBlock25);
+            // 27 should have switch!
+            TrackBlock redBlock26 = new TrackBlock("red26", TrackOrientation.NorthSouth, new Point(redBlock25.StartPoint.X, redBlock25.StartPoint.Y + 50), 50, 0, 0, true, false, 70, TrackAllowedDirection.Both, null, "redController3", null, "redBlock25", "redBlock27"); //26
+            redTrack.Add(redBlock26);
+            TrackBlock redBlock27 = new TrackBlock("red27", TrackOrientation.NorthSouth, new Point(redBlock26.StartPoint.X, redBlock26.StartPoint.Y + 50), 50, 0, 0, true, false, 70, TrackAllowedDirection.Both, null, "redController3", null, "redBlock26", "redBlock28");//27
+            redTrack.Add(redBlock27);
+            TrackBlock redBlock28 = new TrackBlock("red28", TrackOrientation.NorthSouth, new Point(redBlock27.StartPoint.X, redBlock27.StartPoint.Y + 50), 50, 0, 0, true, false, 70, TrackAllowedDirection.Both, null, "redController3", "redController4", "redBlock27", "redBlock29");
+            redTrack.Add(redBlock28);
+            TrackBlock redBlock29 = new TrackBlock("red29", TrackOrientation.NorthSouth, new Point(redBlock28.StartPoint.X, redBlock28.StartPoint.Y + 60), 60, 0, 0, true, false, 70, TrackAllowedDirection.Both, null, "redController3", "redController4", "redBlock28", "redBlock30");
+            redTrack.Add(redBlock29);
+            TrackBlock redBlock30 = new TrackBlock("red30", TrackOrientation.NorthSouth, new Point(redBlock29.StartPoint.X, redBlock29.StartPoint.Y + 60), 60, 0, 0, true, false, 70, TrackAllowedDirection.Both, null, "redController3", "redController4", "redBlock29", "redBlock31");
+            redTrack.Add(redBlock30);
+            // NEED SWITCH on 31
+            TrackBlock redBlock31 = new TrackBlock("red31", TrackOrientation.NorthSouth, new Point(redBlock30.StartPoint.X, redBlock30.StartPoint.Y + 50), 50, 0, 0, true, false, 70, TrackAllowedDirection.Both, null, "redController3", "redController4", "redBlock30", "redBlock32");
+            redTrack.Add(redBlock31);
+            TrackBlock redBlock32 = new TrackBlock("red32", TrackOrientation.NorthSouth, new Point(redBlock31.StartPoint.X, redBlock31.StartPoint.Y + 50), 50, 0, 0, true, false, 70, TrackAllowedDirection.Both, null, "redController4", null, "redBlock31", "redBlock33");//32
+            redTrack.Add(redBlock32);
+            TrackBlock redBlock33 = new TrackBlock("red33", TrackOrientation.NorthSouth, new Point(redBlock32.StartPoint.X, redBlock32.StartPoint.Y + 50), 50, 0, 0, true, false, 70, TrackAllowedDirection.Both, null, "redController4", "redController5", "redBlock32", "redBlock34");
+            redTrack.Add(redBlock33);
+            TrackBlock redBlock34 = new TrackBlock("red34", TrackOrientation.NorthSouth, new Point(redBlock33.StartPoint.X, redBlock33.StartPoint.Y + 50), 50, 0, 0, true, false, 70, TrackAllowedDirection.Both, null, "redController4", "redController5", "redBlock33", "redBlock35");
+            redBlock34.HasTransponder = true;
+            redBlock34.Transponder = new Transponder("Steel Plaza", 1);
+            redTrack.Add(redBlock34);
+            TrackBlock redBlock35 = new TrackBlock("red35", TrackOrientation.NorthSouth, new Point(redBlock34.StartPoint.X, redBlock34.StartPoint.Y + 50), 50, 0, 0, true, false, 70, TrackAllowedDirection.Both, null, "redController4", "redController5", "redBlock34", "redBlock36");
+            redBlock35.HasTransponder = true;
+            redBlock35.Transponder = new Transponder("Steel Plaza", 0);
+            redTrack.Add(redBlock35);
+            TrackBlock redBlock36 = new TrackBlock("red36", TrackOrientation.NorthSouth, new Point(redBlock35.StartPoint.X, redBlock35.StartPoint.Y + 50), 50, 0, 0, true, false, 70, TrackAllowedDirection.Both, null, "redController4", "redController5", "redBlock35", "redBlock37");
+            redTrack.Add(redBlock36);
+            // NEED SWITCH 37
+            TrackBlock redBlock37 = new TrackBlock("red37", TrackOrientation.NorthSouth, new Point(redBlock36.StartPoint.X, redBlock36.StartPoint.Y + 50), 50, 0, 0, true, false, 70, TrackAllowedDirection.Both, null, "redController4", "redController5", "redBlock36", "redBlock38");
+            redTrack.Add(redBlock37);
+            TrackBlock redBlock38 = new TrackBlock("red38", TrackOrientation.NorthSouth, new Point(redBlock37.StartPoint.X, redBlock37.StartPoint.Y + 50), 50, 0, 0, true, false, 70, TrackAllowedDirection.Both, null, "redController5", null, "redBlock37", "redBlock39");
+            redTrack.Add(redBlock38);
+            TrackBlock redBlock39 = new TrackBlock("red39", TrackOrientation.NorthSouth, new Point(redBlock38.StartPoint.X, redBlock38.StartPoint.Y + 50), 50, 0, 0, true, false, 70, TrackAllowedDirection.Both, null, "redController5", "redController6", "redBlock38", "redBlock40");
+            redTrack.Add(redBlock39);
+            TrackBlock redBlock40 = new TrackBlock("red40", TrackOrientation.NorthSouth, new Point(redBlock39.StartPoint.X, redBlock39.StartPoint.Y + 60), 60, 0, 0, true, false, 70, TrackAllowedDirection.Both, null, "redController5", "redController6", "redBlock39", "redBlock41");
+            redTrack.Add(redBlock40);
+            TrackBlock redBlock41 = new TrackBlock("red41", TrackOrientation.NorthSouth, new Point(redBlock40.StartPoint.X, redBlock40.StartPoint.Y + 60), 60, 0, 0, true, false, 70, TrackAllowedDirection.Both, null, "redController5", "redController6", "redBlock40", "redBlock42");
+            redTrack.Add(redBlock41);
+            TrackBlock redBlock42 = new TrackBlock("red42", TrackOrientation.NorthSouth, new Point(redBlock41.StartPoint.X, redBlock41.StartPoint.Y + 50), 50, 0, 0, true, false, 70, TrackAllowedDirection.Both, null, "redController5", "redController6", "redBlock41", "redBlock43");
+            redTrack.Add(redBlock42);
+            // NEED SWITCH 43
+            TrackBlock redBlock43 = new TrackBlock("red43", TrackOrientation.NorthSouth, new Point(redBlock42.StartPoint.X, redBlock42.StartPoint.Y + 50), 50, 0, 0, true, false, 70, TrackAllowedDirection.Both, null, "redController6", null, "redBlock42", "redBlock44");
+            redBlock43.HasTransponder = true;
+            redBlock43.Transponder = new Transponder("First Ave", 1);
+            redTrack.Add(redBlock43);
+            TrackBlock redBlock44 = new TrackBlock("red44", TrackOrientation.NorthSouth, new Point(redBlock43.StartPoint.X, redBlock43.StartPoint.Y + 50), 50, 0, 0, true, false, 70, TrackAllowedDirection.Both, null, "redController6", "redController7", "redBlock43", "redBlock45");
+            redBlock44.HasTransponder = true;
+            redBlock44.Transponder = new Transponder("First Ave", 0);
+            redTrack.Add(redBlock44);
+            TrackBlock redBlock45 = new TrackBlock("red45", TrackOrientation.NorthSouth, new Point(redBlock44.StartPoint.X, redBlock44.StartPoint.Y + 50), 50, 0, 0, true, false, 70, TrackAllowedDirection.Both, null, "redController6", "redController7", "redBlock44", "redBlock46");
+            redTrack.Add(redBlock45);
+            TrackBlock redBlock46 = new TrackBlock("red46", TrackOrientation.SouthWestNorthEast, new Point(redBlock45.StartPoint.X - Convert.ToInt32(Math.Sqrt((75 * 75) / 2)), redBlock45.StartPoint.Y + Convert.ToInt32(Math.Sqrt((75 * 75) / 2))), 75, 0, 0, true, false, 70, TrackAllowedDirection.Both, null, "redController6", "redController7", "redBlock45", "redBlock47");
+            redTrack.Add(redBlock46);
+            TrackBlock redBlock47 = new TrackBlock("red47", TrackOrientation.SouthWestNorthEast, new Point(redBlock46.StartPoint.X - Convert.ToInt32(Math.Sqrt((75 * 75) / 2)), redBlock46.StartPoint.Y + Convert.ToInt32(Math.Sqrt((75 * 75) / 2))), 75, 0, 0, false, true, 70, TrackAllowedDirection.Both, null, "redController6", "redController7", "redBlock46", "redBlock48");
+            redTrack.Add(redBlock47);
+            TrackBlock redBlock48 = new TrackBlock("red48", TrackOrientation.EastWest, new Point(redBlock47.StartPoint.X - 75, redBlock47.StartPoint.Y), 75, 0, 0, false, false, 70, TrackAllowedDirection.Both, null, "redController6", "redController7", "redBlock47", "redBlock49");
+            redBlock48.HasTransponder = true;
+            redBlock48.Transponder = new Transponder("Station Square", 1);
+            redTrack.Add(redBlock48);
+            TrackBlock redBlock49 = new TrackBlock("red49", TrackOrientation.EastWest, new Point(redBlock48.StartPoint.X - 50, redBlock48.StartPoint.Y), 50, 0, 0, false, false, 60, TrackAllowedDirection.Both, null, "redController6", "redController7", "redBlock48", "redBlock50");
+            redBlock49.HasTransponder = true;
+            redBlock49.Transponder = new Transponder("Station Square", 0);
+            redTrack.Add(redBlock49);
+            TrackBlock redBlock50 = new TrackBlock("red50", TrackOrientation.EastWest, new Point(redBlock49.StartPoint.X - 50, redBlock49.StartPoint.Y), 50, 0, 0, false, false, 60, TrackAllowedDirection.Both, null, "redController6", "redController7", "redBlock49", "redBlock51");
+            redTrack.Add(redBlock50);
+            TrackBlock redBlock51 = new TrackBlock("red51", TrackOrientation.EastWest, new Point(redBlock50.StartPoint.X - 50, redBlock50.StartPoint.Y), 50, 0, 0, false, false, 55, TrackAllowedDirection.Both, null, "redController6", "redController7", "redBlock50", "redBlock52");
+            redTrack.Add(redBlock51);
 
-            TrackSwitch yardSwitch = new TrackSwitch("switch1", "Yard", "red9", "red10", "redYard1");
-            //Add the switch to the serializer list
 
-            // End redController1 and redRegion1
-            // Region2 Sections D-E
-            // Controlled by redController2
-            //Region redRegion2 = new Region("redRegion2");
-            //redRegion2.SetPreviousRegion(redRegion1);
-            TrackBlock redBlock10 = new TrackBlock("red10", TrackOrientation.EastWest, redBlock9.EndPoint, 75, 4.13, 0, 
-                                        false, false, 40, TrackAllowedDirection.Both, null, "redController2", "redController1", "red9", "red11");
-            redRegion1.Add(redBlock10);
-            TrackBlock redBlock11 = new TrackBlock("red11", TrackOrientation.EastWest, redBlock10.EndPoint, 75, 3.75, -0.5, 
-                                        false, false, 40, TrackAllowedDirection.Both, null, "redController2", null, "red10", "red12");
-            redRegion1.Add(redBlock11);
-            TrackBlock redBlock12 = new TrackBlock("red12", TrackOrientation.EastWest, redBlock11.EndPoint, 75, 3.38, -0.5, 
-                                        false, false, 40, TrackAllowedDirection.Both, null, "redController2", null, "red11", "red13");
-            redRegion1.Add(redBlock12);
-            TrackBlock redBlock13 = new TrackBlock("red13", TrackOrientation.EastWest, redBlock12.EndPoint, 68.4, 2.69, -1, 
-                                        false, false, 40, TrackAllowedDirection.Both, null, "redController2", null, "red12", "red14");
-            redRegion1.Add(redBlock13);
-            TrackBlock redBlock14 = new TrackBlock("red14", TrackOrientation.EastWest, redBlock13.EndPoint, 60, 2.09, -1, 
-                                        false, false, 40, TrackAllowedDirection.Both, null, "redController2", null, "red13", "red15");
-            redRegion1.Add(redBlock14);
-            TrackBlock redBlock15 = new TrackBlock("red15", TrackOrientation.EastWest, redBlock14.EndPoint, 60, 1.49, -1, 
-                                        false, false, 40, TrackAllowedDirection.Both, null, "redController2", null, "red14", "red16");
-            redBlock15.Transponder = new Transponder("Herron Ave",60);
-            redRegion1.Add(redBlock15);
-            // End redController2 and redRegion2
-            // Region3 Sections F-I
-            // Controlled by redController3
-            TrackBlock redBlock16 = new TrackBlock("red16", TrackOrientation.EastWest, redBlock15.EndPoint, 50, 1.24, -0.5, 
-                                        false, false, 40, TrackAllowedDirection.Both, null, "redController2", "redController3", "red15", "red17");
-            redBlock16.Transponder = new Transponder("Herron Ave",0);
-            redRegion1.Add(redBlock16);
-            TrackBlock redBlock17 = new TrackBlock("red17", TrackOrientation.EastWest, redBlock16.EndPoint, 200, 0.24, -0.5, 
-                                        false, false, 55, TrackAllowedDirection.Both, null,  "redController3", null, "red16", "red18");
-            redRegion1.Add(redBlock17);
-            TrackBlock redBlock18 = new TrackBlock("red18", TrackOrientation.EastWest, redBlock17.EndPoint, 400, 0, -0.06025, 
-                                        false, false, 70, TrackAllowedDirection.Both, null, "redController3", null, "red17", "red19");
-            redRegion1.Add(redBlock18);
-            TrackBlock redBlock19 = new TrackBlock("red19", TrackOrientation.EastWest, redBlock18.EndPoint, 400, 0, 0, 
-                                        false, false, 70, TrackAllowedDirection.Both, null, "redController3", null, "red18", "red20");
-            redRegion1.Add(redBlock19);
-            TrackBlock redBlock20 = new TrackBlock("red20", TrackOrientation.EastWest, redBlock19.EndPoint, 200, 0, 0, 
-                                        false, false, 70, TrackAllowedDirection.Both, null, "redController3", null, "red19", "red21");
-            redBlock20.Transponder = new Transponder("Swissville", 200);
-            redRegion1.Add(redBlock20);
-            TrackBlock redBlock21 = new TrackBlock("red21", TrackOrientation.SouthWestNorthEast, redBlock20.EndPoint, 100, 0, 0, 
-                                        false, false, 55, TrackAllowedDirection.Both, null, "redController3", null, "red20", "red22");
-            redBlock21.Transponder = new Transponder("Swissville", 0);
-            redRegion1.Add(redBlock21);
-            TrackBlock redBlock22 = new TrackBlock("red22", TrackOrientation.SouthWestNorthEast, redBlock21.EndPoint, 100, 0, 0, 
-                                        false, false, 55, TrackAllowedDirection.Both, null, "redController3", null, "red21", "red23");
-            redRegion1.Add(redBlock22);
-            TrackBlock redBlock23 = new TrackBlock("red23", TrackOrientation.SouthWestNorthEast, redBlock22.EndPoint, 100, 0, 0, 
-                                        false, false, 55, TrackAllowedDirection.Both, null, "redController3", null, "red22", "red24");
-            redRegion1.Add(redBlock23);
-            TrackBlock redBlock24 = new TrackBlock("red24", TrackOrientation.NorthSouth, redBlock23.EndPoint, 50, 0, 0, 
-                                        true, false, 70, TrackAllowedDirection.Both, null, "redController3", null, "red23", "red25");
-            redBlock24.Transponder = new Transponder("Penn Station", 50);
-            redRegion1.Add(redBlock24);
-            TrackBlock redBlock25 = new TrackBlock("red25", TrackOrientation.NorthSouth, redBlock24.EndPoint, 50, 0, 0, 
-                                        true, false, 70, TrackAllowedDirection.Both, null, "redController3", null, "red24", "red26");
-            redBlock25.Transponder = new Transponder("Penn Station", 0);
-            redRegion1.Add(redBlock25);
-            TrackBlock redBlock26 = new TrackBlock("red26", TrackOrientation.NorthSouth, redBlock25.EndPoint, 50, 0, 0, 
-                                        true, false, 70, TrackAllowedDirection.Both, null, "redController3", null, "red25", "red27");
-            redRegion1.Add(redBlock26);
-            TrackBlock redBlock27 = new TrackBlock("red27", TrackOrientation.NorthSouth, redBlock26.EndPoint, 50, 0, 0, 
-                                        true, false, 70, TrackAllowedDirection.Both, null, "redController3", null, "red26", "red27");
-            redRegion1.Add(redBlock27);
-            TrackBlock redBlock28 = new TrackBlock("red28", TrackOrientation.NorthSouth, redBlock27.EndPoint, 50, 0, 0, 
-                                        true, false, 70, TrackAllowedDirection.Both, null, "redController3", null, "red27", "red29");
-            redRegion1.Add(redBlock28);
-            TrackBlock redBlock29 = new TrackBlock("red29", TrackOrientation.NorthSouth, redBlock28.EndPoint, 60, 0, 0, 
-                                        true, false, 70, TrackAllowedDirection.Both, null, "redController3", null, "red28", "red30");
-            redRegion1.Add(redBlock29);
-            TrackBlock redBlock30 = new TrackBlock("red30", TrackOrientation.NorthSouth, redBlock29.EndPoint, 60, 0, 0, 
-                                        true, false, 70, TrackAllowedDirection.Both, null, "redController3", null, "red29", "red31");
-            redRegion1.Add(redBlock30);
-            TrackBlock redBlock31 = new TrackBlock("red31", TrackOrientation.NorthSouth, redBlock30.EndPoint, 50, 0, 0, 
-                                        true, false, 70, TrackAllowedDirection.Both, null, "redController3", null, "red30", "red32");
-            redRegion1.Add(redBlock31);
-
-
-
-
-
-            this.m_blockList = redRegion1;
+            // START COPY HERE
+            // Branch Sections for addition to other code
+            TrackBlock redBlock67 = new TrackBlock("red67", TrackOrientation.NorthWestSouthEast, new Point(redBlock43.StartPoint.X - Convert.ToInt32(Math.Sqrt((50 * 50) / 2)), redBlock43.StartPoint.Y - Convert.ToInt32(Math.Sqrt((50 * 50) / 2))), 50, 0, 0, true, false, 55, TrackAllowedDirection.Both, null, "redController5", "redController6", "redBlock43", "redBlock68");
+            redTrack.Add(redBlock67);
+            TrackBlock redBlock68 = new TrackBlock("red68", TrackOrientation.NorthSouth, new Point(redBlock67.StartPoint.X, redBlock67.StartPoint.Y), 50, 0, 0, true, false, 55, TrackAllowedDirection.Both, null, "redController5", "redController6", "redBlock67", "redBlock69");
+            redTrack.Add(redBlock68);
+            TrackBlock redBlock69 = new TrackBlock("red69", TrackOrientation.NorthSouth, new Point(redBlock68.EndPoint.X, redBlock68.EndPoint.Y), 50, 0, 0, true, false, 55, TrackAllowedDirection.Both, null, "redController5", "redController6", "redBlock68", "redBlock70");
+            redTrack.Add(redBlock69);
+            TrackBlock redBlock70 = new TrackBlock("red70", TrackOrientation.NorthSouth, new Point(redBlock69.EndPoint.X, redBlock69.EndPoint.Y), 50, 0, 0, true, false, 55, TrackAllowedDirection.Both, null, "redController5", "redController6", "redBlock69", "redBlock71");
+            redTrack.Add(redBlock70);
+            TrackBlock redBlock71 = new TrackBlock("red71", TrackOrientation.SouthWestNorthEast, new Point(redBlock70.EndPoint.X, redBlock70.EndPoint.Y), 50, 0, 0, true, false, 55, TrackAllowedDirection.Both, null, "redController5", "redController6", "redBlock70", "redBlock38");
+            redTrack.Add(redBlock71);
+            // End Branch 1
+            // Begin Branch 2
+            TrackBlock redBlock72 = new TrackBlock("red72", TrackOrientation.NorthWestSouthEast, new Point(redBlock32.StartPoint.X - Convert.ToInt32(Math.Sqrt((50 * 50) / 2)), redBlock32.StartPoint.Y - Convert.ToInt32(Math.Sqrt((50 * 50) / 2))), 50, 0, 0, true, false, 55, TrackAllowedDirection.Both, null, "redController3", "redController4", "redBlock32", "redBlock73");
+            redTrack.Add(redBlock72);
+            TrackBlock redBlock73 = new TrackBlock("red73", TrackOrientation.NorthSouth, new Point(redBlock72.StartPoint.X, redBlock72.StartPoint.Y), 50, 0, 0, true, false, 55, TrackAllowedDirection.Both, null, "redController3", "redController4", "redBlock72", "redBlock74");
+            redTrack.Add(redBlock73);
+            TrackBlock redBlock74 = new TrackBlock("red74", TrackOrientation.NorthSouth, new Point(redBlock73.EndPoint.X, redBlock73.EndPoint.Y), 50, 0, 0, true, false, 55, TrackAllowedDirection.Both, null, "redController3", "redController4", "redBlock73", "redBlock75");
+            redTrack.Add(redBlock74);
+            TrackBlock redBlock75 = new TrackBlock("red75", TrackOrientation.NorthSouth, new Point(redBlock74.EndPoint.X, redBlock74.EndPoint.Y), 50, 0, 0, true, false, 55, TrackAllowedDirection.Both, null, "redController3", "redController4", "redBlock74", "redBlock76");
+            redTrack.Add(redBlock75);
+            TrackBlock redBlock76 = new TrackBlock("red76", TrackOrientation.SouthWestNorthEast, new Point(redBlock75.EndPoint.X, redBlock75.EndPoint.Y), 50, 0, 0, true, false, 55, TrackAllowedDirection.Both, null, "redController3", "redController4", "redBlock75", "redBlock27");
+            redTrack.Add(redBlock76);
+            // END COPY
+            this.m_switchList = switchList;
+            this.m_blockList = redTrack;
 
         }
         // METHOD: CreateTrackLayoutFileGreenLine
@@ -348,6 +424,11 @@ namespace TrackLib
         /// Log tool
         /// </summary>
         private LoggingTool m_log = new LoggingTool(MethodBase.GetCurrentMethod());
+
+        /// <summary>
+        /// List of Switches
+        /// </summary>
+        private List<TrackSwitch> m_switchList = new List<TrackSwitch>();
 
         #endregion
 
