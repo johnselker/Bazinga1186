@@ -89,24 +89,10 @@
     <Folder Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CommandPanelTest.cs" />
     <Compile Include="CTCControllerTest.cs" />
-    <Compile Include="InfoPanelTest.cs" />
     <Compile Include="LoginCheckerTest.cs" />
-    <Compile Include="LoginWindowTest.cs" />
     <Compile Include="MainScreenTest.cs" />
-    <Compile Include="MessageDialogTest.cs" />
-    <Compile Include="ProgramTest.cs" />
-    <Compile Include="SchedulingScreenTest.cs" />
-    <Compile Include="SchedulingScreen_ScheduleGroupTest.cs" />
     <Compile Include="SimulatorTest.cs" />
-    <Compile Include="SimulatorWindowTest.cs" />
-    <Compile Include="TableViewScreenTest.cs" />
-    <Compile Include="TableViewScreen_TrackBlockRowTest.cs" />
-    <Compile Include="TextInputDialogTest.cs" />
-    <Compile Include="TrackBlockGraphicTest.cs" />
-    <Compile Include="TrackDisplayPanelTest.cs" />
-    <Compile Include="TrainGraphicTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <Shadow Include="Test References\CTCOfficeGUI.accessor" />

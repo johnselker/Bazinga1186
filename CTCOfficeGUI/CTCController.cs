@@ -229,11 +229,12 @@ namespace CTCOfficeGUI
         /// <returns>List of track blocks</returns>
         public List<TrackBlock> LoadTrackLayout(string filename)
         {
+            List<TrackBlock> blocks = null;
             try
             {
                 TrackLayoutSerializer layoutSerializer = new TrackLayoutSerializer(filename);
                 layoutSerializer.Restore();
-                List<TrackBlock> blocks = layoutSerializer.BlockList;
+                blocks = layoutSerializer.BlockList;
                 if (BuildLayout(blocks))
                 {
                     m_updateTimer.Start();
@@ -249,7 +250,7 @@ namespace CTCOfficeGUI
                 m_log.LogError("Layout restoration failed", e);
             }
 
-            return m_blockList;
+            return blocks;
         }
 
         /// <summary>

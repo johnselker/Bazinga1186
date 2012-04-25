@@ -18,8 +18,6 @@ namespace ClassStubs
         { }
 
         public void Dispose()
-        {
-            this.Dispose();
-        }
+        { }
     }
 }

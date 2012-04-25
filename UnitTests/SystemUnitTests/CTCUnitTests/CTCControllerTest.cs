@@ -177,6 +177,7 @@ namespace CTCUnitTests
         {
             CTCController expected = CTCController.GetCTCController();
             CTCController actual = CTCController.GetCTCController();
+            Assert.IsNotNull(actual);
             Assert.AreEqual(expected, actual);
         }
 
@@ -344,9 +345,9 @@ namespace CTCUnitTests
         {
             m_ctcAccessor.m_blockList.Clear();
             string filename = string.Empty;
-            List<TrackBlock> actual;
-            actual = m_ctcAccessor.LoadTrackLayout(filename);
-            Assert.AreEqual(0, actual.Count);
+            List<TrackBlock> expected = null;
+            List<TrackBlock> actual = m_ctcAccessor.LoadTrackLayout(filename);
+            Assert.AreEqual(expected, actual);
         }
 
         /// <summary>

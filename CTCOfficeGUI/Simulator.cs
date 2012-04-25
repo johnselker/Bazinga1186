@@ -71,7 +71,7 @@ namespace CTCOfficeGUI
         {
             bool result = false;
 
-            if (scale >= 1)
+            if (scale >= 1 && scale < 100)
             {
                 m_log.LogInfoFormat("Setting simulation speed to {0}", scale);
                 m_simulationScale = scale;
@@ -88,6 +88,7 @@ namespace CTCOfficeGUI
         {
             m_running = true;
             m_simulationTimer.Start();
+            m_lastUpdateTime = DateTime.Now;
             m_trackControllerList = CTCController.GetCTCController().GetTrackControllerList();
         }
 
@@ -312,12 +313,15 @@ namespace CTCOfficeGUI
             double timeStep = (timeDiff.Ticks / (double)TimeSpan.TicksPerSecond) * m_simulationScale;
             m_lastUpdateTime = timeFreeze;
 
-            lock (m_trackControllerList)
+            if (m_trackControllerList != null)
             {
-                //Update the track controllers first so that they can set safe authorities
-                foreach (ITrackController controller in m_trackControllerList)
+                lock (m_trackControllerList)
                 {
-                    controller.Update();
+                    //Update the track controllers first so that they can set safe authorities
+                    foreach (ITrackController controller in m_trackControllerList)
+                    {
+                        controller.Update();
+                    }
                 }
             }
 
@@ -338,13 +342,16 @@ namespace CTCOfficeGUI
         /// <param name="stationName">Name of the station</param>
         private void OnTrainAtStation(ITrainController train, string stationName)
         {
-            if (stationName.Contains(Constants.TRAINYARD))
+            if (stationName != null && train != null)
             {
-                //Train arrived at the train yard. Destroy it.
-                m_log.LogInfo("Train has arrived at the train yard");
-                m_trainControllerList.Remove(train);
-                
-                //Need to dispose of the train and update the UI
+                if (stationName.Contains(Constants.TRAINYARD))
+                {
+                    //Train arrived at the train yard. Destroy it.
+                    m_log.LogInfo("Train has arrived at the train yard");
+                    m_trainControllerList.Remove(train);
+
+                    train.Dispose();
+                }
             }
         }
 

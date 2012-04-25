@@ -252,7 +252,14 @@ namespace CTCOfficeGUI
             info.Add("Temperature:", state.Temperature.ToString());
             info.Add("Position:", state.X.ToString() + ", " + state.Y.ToString());
 
-            SetInfo(state.TrainID.ToString(), info);
+            if (state.TrainID != null)
+            {
+                SetInfo(state.TrainID.ToString(), info);
+            }
+            else
+            {
+                SetInfo(UNKNOWN_TEXT, info);
+            }
         }
 
         /// <summary>

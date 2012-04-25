@@ -63,7 +63,7 @@ namespace CTCOfficeGUI
         {
             m_okPopup = new MessageDialog(text, "OK", OnPopupAcknowledged);
             m_okPopup.TitleBarText = title;
-            m_okPopup.ShowDialog();
+            m_okPopup.Show();
         }
 
         /// <summary>

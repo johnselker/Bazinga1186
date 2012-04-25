@@ -5,6 +5,8 @@ using System.Timers;
 using TrainControllerLib;
 using CommonLib;
 using TrainLib;
+using ClassStubs;
+using System.Collections.Generic;
 
 namespace CTCUnitTests
 {
@@ -76,20 +78,26 @@ namespace CTCUnitTests
         public void SimulatorConstructorTest()
         {
             Simulator_Accessor target = new Simulator_Accessor();
-            Assert.Inconclusive("TODO: Implement code to verify target");
+
+            Assert.IsNotNull(target.m_log);
+            Assert.IsFalse(target.m_running);
+            Assert.AreEqual(1, target.m_simulationScale);
+            Assert.IsNotNull(target.m_simulationTimer);
+            Assert.IsNotNull(target.m_startingDirections);
+            Assert.AreEqual(2, target.m_startingDirections.Count);
+            Assert.IsNotNull(target.m_trainControllerList);
         }
 
         /// <summary>
         ///A test for GetSimulator
         ///</summary>
         [TestMethod()]
-        public void GetSimulatorTest()
+        public void GetSimulatorTest_singletonCheck()
         {
-            Simulator expected = null; // TODO: Initialize to an appropriate value
-            Simulator actual;
-            actual = Simulator.GetSimulator();
+            Simulator expected = Simulator.GetSimulator();
+            Simulator actual = Simulator.GetSimulator();
+            Assert.IsNotNull(actual);
             Assert.AreEqual(expected, actual);
-            Assert.Inconclusive("Verify the correctness of this test method.");
         }
 
         /// <summary>
@@ -99,11 +107,14 @@ namespace CTCUnitTests
         [DeploymentItem("CTCOfficeGUI.exe")]
         public void OnSimulationTimerElapsedTest()
         {
-            Simulator_Accessor target = new Simulator_Accessor(); // TODO: Initialize to an appropriate value
-            object sender = null; // TODO: Initialize to an appropriate value
-            ElapsedEventArgs e = null; // TODO: Initialize to an appropriate value
+            Simulator_Accessor target = new Simulator_Accessor();
+            object sender = null;
+            ElapsedEventArgs e = null;
+            target.m_lastUpdateTime = DateTime.Now;
             target.OnSimulationTimerElapsed(sender, e);
-            Assert.Inconclusive("A method that does not return a value cannot be verified.");
+            //Make sure the time updates within the minute
+            //Chances of the minute rolling over in the middle of the test are slim
+            Assert.AreEqual(DateTime.Now.Minute, target.m_lastUpdateTime.Minute);
         }
 
         /// <summary>
@@ -113,11 +124,44 @@ namespace CTCUnitTests
         [DeploymentItem("CTCOfficeGUI.exe")]
         public void OnTrainAtStationTest()
         {
-            Simulator_Accessor target = new Simulator_Accessor(); // TODO: Initialize to an appropriate value
-            ITrainController train = null; // TODO: Initialize to an appropriate value
-            string stationName = string.Empty; // TODO: Initialize to an appropriate value
+            Simulator_Accessor target = new Simulator_Accessor();
+            ITrainController train = new TrainControllerStub();
+            target.m_trainControllerList.Add(train);
+            string stationName = "YARD";
             target.OnTrainAtStation(train, stationName);
-            Assert.Inconclusive("A method that does not return a value cannot be verified.");
+
+            Assert.AreEqual(0, target.m_trainControllerList.Count);
+        }
+
+        /// <summary>
+        ///A test for OnTrainAtStation
+        ///</summary>
+        [TestMethod()]
+        [DeploymentItem("CTCOfficeGUI.exe")]
+        public void OnTrainAtStationTest_notYard()
+        {
+            Simulator_Accessor target = new Simulator_Accessor();
+            ITrainController train = new TrainControllerStub();
+            target.m_trainControllerList.Add(train);
+            string stationName = "station1"; 
+            target.OnTrainAtStation(train, stationName);
+
+            Assert.AreEqual(1, target.m_trainControllerList.Count);
+        }
+
+        ///A test for OnTrainAtStation
+        ///</summary>
+        [TestMethod()]
+        [DeploymentItem("CTCOfficeGUI.exe")]
+        public void OnTrainAtStationTest_null()
+        {
+            Simulator_Accessor target = new Simulator_Accessor();
+            ITrainController train = new TrainControllerStub();
+            target.m_trainControllerList.Add(train);
+            string stationName = null;
+            target.OnTrainAtStation(null, stationName);
+
+            Assert.AreEqual(1, target.m_trainControllerList.Count);
         }
 
         /// <summary>
@@ -126,9 +170,9 @@ namespace CTCUnitTests
         [TestMethod()]
         public void PauseSimulationTest()
         {
-            Simulator_Accessor target = new Simulator_Accessor(); // TODO: Initialize to an appropriate value
+            Simulator_Accessor target = new Simulator_Accessor(); 
             target.PauseSimulation();
-            Assert.Inconclusive("A method that does not return a value cannot be verified.");
+            Assert.IsFalse(target.m_running);
         }
 
         /// <summary>
@@ -137,91 +181,74 @@ namespace CTCUnitTests
         [TestMethod()]
         public void SetSimulationSpeedTest()
         {
-            Simulator_Accessor target = new Simulator_Accessor(); // TODO: Initialize to an appropriate value
-            double scale = 0F; // TODO: Initialize to an appropriate value
-            bool expected = false; // TODO: Initialize to an appropriate value
+            Simulator_Accessor target = new Simulator_Accessor();
+            double scale = 1;
+            bool expected = true;
             bool actual;
             actual = target.SetSimulationSpeed(scale);
             Assert.AreEqual(expected, actual);
-            Assert.Inconclusive("Verify the correctness of this test method.");
+            Assert.AreEqual(scale, target.m_simulationScale);
+        }
+
+
+        /// <summary>
+        ///A test for SetSimulationSpeed
+        ///</summary>
+        [TestMethod()]
+        public void SetSimulationSpeedTest_lowerBound()
+        {
+            Simulator_Accessor target = new Simulator_Accessor();
+            double scale = 1;
+            bool expected = true;
+            bool actual;
+            actual = target.SetSimulationSpeed(scale);
+            Assert.AreEqual(expected, actual);
+            Assert.AreEqual(scale, target.m_simulationScale);
         }
 
         /// <summary>
-        ///A test for SimulateBrakeFailure
+        ///A test for SetSimulationSpeed
         ///</summary>
         [TestMethod()]
-        public void SimulateBrakeFailureTest()
+        public void SetSimulationSpeedTest_upperBound()
         {
-            Simulator_Accessor target = new Simulator_Accessor(); // TODO: Initialize to an appropriate value
-            ITrain train = null; // TODO: Initialize to an appropriate value
-            bool failure = false; // TODO: Initialize to an appropriate value
-            target.SimulateBrakeFailure(train, failure);
-            Assert.Inconclusive("A method that does not return a value cannot be verified.");
+            Simulator_Accessor target = new Simulator_Accessor();
+            double scale = 99;
+            bool expected = true;
+            bool actual;
+            actual = target.SetSimulationSpeed(scale);
+            Assert.AreEqual(expected, actual);
+            Assert.AreEqual(scale, target.m_simulationScale);
         }
 
         /// <summary>
-        ///A test for SimulateBrokenRail
+        ///A test for SetSimulationSpeed
         ///</summary>
         [TestMethod()]
-        public void SimulateBrokenRailTest()
+        public void SetSimulationSpeedTest_lowBad()
         {
-            Simulator_Accessor target = new Simulator_Accessor(); // TODO: Initialize to an appropriate value
-            TrackBlock block = null; // TODO: Initialize to an appropriate value
-            bool failure = false; // TODO: Initialize to an appropriate value
-            target.SimulateBrokenRail(block, failure);
-            Assert.Inconclusive("A method that does not return a value cannot be verified.");
+            Simulator_Accessor target = new Simulator_Accessor();
+            double scale = 0;
+            bool expected = false;
+            bool actual;
+            actual = target.SetSimulationSpeed(scale);
+            Assert.AreEqual(expected, actual);
+            Assert.AreNotEqual(scale, target.m_simulationScale);
         }
 
         /// <summary>
-        ///A test for SimulateCircuitFailure
+        ///A test for SetSimulationSpeed
         ///</summary>
         [TestMethod()]
-        public void SimulateCircuitFailureTest()
+        public void SetSimulationSpeedTest_highBad()
         {
-            Simulator_Accessor target = new Simulator_Accessor(); // TODO: Initialize to an appropriate value
-            TrackBlock block = null; // TODO: Initialize to an appropriate value
-            bool failure = false; // TODO: Initialize to an appropriate value
-            target.SimulateCircuitFailure(block, failure);
-            Assert.Inconclusive("A method that does not return a value cannot be verified.");
-        }
-
-        /// <summary>
-        ///A test for SimulateEngineFailure
-        ///</summary>
-        [TestMethod()]
-        public void SimulateEngineFailureTest()
-        {
-            Simulator_Accessor target = new Simulator_Accessor(); // TODO: Initialize to an appropriate value
-            ITrain train = null; // TODO: Initialize to an appropriate value
-            bool failure = false; // TODO: Initialize to an appropriate value
-            target.SimulateEngineFailure(train, failure);
-            Assert.Inconclusive("A method that does not return a value cannot be verified.");
-        }
-
-        /// <summary>
-        ///A test for SimulatePickupFailure
-        ///</summary>
-        [TestMethod()]
-        public void SimulatePickupFailureTest()
-        {
-            Simulator_Accessor target = new Simulator_Accessor(); // TODO: Initialize to an appropriate value
-            ITrain train = null; // TODO: Initialize to an appropriate value
-            bool failure = false; // TODO: Initialize to an appropriate value
-            target.SimulatePickupFailure(train, failure);
-            Assert.Inconclusive("A method that does not return a value cannot be verified.");
-        }
-
-        /// <summary>
-        ///A test for SimulatePowerFailure
-        ///</summary>
-        [TestMethod()]
-        public void SimulatePowerFailureTest()
-        {
-            Simulator_Accessor target = new Simulator_Accessor(); // TODO: Initialize to an appropriate value
-            TrackBlock block = null; // TODO: Initialize to an appropriate value
-            bool failure = false; // TODO: Initialize to an appropriate value
-            target.SimulatePowerFailure(block, failure);
-            Assert.Inconclusive("A method that does not return a value cannot be verified.");
+            Simulator_Accessor target = new Simulator_Accessor();
+            double scale = 100;
+            bool expected = false;
+            bool actual;
+            actual = target.SetSimulationSpeed(scale);
+            Assert.AreEqual(expected, actual);
+            Assert.AreNotEqual(scale, target.m_simulationScale);
         }
 
         /// <summary>
@@ -230,11 +257,53 @@ namespace CTCUnitTests
         [TestMethod()]
         public void SpawnNewTrainTest()
         {
-            Simulator_Accessor target = new Simulator_Accessor(); // TODO: Initialize to an appropriate value
-            TrackBlock initialBlock = null; // TODO: Initialize to an appropriate value
-            string name = string.Empty; // TODO: Initialize to an appropriate value
-            target.SpawnNewTrain(initialBlock, name);
-            Assert.Inconclusive("A method that does not return a value cannot be verified.");
+            Simulator_Accessor target = new Simulator_Accessor();
+            TrackBlock block = new TrackBlock();
+            block.Transponder = new Transponder("REDYARD", 0);
+            string name = "train"; 
+            target.SpawnNewTrain(block, name);
+            Assert.AreEqual(1, target.m_trainControllerList.Count);
+        }
+
+        /// <summary>
+        ///A test for SpawnNewTrain
+        ///</summary>
+        [TestMethod()]
+        public void SpawnNewTrainTest_badBlock()
+        {
+            Simulator_Accessor target = new Simulator_Accessor();
+            TrackBlock block = new TrackBlock();
+            block.Transponder = new Transponder("BLOCK", 0);
+            string name = "train";
+            target.SpawnNewTrain(block, name);
+            Assert.AreEqual(0, target.m_trainControllerList.Count);
+        }
+
+        /// <summary>
+        ///A test for SpawnNewTrain
+        ///</summary>
+        [TestMethod()]
+        public void SpawnNewTrainTest_nullBlock()
+        {
+            Simulator_Accessor target = new Simulator_Accessor();
+            TrackBlock block = null;
+            string name = "train";
+            target.SpawnNewTrain(block, name);
+            Assert.AreEqual(0, target.m_trainControllerList.Count);
+        }
+
+        /// <summary>
+        ///A test for SpawnNewTrain
+        ///</summary>
+        [TestMethod()]
+        public void SpawnNewTrainTest_nullTransponder()
+        {
+            Simulator_Accessor target = new Simulator_Accessor();
+            TrackBlock block = new TrackBlock();
+            block.Transponder = null;
+            string name = "train";
+            target.SpawnNewTrain(block, name);
+            Assert.AreEqual(0, target.m_trainControllerList.Count);
         }
 
         /// <summary>
@@ -243,9 +312,13 @@ namespace CTCUnitTests
         [TestMethod()]
         public void StartSimulationTest()
         {
-            Simulator_Accessor target = new Simulator_Accessor(); // TODO: Initialize to an appropriate value
+            Simulator_Accessor target = new Simulator_Accessor();
             target.StartSimulation();
-            Assert.Inconclusive("A method that does not return a value cannot be verified.");
+            Assert.IsTrue(target.m_running);
+            //Make sure the time updates within the minute
+            //Chances of the minute rolling over in the middle of the test are slim
+            Assert.AreEqual(DateTime.Now.Minute, target.m_lastUpdateTime.Minute);
+            Assert.IsNotNull(target.m_trackControllerList);
         }
 
         /// <summary>
@@ -254,224 +327,36 @@ namespace CTCUnitTests
         [TestMethod()]
         public void StopSimulationTest()
         {
-            Simulator_Accessor target = new Simulator_Accessor(); // TODO: Initialize to an appropriate value
+            Simulator_Accessor target = new Simulator_Accessor();
+            target.m_trainControllerList.Add(new TrainControllerStub());
+            target.m_trackControllerList = new List<TrackControlLib.Sean.ITrackController>(){new TrackControllerStub()};
             target.StopSimulation();
-            Assert.Inconclusive("A method that does not return a value cannot be verified.");
+            Assert.IsFalse(target.m_running);
+            Assert.AreEqual(0, target.m_trainControllerList.Count);
+            Assert.AreEqual(0, target.m_trackControllerList.Count);
         }
 
         /// <summary>
         ///A test for SimulationRunning
         ///</summary>
         [TestMethod()]
-        public void SimulationRunningTest()
-        {
-            Simulator_Accessor target = new Simulator_Accessor(); // TODO: Initialize to an appropriate value
-            bool actual;
-            actual = target.SimulationRunning;
-            Assert.Inconclusive("Verify the correctness of this test method.");
-        }
-
-        /// <summary>
-        ///A test for Simulator Constructor
-        ///</summary>
-        [TestMethod()]
-        [DeploymentItem("CTCOfficeGUI.exe")]
-        public void SimulatorConstructorTest1()
+        public void SimulationRunningTest_false()
         {
             Simulator_Accessor target = new Simulator_Accessor();
-            Assert.Inconclusive("TODO: Implement code to verify target");
-        }
-
-        /// <summary>
-        ///A test for GetSimulator
-        ///</summary>
-        [TestMethod()]
-        public void GetSimulatorTest1()
-        {
-            Simulator expected = null; // TODO: Initialize to an appropriate value
-            Simulator actual;
-            actual = Simulator.GetSimulator();
+            bool expected = target.m_running;
+            bool actual = target.SimulationRunning;
             Assert.AreEqual(expected, actual);
-            Assert.Inconclusive("Verify the correctness of this test method.");
         }
 
-        /// <summary>
-        ///A test for OnSimulationTimerElapsed
-        ///</summary>
-        [TestMethod()]
-        [DeploymentItem("CTCOfficeGUI.exe")]
-        public void OnSimulationTimerElapsedTest1()
-        {
-            Simulator_Accessor target = new Simulator_Accessor(); // TODO: Initialize to an appropriate value
-            object sender = null; // TODO: Initialize to an appropriate value
-            ElapsedEventArgs e = null; // TODO: Initialize to an appropriate value
-            target.OnSimulationTimerElapsed(sender, e);
-            Assert.Inconclusive("A method that does not return a value cannot be verified.");
-        }
-
-        /// <summary>
-        ///A test for OnTrainAtStation
-        ///</summary>
-        [TestMethod()]
-        [DeploymentItem("CTCOfficeGUI.exe")]
-        public void OnTrainAtStationTest1()
-        {
-            Simulator_Accessor target = new Simulator_Accessor(); // TODO: Initialize to an appropriate value
-            ITrainController train = null; // TODO: Initialize to an appropriate value
-            string stationName = string.Empty; // TODO: Initialize to an appropriate value
-            target.OnTrainAtStation(train, stationName);
-            Assert.Inconclusive("A method that does not return a value cannot be verified.");
-        }
-
-        /// <summary>
-        ///A test for PauseSimulation
-        ///</summary>
-        [TestMethod()]
-        public void PauseSimulationTest1()
-        {
-            Simulator_Accessor target = new Simulator_Accessor(); // TODO: Initialize to an appropriate value
-            target.PauseSimulation();
-            Assert.Inconclusive("A method that does not return a value cannot be verified.");
-        }
-
-        /// <summary>
-        ///A test for SetSimulationSpeed
-        ///</summary>
-        [TestMethod()]
-        public void SetSimulationSpeedTest1()
-        {
-            Simulator_Accessor target = new Simulator_Accessor(); // TODO: Initialize to an appropriate value
-            double scale = 0F; // TODO: Initialize to an appropriate value
-            bool expected = false; // TODO: Initialize to an appropriate value
-            bool actual;
-            actual = target.SetSimulationSpeed(scale);
-            Assert.AreEqual(expected, actual);
-            Assert.Inconclusive("Verify the correctness of this test method.");
-        }
-
-        /// <summary>
-        ///A test for SimulateBrakeFailure
-        ///</summary>
-        [TestMethod()]
-        public void SimulateBrakeFailureTest1()
-        {
-            Simulator_Accessor target = new Simulator_Accessor(); // TODO: Initialize to an appropriate value
-            ITrain train = null; // TODO: Initialize to an appropriate value
-            bool failure = false; // TODO: Initialize to an appropriate value
-            target.SimulateBrakeFailure(train, failure);
-            Assert.Inconclusive("A method that does not return a value cannot be verified.");
-        }
-
-        /// <summary>
-        ///A test for SimulateBrokenRail
-        ///</summary>
-        [TestMethod()]
-        public void SimulateBrokenRailTest1()
-        {
-            Simulator_Accessor target = new Simulator_Accessor(); // TODO: Initialize to an appropriate value
-            TrackBlock block = null; // TODO: Initialize to an appropriate value
-            bool failure = false; // TODO: Initialize to an appropriate value
-            target.SimulateBrokenRail(block, failure);
-            Assert.Inconclusive("A method that does not return a value cannot be verified.");
-        }
-
-        /// <summary>
-        ///A test for SimulateCircuitFailure
-        ///</summary>
-        [TestMethod()]
-        public void SimulateCircuitFailureTest1()
-        {
-            Simulator_Accessor target = new Simulator_Accessor(); // TODO: Initialize to an appropriate value
-            TrackBlock block = null; // TODO: Initialize to an appropriate value
-            bool failure = false; // TODO: Initialize to an appropriate value
-            target.SimulateCircuitFailure(block, failure);
-            Assert.Inconclusive("A method that does not return a value cannot be verified.");
-        }
-
-        /// <summary>
-        ///A test for SimulateEngineFailure
-        ///</summary>
-        [TestMethod()]
-        public void SimulateEngineFailureTest1()
-        {
-            Simulator_Accessor target = new Simulator_Accessor(); // TODO: Initialize to an appropriate value
-            ITrain train = null; // TODO: Initialize to an appropriate value
-            bool failure = false; // TODO: Initialize to an appropriate value
-            target.SimulateEngineFailure(train, failure);
-            Assert.Inconclusive("A method that does not return a value cannot be verified.");
-        }
-
-        /// <summary>
-        ///A test for SimulatePickupFailure
-        ///</summary>
-        [TestMethod()]
-        public void SimulatePickupFailureTest1()
-        {
-            Simulator_Accessor target = new Simulator_Accessor(); // TODO: Initialize to an appropriate value
-            ITrain train = null; // TODO: Initialize to an appropriate value
-            bool failure = false; // TODO: Initialize to an appropriate value
-            target.SimulatePickupFailure(train, failure);
-            Assert.Inconclusive("A method that does not return a value cannot be verified.");
-        }
-
-        /// <summary>
-        ///A test for SimulatePowerFailure
-        ///</summary>
-        [TestMethod()]
-        public void SimulatePowerFailureTest1()
-        {
-            Simulator_Accessor target = new Simulator_Accessor(); // TODO: Initialize to an appropriate value
-            TrackBlock block = null; // TODO: Initialize to an appropriate value
-            bool failure = false; // TODO: Initialize to an appropriate value
-            target.SimulatePowerFailure(block, failure);
-            Assert.Inconclusive("A method that does not return a value cannot be verified.");
-        }
-
-        /// <summary>
-        ///A test for SpawnNewTrain
-        ///</summary>
-        [TestMethod()]
-        public void SpawnNewTrainTest1()
-        {
-            Simulator_Accessor target = new Simulator_Accessor(); // TODO: Initialize to an appropriate value
-            TrackBlock initialBlock = null; // TODO: Initialize to an appropriate value
-            string name = string.Empty; // TODO: Initialize to an appropriate value
-            target.SpawnNewTrain(initialBlock, name);
-            Assert.Inconclusive("A method that does not return a value cannot be verified.");
-        }
-
-        /// <summary>
-        ///A test for StartSimulation
-        ///</summary>
-        [TestMethod()]
-        public void StartSimulationTest1()
-        {
-            Simulator_Accessor target = new Simulator_Accessor(); // TODO: Initialize to an appropriate value
-            target.StartSimulation();
-            Assert.Inconclusive("A method that does not return a value cannot be verified.");
-        }
-
-        /// <summary>
-        ///A test for StopSimulation
-        ///</summary>
-        [TestMethod()]
-        public void StopSimulationTest1()
-        {
-            Simulator_Accessor target = new Simulator_Accessor(); // TODO: Initialize to an appropriate value
-            target.StopSimulation();
-            Assert.Inconclusive("A method that does not return a value cannot be verified.");
-        }
-
-        /// <summary>
         ///A test for SimulationRunning
         ///</summary>
         [TestMethod()]
-        public void SimulationRunningTest1()
+        public void SimulationRunningTest_true()
         {
-            Simulator_Accessor target = new Simulator_Accessor(); // TODO: Initialize to an appropriate value
-            bool actual;
-            actual = target.SimulationRunning;
-            Assert.Inconclusive("Verify the correctness of this test method.");
+            Simulator_Accessor target = new Simulator_Accessor();
+            bool expected = target.m_running = true;
+            bool actual = target.SimulationRunning;
+            Assert.AreEqual(expected, actual);
         }
     }
 }

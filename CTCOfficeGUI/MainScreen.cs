@@ -46,15 +46,18 @@ namespace CTCOfficeGUI
         private bool Initialize(string filename)
         {
             bool result = false;
-           
-            List<TrackBlock> blocks = m_ctcController.LoadTrackLayout(filename);
-            
-            if (blocks != null)
+
+            if (!string.IsNullOrEmpty(filename))
             {
-                Point p = m_ctcController.GetLayoutPosition();
-                Size s = m_ctcController.GetLayoutSize();
-                trackDisplayPanel.SetTrackLayout(blocks, s, p);
-                result = true;
+                List<TrackBlock> blocks = m_ctcController.LoadTrackLayout(filename);
+
+                if (blocks != null)
+                {
+                    Point p = m_ctcController.GetLayoutPosition();
+                    Size s = m_ctcController.GetLayoutSize();
+                    trackDisplayPanel.SetTrackLayout(blocks, s, p);
+                    result = true;
+                }
             }
 
             return result;
@@ -230,14 +233,6 @@ namespace CTCOfficeGUI
             m_selectedTrain = train;
             infoPanel.SetTrainInfo(train);
             commandPanel.ShowTrainCommands();
-
-            if (m_simulatorWindow == null || m_simulatorWindow.IsDisposed || m_simulatorWindow.Disposing)
-            {
-                m_simulatorWindow = new SimulatorWindow(); //User may have closed the simulator
-                m_simulatorWindow.Show();
-            }
-
-            m_simulatorWindow.SetSelectedTrackBlock(m_selectedTrackBlock);
 
             CloseOpenPopups();
         }
