@@ -105,20 +105,19 @@ namespace CTCOfficeGUI
 
             if (Int32.TryParse(value, out authority)) //Parse the string into an integer
             {
-                if (authority >= 0)
+                //Let the Wayside controller determine if the authority is valid
+
+                //Send authority to wayside controller
+                ITrackController controller = GetTrackController(block);
+                if (controller != null)
                 {
-                    //Send authority to wayside controller
-                    ITrackController controller = GetTrackController(block);
-                    if (controller != null)
+                    try
                     {
-                        try
-                        {
-                            result = controller.SuggestAuthority(block.Name, new BlockAuthority(block.Authority.SpeedLimitKPH, authority));
-                        }
-                        catch (Exception e)
-                        {
-                            m_log.LogError("Error in setting authority", e);
-                        }
+                        result = controller.SuggestAuthority(block.Name, new BlockAuthority(block.Authority.SpeedLimitKPH, authority));
+                    }
+                    catch (Exception e)
+                    {
+                        m_log.LogError("Error in setting authority", e);
                     }
                 }
             }
@@ -133,9 +132,12 @@ namespace CTCOfficeGUI
         /// <returns>Track controller</returns>
         public ITrackController GetTrackController(TrackBlock block)
         {
-            if (m_trackTable.ContainsKey(block))
+            if (block != null)
             {
-                return m_trackTable[block];
+                if (m_trackTable.ContainsKey(block))
+                {
+                    return m_trackTable[block];
+                }
             }
             return null;
         }
@@ -231,8 +233,8 @@ namespace CTCOfficeGUI
             {
                 TrackLayoutSerializer layoutSerializer = new TrackLayoutSerializer(filename);
                 layoutSerializer.Restore();
-                m_blockList = layoutSerializer.BlockList;
-                if (BuildLayout(m_blockList))
+                List<TrackBlock> blocks = layoutSerializer.BlockList;
+                if (BuildLayout(blocks))
                 {
                     m_updateTimer.Start();
                     m_log.LogInfo("Successfully loaded track layout. Starting update timer");
@@ -351,10 +353,13 @@ namespace CTCOfficeGUI
         {
             bool result = false;
 
-            if (!m_trainList.Contains(train))
+            if (train != null)
             {
-                m_trainList.Add(train);
-                result = true;
+                if (!m_trainList.Contains(train))
+                {
+                    m_trainList.Add(train);
+                    result = true;
+                }
             }
 
             return result;
@@ -390,6 +395,8 @@ namespace CTCOfficeGUI
             m_updateTimer = new Timer();
             m_updateTimer.Interval = 2000; //Update every 200 ms
             m_updateTimer.Tick += OnUpdateTimerTick;
+
+            CloseTrackBlock(null);
         }
 
         #endregion
@@ -423,11 +430,13 @@ namespace CTCOfficeGUI
             m_controllerList.Clear();
             m_trainList.Clear();
             m_trackTable.Clear();
+            m_blockList = new List<TrackBlock>();
 
             foreach (TrackBlock b in blocks)
             {
                 if (!string.IsNullOrEmpty(b.ControllerId))
                 {
+                    m_blockList.Add(b);
                     if (!trackControllers.ContainsKey(b.ControllerId))
                     {
                         //Create a new track controller
@@ -435,6 +444,7 @@ namespace CTCOfficeGUI
                         controller.AddTrackBlock(b);
                         m_trackTable[b] = controller;
                         m_controllerList.Add(controller);
+                        trackControllers[b.ControllerId] = controller;
                     }
                     else
                     {
@@ -458,12 +468,14 @@ namespace CTCOfficeGUI
                         ITrackController controller = new TrackController();
                         controller.AddTrackBlock(b);
                         m_controllerList.Add(controller);
+                        trackControllers[b.SecondaryControllerId] = controller;
+
                         //No need to add the controller to the track table. 
                     }
                     else
                     {
                         //Add it to the existing track controller
-                        ITrackController controller = trackControllers[b.ControllerId];
+                        ITrackController controller = trackControllers[b.SecondaryControllerId];
                         controller.AddTrackBlock(b);
 
                         //No need to add the controller to the track table. 

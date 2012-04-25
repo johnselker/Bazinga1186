@@ -19,7 +19,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>..\Bin\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -80,6 +80,10 @@
       <Project>{69FA46C5-B2BD-45DA-A60A-022932F30C1E}</Project>
       <Name>TrainLib</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ClassStubs\ClassStubs.csproj">
+      <Project>{AE4E0B9D-816C-4716-A843-099562EACED4}</Project>
+      <Name>ClassStubs</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />
@@ -106,6 +110,9 @@
   </ItemGroup>
   <ItemGroup>
     <Shadow Include="Test References\CTCOfficeGUI.accessor" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="log4net.config" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
