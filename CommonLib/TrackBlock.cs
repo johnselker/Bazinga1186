@@ -75,46 +75,6 @@ namespace CommonLib
             set;
         }
 
-        // PROPERTY: BrokenRail
-        //--------------------------------------------------------------------------------------
-        /// <summary>
-        /// Indicates the presence of a broken rail in the block
-        /// </summary>
-        //--------------------------------------------------------------------------------------
-        [XmlIgnore]
-        public bool BrokenRail
-        {
-            get;
-            set;
-        }
-
-        // PROPERTY: PowerFailure
-        //--------------------------------------------------------------------------------------
-        /// <summary>
-        /// Indicates a power failure in the block
-        /// </summary>
-        //--------------------------------------------------------------------------------------
-        [XmlIgnore]
-        public bool PowerFailure
-        {
-            get;
-            set;
-        }
-
-        // PROPERTY: TrackCircuitFailure
-        //--------------------------------------------------------------------------------------
-        /// <summary>
-        /// Indicates a failure of the track circuit in the block
-        /// </summary>
-        //--------------------------------------------------------------------------------------
-        [XmlIgnore]
-        public bool TrackCircuitFailure
-        {
-            get;
-            set;
-        }
-
-
         #endregion
 
         #region Accessors
@@ -398,8 +358,7 @@ namespace CommonLib
         [XmlIgnore]
         public bool HasTransponder
         {
-            get;
-            set;
+            get { return Transponder != null; }
         }
 
         // ACCESSOR: HasSwitch
@@ -411,8 +370,7 @@ namespace CommonLib
         [XmlIgnore]
         public Boolean HasSwitch
         {
-            get;
-            set;
+            get { return m_switch != null; }
         }
 
         // ACCESSOR: Status
@@ -490,6 +448,100 @@ namespace CommonLib
             }
             PreviousBockId = prevBlockID;
             NextBockId = nextBlockID;
+        }
+
+        #endregion
+
+        #region Public Methods
+
+        // METHOD: GetNextBlock
+        //--------------------------------------------------------------------------------------
+        /// <summary>
+        /// Returns the next track block based on the direction the train is heading
+        /// </summary>
+        /// <param name="direction">Direction the train is heading</param>
+        /// <returns>Returns the next track block</returns>
+        //--------------------------------------------------------------------------------------
+        public TrackBlock GetNextBlock(Direction direction)
+        {
+            switch (direction)
+			{
+				case Direction.East:
+                    if (Orientation == TrackOrientation.EastWest)
+                    {
+                        return NextBlock;
+                    }
+                    else
+                    {
+                        return null;
+                    }
+				case Direction.North:
+                    if (Orientation == TrackOrientation.NorthSouth)
+                    {
+                        return NextBlock;
+                    }
+                    else
+                    {
+                        return null;
+                    }
+				case Direction.Northeast:
+                    if (Orientation == TrackOrientation.SouthWestNorthEast)
+                    {
+                        return NextBlock;
+                    }
+                    else
+                    {
+                        return null;
+                    }
+				case Direction.Southeast:
+                    if (Orientation == TrackOrientation.NorthWestSouthEast)
+                    {
+                        return NextBlock;
+                    }
+                    else
+                    {
+                        return null;
+                    }
+				case Direction.West:
+                    if (Orientation == TrackOrientation.EastWest)
+                    {
+                        return PreviousBlock;
+                    }
+                    else
+                    {
+                        return null;
+                    }
+				case Direction.South:
+                    if (Orientation == TrackOrientation.NorthSouth)
+                    {
+                        return PreviousBlock;
+                    }
+                    else
+                    {
+                        return null;
+                    }
+				case Direction.Northwest:
+                    if (Orientation == TrackOrientation.NorthWestSouthEast)
+                    {
+                        return PreviousBlock;
+                    }
+                    else
+                    {
+                        return null;
+                    }
+				case Direction.Southwest:
+                    if (Orientation == TrackOrientation.SouthWestNorthEast)
+                    {
+                        return PreviousBlock;
+                    }
+                    else
+                    {
+                        return null;
+                    }
+				default:
+                    return null;
+			}
+            
         }
 
         #endregion

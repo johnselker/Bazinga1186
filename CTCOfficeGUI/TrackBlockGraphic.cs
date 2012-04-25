@@ -53,8 +53,8 @@ namespace CTCOfficeGUI
                 m_block = value;
                 m_currentColor = GetDrawColor();
 
-                picRRCrossing.Visible = m_block.RailroadCrossing;
-                picTunnel.Visible = m_block.HasTunnel;
+                //picRRCrossing.Visible = m_block.RailroadCrossing;
+                //picTunnel.Visible = m_block.HasTunnel;
             }
         }
 
@@ -98,24 +98,6 @@ namespace CTCOfficeGUI
         /// Blink color
         /// </summary>
         public Color BlinkColor
-        {
-            get;
-            set;
-        }
-
-        /// <summary>
-        /// Color of dot on the block
-        /// </summary>
-        public Color DotColor
-        {
-            get;
-            set;
-        }
-
-        /// <summary>
-        /// Flag to show a dot on the block
-        /// </summary>
-        public bool ShowDot
         {
             get;
             set;
@@ -168,7 +150,6 @@ namespace CTCOfficeGUI
             YellowColor = Color.Yellow;
             GreenColor = Color.Green;
             SuperGreenColor = Color.Green;
-            DotColor = Color.Orange;
 
             LineThickness = 5;
             ArrowLength = 5;
@@ -237,22 +218,22 @@ namespace CTCOfficeGUI
 
                     }
 
-                    if (m_block.RailroadCrossing && !m_block.HasTunnel)
-                    {
-                        picRRCrossing.Left = System.Convert.ToInt32((this.Width - picRRCrossing.Width) / 2.0);
-                        picRRCrossing.Top = System.Convert.ToInt32((this.Height - picRRCrossing.Height) / 2.0);
-                    }
-                    else if (!m_block.RailroadCrossing && m_block.HasTunnel)
-                    {
-                        picTunnel.Left = System.Convert.ToInt32((this.Width - picRRCrossing.Width) / 2.0);
-                        picTunnel.Top = System.Convert.ToInt32((this.Height - picRRCrossing.Height) / 2.0);
-                    }
-                    else
-                    {
-                        picRRCrossing.Left = System.Convert.ToInt32((this.Width / 2.0) - picRRCrossing.Width);
-                        picTunnel.Left = System.Convert.ToInt32(this.Width / 2.0);
-                        picTunnel.Top = picRRCrossing.Top = System.Convert.ToInt32((this.Height - picRRCrossing.Height) / 2.0);
-                    }
+                    //if (m_block.RailroadCrossing && !m_block.HasTunnel)
+                    //{
+                    //    picRRCrossing.Left = System.Convert.ToInt32((this.Width - picRRCrossing.Width) / 2.0);
+                    //    picRRCrossing.Top = System.Convert.ToInt32((this.Height - picRRCrossing.Height) / 2.0);
+                    //}
+                    //else if (!m_block.RailroadCrossing && m_block.HasTunnel)
+                    //{
+                    //    picTunnel.Left = System.Convert.ToInt32((this.Width - picRRCrossing.Width) / 2.0);
+                    //    picTunnel.Top = System.Convert.ToInt32((this.Height - picRRCrossing.Height) / 2.0);
+                    //}
+                    //else
+                    //{
+                    //    picRRCrossing.Left = System.Convert.ToInt32((this.Width / 2.0) - picRRCrossing.Width);
+                    //    picTunnel.Left = System.Convert.ToInt32(this.Width / 2.0);
+                    //    picTunnel.Top = picRRCrossing.Top = System.Convert.ToInt32((this.Height - picRRCrossing.Height) / 2.0);
+                    //}
 
                     return true;
                 }
@@ -445,16 +426,7 @@ namespace CTCOfficeGUI
             
             g.DrawLine(pen, m_scaledStart, m_scaledEnd); //Draw line
 
-            DrawArrows(g, pen);
-            
-            if (ShowDot)
-            {
-                Rectangle center = new Rectangle((this.Width - LineThickness) / 2, (this.Height - LineThickness) / 2, 
-                                                                                        LineThickness, LineThickness);
-                SolidBrush brush = new SolidBrush(DotColor);
-
-                g.FillEllipse(brush, center);
-            }
+            //DrawArrows(g, pen);
 
             pen.Dispose();
         }

@@ -121,6 +121,8 @@ namespace CTCOfficeGUI
                 //Update the block layout
                 if (updatedBlocks != null)
                 {
+                    this.SuspendLayout();
+
                     foreach (TrackBlock b in updatedBlocks)
                     {
                         if (m_blockTable.ContainsKey(b))
@@ -155,6 +157,8 @@ namespace CTCOfficeGUI
                             m_trainTable[train] = graphic;
                         }
                     }
+
+                    this.ResumeLayout();
                 }
             }
         }

@@ -222,19 +222,19 @@ namespace TrackLib
             TrackBlock redBlock7 = new TrackBlock("red7", TrackOrientation.EastWest, redBlock6.EndPoint, 75, 4.13, 0.5,
                                         false, false, 40, TrackAllowedDirection.Both, null, "redController1", "redController2", "red6", "red8");
             redBlock7.Transponder = new Transponder("Shadyside", 1);
-            redBlock7.HasTransponder = true;
+
             redTrack.Add(redBlock7);
             TrackBlock redBlock8 = new TrackBlock("red8", TrackOrientation.EastWest, redBlock7.EndPoint, 75, 4.13, 0,
                                         false, false, 40, TrackAllowedDirection.Both, null, "redController1", "redController2", "red7", "red9");
             redBlock8.Transponder = new Transponder("Shadyside", 0);
-            redBlock8.HasTransponder = true;
+
             redTrack.Add(redBlock8);
             TrackBlock redBlock9 = new TrackBlock("red9", TrackOrientation.NorthWestSouthEast, redBlock8.EndPoint, 75, 4.13, 0,
                                         false, false, 40, TrackAllowedDirection.Both, "Yard Switch", "redController1", "redController2", "red8", "red10");
             TrackBlock redBlock10 = new TrackBlock("red10", TrackOrientation.NorthWestSouthEast, redBlock9.EndPoint, 75, 4.13, 0,
                                         false, false, 40, TrackAllowedDirection.Both, null, "redController1", "redController2", "red8", "red10");
             TrackBlock YARD = new TrackBlock(Constants.REDYARD, TrackOrientation.NorthWestSouthEast, redBlock10.EndPoint, 150, 0, 0, false, false, 0, TrackAllowedDirection.Both, "YardSwitch", "redController1", "redController1", "red9", null);
-            redBlock10.HasSwitch = true;
+            YARD.Transponder = new Transponder(Constants.REDYARD, 0);
             redBlock10.Switch = new TrackSwitch("Yard Switch", "redController1", "redBlock10", "redBlock11", Constants.REDYARD);
             redTrack.Add(redBlock9);
             redTrack.Add(YARD);
@@ -253,12 +253,12 @@ namespace TrackLib
             TrackBlock redBlock14 = new TrackBlock("red14", TrackOrientation.EastWest, new Point(redBlock13.StartPoint.X - 60, redBlock13.StartPoint.Y), 60, 2.09, -1, false, false, 40, TrackAllowedDirection.Both, null, "redController1", "redController2", "red13", "red15");
             redTrack.Add(redBlock14);
             TrackBlock redBlock15 = new TrackBlock("red15", TrackOrientation.EastWest, new Point(redBlock14.StartPoint.X - 60, redBlock14.StartPoint.Y), 60, 1.49, -1, false, false, 40, TrackAllowedDirection.Both, null, "redController2", null, "red14", "red16");
-            redBlock15.HasTransponder = true;
+
             redBlock15.Transponder = new Transponder("Herron Ave", 1);
             // NEED SWITCH
             redTrack.Add(redBlock15);
             TrackBlock redBlock16 = new TrackBlock("red16", TrackOrientation.EastWest, new Point(redBlock15.StartPoint.X - 50, redBlock15.StartPoint.Y), 50, 1.24, -0.5, false, false, 40, TrackAllowedDirection.Both, null, "redController3", "redController2", "red15", "red17"); //16
-            redBlock16.HasTransponder = true;
+
             redBlock16.Transponder = new Transponder("Herron Ave", 0);
             redTrack.Add(redBlock16);
             TrackBlock redBlock17 = new TrackBlock("red17", TrackOrientation.EastWest, new Point(redBlock16.StartPoint.X - 200, redBlock16.StartPoint.Y), 200, 0.24, -0.5, false, false, 55, TrackAllowedDirection.Both, null, "redController3", "redController2", "red16", "red18");
@@ -268,7 +268,7 @@ namespace TrackLib
             TrackBlock redBlock19 = new TrackBlock("red19", TrackOrientation.EastWest, new Point(redBlock18.StartPoint.X - 400, redBlock18.StartPoint.Y), 400, 0.0, 0, false, false, 70, TrackAllowedDirection.Both, null, "redController3", "redController2", "red18", "red20");
             redTrack.Add(redBlock19);
             TrackBlock redBlock20 = new TrackBlock("red20", TrackOrientation.EastWest, new Point(redBlock19.StartPoint.X - 200, redBlock17.StartPoint.Y), 200, 0.0, 0, false, false, 70, TrackAllowedDirection.Both, null, "redController3", "redController2", "red19", "red21");
-            redBlock20.HasTransponder = true;
+
             redBlock20.Transponder = new Transponder("Swissville", 1);
             redTrack.Add(redBlock20);
             TrackBlock redBlock21 = new TrackBlock("red21", TrackOrientation.SouthWestNorthEast, new Point(redBlock20.StartPoint.X - Convert.ToInt32(Math.Sqrt((100 * 100) / 2)) + 1, redBlock20.StartPoint.Y + Convert.ToInt32(Math.Sqrt((100 * 100) / 2)) - 1), 100, 0, 0,
@@ -281,11 +281,11 @@ namespace TrackLib
                                        false, false, 55, TrackAllowedDirection.Both, null, "redController3", "redController2", "red22", "red24");
             redTrack.Add(redBlock23);
             TrackBlock redBlock24 = new TrackBlock("red24", TrackOrientation.NorthSouth, new Point(redBlock23.StartPoint.X, redBlock23.StartPoint.Y + 50), 50, 0, 0, true, false, 70, TrackAllowedDirection.Both, null, "redController3", "redController2", "redBlock23", "redBlock25");
-            redBlock24.HasTransponder = true;
+
             redBlock24.Transponder = new Transponder("Penn", 1);
             redTrack.Add(redBlock24);
             TrackBlock redBlock25 = new TrackBlock("red25", TrackOrientation.NorthSouth, new Point(redBlock24.StartPoint.X, redBlock24.StartPoint.Y + 50), 50, 0, 0, true, false, 70, TrackAllowedDirection.Both, null, "redController3", "redController2", "redBlock24", "redBlock26");
-            redBlock25.HasTransponder = true;
+
             redBlock25.Transponder = new Transponder("Penn", 0);
             redTrack.Add(redBlock25);
             // 27 should have switch!
@@ -307,11 +307,11 @@ namespace TrackLib
             TrackBlock redBlock33 = new TrackBlock("red33", TrackOrientation.NorthSouth, new Point(redBlock32.StartPoint.X, redBlock32.StartPoint.Y + 50), 50, 0, 0, true, false, 70, TrackAllowedDirection.Both, null, "redController4", "redController5", "redBlock32", "redBlock34");
             redTrack.Add(redBlock33);
             TrackBlock redBlock34 = new TrackBlock("red34", TrackOrientation.NorthSouth, new Point(redBlock33.StartPoint.X, redBlock33.StartPoint.Y + 50), 50, 0, 0, true, false, 70, TrackAllowedDirection.Both, null, "redController4", "redController5", "redBlock33", "redBlock35");
-            redBlock34.HasTransponder = true;
+
             redBlock34.Transponder = new Transponder("Steel Plaza", 1);
             redTrack.Add(redBlock34);
             TrackBlock redBlock35 = new TrackBlock("red35", TrackOrientation.NorthSouth, new Point(redBlock34.StartPoint.X, redBlock34.StartPoint.Y + 50), 50, 0, 0, true, false, 70, TrackAllowedDirection.Both, null, "redController4", "redController5", "redBlock34", "redBlock36");
-            redBlock35.HasTransponder = true;
+
             redBlock35.Transponder = new Transponder("Steel Plaza", 0);
             redTrack.Add(redBlock35);
             TrackBlock redBlock36 = new TrackBlock("red36", TrackOrientation.NorthSouth, new Point(redBlock35.StartPoint.X, redBlock35.StartPoint.Y + 50), 50, 0, 0, true, false, 70, TrackAllowedDirection.Both, null, "redController4", "redController5", "redBlock35", "redBlock37");
@@ -331,11 +331,11 @@ namespace TrackLib
             redTrack.Add(redBlock42);
             // NEED SWITCH 43
             TrackBlock redBlock43 = new TrackBlock("red43", TrackOrientation.NorthSouth, new Point(redBlock42.StartPoint.X, redBlock42.StartPoint.Y + 50), 50, 0, 0, true, false, 70, TrackAllowedDirection.Both, null, "redController6", null, "redBlock42", "redBlock44");
-            redBlock43.HasTransponder = true;
+
             redBlock43.Transponder = new Transponder("First Ave", 1);
             redTrack.Add(redBlock43);
             TrackBlock redBlock44 = new TrackBlock("red44", TrackOrientation.NorthSouth, new Point(redBlock43.StartPoint.X, redBlock43.StartPoint.Y + 50), 50, 0, 0, true, false, 70, TrackAllowedDirection.Both, null, "redController6", "redController7", "redBlock43", "redBlock45");
-            redBlock44.HasTransponder = true;
+
             redBlock44.Transponder = new Transponder("First Ave", 0);
             redTrack.Add(redBlock44);
             TrackBlock redBlock45 = new TrackBlock("red45", TrackOrientation.NorthSouth, new Point(redBlock44.StartPoint.X, redBlock44.StartPoint.Y + 50), 50, 0, 0, true, false, 70, TrackAllowedDirection.Both, null, "redController6", "redController7", "redBlock44", "redBlock46");
@@ -345,11 +345,11 @@ namespace TrackLib
             TrackBlock redBlock47 = new TrackBlock("red47", TrackOrientation.SouthWestNorthEast, new Point(redBlock46.StartPoint.X - Convert.ToInt32(Math.Sqrt((75 * 75) / 2)), redBlock46.StartPoint.Y + Convert.ToInt32(Math.Sqrt((75 * 75) / 2))), 75, 0, 0, false, true, 70, TrackAllowedDirection.Both, null, "redController6", "redController7", "redBlock46", "redBlock48");
             redTrack.Add(redBlock47);
             TrackBlock redBlock48 = new TrackBlock("red48", TrackOrientation.EastWest, new Point(redBlock47.StartPoint.X - 75, redBlock47.StartPoint.Y), 75, 0, 0, false, false, 70, TrackAllowedDirection.Both, null, "redController6", "redController7", "redBlock47", "redBlock49");
-            redBlock48.HasTransponder = true;
+
             redBlock48.Transponder = new Transponder("Station Square", 1);
             redTrack.Add(redBlock48);
             TrackBlock redBlock49 = new TrackBlock("red49", TrackOrientation.EastWest, new Point(redBlock48.StartPoint.X - 50, redBlock48.StartPoint.Y), 50, 0, 0, false, false, 60, TrackAllowedDirection.Both, null, "redController6", "redController7", "redBlock48", "redBlock50");
-            redBlock49.HasTransponder = true;
+
             redBlock49.Transponder = new Transponder("Station Square", 0);
             redTrack.Add(redBlock49);
             TrackBlock redBlock50 = new TrackBlock("red50", TrackOrientation.EastWest, new Point(redBlock49.StartPoint.X - 50, redBlock49.StartPoint.Y), 50, 0, 0, false, false, 60, TrackAllowedDirection.Both, null, "redController6", "redController7", "redBlock49", "redBlock51");
