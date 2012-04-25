@@ -10,7 +10,7 @@ namespace TrackControlLib
 	{
 		public interface ITrackController
 		{
-			bool AddTrackBlock(TrackBlock block);
+			bool AddTrackBlock(TrackBlock block, TrackBlock[] adj);
 			bool SetAdjTrackController(TrackController controller);
 			bool SuggestAuthority(string trackId, BlockAuthority auth);
 			bool CloseTrack(string trackId);
