@@ -318,18 +318,6 @@ namespace CTCOfficeGUI
             double timeStep = (timeDiff.Ticks / (double)TimeSpan.TicksPerSecond) * m_simulationScale;
             m_lastUpdateTime = timeFreeze;
 
-            if (m_trackControllerList != null)
-            {
-                lock (m_trackControllerList)
-                {
-                    //Update the track controllers first so that they can set safe authorities
-                    foreach (ITrackController controller in m_trackControllerList)
-                    {
-                        controller.Update();
-                    }
-                }
-            }
-
             lock (m_trainControllerList)
             {
                 //Update all the trains
