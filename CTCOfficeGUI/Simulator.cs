@@ -25,7 +25,8 @@ namespace CTCOfficeGUI
         private LoggingTool m_log = new LoggingTool(MethodBase.GetCurrentMethod());
         private Dictionary<string, Direction> m_startingDirections;
         private bool m_running = false;
-
+        private CTCController m_ctcController = CTCController.GetCTCController();
+        
         #endregion
 
         #region Accessors
@@ -89,7 +90,7 @@ namespace CTCOfficeGUI
             m_running = true;
             m_simulationTimer.Start();
             m_lastUpdateTime = DateTime.Now;
-            m_trackControllerList = CTCController.GetCTCController().GetTrackControllerList();
+            m_trackControllerList = m_ctcController.GetTrackControllerList();
         }
 
         /// <summary>
@@ -196,6 +197,7 @@ namespace CTCOfficeGUI
                 {
                     m_log.LogInfoFormat("Setting broken rail of block {0} to {1}", block.Name, failure);
                     block.Status.BrokenRail = failure;
+                    m_ctcController.UpdateTrackController(block);
                 }
             }
         }
@@ -213,6 +215,7 @@ namespace CTCOfficeGUI
                 {
                     m_log.LogInfoFormat("Setting circuit fail of block {0} to {1}", block.Name, failure);
                     block.Status.CircuitFail = failure;
+                    m_ctcController.UpdateTrackController(block);
                 }
             }
         }
@@ -230,6 +233,7 @@ namespace CTCOfficeGUI
                 {
                     m_log.LogInfoFormat("Setting power fail of block {0} to {1}", block.Name, failure);
                     block.Status.PowerFail = failure;
+                    m_ctcController.UpdateTrackController(block);
                 }
             }
         }
@@ -256,6 +260,7 @@ namespace CTCOfficeGUI
                             m_log.LogInfoFormat("Spawning new train \"{0}\" at start {1}", name, start); 
                             //Create the new train and train controller
                             ITrain train = new TrainLib.Train(name, initialBlock, m_startingDirections[start]);
+                            train.TrainEnteredNewBlock += OnTrainEnteredNewBlock;
                             ITrainController trainController = new TrainController(train);
                             m_trainControllerList.Add(trainController);
                             CTCController.GetCTCController().AddTrainToList(train); 
@@ -313,18 +318,6 @@ namespace CTCOfficeGUI
             double timeStep = (timeDiff.Ticks / (double)TimeSpan.TicksPerSecond) * m_simulationScale;
             m_lastUpdateTime = timeFreeze;
 
-            if (m_trackControllerList != null)
-            {
-                lock (m_trackControllerList)
-                {
-                    //Update the track controllers first so that they can set safe authorities
-                    foreach (ITrackController controller in m_trackControllerList)
-                    {
-                        controller.Update();
-                    }
-                }
-            }
-
             lock (m_trainControllerList)
             {
                 //Update all the trains
@@ -352,6 +345,19 @@ namespace CTCOfficeGUI
 
                     train.Dispose();
                 }
+            }
+        }
+
+        /// <summary>
+        /// A train entered a new track block. Need to push an update to the track controllers
+        /// </summary>
+        /// <param name="previous">Previous track block</param>
+        /// <param name="next">Next track block</param>
+        private void OnTrainEnteredNewBlock(TrackBlock previous, TrackBlock next)
+        {
+            if (!m_ctcController.UpdateTrackControllers(previous, next))
+            {
+                m_log.LogError("Failed to update track controllers");
             }
         }
 

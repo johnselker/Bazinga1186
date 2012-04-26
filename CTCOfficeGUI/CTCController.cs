@@ -384,6 +384,60 @@ namespace CTCOfficeGUI
             return result;
         }
 
+        /// <summary>
+        /// Updates the owners of the track blocks notifiying them that a train moved to a new position
+        /// </summary>
+        /// <param name="previous">Previous block the train was on</param>
+        /// <param name="current">Current block the train is now on</param>
+        /// <returns></returns>
+        public bool UpdateTrackControllers(TrackBlock previous, TrackBlock current)
+        {
+            bool result = false;
+            if (previous != null && current != null)
+            {
+                ITrackController previousController = GetTrackController(previous);
+                ITrackController newController = GetTrackController(previous);
+                
+                if (previousController != null && newController != null)
+                {
+                    previousController.Update();
+
+                    if (newController != previousController)
+                    {
+                        newController.Update();
+                    }
+
+                    result = true;
+                }
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Updates the owners of the track blocks notifiying them that a train moved to a new position
+        /// </summary>
+        /// <param name="previous">Previous block the train was on</param>
+        /// <param name="current">Current block the train is now on</param>
+        /// <returns></returns>
+        public bool UpdateTrackController(TrackBlock block)
+        {
+            bool result = false;
+            if (block != null)
+            {
+                ITrackController blockOwner = GetTrackController(block);
+
+                if (blockOwner != null)
+                {
+                    blockOwner.Update();
+
+                    result = true;
+                }
+            }
+
+            return result;
+        }
+
         #endregion
 
         #region Constructor
@@ -547,47 +601,6 @@ namespace CTCOfficeGUI
             }
         }
 
-
-        /// <summary>
-        /// Determines a list of track blocks that are adjacent to the given block
-        /// </summary>
-        /// <param name="b">Track block</param>
-        /// <returns>List of adjacent blocks</returns>
-        private List<TrackBlock> GetAdjacentTrackBlocks(TrackBlock b)
-        {
-            List<TrackBlock> adjacentBlocks = new List<TrackBlock>();
-            if (b != null)
-            {
-                //Add the next and previous blocks for starters...
-                if (b.NextBlock != null)
-                {
-                    adjacentBlocks.Add(b.NextBlock);
-                }
-                if (b.PreviousBlock != null)
-                {
-                    adjacentBlocks.Add(b.PreviousBlock);
-                }
-
-                if (b.HasSwitch)
-                {
-                    AddSwitchBlocks(b, adjacentBlocks);
-                }
-            }
-
-            return adjacentBlocks;
-        }
-
-        /// <summary>
-        /// Adds potentially adjacent blocks to the adjacency list
-        /// </summary>
-        /// <param name="b">Track block to check</param>
-        /// <param name="adjacentBlocks"></param>
-        private void AddSwitchBlocks(TrackBlock b, List<TrackBlock> adjacentBlocks)
-        {
-            if (b != null && adjacentBlocks != null)
-            {
-            }
-        }
         #endregion
 
         #region Private Data
