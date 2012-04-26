@@ -215,17 +215,13 @@ namespace CommonLib
         {
             Name = name;
             ControllerId = controllerID;
-			
-			TrunkId = trunk.Name;
-			BranchClosedId = branch1.Name;
-			BranchOpenId = branch2.Name;
 
             m_trunk = trunk;
             m_branch1 = branch1;
             m_branch2 = branch2;
             TrunkId = m_branch1.Name;
             BranchClosedId = m_branch1.Name;
-            BranchClosedId = m_branch2.Name;
+            BranchOpenId = m_branch2.Name;
 
             // initial state
             Branch = branch1;
