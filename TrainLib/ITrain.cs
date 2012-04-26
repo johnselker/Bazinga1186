@@ -8,6 +8,7 @@ using CommonLib;
 
 namespace TrainLib
 {
+	public delegate void OnTrainEnteredNewBlock(TrackBlock previousBlock, TrackBlock newBlock);
 	public interface ITrain
 	{
 		double GetSpeed();
@@ -30,5 +31,6 @@ namespace TrainLib
 		bool SetFriction(double friction);
         void SetPower(double power, double deltaTime);
 		TrainState GetState();
+		event OnTrainEnteredNewBlock TrainEnteredNewBlock;
 	}
 }

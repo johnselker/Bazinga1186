@@ -28,6 +28,9 @@ namespace CommonLib
         #region Private Data
 
         private TrackSwitchState m_state;
+        private TrackBlock m_trunk;
+        private TrackBlock m_branch1;
+        private TrackBlock m_branch2;
 
         #endregion
 
@@ -96,7 +99,7 @@ namespace CommonLib
             set;
         }
 
-        // PROPERTY: TrunkId
+        // ACCESSOR: TrunkId
         //--------------------------------------------------------------------------------------
         /// <summary>
         /// Id of the trunk block connecting to the switch
@@ -109,7 +112,7 @@ namespace CommonLib
             set;
         }
 
-        // PROPERTY: BranchClosedId
+        // ACCESSOR: BranchClosedId
         //--------------------------------------------------------------------------------------
         /// <summary>
         /// Id of the branch blocks connecting to the switch when closed
@@ -122,7 +125,7 @@ namespace CommonLib
             set;
         }
 
-        // PROPERTY: BranchOpenId
+        // ACCESSOR: BranchOpenId
         //--------------------------------------------------------------------------------------
         /// <summary>
         /// Name of the branch blocks connecting to the switch when open
@@ -134,6 +137,47 @@ namespace CommonLib
             get;
             set;
         }
+
+        // ACCESSOR: Branch
+        //--------------------------------------------------------------------------------------
+        /// <summary>
+        /// The branch currently connected to the trunk of the switch
+        /// </summary>
+        //--------------------------------------------------------------------------------------
+        [XmlElement(ElementName = "Branch")]
+        public TrackBlock Branch
+        {
+            get;
+            set;
+        }
+
+        // ACCESSOR: Trunk1
+        //--------------------------------------------------------------------------------------
+        /// <summary>
+        /// The trunk connected to the first branch of the switch
+        /// </summary>
+        //--------------------------------------------------------------------------------------
+        [XmlElement(ElementName = "Trunk1")]
+        public TrackBlock Trunk1
+        {
+            get;
+            set;
+        }
+
+        // ACCESSOR: Trunk2
+        //--------------------------------------------------------------------------------------
+        /// <summary>
+        /// The trunck connected to the second branch of the switch
+        /// </summary>
+        //--------------------------------------------------------------------------------------
+        [XmlElement(ElementName = "Trunk2")]
+        public TrackBlock Trunk2
+        {
+            get;
+            set;
+        }
+
+
 
         #endregion
 
@@ -149,11 +193,44 @@ namespace CommonLib
             //Do nothing
         }
 
-        
+
         // METHOD: TrackSwitch
         //--------------------------------------------------------------------------------------
         /// <summary>
         /// Primary constructor with initial state
+        /// </summary>
+        /// 
+        /// <param name="name">Track switch name</param>
+        /// <param name="controllerID">ID of the TrackController assigned to the switch</param>
+        /// <param name="trunk">the trunk of the switch</param>
+        /// <param name="branch1">the first branch of the switch</param>
+        /// <param name="branch2">the second branch of the switch</param>
+        /// <remarks>
+        /// The TrackBlock that you pass as trunk should be connected to Branch
+        /// The TrackBlock that you pass as branch1 should be connected to Trunk1
+        /// The TrackBlock that you pass as branch2 should be connected to Trunk2
+        /// </remarks>
+        //--------------------------------------------------------------------------------------
+        public TrackSwitch(string name, string controllerID, TrackBlock trunk, TrackBlock branch1, TrackBlock branch2)
+        {
+            Name = name;
+            ControllerId = controllerID;
+            m_trunk = trunk;
+            m_branch1 = branch1;
+            m_branch2 = branch2;
+
+            // initial state
+            Branch = branch1;
+            Trunk1 = trunk;
+            Trunk2 = null;
+
+            m_state = TrackSwitchState.Closed;
+        }
+
+        // METHOD: TrackSwitch
+        //--------------------------------------------------------------------------------------
+        /// <summary>
+        /// Secondary constructor with initial state
         /// </summary>
         /// 
         /// <param name="name">Track switch name</param>
@@ -171,6 +248,34 @@ namespace CommonLib
             BranchOpenId = branchOpenID;
 
             m_state = TrackSwitchState.Closed;
+        }
+
+        #endregion
+
+        #region Public Methods
+
+        // METHOD: Switch
+        //--------------------------------------------------------------------------------------
+        /// <summary>
+        /// Changes the state of the switch
+        /// </summary>
+        //--------------------------------------------------------------------------------------
+        public void Switch()
+        {
+            if (Branch == m_branch1)
+            {
+                Branch = m_branch2;
+                Trunk1 = null;
+                Trunk2 = m_trunk;
+                m_state = TrackSwitchState.Open;
+            }
+            else
+            {
+                Branch = m_branch1;
+                Trunk1 = m_trunk;
+                Trunk2 = null;
+                m_state = TrackSwitchState.Closed;
+            }
         }
 
         #endregion

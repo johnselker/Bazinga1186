@@ -452,6 +452,100 @@ namespace CommonLib
 
         #endregion
 
+        #region Public Methods
+
+        // METHOD: GetNextBlock
+        //--------------------------------------------------------------------------------------
+        /// <summary>
+        /// Returns the next track block based on the direction the train is heading
+        /// </summary>
+        /// <param name="direction">Direction the train is heading</param>
+        /// <returns>Returns the next track block</returns>
+        //--------------------------------------------------------------------------------------
+        public TrackBlock GetNextBlock(Direction direction)
+        {
+            switch (direction)
+			{
+				case Direction.East:
+                    if (Orientation == TrackOrientation.EastWest)
+                    {
+                        return NextBlock;
+                    }
+                    else
+                    {
+                        return null;
+                    }
+				case Direction.North:
+                    if (Orientation == TrackOrientation.NorthSouth)
+                    {
+                        return NextBlock;
+                    }
+                    else
+                    {
+                        return null;
+                    }
+				case Direction.Northeast:
+                    if (Orientation == TrackOrientation.SouthWestNorthEast)
+                    {
+                        return NextBlock;
+                    }
+                    else
+                    {
+                        return null;
+                    }
+				case Direction.Southeast:
+                    if (Orientation == TrackOrientation.NorthWestSouthEast)
+                    {
+                        return NextBlock;
+                    }
+                    else
+                    {
+                        return null;
+                    }
+				case Direction.West:
+                    if (Orientation == TrackOrientation.EastWest)
+                    {
+                        return PreviousBlock;
+                    }
+                    else
+                    {
+                        return null;
+                    }
+				case Direction.South:
+                    if (Orientation == TrackOrientation.NorthSouth)
+                    {
+                        return PreviousBlock;
+                    }
+                    else
+                    {
+                        return null;
+                    }
+				case Direction.Northwest:
+                    if (Orientation == TrackOrientation.NorthWestSouthEast)
+                    {
+                        return PreviousBlock;
+                    }
+                    else
+                    {
+                        return null;
+                    }
+				case Direction.Southwest:
+                    if (Orientation == TrackOrientation.SouthWestNorthEast)
+                    {
+                        return PreviousBlock;
+                    }
+                    else
+                    {
+                        return null;
+                    }
+				default:
+                    return null;
+			}
+            
+        }
+
+        #endregion
+
         #region Private Methods
 
         // METHOD: CalculateEndPoint
