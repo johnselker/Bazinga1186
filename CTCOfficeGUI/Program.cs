@@ -14,6 +14,9 @@ namespace CTCOfficeGUI
         [STAThread]
         static void Main()
         {
+            TrackLayoutSerializer bob = new TrackLayoutSerializer("RedLineFinal.xml");
+            bob.CreateTrackLayoutFileRedLine();
+            bob.Save();
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new MainScreen());
