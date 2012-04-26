@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <TrackLayout xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <LastUpdated>2012-04-25T22:45:12.0594785-04:00</LastUpdated>
+  <LastUpdated>2012-04-25T22:51:19.3414779-04:00</LastUpdated>
   <BlockList>
     <TrackBlock>
       <Name>red1</Name>
@@ -238,9 +238,8 @@
       </EndPoint>
       <EndElevation>0</EndElevation>
       <Grade>0</Grade>
-      <SwitchId>YardSwitch</SwitchId>
+      <SwitchId>Switch1</SwitchId>
       <ControllerId>redController1</ControllerId>
-      <SecondaryControllerId>redController2</SecondaryControllerId>
       <AllowedDirection>Both</AllowedDirection>
       <PreviousBlockId>red9</PreviousBlockId>
     </TrackBlock>
