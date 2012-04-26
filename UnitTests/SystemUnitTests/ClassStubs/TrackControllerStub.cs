@@ -9,46 +9,39 @@ namespace ClassStubs
 {
     public class TrackControllerStub : ITrackController
     {
+
         public bool AddTrackBlock(TrackBlock block)
         {
             return block != null;
         }
 
-        public bool SetAdjTrackController(TrackController controller)
+        public bool SetSwitch(TrackSwitch s)
         {
-            return controller != null;
+            return s != null;
         }
 
         public bool SuggestAuthority(string trackId, BlockAuthority auth)
         {
-            return (!string.IsNullOrEmpty(trackId) && auth != null);
+            return trackId != string.Empty && auth != null;
         }
 
         public bool CloseTrack(string trackId)
         {
-            return (!string.IsNullOrEmpty(trackId));
+            return trackId != string.Empty;
         }
 
         public bool OpenTrack(string trackId)
         {
-            return (!string.IsNullOrEmpty(trackId));
+            return trackId != string.Empty;
         }
 
-        public TrackStatus GetTrackStatus(string trackId)
+        public Dictionary<string, TrackBlock> GetUpdatedTrackStatus()
         {
-            if (!string.IsNullOrEmpty(trackId))
-            {
-                return new TrackStatus();
-            }
             return null;
         }
 
-        public Dictionary<string, TrackStatus> GetAllTrackStatus()
-        {
-            return new Dictionary<string, TrackStatus>();
-        }
-
         public void Update()
-        { }
+        {
+        }
     }
 }

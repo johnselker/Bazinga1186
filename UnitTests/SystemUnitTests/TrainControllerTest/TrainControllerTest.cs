@@ -75,7 +75,7 @@ namespace TrainControllerTest
         [TestMethod()]
         public void TrainControllerConstructorTest()
         {
-            TrackBlock startingBlock = new TrackBlock("Block1", TrackOrientation.EastWest, new Point(123, 456), 100, 50, 1, true, false, 70, TrackAllowedDirection.Both, null, "controller1", "controller2", "previousBlock", "nextBlock");
+            TrackBlock startingBlock = new TrackBlock("Block1", TrackOrientation.EastWest, new Point(123, 456), 100, 50, 1, true, false, 70, TrackAllowedDirection.Both, false, "controller1", "controller2", "previousBlock", "nextBlock");
             ITrain myTrain = new Train("train1", startingBlock, Direction.East);
             TrainController myTrainController = new TrainController(myTrain);
             PrivateObject param0 = new PrivateObject(myTrainController);
@@ -97,7 +97,7 @@ namespace TrainControllerTest
         [DeploymentItem("TrainControllerLib.dll")]
         public void CalculateStoppingDistanceTest()
         {
-            TrackBlock startingBlock = new TrackBlock("Block1", TrackOrientation.EastWest, new Point(123, 456), 100, 50, 1, true, false, 70, TrackAllowedDirection.Both, null, "controller1", "controller2", "previousBlock", "nextBlock");
+            TrackBlock startingBlock = new TrackBlock("Block1", TrackOrientation.EastWest, new Point(123, 456), 100, 50, 1, true, false, 70, TrackAllowedDirection.Both, false, "controller1", "controller2", "previousBlock", "nextBlock");
             ITrain myTrain = new Train("train1", startingBlock, Direction.East);
             TrainController myTrainController = new TrainController(myTrain);
             PrivateObject param0 = new PrivateObject(myTrainController);
@@ -118,7 +118,7 @@ namespace TrainControllerTest
         [DeploymentItem("TrainControllerLib.dll")]
         public void ControlLawAllZerosTest()
         {
-            TrackBlock startingBlock = new TrackBlock("Block1", TrackOrientation.EastWest, new Point(123, 456), 100, 50, 1, true, false, 70, TrackAllowedDirection.Both, null, "controller1", "controller2", "previousBlock", "nextBlock");
+            TrackBlock startingBlock = new TrackBlock("Block1", TrackOrientation.EastWest, new Point(123, 456), 100, 50, 1, true, false, 70, TrackAllowedDirection.Both, false, "controller1", "controller2", "previousBlock", "nextBlock");
             ITrain myTrain = new Train("train1", startingBlock, Direction.East);
             TrainController myTrainController = new TrainController(myTrain);
             PrivateObject param0 = new PrivateObject(myTrainController);
@@ -142,7 +142,7 @@ namespace TrainControllerTest
         [DeploymentItem("TrainControllerLib.dll")]
         public void ControlLawNegativePowerTest()
         {
-            TrackBlock startingBlock = new TrackBlock("Block1", TrackOrientation.EastWest, new Point(123, 456), 100, 50, 1, true, false, 70, TrackAllowedDirection.Both, null, "controller1", "controller2", "previousBlock", "nextBlock");
+            TrackBlock startingBlock = new TrackBlock("Block1", TrackOrientation.EastWest, new Point(123, 456), 100, 50, 1, true, false, 70, TrackAllowedDirection.Both, false, "controller1", "controller2", "previousBlock", "nextBlock");
             ITrain myTrain = new Train("train1", startingBlock, Direction.East);
             TrainController myTrainController = new TrainController(myTrain);
             PrivateObject param0 = new PrivateObject(myTrainController);
@@ -166,7 +166,7 @@ namespace TrainControllerTest
         [DeploymentItem("TrainControllerLib.dll")]
         public void ControlLawSaturationTest()
         {
-            TrackBlock startingBlock = new TrackBlock("Block1", TrackOrientation.EastWest, new Point(123, 456), 100, 50, 1, true, false, 70, TrackAllowedDirection.Both, null, "controller1", "controller2", "previousBlock", "nextBlock");
+            TrackBlock startingBlock = new TrackBlock("Block1", TrackOrientation.EastWest, new Point(123, 456), 100, 50, 1, true, false, 70, TrackAllowedDirection.Both, false, "controller1", "controller2", "previousBlock", "nextBlock");
             ITrain myTrain = new Train("train1", startingBlock, Direction.East);
             TrainController myTrainController = new TrainController(myTrain);
             PrivateObject param0 = new PrivateObject(myTrainController);
@@ -190,7 +190,7 @@ namespace TrainControllerTest
         [DeploymentItem("TrainControllerLib.dll")]
         public void ControlLawProportionalGainOnlyTest()
         {
-            TrackBlock startingBlock = new TrackBlock("Block1", TrackOrientation.EastWest, new Point(123, 456), 100, 50, 1, true, false, 70, TrackAllowedDirection.Both, null, "controller1", "controller2", "previousBlock", "nextBlock");
+            TrackBlock startingBlock = new TrackBlock("Block1", TrackOrientation.EastWest, new Point(123, 456), 100, 50, 1, true, false, 70, TrackAllowedDirection.Both, false, "controller1", "controller2", "previousBlock", "nextBlock");
             ITrain myTrain = new Train("train1", startingBlock, Direction.East);
             TrainController myTrainController = new TrainController(myTrain);
             PrivateObject param0 = new PrivateObject(myTrainController);
@@ -213,7 +213,7 @@ namespace TrainControllerTest
         [DeploymentItem("TrainControllerLib.dll")]
         public void ControlLawIntegralGainOnlyTest()
         {
-            TrackBlock startingBlock = new TrackBlock("Block1", TrackOrientation.EastWest, new Point(123, 456), 100, 50, 1, true, false, 70, TrackAllowedDirection.Both, null, "controller1", "controller2", "previousBlock", "nextBlock");
+            TrackBlock startingBlock = new TrackBlock("Block1", TrackOrientation.EastWest, new Point(123, 456), 100, 50, 1, true, false, 70, TrackAllowedDirection.Both, false, "controller1", "controller2", "previousBlock", "nextBlock");
             ITrain myTrain = new Train("train1", startingBlock, Direction.East);
             TrainController myTrainController = new TrainController(myTrain);
             PrivateObject param0 = new PrivateObject(myTrainController);
@@ -236,7 +236,7 @@ namespace TrainControllerTest
         [DeploymentItem("TrainControllerLib.dll")]
         public void ControlLawIntegralGainWithMaxPowerTest()
         {
-            TrackBlock startingBlock = new TrackBlock("Block1", TrackOrientation.EastWest, new Point(123, 456), 100, 50, 1, true, false, 70, TrackAllowedDirection.Both, null, "controller1", "controller2", "previousBlock", "nextBlock");
+            TrackBlock startingBlock = new TrackBlock("Block1", TrackOrientation.EastWest, new Point(123, 456), 100, 50, 1, true, false, 70, TrackAllowedDirection.Both, false, "controller1", "controller2", "previousBlock", "nextBlock");
             ITrain myTrain = new Train("train1", startingBlock, Direction.East);
             TrainController myTrainController = new TrainController(myTrain);
             PrivateObject param0 = new PrivateObject(myTrainController);
@@ -259,7 +259,7 @@ namespace TrainControllerTest
         [DeploymentItem("TrainControllerLib.dll")]
         public void ControlLawProportionalAndIntegralGain()
         {
-            TrackBlock startingBlock = new TrackBlock("Block1", TrackOrientation.EastWest, new Point(123, 456), 100, 50, 1, true, false, 70, TrackAllowedDirection.Both, null, "controller1", "controller2", "previousBlock", "nextBlock");
+            TrackBlock startingBlock = new TrackBlock("Block1", TrackOrientation.EastWest, new Point(123, 456), 100, 50, 1, true, false, 70, TrackAllowedDirection.Both, false, "controller1", "controller2", "previousBlock", "nextBlock");
             ITrain myTrain = new Train("train1", startingBlock, Direction.East);
             TrainController myTrainController = new TrainController(myTrain);
             PrivateObject param0 = new PrivateObject(myTrainController);
@@ -282,14 +282,14 @@ namespace TrainControllerTest
         [DeploymentItem("TrainControllerLib.dll")]
         public void DetermineSetPointTest()
         {
-            TrackBlock startingBlock = new TrackBlock("Block1", TrackOrientation.EastWest, new Point(123, 456), 100, 50, 1, true, false, 70, TrackAllowedDirection.Both, null, "controller1", "controller2", "previousBlock", "nextBlock");
+            TrackBlock startingBlock = new TrackBlock("Block1", TrackOrientation.EastWest, new Point(123, 456), 100, 50, 1, true, false, 70, TrackAllowedDirection.Both, false, "controller1", "controller2", "previousBlock", "nextBlock");
             ITrain myTrain = new Train("train1", startingBlock, Direction.East);
             TrainController myTrainController = new TrainController(myTrain);
             PrivateObject param0 = new PrivateObject(myTrainController);
             TrainController_Accessor target = new TrainController_Accessor(param0);
 
             target.m_currentBlock.Authority = new BlockAuthority(0, 0);
-            target.m_currentBlock.NextBlock = new TrackBlock("nextBlock", TrackOrientation.EastWest, new Point(123, 456), 100, 50, 1, true, false, 70, TrackAllowedDirection.Both, null, "controller1", "controller2", "Block1", "nextBlock2");
+            target.m_currentBlock.NextBlock = new TrackBlock("nextBlock", TrackOrientation.EastWest, new Point(123, 456), 100, 50, 1, true, false, 70, TrackAllowedDirection.Both, false, "controller1", "controller2", "Block1", "nextBlock2");
             target.m_currentBlock.NextBlock.Authority = new BlockAuthority(100, 0);
 
             target.m_setPoint = 0;
@@ -461,7 +461,7 @@ namespace TrainControllerTest
         [DeploymentItem("TrainControllerLib.dll")]
         public void FaultMonitorTest()
         {
-            TrackBlock startingBlock = new TrackBlock("Block1", TrackOrientation.EastWest, new Point(123, 456), 100, 50, 1, true, false, 70, TrackAllowedDirection.Both, null, "controller1", "controller2", "previousBlock", "nextBlock");
+            TrackBlock startingBlock = new TrackBlock("Block1", TrackOrientation.EastWest, new Point(123, 456), 100, 50, 1, true, false, 70, TrackAllowedDirection.Both, false, "controller1", "controller2", "previousBlock", "nextBlock");
             ITrain myTrain = new Train("train1", startingBlock, Direction.East);
             TrainController myTrainController = new TrainController(myTrain);
             PrivateObject param0 = new PrivateObject(myTrainController);
@@ -512,7 +512,7 @@ namespace TrainControllerTest
         [DeploymentItem("TrainControllerLib.dll")]
         public void LeaveStationTest()
         {
-            TrackBlock startingBlock = new TrackBlock("Block1", TrackOrientation.EastWest, new Point(123, 456), 100, 50, 1, true, false, 70, TrackAllowedDirection.Both, null, "controller1", "controller2", "previousBlock", "nextBlock");
+            TrackBlock startingBlock = new TrackBlock("Block1", TrackOrientation.EastWest, new Point(123, 456), 100, 50, 1, true, false, 70, TrackAllowedDirection.Both, false, "controller1", "controller2", "previousBlock", "nextBlock");
             ITrain myTrain = new Train("train1", startingBlock, Direction.East);
             TrainController myTrainController = new TrainController(myTrain);
             PrivateObject param0 = new PrivateObject(myTrainController);
@@ -539,7 +539,7 @@ namespace TrainControllerTest
         [DeploymentItem("TrainControllerLib.dll")]
         public void LightControllerTest()
         {
-            TrackBlock startingBlock = new TrackBlock("Block1", TrackOrientation.EastWest, new Point(123, 456), 100, 50, 1, true, false, 70, TrackAllowedDirection.Both, null, "controller1", "controller2", "previousBlock", "nextBlock");
+            TrackBlock startingBlock = new TrackBlock("Block1", TrackOrientation.EastWest, new Point(123, 456), 100, 50, 1, true, false, 70, TrackAllowedDirection.Both, false, "controller1", "controller2", "previousBlock", "nextBlock");
             ITrain myTrain = new Train("train1", startingBlock, Direction.East);
             TrainController myTrainController = new TrainController(myTrain);
             PrivateObject param0 = new PrivateObject(myTrainController);
@@ -583,7 +583,7 @@ namespace TrainControllerTest
         [TestMethod()]
         public void SetScheduleTest()
         {
-            TrackBlock startingBlock = new TrackBlock("Block1", TrackOrientation.EastWest, new Point(123, 456), 100, 50, 1, true, false, 70, TrackAllowedDirection.Both, null, "controller1", "controller2", "previousBlock", "nextBlock");
+            TrackBlock startingBlock = new TrackBlock("Block1", TrackOrientation.EastWest, new Point(123, 456), 100, 50, 1, true, false, 70, TrackAllowedDirection.Both, false, "controller1", "controller2", "previousBlock", "nextBlock");
             ITrain myTrain = new Train("train1", startingBlock, Direction.East);
             TrainController myTrainController = new TrainController(myTrain);
             PrivateObject param0 = new PrivateObject(myTrainController);
@@ -604,7 +604,7 @@ namespace TrainControllerTest
         [DeploymentItem("TrainControllerLib.dll")]
         public void StationControllerTest()
         {
-            TrackBlock startingBlock = new TrackBlock("Block1", TrackOrientation.EastWest, new Point(123, 456), 100, 50, 1, true, false, 70, TrackAllowedDirection.Both, null, "controller1", "controller2", "previousBlock", "nextBlock");
+            TrackBlock startingBlock = new TrackBlock("Block1", TrackOrientation.EastWest, new Point(123, 456), 100, 50, 1, true, false, 70, TrackAllowedDirection.Both, false, "controller1", "controller2", "previousBlock", "nextBlock");
             ITrain myTrain = new Train("train1", startingBlock, Direction.East);
             TrainController myTrainController = new TrainController(myTrain);
             PrivateObject param0 = new PrivateObject(myTrainController);
@@ -694,10 +694,10 @@ namespace TrainControllerTest
         [DeploymentItem("TrainControllerLib.dll")]
         public void SystemControllerTest()
         {
-            TrackBlock startingBlock = new TrackBlock("Block1", TrackOrientation.EastWest, new Point(123, 456), 100, 50, 1, true, false, 70, TrackAllowedDirection.Both, null, "controller1", "controller2", "previousBlock", "nextBlock");
+            TrackBlock startingBlock = new TrackBlock("Block1", TrackOrientation.EastWest, new Point(123, 456), 100, 50, 1, true, false, 70, TrackAllowedDirection.Both, false, "controller1", "controller2", "previousBlock", "nextBlock");
             startingBlock.Authority.Authority = -1;
             startingBlock.Transponder = new Transponder("station456", 1);
-            startingBlock.NextBlock = new TrackBlock("nextBlock", TrackOrientation.EastWest, new Point(123, 456), 100, 50, 1, true, false, 70, TrackAllowedDirection.Both, null, "controller1", "controller2", "Block1", "nextBlock2");
+            startingBlock.NextBlock = new TrackBlock("nextBlock", TrackOrientation.EastWest, new Point(123, 456), 100, 50, 1, true, false, 70, TrackAllowedDirection.Both, false, "controller1", "controller2", "Block1", "nextBlock2");
             startingBlock.NextBlock.Authority = new BlockAuthority(100, 0);
             ITrain myTrain = new Train("train1", startingBlock, Direction.East);
             TrainController myTrainController = new TrainController(myTrain);
@@ -750,7 +750,7 @@ namespace TrainControllerTest
         [TestMethod()]
         public void UpdateTest()
         {
-            TrackBlock startingBlock = new TrackBlock("Block1", TrackOrientation.EastWest, new Point(123, 456), 100, 50, 1, true, false, 70, TrackAllowedDirection.Both, null, "controller1", "controller2", "previousBlock", "nextBlock");
+            TrackBlock startingBlock = new TrackBlock("Block1", TrackOrientation.EastWest, new Point(123, 456), 100, 50, 1, true, false, 70, TrackAllowedDirection.Both, false, "controller1", "controller2", "previousBlock", "nextBlock");
             ITrain myTrain = new Train("train1", startingBlock, Direction.East);
             TrainController myTrainController = new TrainController(myTrain);
             PrivateObject param0 = new PrivateObject(myTrainController);
@@ -777,7 +777,7 @@ namespace TrainControllerTest
         [DeploymentItem("TrainControllerLib.dll")]
         public void VelocityControllerTest()
         {
-            TrackBlock startingBlock = new TrackBlock("Block1", TrackOrientation.EastWest, new Point(123, 456), 100, 50, 1, true, false, 70, TrackAllowedDirection.Both, null, "controller1", "controller2", "previousBlock", "nextBlock");
+            TrackBlock startingBlock = new TrackBlock("Block1", TrackOrientation.EastWest, new Point(123, 456), 100, 50, 1, true, false, 70, TrackAllowedDirection.Both, false, "controller1", "controller2", "previousBlock", "nextBlock");
             ITrain myTrain = new Train("train1", startingBlock, Direction.East);
             TrainController myTrainController = new TrainController(myTrain);
             PrivateObject param0 = new PrivateObject(myTrainController);
@@ -818,7 +818,7 @@ namespace TrainControllerTest
         [TestMethod()]
         public void LocationXTest()
         {
-            TrackBlock startingBlock = new TrackBlock("Block1", TrackOrientation.EastWest, new Point(123, 456), 100, 50, 1, true, false, 70, TrackAllowedDirection.Both, null, "controller1", "controller2", "previousBlock", "nextBlock");
+            TrackBlock startingBlock = new TrackBlock("Block1", TrackOrientation.EastWest, new Point(123, 456), 100, 50, 1, true, false, 70, TrackAllowedDirection.Both, false, "controller1", "controller2", "previousBlock", "nextBlock");
             ITrain myTrain = new Train("train1", startingBlock, Direction.East);
             TrainController myTrainController = new TrainController(myTrain);
             PrivateObject param0 = new PrivateObject(myTrainController);
@@ -835,7 +835,7 @@ namespace TrainControllerTest
         [TestMethod()]
         public void LocationYTest()
         {
-            TrackBlock startingBlock = new TrackBlock("Block1", TrackOrientation.EastWest, new Point(123, 456), 100, 50, 1, true, false, 70, TrackAllowedDirection.Both, null, "controller1", "controller2", "previousBlock", "nextBlock");
+            TrackBlock startingBlock = new TrackBlock("Block1", TrackOrientation.EastWest, new Point(123, 456), 100, 50, 1, true, false, 70, TrackAllowedDirection.Both, false, "controller1", "controller2", "previousBlock", "nextBlock");
             ITrain myTrain = new Train("train1", startingBlock, Direction.East);
             TrainController myTrainController = new TrainController(myTrain);
             PrivateObject param0 = new PrivateObject(myTrainController);
@@ -852,7 +852,7 @@ namespace TrainControllerTest
         [TestMethod()]
         public void ManualModeTest()
         {
-            TrackBlock startingBlock = new TrackBlock("Block1", TrackOrientation.EastWest, new Point(123, 456), 100, 50, 1, true, false, 70, TrackAllowedDirection.Both, null, "controller1", "controller2", "previousBlock", "nextBlock");
+            TrackBlock startingBlock = new TrackBlock("Block1", TrackOrientation.EastWest, new Point(123, 456), 100, 50, 1, true, false, 70, TrackAllowedDirection.Both, false, "controller1", "controller2", "previousBlock", "nextBlock");
             ITrain myTrain = new Train("train1", startingBlock, Direction.East);
             TrainController myTrainController = new TrainController(myTrain);
             PrivateObject param0 = new PrivateObject(myTrainController);
@@ -871,7 +871,7 @@ namespace TrainControllerTest
         [TestMethod()]
         public void ManualSpeedTest()
         {
-            TrackBlock startingBlock = new TrackBlock("Block1", TrackOrientation.EastWest, new Point(123, 456), 100, 50, 1, true, false, 70, TrackAllowedDirection.Both, null, "controller1", "controller2", "previousBlock", "nextBlock");
+            TrackBlock startingBlock = new TrackBlock("Block1", TrackOrientation.EastWest, new Point(123, 456), 100, 50, 1, true, false, 70, TrackAllowedDirection.Both, false, "controller1", "controller2", "previousBlock", "nextBlock");
             ITrain myTrain = new Train("train1", startingBlock, Direction.East);
             TrainController myTrainController = new TrainController(myTrain);
             PrivateObject param0 = new PrivateObject(myTrainController);
@@ -888,7 +888,7 @@ namespace TrainControllerTest
         [TestMethod()]
         public void SpeedTest()
         {
-            TrackBlock startingBlock = new TrackBlock("Block1", TrackOrientation.EastWest, new Point(123, 456), 100, 50, 1, true, false, 70, TrackAllowedDirection.Both, null, "controller1", "controller2", "previousBlock", "nextBlock");
+            TrackBlock startingBlock = new TrackBlock("Block1", TrackOrientation.EastWest, new Point(123, 456), 100, 50, 1, true, false, 70, TrackAllowedDirection.Both, false, "controller1", "controller2", "previousBlock", "nextBlock");
             ITrain myTrain = new Train("train1", startingBlock, Direction.East);
             TrainController myTrainController = new TrainController(myTrain);
             PrivateObject param0 = new PrivateObject(myTrainController);
@@ -906,11 +906,11 @@ namespace TrainControllerTest
         [DeploymentItem("TrainControllerLib.dll")]
         public void SystemControllerTest2()
         {
-            TrackBlock startingBlock = new TrackBlock("Block1", TrackOrientation.EastWest, new Point(0, 0), 100, 0, 0, true, false, 70, TrackAllowedDirection.Both, null, "controller1", "controller2", "Block0", "Block2");
-            startingBlock.NextBlock = new TrackBlock("Block2", TrackOrientation.EastWest, new Point(100, 0), 100, 0, 0, true, false, 70, TrackAllowedDirection.Both, null, "controller1", "controller2", "Block1", "Block3");
+            TrackBlock startingBlock = new TrackBlock("Block1", TrackOrientation.EastWest, new Point(0, 0), 100, 0, 0, true, false, 70, TrackAllowedDirection.Both, false, "controller1", "controller2", "Block0", "Block2");
+            startingBlock.NextBlock = new TrackBlock("Block2", TrackOrientation.EastWest, new Point(100, 0), 100, 0, 0, true, false, 70, TrackAllowedDirection.Both, false, "controller1", "controller2", "Block1", "Block3");
             startingBlock.Authority = new BlockAuthority(50, 1);
             startingBlock.NextBlock.Authority = new BlockAuthority(50, 0);
-            startingBlock.NextBlock.NextBlock = new TrackBlock("Block3", TrackOrientation.EastWest, new Point(200, 0), 100, 0, 0, true, false, 70, TrackAllowedDirection.Both, null, "controller1", "controller2", "Block2", "Block4");
+            startingBlock.NextBlock.NextBlock = new TrackBlock("Block3", TrackOrientation.EastWest, new Point(200, 0), 100, 0, 0, true, false, 70, TrackAllowedDirection.Both, false, "controller1", "controller2", "Block2", "Block4");
 
             startingBlock.Transponder = new Transponder("station1", 1);
             startingBlock.NextBlock.Transponder = new Transponder("station1", 0);
@@ -972,11 +972,11 @@ namespace TrainControllerTest
         [DeploymentItem("TrainControllerLib.dll")]
         public void SystemControllerTest3()
         {
-            TrackBlock startingBlock = new TrackBlock("Block1", TrackOrientation.EastWest, new Point(0, 0), 100, 0, 0, true, false, 70, TrackAllowedDirection.Both, null, "controller1", "controller2", "Block0", "Block2");
-            startingBlock.NextBlock = new TrackBlock("Block2", TrackOrientation.EastWest, new Point(100, 0), 100, 0, 0, true, false, 70, TrackAllowedDirection.Both, null, "controller1", "controller2", "Block1", "Block3");
+            TrackBlock startingBlock = new TrackBlock("Block1", TrackOrientation.EastWest, new Point(0, 0), 100, 0, 0, true, false, 70, TrackAllowedDirection.Both, false, "controller1", "controller2", "Block0", "Block2");
+            startingBlock.NextBlock = new TrackBlock("Block2", TrackOrientation.EastWest, new Point(100, 0), 100, 0, 0, true, false, 70, TrackAllowedDirection.Both, false, "controller1", "controller2", "Block1", "Block3");
             startingBlock.Authority = new BlockAuthority(70, 1);
             startingBlock.NextBlock.Authority = new BlockAuthority(70, 0);
-            startingBlock.NextBlock.NextBlock = new TrackBlock("Block3", TrackOrientation.EastWest, new Point(200, 0), 100, 0, 0, true, false, 70, TrackAllowedDirection.Both, null, "controller1", "controller2", "Block2", "Block4");
+            startingBlock.NextBlock.NextBlock = new TrackBlock("Block3", TrackOrientation.EastWest, new Point(200, 0), 100, 0, 0, true, false, 70, TrackAllowedDirection.Both, false, "controller1", "controller2", "Block2", "Block4");
 
             startingBlock.Transponder = new Transponder("station1", 1);
             startingBlock.NextBlock.Transponder = new Transponder("station1", 0);

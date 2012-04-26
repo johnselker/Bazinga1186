@@ -243,8 +243,8 @@ namespace CommonLib
         /// Id of the switch connecting to this block
         /// </summary>
         //--------------------------------------------------------------------------------------
-        [XmlElement(ElementName = "SwitchId")]
-        public string SwitchId
+        [XmlElement(ElementName = "HasSwitch")]
+        public bool HasSwitch
         {
             get;
             set;
@@ -303,7 +303,7 @@ namespace CommonLib
         /// </remarks>
         //--------------------------------------------------------------------------------------
         [XmlElement(ElementName = "PreviousBlockId")]
-        public string PreviousBockId
+        public string PreviousBlockId
         {
             get;
             set;
@@ -321,7 +321,7 @@ namespace CommonLib
         /// </remarks>
         //--------------------------------------------------------------------------------------
         [XmlElement(ElementName = "NextBlockId")]
-        public string NextBockId
+        public string NextBlockId
         {
             get;
             set;
@@ -337,19 +337,6 @@ namespace CommonLib
         public bool HasTransponder
         {
             get { return Transponder != null; }
-        }
-
-        // ACCESSOR: HasSwitch
-        //--------------------------------------------------------------------------------------
-        /// <summary>
-        /// Shortcut to determine if the block has a switch
-        /// </summary>
-        //--------------------------------------------------------------------------------------
-        [XmlIgnore]
-        public Boolean HasSwitch
-        {
-            get;
-            set;
         }
 
         // ACCESSOR: Status
@@ -401,7 +388,7 @@ namespace CommonLib
         //--------------------------------------------------------------------------------------
         public TrackBlock(string name, TrackOrientation orientation, Point startPoint, double length, double endElevation,
                             double grade, bool tunnel, bool railroadCrossing, int staticSpeedLimit,
-                            TrackAllowedDirection direction, string switchID, string controllerID,
+                            TrackAllowedDirection direction, bool hasSwitch, string controllerID,
                             string secondaryControllerID, string prevBlockID, string nextBlockID)
         {
             Name = name;
@@ -416,7 +403,7 @@ namespace CommonLib
             CalculateEndPoint();
             EndElevationMeters = endElevation;
             AllowedDirection = direction;
-            SwitchId = switchID;
+            HasSwitch = hasSwitch;
             ControllerId = controllerID;
             SecondaryControllerId = secondaryControllerID;
             // Set default static max speed to physical limit
@@ -425,8 +412,8 @@ namespace CommonLib
             {
                 StartElevationMeters = EndElevationMeters - ((LengthMeters * grade) / 100);
             }
-            PreviousBockId = prevBlockID;
-            NextBockId = nextBlockID;
+            PreviousBlockId = prevBlockID;
+            NextBlockId = nextBlockID;
         }
 
         #endregion

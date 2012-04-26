@@ -10,6 +10,8 @@ namespace ClassStubs
 {
     public class TrainStub : ITrain
     {
+        public event OnTrainEnteredNewBlock TrainEnteredNewBlock;
+
         public double GetSpeed()
         {
             return 0;

@@ -13,28 +13,74 @@ namespace TrainControllerLib
 {
     public partial class TrainOperator : Form
     {
-        private TrainController myTrainController;
-        private ITrain myTrain;
-        private double mySpeed = 0;
-        private Timer myTimer;
-        //private double currentSpeedD;
-        private double time = 0;
-        private DateTime start;
-        private TimeSpan myTimeSpan;
-        private TrainState myTrainState;
-        private TrackBlock startingBlock;
+        private TrainController m_myTrainController;
+        private ITrain m_myTrain;
+        private double m_mySpeed = 0;
+        private Timer m_myTimer;
+        private TrainState m_myTrainState;
+        private TrackBlock m_startingBlock;
+        private bool m_isDemo;
 
+        #region Constructors
+
+        // METHOD: TrainOperator
+        //--------------------------------------------------------------------------------------
+        /// <summary>
+        /// Primary constructor, to be used for a module demo ONLY
+        /// </summary>
+        //--------------------------------------------------------------------------------------
         public TrainOperator()
         {
             InitializeComponent();
+            m_isDemo = true;
         }
 
-        public void updateTrainController(object sender, EventArgs e)
+        // METHOD: TrainOperator
+        //--------------------------------------------------------------------------------------
+        /// <summary>
+        /// Secondary constructor, to be used by the CTC
+        /// </summary>
+        /// 
+        /// <param name="myTrain">The train associated with this GUI</param>
+        /// <param name="myTrainController">The train controller associated with this GUI</param>
+        //--------------------------------------------------------------------------------------
+        public TrainOperator(ITrain myTrain, TrainController myTrainController)
         {
-            myTrainController.Update(0.08);
-            time += 0.01;
-            timePassed.Text = myTrainController.TimePassed.ToString(); // time.ToString();
-            if (myTrainState.Lights == TrainState.Light.Off)
+            InitializeComponent();
+            m_isDemo = false;
+            this.m_myTrain = myTrain;
+            this.m_myTrainState = m_myTrain.GetState();
+            this.m_myTrainController = myTrainController;
+
+            engineFailure.Enabled = false;
+            brakeFailure.Enabled = false;
+            powerFailure.Enabled = false;
+            circuitFailure.Enabled = false;
+        }
+
+        #endregion
+
+        #region Private Methods
+
+        // METHOD: Update
+        //--------------------------------------------------------------------------------------
+        /// <summary>
+        /// Refresh the GUI, and update the train controller if in a demo
+        /// </summary>
+        /// 
+        /// <param name="sender">Sender</param>
+        /// <param name="e">Event Arguments</param>
+        //--------------------------------------------------------------------------------------
+        private void Update(object sender, EventArgs e)
+        {
+            if (m_isDemo)
+            {
+                m_myTrainController.Update(0.08);
+            }
+
+            timePassed.Text = m_myTrainController.TimePassed.ToString();
+
+            if (m_myTrainState.Lights == TrainState.Light.Off)
             {
                 lights.Text = "OFF";
             }
@@ -43,7 +89,7 @@ namespace TrainControllerLib
                 lights.Text = "ON";
             }
 
-            if (myTrainState.Doors == TrainState.Door.Open)
+            if (m_myTrainState.Doors == TrainState.Door.Open)
             {
                 doors.Text = "OPEN";
             }
@@ -52,72 +98,100 @@ namespace TrainControllerLib
                 doors.Text = "CLOSED";
             }
 
-            announcement.Text = myTrainState.Announcement;
-
-            //myTimeSpan = DateTime.Now - start;
-            //lights.Text = myTimeSpan.Milliseconds.ToString();
-            //start = DateTime.Now;
+            announcement.Text = m_myTrainState.Announcement;
         }
 
-        private void createTrain_Click(object sender, EventArgs e)
+        // METHOD: CreateTrain_Click
+        //--------------------------------------------------------------------------------------
+        /// <summary>
+        /// Start the GUI, and create a train and train controller if in a demo
+        /// </summary>
+        /// 
+        /// <param name="sender">Sender</param>
+        /// <param name="e">Event Arguments</param>
+        //--------------------------------------------------------------------------------------
+        private void CreateTrain_Click(object sender, EventArgs e)
         {
-            startingBlock = new TrackBlock("Block1", TrackOrientation.EastWest, new Point(0, 0), 1650, 0, 0, false, false, 70, TrackAllowedDirection.Both, null, "controller1", "controller2", "Block0", "Block2");
-            startingBlock.NextBlock = new TrackBlock("Block2", TrackOrientation.EastWest, new Point(1650, 0), 50, 0, 0, true, false, 70, TrackAllowedDirection.Both, null, "controller1", "controller2", "Block1", "Block3");
-            startingBlock.Authority = new BlockAuthority(70, 3);
-            startingBlock.NextBlock.Authority = new BlockAuthority(70, 2);
-            startingBlock.NextBlock.NextBlock = new TrackBlock("Block3", TrackOrientation.EastWest, new Point(1700, 0), 1000, 0, 0, true, false, 70, TrackAllowedDirection.Both, null, "controller1", "controller2", "Block2", "Block4");
-            startingBlock.NextBlock.NextBlock.NextBlock = new TrackBlock("Block4", TrackOrientation.EastWest, new Point(2700, 0), 100, 0, 0, false, false, 70, TrackAllowedDirection.Both, null, "controller1", "controller2", "Block3", "Block5");
-            startingBlock.NextBlock.NextBlock.NextBlock.NextBlock = new TrackBlock("Block5", TrackOrientation.EastWest, new Point(2800, 0), 100, 0, 0, false, false, 70, TrackAllowedDirection.Both, null, "controller1", "controller2", "Block4", "Block6");
-            startingBlock.NextBlock.NextBlock.NextBlock.NextBlock.NextBlock = new TrackBlock("Block6", TrackOrientation.EastWest, new Point(2800, 0), 100, 0, 0, false, false, 70, TrackAllowedDirection.Both, null, "controller1", "controller2", "Block5", "Block7");
-            //startingBlock.NextBlock.NextBlock = startingBlock;
-            startingBlock.NextBlock.NextBlock.Authority = new BlockAuthority(70, 1);
-            startingBlock.NextBlock.NextBlock.NextBlock.Authority = new BlockAuthority(40, 0);
-            startingBlock.NextBlock.NextBlock.NextBlock.NextBlock.Authority = new BlockAuthority(40, 0);
-            startingBlock.NextBlock.NextBlock.NextBlock.NextBlock.NextBlock.Authority = new BlockAuthority(40, 0);
-
-            startingBlock.Transponder = new Transponder("SHADYSIDE", 1);
-            startingBlock.NextBlock.Transponder = new Transponder("SHADYSIDE", 0);
-
-            myTrain = new TrainLib.Train("train1", startingBlock, Direction.East);
-            myTrainState = myTrain.GetState();
-            myTrainController = new TrainController(myTrain);
-            myTrainController.Schedule = GetRedlineSchedule();
-
-            start = DateTime.Now;
-
-            Timer updateTimer = new Timer();
-            updateTimer.Tick += new EventHandler(updateTrainController);
-            updateTimer.Interval = 40;
-            updateTimer.Enabled = true;
-            updateTimer.Start();
-
-            myTimer = new Timer();
-            myTimer.Tick += new EventHandler(updateDisplay);
-            myTimer.Interval = 500;
-            myTimer.Enabled = true;
-            myTimer.Start();
-        }
-
-        private void updateDisplay(object sender, EventArgs e)
-        {
-            currentSpeed.Text = myTrainController.Speed.ToString();
-            currentPosition.Text = myTrainController.LocationX.ToString();
-        }
-
-        private void enterSpeed_Click(object sender, EventArgs e)
-        {
-            myTrainController.ManualMode = true;
-            if (Double.TryParse(manualSpeed.Text, out mySpeed))
+            if (m_isDemo)
             {
-                myTrainController.ManualSpeed = mySpeed;
+                m_startingBlock = new TrackBlock("Block1", TrackOrientation.EastWest, new Point(0, 0), 1650, 0, 0, false, false, 70, TrackAllowedDirection.Both, false, "controller1", "controller2", "Block0", "Block2");
+                m_startingBlock.NextBlock = new TrackBlock("Block2", TrackOrientation.EastWest, new Point(1650, 0), 50, 0, 0, true, false, 70, TrackAllowedDirection.Both, false, "controller1", "controller2", "Block1", "Block3");
+                m_startingBlock.Authority = new BlockAuthority(70, 3);
+                m_startingBlock.NextBlock.Authority = new BlockAuthority(70, 2);
+                m_startingBlock.NextBlock.NextBlock = new TrackBlock("Block3", TrackOrientation.EastWest, new Point(1700, 0), 1000, 0, 0, true, false, 70, TrackAllowedDirection.Both, false, "controller1", "controller2", "Block2", "Block4");
+                m_startingBlock.NextBlock.NextBlock.NextBlock = new TrackBlock("Block4", TrackOrientation.EastWest, new Point(2700, 0), 100, 0, 0, false, false, 70, TrackAllowedDirection.Both, false, "controller1", "controller2", "Block3", "Block5");
+                m_startingBlock.NextBlock.NextBlock.NextBlock.NextBlock = new TrackBlock("Block5", TrackOrientation.EastWest, new Point(2800, 0), 100, 0, 0, false, false, 70, TrackAllowedDirection.Both, false, "controller1", "controller2", "Block4", "Block6");
+                m_startingBlock.NextBlock.NextBlock.NextBlock.NextBlock.NextBlock = new TrackBlock("Block6", TrackOrientation.EastWest, new Point(2800, 0), 100, 0, 0, false, false, 70, TrackAllowedDirection.Both, false, "controller1", "controller2", "Block5", "Block7");
+                m_startingBlock.NextBlock.NextBlock.Authority = new BlockAuthority(70, 1);
+
+                m_startingBlock.NextBlock.NextBlock.NextBlock.Authority = new BlockAuthority(40, 0);
+                m_startingBlock.NextBlock.NextBlock.NextBlock.NextBlock.Authority = new BlockAuthority(40, 0);
+                m_startingBlock.NextBlock.NextBlock.NextBlock.NextBlock.NextBlock.Authority = new BlockAuthority(40, 0);
+
+                m_startingBlock.Transponder = new Transponder("SHADYSIDE", 1);
+                m_startingBlock.NextBlock.Transponder = new Transponder("SHADYSIDE", 0);
+
+                m_myTrain = new TrainLib.Train("train1", m_startingBlock, Direction.East);
+                m_myTrainState = m_myTrain.GetState();
+                m_myTrainController = new TrainController(m_myTrain);
+                m_myTrainController.Schedule = GetRedlineSchedule();
+
+                Timer updateTimer = new Timer();
+                updateTimer.Tick += new EventHandler(Update);
+                updateTimer.Interval = 40;
+                updateTimer.Enabled = true;
+                updateTimer.Start();
+            }
+
+            m_myTimer = new Timer();
+            m_myTimer.Tick += new EventHandler(UpdateDisplay);
+            m_myTimer.Interval = 500;
+            m_myTimer.Enabled = true;
+            m_myTimer.Start();
+        }
+
+        // METHOD: UpdateDisplay
+        //--------------------------------------------------------------------------------------
+        /// <summary>
+        /// Update the current speed and position of the train
+        /// </summary>
+        /// 
+        /// <param name="sender">Sender</param>
+        /// <param name="e">Event Arguments</param>
+        //--------------------------------------------------------------------------------------
+        private void UpdateDisplay(object sender, EventArgs e)
+        {
+            currentSpeed.Text = m_myTrainController.Speed.ToString();
+            currentPosition.Text = m_myTrainController.LocationX.ToString();
+        }
+
+        // METHOD: EnterSpeed_Click
+        //--------------------------------------------------------------------------------------
+        /// <summary>
+        /// Send a manual speed command to the train controller
+        /// </summary>
+        /// 
+        /// <param name="sender">Sender</param>
+        /// <param name="e">Event Arguments</param>
+        //--------------------------------------------------------------------------------------
+        private void EnterSpeed_Click(object sender, EventArgs e)
+        {
+            m_myTrainController.ManualMode = true;
+            if (Double.TryParse(manualSpeed.Text, out m_mySpeed))
+            {
+                m_myTrainController.ManualSpeed = m_mySpeed;
             }
         }
 
+        // METHOD: GetRedlineSchedule
+        //--------------------------------------------------------------------------------------
         /// <summary>
         /// Gets the redline schedule
         /// </summary>
+        /// 
         /// <returns>Queue of schedule info</returns>
-        public Queue<ScheduleInfo> GetRedlineSchedule()
+        //--------------------------------------------------------------------------------------
+        private Queue<ScheduleInfo> GetRedlineSchedule()
         {
             Queue<ScheduleInfo> redline = new Queue<ScheduleInfo>();
             ScheduleInfo info = new ScheduleInfo(Constants.StationNames.SHADYSIDE, 1.0);
@@ -140,39 +214,86 @@ namespace TrainControllerLib
             return redline;
         }
 
-        private void engineFailure_Click(object sender, EventArgs e)
+        // METHOD: EngineFailure_Click
+        //--------------------------------------------------------------------------------------
+        /// <summary>
+        /// Simulate an Engine Failure
+        /// </summary>
+        /// 
+        /// <param name="sender">Sender</param>
+        /// <param name="e">Event Arguments</param>
+        //--------------------------------------------------------------------------------------
+        private void EngineFailure_Click(object sender, EventArgs e)
         {
-            myTrainState.EngineFailure = !myTrainState.EngineFailure;
+            m_myTrainState.EngineFailure = !m_myTrainState.EngineFailure;
         }
 
-        private void brakeFailure_Click(object sender, EventArgs e)
+        // METHOD: BrakeFailure_Click
+        //--------------------------------------------------------------------------------------
+        /// <summary>
+        /// Simulate a Brake Failure
+        /// </summary>
+        /// 
+        /// <param name="sender">Sender</param>
+        /// <param name="e">Event Arguments</param>
+        //--------------------------------------------------------------------------------------
+        private void BrakeFailure_Click(object sender, EventArgs e)
         {
-            myTrainState.BrakeFailure = !myTrainState.BrakeFailure;
+            m_myTrainState.BrakeFailure = !m_myTrainState.BrakeFailure;
         }
 
-        private void powerFailure_Click(object sender, EventArgs e)
+        // METHOD: PowerFailure_Click
+        //--------------------------------------------------------------------------------------
+        /// <summary>
+        /// Simulate a Track Power Failure
+        /// </summary>
+        /// 
+        /// <param name="sender">Sender</param>
+        /// <param name="e">Event Arguments</param>
+        //--------------------------------------------------------------------------------------
+        private void PowerFailure_Click(object sender, EventArgs e)
         {
-            startingBlock.Status.PowerFail = !startingBlock.Status.PowerFail;
-            startingBlock.NextBlock.Status.PowerFail = startingBlock.Status.PowerFail;
-            startingBlock.NextBlock.NextBlock.Status.PowerFail = startingBlock.Status.PowerFail;
-            startingBlock.NextBlock.NextBlock.NextBlock.Status.PowerFail = startingBlock.Status.PowerFail;
-            startingBlock.NextBlock.NextBlock.NextBlock.NextBlock.Status.PowerFail = startingBlock.Status.PowerFail;
-            startingBlock.NextBlock.NextBlock.NextBlock.NextBlock.NextBlock.Status.PowerFail = startingBlock.Status.PowerFail;
+            m_startingBlock.Status.PowerFail = !m_startingBlock.Status.PowerFail;
+            m_startingBlock.NextBlock.Status.PowerFail = m_startingBlock.Status.PowerFail;
+            m_startingBlock.NextBlock.NextBlock.Status.PowerFail = m_startingBlock.Status.PowerFail;
+            m_startingBlock.NextBlock.NextBlock.NextBlock.Status.PowerFail = m_startingBlock.Status.PowerFail;
+            m_startingBlock.NextBlock.NextBlock.NextBlock.NextBlock.Status.PowerFail = m_startingBlock.Status.PowerFail;
+            m_startingBlock.NextBlock.NextBlock.NextBlock.NextBlock.NextBlock.Status.PowerFail = m_startingBlock.Status.PowerFail;
         }
 
-        private void circuitFailure_Click(object sender, EventArgs e)
+        // METHOD: CircuitFailure_Click
+        //--------------------------------------------------------------------------------------
+        /// <summary>
+        /// Simulate a Track Circuit Failure
+        /// </summary>
+        /// 
+        /// <param name="sender">Sender</param>
+        /// <param name="e">Event Arguments</param>
+        //--------------------------------------------------------------------------------------
+        private void CircuitFailure_Click(object sender, EventArgs e)
         {
-            startingBlock.Status.CircuitFail = !startingBlock.Status.CircuitFail;
-            startingBlock.NextBlock.Status.PowerFail = startingBlock.Status.CircuitFail;
-            startingBlock.NextBlock.NextBlock.Status.PowerFail = startingBlock.Status.CircuitFail;
-            startingBlock.NextBlock.NextBlock.NextBlock.Status.PowerFail = startingBlock.Status.CircuitFail;
-            startingBlock.NextBlock.NextBlock.NextBlock.NextBlock.Status.PowerFail = startingBlock.Status.CircuitFail;
-            startingBlock.NextBlock.NextBlock.NextBlock.NextBlock.NextBlock.Status.PowerFail = startingBlock.Status.CircuitFail;
+            m_startingBlock.Status.CircuitFail = !m_startingBlock.Status.CircuitFail;
+            m_startingBlock.NextBlock.Status.PowerFail = m_startingBlock.Status.CircuitFail;
+            m_startingBlock.NextBlock.NextBlock.Status.PowerFail = m_startingBlock.Status.CircuitFail;
+            m_startingBlock.NextBlock.NextBlock.NextBlock.Status.PowerFail = m_startingBlock.Status.CircuitFail;
+            m_startingBlock.NextBlock.NextBlock.NextBlock.NextBlock.Status.PowerFail = m_startingBlock.Status.CircuitFail;
+            m_startingBlock.NextBlock.NextBlock.NextBlock.NextBlock.NextBlock.Status.PowerFail = m_startingBlock.Status.CircuitFail;
         }
 
-        private void emergencyBrake_Click(object sender, EventArgs e)
+        // METHOD: EmergencyBrake_Click
+        //--------------------------------------------------------------------------------------
+        /// <summary>
+        /// Engage the train's emergency brake
+        /// </summary>
+        /// 
+        /// <param name="sender">Sender</param>
+        /// <param name="e">Event Arguments</param>
+        //--------------------------------------------------------------------------------------
+        private void EmergencyBrake_Click(object sender, EventArgs e)
         {
-            myTrainController.EmergencyBrake = !myTrainController.EmergencyBrake;
+            m_myTrainController.EmergencyBrake = !m_myTrainController.EmergencyBrake;
         }
+
+        #endregion
     }
 }

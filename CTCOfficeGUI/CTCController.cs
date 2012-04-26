@@ -158,7 +158,7 @@ namespace CTCOfficeGUI
         /// <returns>Copy of the block list</returns>
         public List<TrackBlock> GetBlockList()
         {
-            return new List<TrackBlock>(m_blockList);
+            return m_blockTable.Values.ToList<TrackBlock>();
         }
 
         /// <summary>
@@ -230,12 +230,14 @@ namespace CTCOfficeGUI
         public List<TrackBlock> LoadTrackLayout(string filename)
         {
             List<TrackBlock> blocks = null;
+            List<TrackSwitch> switches = null;
             try
             {
                 TrackLayoutSerializer layoutSerializer = new TrackLayoutSerializer(filename);
                 layoutSerializer.Restore();
                 blocks = layoutSerializer.BlockList;
-                if (BuildLayout(blocks))
+                switches = layoutSerializer.SwitchList;
+                if (BuildLayout(blocks, switches))
                 {
                     m_updateTimer.Start();
                     m_log.LogInfo("Successfully loaded track layout. Starting update timer");
@@ -448,7 +450,7 @@ namespace CTCOfficeGUI
         private CTCController()
         {
             m_updateTimer = new Timer();
-            m_updateTimer.Interval = 2000; //Update every 200 ms
+            m_updateTimer.Interval = 200; //Update every 200 ms
             m_updateTimer.Tick += OnUpdateTimerTick;
 
             CloseTrackBlock(null);
@@ -465,7 +467,7 @@ namespace CTCOfficeGUI
         /// <param name="blocks">List of track blocks in the layout</param>
         /// 
         /// <returns>bool Sucess</returns>
-        private bool BuildLayout(List<TrackBlock> blocks)
+        private bool BuildLayout(List<TrackBlock> blocks, List<TrackSwitch> switches)
         {
             if (blocks == null)
             {
@@ -485,13 +487,13 @@ namespace CTCOfficeGUI
             m_controllerList.Clear();
             m_trainList.Clear();
             m_trackTable.Clear();
-            m_blockList = new List<TrackBlock>();
+            m_blockTable.Clear();
 
             foreach (TrackBlock b in blocks)
             {
                 if (!string.IsNullOrEmpty(b.ControllerId))
                 {
-                    m_blockList.Add(b);
+                    m_blockTable[b.Name] = b;
                     if (!trackControllers.ContainsKey(b.ControllerId))
                     {
                         //Create a new track controller
@@ -569,6 +571,50 @@ namespace CTCOfficeGUI
                 }
             }
 
+            //Now go back and assign previous/next blocks
+            foreach (TrackBlock b in blocks)
+            {
+                if (!string.IsNullOrEmpty(b.PreviousBlockId))
+                {
+                    if (m_blockTable.ContainsKey(b.PreviousBlockId))
+                    {
+                        b.PreviousBlock = m_blockTable[b.PreviousBlockId];
+                    }
+                }
+                if (!string.IsNullOrEmpty(b.NextBlockId))
+                {
+                    if (m_blockTable.ContainsKey(b.NextBlockId))
+                    {
+                        b.NextBlock = m_blockTable[b.NextBlockId];
+                    }
+                }
+            }
+
+            //Now create the switches and assign them to track controllers
+            foreach (TrackSwitch s in switches)
+            {
+                if (m_blockTable.ContainsKey(s.BranchClosedId) && m_blockTable.ContainsKey(s.BranchOpenId) && m_blockTable.ContainsKey(s.TrunkId))
+                {
+                    if (trackControllers.ContainsKey(s.ControllerId))
+                    {
+                        trackControllers[s.ControllerId].SetSwitch(s);
+
+                        //Assign the blocks to the switch
+                        s.Branch = m_blockTable[s.BranchClosedId];
+                        s.Trunk1 = m_blockTable[s.TrunkId];
+                        s.Trunk2 = null;
+                    }
+                    else
+                    {
+                        m_log.LogError("Switch Track Controller Id was invalid. Skipping.");
+                    }
+                }
+                else
+                {
+                    m_log.LogError("Block Id not found. Skipping.");
+                }
+            }
+
             //Calculate the start point and total size
             m_layoutStartPoint = new Point(System.Convert.ToInt32(minX), System.Convert.ToInt32(minY));
 
@@ -620,7 +666,7 @@ namespace CTCOfficeGUI
 
         private static CTCController m_singleton = null;
         private Dictionary<TrackBlock, ITrackController> m_trackTable = new Dictionary<TrackBlock, ITrackController>();
-        private List<TrackBlock> m_blockList;
+        private Dictionary<string, TrackBlock> m_blockTable = new Dictionary<string, TrackBlock>();
         private List<ITrackController> m_controllerList = new List<ITrackController>();
         private List<ITrain> m_trainList = new List<ITrain>();
         private LoggingTool m_log = new LoggingTool(MethodBase.GetCurrentMethod());

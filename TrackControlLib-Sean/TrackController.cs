@@ -11,7 +11,7 @@ namespace TrackControlLib
 	{
 		public class TrackController : ITrackController
 		{
-			private const int DEFAULT_AUTHORITY = 100;
+			private const int DEFAULT_AUTHORITY = 20;
 			private const int AUTH_THRESH_SWITCH = 2;
 			private const int AUTH_THRESH_YELLOW = 1;
 			private const int AUTH_THRESH_GREEN = 5;
@@ -31,8 +31,7 @@ namespace TrackControlLib
 			public bool AddTrackBlock(TrackBlock block)
 			{
 				if (block == null) return false;
-				if (m_trackBlocks.ContainsKey(block.Name))
-					return false;
+				if (m_trackBlocks.ContainsKey(block.Name)) return false;
 				
 				m_trackBlocks.Add(block.Name, block);
 
@@ -45,6 +44,13 @@ namespace TrackControlLib
 			public bool SetSwitch(TrackSwitch s)
 			{
 				if (s == null) return false;
+
+				if (!m_trackBlocks.ContainsKey(s.BranchClosedId) ||
+					!m_trackBlocks.ContainsKey(s.BranchOpenId) ||
+					!m_trackBlocks.ContainsKey(s.TrunkId))
+				{
+					return false;
+				}
 
 				m_switch = s;
 
@@ -68,7 +74,7 @@ namespace TrackControlLib
 					m_trackBlocks[trackId].Authority.SpeedLimitKPH = auth.SpeedLimitKPH;
 				else
 					return false;
-
+                Update();
 				return true;
 			}
 
@@ -76,27 +82,32 @@ namespace TrackControlLib
 			{
 				if (m_trackBlocks.ContainsKey(trackId))
 				{
-					m_trackBlocks[trackId].Authority.Authority = 0;
-					m_trackBlocks[trackId].Authority.SpeedLimitKPH = 0;
-					m_trackBlocks[trackId].Status.SignalState = TrackSignalState.Red;
-					m_trackBlocks[trackId].Status.IsOpen = false;
-
-					return true;
+                    if (m_trackBlocks[trackId].Status.IsOpen && !m_trackBlocks[trackId].Status.TrainPresent)
+                    {
+					    m_trackBlocks[trackId].Authority.Authority = 0;
+					    m_trackBlocks[trackId].Authority.SpeedLimitKPH = 0;
+					    m_trackBlocks[trackId].Status.SignalState = TrackSignalState.Red;
+					    m_trackBlocks[trackId].Status.IsOpen = false;
+                        Update();
+					    return true;
+                    }
 				}
-				else
-					return false;
+                return false;
 			}
 
 			public bool OpenTrack(string trackId)
 			{
 				if (m_trackBlocks.ContainsKey(trackId))
 				{
-					m_trackBlocks[trackId].Authority.SpeedLimitKPH = System.Convert.ToInt32(m_trackBlocks[trackId].StaticSpeedLimit);
-					m_trackBlocks[trackId].Status.IsOpen = true;
-					return true;
+                    if (!m_trackBlocks[trackId].Status.IsOpen)
+                    {
+                        m_trackBlocks[trackId].Authority.SpeedLimitKPH = System.Convert.ToInt32(m_trackBlocks[trackId].StaticSpeedLimit);
+                        m_trackBlocks[trackId].Status.IsOpen = true;
+                        Update();
+                        return true;
+                    }
 				}
-				else
-					return false;
+                return false;
 			}
 
 			public Dictionary<string, TrackBlock> GetUpdatedTrackStatus()
@@ -111,6 +122,19 @@ namespace TrackControlLib
 			public void Update()
 			{
 				// check for track block errors
+				CheckFailModes();
+
+                // update switching
+				UpdateSwitch();
+
+				// update track block authorites, speed and signals
+				// work backward from the end of a swicth, a broken track, or a train present
+				List<TrackBlock> blocks = new List<TrackBlock>(m_trackBlocks.Values);
+				UpdateAuthority(blocks);
+			}
+
+			private void CheckFailModes()
+			{
 				foreach (TrackBlock b in m_trackBlocks.Values)
 				{
 					if (b.Status.BrokenRail || b.Status.CircuitFail || b.Status.PowerFail)
@@ -119,10 +143,12 @@ namespace TrackControlLib
 						if (b.Status.IsOpen) CloseTrack(b.Name);
 					}
 				}
+			}
 
+			private void UpdateSwitch()
+			{
 				foreach (TrackBlock b in m_trackBlocks.Values)
 				{
-					// update switching
 					if (b.HasSwitch && b.Status.TrainPresent) // might need a different test here
 					{
 						// we are on a switch that is already in the right direction
@@ -130,21 +156,26 @@ namespace TrackControlLib
 						{
 							// a train is approaching, switch so there isn't a collision
 							if (IsTrainApproaching(b.GetNextBlock(b.Status.TrainDirection)))
+							{
 								m_switch.Switch();
+								AddUpdatedStatus(b);
+							}
 						}
 						else
 						{
 							// a train is approaching, switch so there isn't a collision
 							if (!IsTrainApproaching(m_trackBlocks[m_switch.TrunkId]))
+							{
 								m_switch.Switch();
+								AddUpdatedStatus(b);
+							}
 						}
 					}
 				}
+			}
 
-				// update track block authorites, speed and signals
-				// work backward from the end of a swicth, a broken track, or a train present
-				//if (m_trackBlocks.ContainsValue(b.NextBlock) || m_trackBlocks.ContainsValue(b.PreviousBlock))
-				List<TrackBlock> blocks = new List<TrackBlock>(m_trackBlocks.Values);
+			private void UpdateAuthority(List<TrackBlock> blocks)
+			{
 				while (blocks.Count > 0)
 				{
 					TrackBlock b = blocks.ElementAt<TrackBlock>(0);
@@ -154,7 +185,7 @@ namespace TrackControlLib
 						int i;
 
 						for (i = -1, t = (b.GetNextBlock(b.Status.TrainDirection) == b.NextBlock) ? b.PreviousBlock : b.NextBlock;
-							t != null && blocks.Contains<TrackBlock>(t) &&
+							t != null && blocks.Contains(t) &&
 							t.Status.IsOpen;
 							++i, t = (t.NextBlock == t) ? t.PreviousBlock : t.NextBlock)
 						{
@@ -163,11 +194,23 @@ namespace TrackControlLib
 							blocks.Remove(t);
 						}
 					}
-					else
+
+					if (!blocks.Contains(b.NextBlock) || !blocks.Contains(b.PreviousBlock) ||
+						b.NextBlock == null || b.PreviousBlock == null)
 					{
-						UpdateAuthoritySignal(b, DEFAULT_AUTHORITY);
+						TrackBlock t;
+						int i;
+
+						for (i = -1, t = b;
+							t != null && blocks.Contains(t) &&
+							t.Status.IsOpen;
+							++i, t = (t.NextBlock == t) ? t.NextBlock : t.PreviousBlock)
+						{
+							UpdateAuthoritySignal(t, i);
+							if (t.Status.TrainPresent) break;
+							blocks.Remove(t);
+						}
 					}
-					AddUpdatedStatus(b);
 					blocks.Remove(b);
 				}
 			}
@@ -182,6 +225,8 @@ namespace TrackControlLib
 			{
 				if (block == null) throw new ArgumentNullException();
 				if (authority < -1) throw new ArgumentOutOfRangeException();
+
+                AddUpdatedStatus(block);
 
 				block.Authority.Authority = authority;
 
@@ -205,11 +250,13 @@ namespace TrackControlLib
 
 			private bool IsTrainApproaching(TrackBlock dest)
 			{
+                if (dest == null) throw new ArgumentNullException();
+
 				List<TrackBlock> blocks = new List<TrackBlock>(m_trackBlocks.Values);
 				while (blocks.Count > 0)
 				{
 					TrackBlock b = blocks.ElementAt<TrackBlock>(0);
-					if (b == dest) continue;
+					blocks.Remove(b);
 					if (b.Status.TrainPresent)
 					{
 						for(TrackBlock t = b.GetNextBlock(b.Status.TrainDirection);
@@ -221,7 +268,6 @@ namespace TrackControlLib
 							blocks.Remove(t);
 						}
 					}
-					blocks.Remove(b);
 				}
 				return false;
 			}

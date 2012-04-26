@@ -153,6 +153,7 @@ namespace CTCOfficeGUI
                             graphic.Disposed += OnTrainDisposed;
 
                             Controls.Add(graphic);
+                            graphic.Visible = true;
                             graphic.BringToFront();
                             m_trainTable[train] = graphic;
                         }
