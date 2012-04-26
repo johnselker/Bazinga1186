@@ -387,16 +387,16 @@ namespace TrackLib
             redTrack.Add(redBlock61);
             TrackBlock redBlock62 = new TrackBlock("red62", TrackOrientation.NorthSouth, new Point(redBlock61.EndPoint.X, redBlock61.EndPoint.Y+75 ), 75, 1.13, -1, false, false, 55, TrackAllowedDirection.Both, false, "redController7", null, "red61", "red63");
             redTrack.Add(redBlock62);
-            TrackBlock redBlock63 = new TrackBlock("red63", TrackOrientation.NorthSouth, new Point(redBlock62.EndPoint.X, redBlock62.EndPoint.Y+150 ), 75, 0.38, -1, false, false, 55, TrackAllowedDirection.Both, false, "redController7", null, "red61", "red63");
+            TrackBlock redBlock63 = new TrackBlock("red63", TrackOrientation.NorthSouth, new Point(redBlock62.EndPoint.X, redBlock62.EndPoint.Y+150 ), 75, 0.38, -1, false, false, 55, TrackAllowedDirection.Both, false, "redController7", null, "red62", "red64");
             redTrack.Add(redBlock63);
-            TrackBlock redBlock64 = new TrackBlock("red64", TrackOrientation.NorthSouth, new Point(redBlock63.EndPoint.X, redBlock63.EndPoint.Y+150), 75, 0.00, -0.5, false, false, 55, TrackAllowedDirection.Both, false, "redController7", null, "red62", "red64");
+            TrackBlock redBlock64 = new TrackBlock("red64", TrackOrientation.NorthSouth, new Point(redBlock63.EndPoint.X, redBlock63.EndPoint.Y+150), 75, 0.00, -0.5, false, false, 55, TrackAllowedDirection.Both, false, "redController7", null, "red63", "red65");
             redTrack.Add(redBlock64);
-            TrackBlock redBlock65 = new TrackBlock("red65", TrackOrientation.NorthWestSouthEast, new Point(redBlock64.StartPoint.X, redBlock64.StartPoint.Y), 75, 0, 0, false, false, 55, TrackAllowedDirection.Both, true, "redController7", null, "red62", "red64");
+            TrackBlock redBlock65 = new TrackBlock("red65", TrackOrientation.NorthWestSouthEast, new Point(redBlock64.StartPoint.X, redBlock64.StartPoint.Y), 75, 0, 0, false, false, 55, TrackAllowedDirection.Both, true, "redController7", null, "red64", "red66");
             redTrack.Add(redBlock65);
 
             // Start Branch Sections
 
-            TrackBlock redBlock67 = new TrackBlock("red67", TrackOrientation.NorthWestSouthEast, new Point(redBlock43.StartPoint.X - Convert.ToInt32(Math.Sqrt((50 * 50) / 2)), redBlock43.StartPoint.Y - Convert.ToInt32(Math.Sqrt((50 * 50) / 2))), 50, 0, 0, true, false, 55, TrackAllowedDirection.Both, true, "redController5", "redController6", "red43", "red68");
+            TrackBlock redBlock67 = new TrackBlock("red67", TrackOrientation.NorthWestSouthEast, new Point(redBlock43.StartPoint.X - Convert.ToInt32(Math.Sqrt((50 * 50) / 2)), redBlock43.StartPoint.Y - Convert.ToInt32(Math.Sqrt((50 * 50) / 2))), 50, 0, 0, true, false, 55, TrackAllowedDirection.Both, true, "redController5", "redController6", null, "red68");
             redTrack.Add(redBlock67);
             TrackBlock redBlock68 = new TrackBlock("red68", TrackOrientation.NorthSouth, new Point(redBlock67.StartPoint.X, redBlock67.StartPoint.Y), 50, 0, 0, true, false, 55, TrackAllowedDirection.Both, false, "redController5", "redController6", "red67", "red69");
             redTrack.Add(redBlock68);
@@ -404,11 +404,11 @@ namespace TrackLib
             redTrack.Add(redBlock69);
             TrackBlock redBlock70 = new TrackBlock("red70", TrackOrientation.NorthSouth, new Point(redBlock69.EndPoint.X, redBlock69.EndPoint.Y), 50, 0, 0, true, false, 55, TrackAllowedDirection.Both, false, "redController5", "redController6", "red69", "red71");
             redTrack.Add(redBlock70);
-            TrackBlock redBlock71 = new TrackBlock("red71", TrackOrientation.SouthWestNorthEast, new Point(redBlock70.EndPoint.X, redBlock70.EndPoint.Y), 50, 0, 0, true, false, 55, TrackAllowedDirection.Both, true, "redController5", "redController6", "red70", "red38");
+            TrackBlock redBlock71 = new TrackBlock("red71", TrackOrientation.SouthWestNorthEast, new Point(redBlock70.EndPoint.X, redBlock70.EndPoint.Y), 50, 0, 0, true, false, 55, TrackAllowedDirection.Both, true, "redController5", "redController6", "red70", null);
             redTrack.Add(redBlock71);
             // End Branch 1
             // Begin Branch 2
-            TrackBlock redBlock72 = new TrackBlock("red72", TrackOrientation.NorthWestSouthEast, new Point(redBlock32.StartPoint.X - Convert.ToInt32(Math.Sqrt((50 * 50) / 2)), redBlock32.StartPoint.Y - Convert.ToInt32(Math.Sqrt((50 * 50) / 2))), 50, 0, 0, true, false, 55, TrackAllowedDirection.Both, true, "redController3", "redController4", "red32", "red73");
+            TrackBlock redBlock72 = new TrackBlock("red72", TrackOrientation.NorthWestSouthEast, new Point(redBlock32.StartPoint.X - Convert.ToInt32(Math.Sqrt((50 * 50) / 2)), redBlock32.StartPoint.Y - Convert.ToInt32(Math.Sqrt((50 * 50) / 2))), 50, 0, 0, true, false, 55, TrackAllowedDirection.Both, true, "redController3", "redController4", null, "red73");
             redTrack.Add(redBlock72);
             TrackBlock redBlock73 = new TrackBlock("red73", TrackOrientation.NorthSouth, new Point(redBlock72.StartPoint.X, redBlock72.StartPoint.Y), 50, 0, 0, true, false, 55, TrackAllowedDirection.Both, false, "redController3", "redController4", "red72", "red74");
             redTrack.Add(redBlock73);
@@ -416,7 +416,7 @@ namespace TrackLib
             redTrack.Add(redBlock74);
             TrackBlock redBlock75 = new TrackBlock("red75", TrackOrientation.NorthSouth, new Point(redBlock74.EndPoint.X, redBlock74.EndPoint.Y), 50, 0, 0, true, false, 55, TrackAllowedDirection.Both, false, "redController3", "redController4", "red74", "red76");
             redTrack.Add(redBlock75);
-            TrackBlock redBlock76 = new TrackBlock("red76", TrackOrientation.SouthWestNorthEast, new Point(redBlock75.EndPoint.X, redBlock75.EndPoint.Y), 50, 0, 0, true, false, 55, TrackAllowedDirection.Both, true, "redController3", "redController4", "red75", "red27");
+            TrackBlock redBlock76 = new TrackBlock("red76", TrackOrientation.SouthWestNorthEast, new Point(redBlock75.EndPoint.X, redBlock75.EndPoint.Y), 50, 0, 0, true, false, 55, TrackAllowedDirection.Both, true, "redController3", "redController4", "red75", null);
             redTrack.Add(redBlock76);
             // End Branch 2
 

@@ -178,13 +178,13 @@ namespace TrackControlLib
 			{
 				while (blocks.Count > 0)
 				{
+					TrackBlock t;
+					int i;
+
 					TrackBlock b = blocks.ElementAt<TrackBlock>(0);
 					blocks.Remove(b);
 					if (b.Status.TrainPresent)
 					{
-						TrackBlock t;
-						int i;
-
 						for (i = -1, t = (b.GetNextBlock(b.Status.TrainDirection) == b.NextBlock) ? b.PreviousBlock : b.NextBlock;
 							t != null && blocks.Contains(t) &&
 							t.Status.IsOpen;
@@ -196,16 +196,24 @@ namespace TrackControlLib
 						}
 					}
 
-					if (!m_trackBlocks.ContainsValue(b.NextBlock) || !m_trackBlocks.ContainsValue(b.PreviousBlock) ||
-						b.NextBlock == null || b.PreviousBlock == null)
+					if (!m_trackBlocks.ContainsValue(b.NextBlock) || b.NextBlock == null)
 					{
-						TrackBlock t;
-						int i;
-
 						for (i = -1, t = b;
 							t != null && m_trackBlocks.ContainsValue(t) &&
 							t.Status.IsOpen;
-							++i, t = (t.NextBlock.PreviousBlock == t) ? t.NextBlock : t.PreviousBlock)
+							++i, t = t.PreviousBlock)
+						{
+							UpdateAuthoritySignal(t, i);
+							blocks.Remove(t);
+							if (t.Status.TrainPresent) break;
+						}
+					}
+					else if (!m_trackBlocks.ContainsValue(b.PreviousBlock) || b.PreviousBlock == null)
+					{
+						for (i = -1, t = b;
+							t != null && m_trackBlocks.ContainsValue(t) &&
+							t.Status.IsOpen;
+							++i, t = t.NextBlock)
 						{
 							UpdateAuthoritySignal(t, i);
 							blocks.Remove(t);

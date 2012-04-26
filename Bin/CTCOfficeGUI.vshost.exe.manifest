@@ -49,7 +49,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>7nx+AazKzc+CUawFuwQK4rGsyBE=</dsig:DigestValue>
+        <dsig:DigestValue>uY45YbPQUsZr32xu6yfX+KgWRhQ=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -61,7 +61,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>aLJU8xVpyKyU8eJ8EEJQeP6QvKY=</dsig:DigestValue>
+        <dsig:DigestValue>4gwJAHgyYr/LbGqTqvomubddsJc=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -85,7 +85,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>Pwq+8tEMmTxAuJ3Wa967V4Nea28=</dsig:DigestValue>
+        <dsig:DigestValue>ctk52H43Te7ZRKJlCh5bXo1+qiQ=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -97,7 +97,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>uxJ9I7c61NVPRmEY8fGQBB9bNrg=</dsig:DigestValue>
+        <dsig:DigestValue>iVRqzGtAZ2hkozA+A044yrRI2rg=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -109,19 +109,19 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>n62v/qzgtQmRwWNZ+HJoMz7l6bI=</dsig:DigestValue>
+        <dsig:DigestValue>qaDO+o0xRB26tY8QZROJHeYT+y0=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="TrainControllerLib.dll" size="19968">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="TrainControllerLib.dll" size="20480">
       <assemblyIdentity name="TrainControllerLib" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>4/DGr9rwkARsdO0nv1MBSc+o0hE=</dsig:DigestValue>
+        <dsig:DigestValue>e5lnnQhIjpClLE2eZLWZSEZc7JA=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

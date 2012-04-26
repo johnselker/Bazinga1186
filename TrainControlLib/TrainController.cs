@@ -300,14 +300,14 @@ namespace TrainControllerLib
             {
                 m_setPoint = 0;
             }
-            else if (m_currentBlock.NextBlock.Authority.SpeedLimitKPH < m_currentBlock.Authority.SpeedLimitKPH && CalculateStoppingDistance(m_currentBlock.NextBlock.Authority.SpeedLimitKPH / 3.6) >= m_currentBlock.LengthMeters - m_currentState.BlockProgress)
+			else if (m_currentBlock.GetNextBlock(m_currentState.Direction).Authority.SpeedLimitKPH < m_currentBlock.Authority.SpeedLimitKPH && CalculateStoppingDistance(m_currentBlock.GetNextBlock(m_currentState.Direction).Authority.SpeedLimitKPH / 3.6) >= m_currentBlock.LengthMeters - m_currentState.BlockProgress)
             {
-                m_setPoint = m_currentBlock.NextBlock.Authority.SpeedLimitKPH / 3.6;
+				m_setPoint = m_currentBlock.GetNextBlock(m_currentState.Direction).Authority.SpeedLimitKPH / 3.6;
             }
 
             if (m_approachingStation)
             {
-                if (m_currentBlock.HasTransponder && m_currentBlock.Transponder.DistanceToStation == 1 && CalculateStoppingDistance(0) >= m_currentBlock.LengthMeters + m_currentBlock.NextBlock.LengthMeters * 0.5 - m_currentState.BlockProgress)
+				if (m_currentBlock.HasTransponder && m_currentBlock.Transponder.DistanceToStation == 1 && CalculateStoppingDistance(0) >= m_currentBlock.LengthMeters + m_currentBlock.GetNextBlock(m_currentState.Direction).LengthMeters * 0.5 - m_currentState.BlockProgress)
                 {
                     m_setPoint = 0;
                 }

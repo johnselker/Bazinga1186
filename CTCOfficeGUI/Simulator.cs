@@ -307,7 +307,7 @@ namespace CTCOfficeGUI
 
             //Hard-coded starting diretions for spawning trains from the train yard
             m_startingDirections = new Dictionary<string, Direction>(){
-            {Constants.REDYARD, Direction.North}, {Constants.GREENYARDOUT, Direction.South} };
+            {Constants.REDYARD, Direction.Northwest}, {Constants.GREENYARDOUT, Direction.South} };
         }
 
         #endregion
