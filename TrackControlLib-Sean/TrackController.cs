@@ -18,13 +18,13 @@ namespace TrackControlLib
 			private const int AUTH_THRESH_SUPERGREEN = 10;
 
 			private Dictionary<string, TrackBlock> m_trackBlocks;
-			private Dictionary<string, TrackStatus> m_updatedStatuses;
+			private Dictionary<string, TrackBlock> m_updatedBlocks;
 			private TrackSwitch m_switch;
 
 			public TrackController()
 			{
 				m_trackBlocks = new Dictionary<string, TrackBlock>();
-				m_updatedStatuses = new Dictionary<string, TrackStatus>();
+				m_updatedBlocks = new Dictionary<string, TrackBlock>();
 				m_switch = null;
 			}
 
@@ -99,13 +99,13 @@ namespace TrackControlLib
 					return false;
 			}
 
-			public Dictionary<string, TrackStatus> GetUpdatedTrackStatus()
+			public Dictionary<string, TrackBlock> GetUpdatedTrackStatus()
 			{
-				Dictionary<string, TrackStatus> statuses = new Dictionary<string, TrackStatus>();
-				foreach (KeyValuePair<string, TrackStatus> b in m_updatedStatuses)
+				Dictionary<string, TrackBlock> statuses = new Dictionary<string, TrackBlock>();
+				foreach (KeyValuePair<string, TrackBlock> b in m_updatedBlocks)
 					statuses.Add(b.Key, b.Value);
-				m_updatedStatuses.Clear();
-				return m_updatedStatuses;
+				m_updatedBlocks.Clear();
+				return statuses;
 			}
 
 			public void Update()
@@ -167,14 +167,15 @@ namespace TrackControlLib
 					{
 						UpdateAuthoritySignal(b, DEFAULT_AUTHORITY);
 					}
+					AddUpdatedStatus(b);
 					blocks.Remove(b);
 				}
 			}
 
 			private void AddUpdatedStatus(TrackBlock b)
 			{
-				if (!m_updatedStatuses.ContainsKey(b.Name))
-					m_updatedStatuses.Add(b.Name, b.Status);
+				if (!m_updatedBlocks.ContainsKey(b.Name))
+					m_updatedBlocks.Add(b.Name, b);
 			}
 
 			private void UpdateAuthoritySignal(TrackBlock block, int authority)
