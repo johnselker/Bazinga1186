@@ -606,6 +606,7 @@ namespace CTCOfficeGUI
                             s.Trunk = m_blockTable[s.TrunkId];
                             s.BranchClosed = m_blockTable[s.BranchClosedId];
                             s.BranchOpen = m_blockTable[s.BranchOpenId];
+							s.State = TrackSwitchState.Closed;
                         }
                         else
                         {

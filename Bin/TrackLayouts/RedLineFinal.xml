@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <TrackLayout xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <LastUpdated>2012-04-26T11:56:45.336511-04:00</LastUpdated>
+  <LastUpdated>2012-04-26T14:36:25.6800906-04:00</LastUpdated>
   <BlockList>
     <TrackBlock>
       <Name>red1</Name>
@@ -249,7 +249,6 @@
       <HasSwitch>true</HasSwitch>
       <ControllerId>redController1</ControllerId>
       <AllowedDirection>Both</AllowedDirection>
-      <PreviousBlockId>red9</PreviousBlockId>
     </TrackBlock>
     <TrackBlock>
       <Name>red10</Name>
@@ -272,8 +271,8 @@
       <ControllerId>redController1</ControllerId>
       <SecondaryControllerId>redController2</SecondaryControllerId>
       <AllowedDirection>Both</AllowedDirection>
-      <PreviousBlockId>red8</PreviousBlockId>
-      <NextBlockId>red10</NextBlockId>
+      <PreviousBlockId>red9</PreviousBlockId>
+      <NextBlockId>red11</NextBlockId>
     </TrackBlock>
     <TrackBlock>
       <Name>red11</Name>
@@ -296,8 +295,8 @@
       <ControllerId>redController1</ControllerId>
       <SecondaryControllerId>redController2</SecondaryControllerId>
       <AllowedDirection>Both</AllowedDirection>
-      <PreviousBlockId>red9</PreviousBlockId>
-      <NextBlockId>red11</NextBlockId>
+      <PreviousBlockId>red10</PreviousBlockId>
+      <NextBlockId>red12</NextBlockId>
     </TrackBlock>
     <TrackBlock>
       <Name>red12</Name>
@@ -1878,49 +1877,49 @@
     <TrackSwitch>
       <Name>Switch1</Name>
       <ControllerId>redController1</ControllerId>
-      <TrunkId>red11</TrunkId>
+      <TrunkId>red10</TrunkId>
       <BranchClosedId>red11</BranchClosedId>
       <BranchOpenId>REDYARD</BranchOpenId>
     </TrackSwitch>
     <TrackSwitch>
       <Name>Switch2</Name>
       <ControllerId>redController2</ControllerId>
-      <TrunkId>red17</TrunkId>
+      <TrunkId>red18</TrunkId>
       <BranchClosedId>red17</BranchClosedId>
       <BranchOpenId>red1</BranchOpenId>
     </TrackSwitch>
     <TrackSwitch>
       <Name>Switch3</Name>
       <ControllerId>redController3</ControllerId>
-      <TrunkId>red29</TrunkId>
+      <TrunkId>red28</TrunkId>
       <BranchClosedId>red29</BranchClosedId>
       <BranchOpenId>red76</BranchOpenId>
     </TrackSwitch>
     <TrackSwitch>
       <Name>Switch4</Name>
       <ControllerId>redController4</ControllerId>
-      <TrunkId>red32</TrunkId>
+      <TrunkId>red33</TrunkId>
       <BranchClosedId>red32</BranchClosedId>
       <BranchOpenId>red72</BranchOpenId>
     </TrackSwitch>
     <TrackSwitch>
       <Name>Switch5</Name>
       <ControllerId>redController5</ControllerId>
-      <TrunkId>red40</TrunkId>
+      <TrunkId>red39</TrunkId>
       <BranchClosedId>red40</BranchClosedId>
       <BranchOpenId>red71</BranchOpenId>
     </TrackSwitch>
     <TrackSwitch>
       <Name>Switch6</Name>
       <ControllerId>redController6</ControllerId>
-      <TrunkId>red44</TrunkId>
+      <TrunkId>red43</TrunkId>
       <BranchClosedId>red44</BranchClosedId>
       <BranchOpenId>red67</BranchOpenId>
     </TrackSwitch>
     <TrackSwitch>
       <Name>Switch7</Name>
       <ControllerId>redController7</ControllerId>
-      <TrunkId>red52</TrunkId>
+      <TrunkId>red51</TrunkId>
       <BranchClosedId>red52</BranchClosedId>
       <BranchOpenId>red65</BranchOpenId>
     </TrackSwitch>

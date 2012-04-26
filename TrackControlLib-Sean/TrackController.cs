@@ -179,6 +179,7 @@ namespace TrackControlLib
 				while (blocks.Count > 0)
 				{
 					TrackBlock b = blocks.ElementAt<TrackBlock>(0);
+					blocks.Remove(b);
 					if (b.Status.TrainPresent)
 					{
 						TrackBlock t;
@@ -195,23 +196,22 @@ namespace TrackControlLib
 						}
 					}
 
-					if (!blocks.Contains(b.NextBlock) || !blocks.Contains(b.PreviousBlock) ||
+					if (!m_trackBlocks.ContainsValue(b.NextBlock) || !m_trackBlocks.ContainsValue(b.PreviousBlock) ||
 						b.NextBlock == null || b.PreviousBlock == null)
 					{
 						TrackBlock t;
 						int i;
 
 						for (i = -1, t = b;
-							t != null && blocks.Contains(t) &&
+							t != null && m_trackBlocks.ContainsValue(t) &&
 							t.Status.IsOpen;
-							++i, t = (t.NextBlock == t) ? t.NextBlock : t.PreviousBlock)
+							++i, t = (t.NextBlock.PreviousBlock == t) ? t.NextBlock : t.PreviousBlock)
 						{
 							UpdateAuthoritySignal(t, i);
-							if (t.Status.TrainPresent) break;
 							blocks.Remove(t);
+							if (t.Status.TrainPresent) break;
 						}
 					}
-					blocks.Remove(b);
 				}
 			}
 

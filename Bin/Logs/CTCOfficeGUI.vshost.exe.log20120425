@@ -1,0 +1,5 @@
+04-25-2012 16:30:35.887 [10] INFO  TrackLib.TrackLayoutSerializer - Track layout restore complete
+04-25-2012 16:30:35.944 [10] INFO  CTCOfficeGUI.CTCController - Successfully loaded track layout. Starting update timer
+04-25-2012 16:30:50.926 [10] INFO  CTCOfficeGUI.MainScreen - Track block was clicked
+04-25-2012 16:31:42.036 [10] INFO  CTCOfficeGUI.MainScreen - Track block was clicked
+04-25-2012 16:32:28.887 [10] INFO  CTCOfficeGUI.MainScreen - Track block was clicked

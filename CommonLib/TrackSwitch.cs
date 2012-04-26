@@ -28,9 +28,6 @@ namespace CommonLib
         #region Private Data
 
         private TrackSwitchState m_state;
-        private TrackBlock m_trunk;
-        private TrackBlock m_branch1;
-        private TrackBlock m_branch2;
 
         #endregion
 
@@ -216,9 +213,9 @@ namespace CommonLib
             Name = name;
             ControllerId = controllerID;
 
-            TrunkId = m_branch1.Name;
-            BranchClosedId = m_branch1.Name;
-            BranchOpenId = m_branch2.Name;
+            TrunkId = trunk.Name;
+			BranchClosedId = branchClosed.Name;
+			BranchOpenId = branchOpen.Name;
 
             // initial state
             BranchClosed = branchClosed;
@@ -246,17 +243,17 @@ namespace CommonLib
 			{
 				m_state = TrackSwitchState.Open;
 
-				if (BranchOpen.NextBlock == null)
-				{
-					BranchOpen.NextBlock = Trunk;
-					Trunk.PreviousBlock = BranchOpen;
-					BranchClosed.NextBlock = null;
-				}
-				else
+				if (BranchOpen.PreviousBlock == null)
 				{
 					BranchOpen.PreviousBlock = Trunk;
 					Trunk.NextBlock = BranchOpen;
 					BranchClosed.PreviousBlock = null;
+				}
+				else
+				{
+					BranchOpen.NextBlock = Trunk;
+					Trunk.PreviousBlock = BranchOpen;
+					BranchClosed.NextBlock = null;
 				}
 			}
 			else
