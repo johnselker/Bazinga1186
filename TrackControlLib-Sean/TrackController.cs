@@ -11,7 +11,7 @@ namespace TrackControlLib
 	{
 		public class TrackController : ITrackController
 		{
-			private const int DEFAULT_AUTHORITY = 100;
+			private const int DEFAULT_AUTHORITY = 20;
 			private const int AUTH_THRESH_SWITCH = 2;
 			private const int AUTH_THRESH_YELLOW = 1;
 			private const int AUTH_THRESH_GREEN = 5;
@@ -165,7 +165,7 @@ namespace TrackControlLib
 						int i;
 
 						for (i = -1, t = (b.GetNextBlock(b.Status.TrainDirection) == b.NextBlock) ? b.PreviousBlock : b.NextBlock;
-							t != null && blocks.Contains<TrackBlock>(t) &&
+							t != null && blocks.Contains(t) &&
 							t.Status.IsOpen;
 							++i, t = (t.NextBlock == t) ? t.PreviousBlock : t.NextBlock)
 						{
@@ -174,10 +174,23 @@ namespace TrackControlLib
 							blocks.Remove(t);
 						}
 					}
-					else
-					{
-						UpdateAuthoritySignal(b, DEFAULT_AUTHORITY);
-					}
+
+                    if (!blocks.Contains(b.NextBlock) || !blocks.Contains(b.PreviousBlock) ||
+                        b.NextBlock == null || b.PreviousBlock == null)
+                    {
+                        TrackBlock t;
+                        int i;
+
+                        for (i = -1, t = b;
+                            t != null && blocks.Contains(t) &&
+                            t.Status.IsOpen;
+                            ++i, t = (t.NextBlock == t) ? t.NextBlock : t.PreviousBlock)
+                        {
+                            UpdateAuthoritySignal(t, i);
+                            if (t.Status.TrainPresent) break;
+                            blocks.Remove(t);
+                        }
+                    }
 					blocks.Remove(b);
 				}
 			}
