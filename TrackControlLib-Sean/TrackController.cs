@@ -142,7 +142,7 @@ namespace TrackControlLib
 					if (b.Status.TrainPresent)
 					{
 						// we are on a switch that is already in the right direction,
-						if (b == m_switch.Branch || b == m_switch.Trunk1 || b == m_switch.Trunk2)
+						if (b.HasSwitch && b.GetNextBlock(b.Status.TrainDirection) != null)
 						{
 							if (!IsTrainApproaching(b)) ;
 						}
@@ -184,8 +184,26 @@ namespace TrackControlLib
 				}
 			}
 
-			private bool IsTrainApproaching(TrackBlock from)
+			private bool IsTrainApproaching(TrackBlock dest)
 			{
+				List<TrackBlock> blocks = new List<TrackBlock>(m_trackBlocks.Values);
+				while (blocks.Count > 0)
+				{
+					TrackBlock b = blocks.ElementAt<TrackBlock>(0);
+					if (b == dest) continue;
+					if (b.Status.TrainPresent)
+					{
+						for(TrackBlock t = b.GetNextBlock(b.Status.TrainDirection);
+							t != null && m_trackBlocks.ContainsValue(t) &&
+							t.Status.IsOpen && !t.Status.TrainPresent;
+							t = (t.NextBlock == t) ? t.PreviousBlock : t.NextBlock)
+						{
+							if (t == dest) return true;
+							blocks.Remove(t);
+						}
+					}
+					blocks.Remove(b);
+				}
 				return false;
 			}
 		}
