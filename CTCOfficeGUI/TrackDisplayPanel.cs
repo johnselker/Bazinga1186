@@ -141,16 +141,16 @@ namespace CTCOfficeGUI
                         {
                             TrainGraphic graphic = m_trainTable[train];
 
-                            graphic.Left = System.Convert.ToInt32((train.GetPosition().X + m_layoutPosition.X) * m_scale - graphic.Width / 2);
-                            graphic.Top = System.Convert.ToInt32((train.GetPosition().Y + m_layoutPosition.Y) * m_scale - graphic.Height / 2);
+                            graphic.Left = System.Convert.ToInt32((train.GetPosition().X - m_layoutPosition.X) * m_scale - graphic.Width / 2);
+                            graphic.Top = System.Convert.ToInt32((train.GetPosition().Y - m_layoutPosition.Y) * m_scale - graphic.Height / 2);
                         }
                         else
                         {
                             //New train, add it to the list
                             TrainGraphic graphic = new TrainGraphic(train);
 
-                            graphic.Location = new Point(System.Convert.ToInt32((train.GetPosition().X + m_layoutPosition.X) * m_scale - graphic.Width / 2),
-                                                         System.Convert.ToInt32((train.GetPosition().Y + m_layoutPosition.Y) * m_scale - graphic.Height / 2));
+                            graphic.Location = new Point(System.Convert.ToInt32((train.GetPosition().X - m_layoutPosition.X) * m_scale - graphic.Width / 2),
+                                                         System.Convert.ToInt32((train.GetPosition().Y - m_layoutPosition.Y) * m_scale - graphic.Height / 2));
 
                             graphic.TrainClicked += OnTrainGraphicClicked;
                             graphic.Disposed += OnTrainDisposed;
