@@ -269,6 +269,8 @@ namespace CTCOfficeGUI
         public void SetTrainYardInfo(TrackBlock b)
         {
             //Just show the block name
+            m_displayedTrain = null;
+            m_displayedBlock = b;
             SetInfo(b.Name, null);
         }
 
