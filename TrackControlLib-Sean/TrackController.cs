@@ -155,7 +155,7 @@ namespace TrackControlLib
 						if (b.GetNextBlock(b.Status.TrainDirection) != null)
 						{
 							// a train is approaching, switch so there isn't a collision
-							if (IsTrainApproaching(b.GetNextBlock(b.Status.TrainDirection)))
+							if (IsTrainApproaching(b, b.GetNextBlock(b.Status.TrainDirection)))
 							{
 								m_switch.Switch();
 								AddUpdatedStatus(b);
@@ -164,7 +164,7 @@ namespace TrackControlLib
 						else
 						{
 							// a train is approaching, switch so there isn't a collision
-							if (!IsTrainApproaching(m_trackBlocks[m_switch.TrunkId]))
+							if (!IsTrainApproaching(b, m_trackBlocks[m_switch.TrunkId]))
 							{
 								m_switch.Switch();
 								AddUpdatedStatus(b);
@@ -256,7 +256,7 @@ namespace TrackControlLib
 				}
 			}
 
-			private bool IsTrainApproaching(TrackBlock dest)
+			private bool IsTrainApproaching(TrackBlock curr, TrackBlock dest)
 			{
                 if (dest == null) throw new ArgumentNullException();
 
@@ -265,6 +265,7 @@ namespace TrackControlLib
 				{
 					TrackBlock b = blocks.ElementAt<TrackBlock>(0);
 					blocks.Remove(b);
+					if (b == curr) continue;
 					if (b.Status.TrainPresent)
 					{
 						for(TrackBlock t = b.GetNextBlock(b.Status.TrainDirection);
