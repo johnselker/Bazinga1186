@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <TrackLayout xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <LastUpdated>2012-04-26T01:47:43.0465051-04:00</LastUpdated>
+  <LastUpdated>2012-04-26T11:56:45.336511-04:00</LastUpdated>
   <BlockList>
     <TrackBlock>
       <Name>red1</Name>
@@ -624,8 +624,8 @@
       <ControllerId>redController3</ControllerId>
       <SecondaryControllerId>redController2</SecondaryControllerId>
       <AllowedDirection>Both</AllowedDirection>
-      <PreviousBlockId>redBlock23</PreviousBlockId>
-      <NextBlockId>redBlock25</NextBlockId>
+      <PreviousBlockId>red23</PreviousBlockId>
+      <NextBlockId>red25</NextBlockId>
     </TrackBlock>
     <TrackBlock>
       <Name>red25</Name>
@@ -652,8 +652,8 @@
       <ControllerId>redController3</ControllerId>
       <SecondaryControllerId>redController2</SecondaryControllerId>
       <AllowedDirection>Both</AllowedDirection>
-      <PreviousBlockId>redBlock24</PreviousBlockId>
-      <NextBlockId>redBlock26</NextBlockId>
+      <PreviousBlockId>red24</PreviousBlockId>
+      <NextBlockId>red26</NextBlockId>
     </TrackBlock>
     <TrackBlock>
       <Name>red26</Name>
@@ -676,8 +676,8 @@
       <ControllerId>redController3</ControllerId>
       <SecondaryControllerId>redController4</SecondaryControllerId>
       <AllowedDirection>Both</AllowedDirection>
-      <PreviousBlockId>redBlock25</PreviousBlockId>
-      <NextBlockId>redBlock27</NextBlockId>
+      <PreviousBlockId>red25</PreviousBlockId>
+      <NextBlockId>red27</NextBlockId>
     </TrackBlock>
     <TrackBlock>
       <Name>red27</Name>
@@ -700,8 +700,8 @@
       <ControllerId>redController3</ControllerId>
       <SecondaryControllerId>redController4</SecondaryControllerId>
       <AllowedDirection>Both</AllowedDirection>
-      <PreviousBlockId>redBlock26</PreviousBlockId>
-      <NextBlockId>redBlock28</NextBlockId>
+      <PreviousBlockId>red26</PreviousBlockId>
+      <NextBlockId>red28</NextBlockId>
     </TrackBlock>
     <TrackBlock>
       <Name>red28</Name>
@@ -724,8 +724,8 @@
       <ControllerId>redController3</ControllerId>
       <SecondaryControllerId>redController4</SecondaryControllerId>
       <AllowedDirection>Both</AllowedDirection>
-      <PreviousBlockId>redBlock27</PreviousBlockId>
-      <NextBlockId>redBlock29</NextBlockId>
+      <PreviousBlockId>red27</PreviousBlockId>
+      <NextBlockId>red29</NextBlockId>
     </TrackBlock>
     <TrackBlock>
       <Name>red29</Name>
@@ -748,8 +748,8 @@
       <ControllerId>redController3</ControllerId>
       <SecondaryControllerId>redController4</SecondaryControllerId>
       <AllowedDirection>Both</AllowedDirection>
-      <PreviousBlockId>redBlock28</PreviousBlockId>
-      <NextBlockId>redBlock30</NextBlockId>
+      <PreviousBlockId>red28</PreviousBlockId>
+      <NextBlockId>red30</NextBlockId>
     </TrackBlock>
     <TrackBlock>
       <Name>red30</Name>
@@ -772,8 +772,8 @@
       <ControllerId>redController3</ControllerId>
       <SecondaryControllerId>redController4</SecondaryControllerId>
       <AllowedDirection>Both</AllowedDirection>
-      <PreviousBlockId>redBlock29</PreviousBlockId>
-      <NextBlockId>redBlock31</NextBlockId>
+      <PreviousBlockId>red29</PreviousBlockId>
+      <NextBlockId>red31</NextBlockId>
     </TrackBlock>
     <TrackBlock>
       <Name>red31</Name>
@@ -796,8 +796,8 @@
       <ControllerId>redController3</ControllerId>
       <SecondaryControllerId>redController4</SecondaryControllerId>
       <AllowedDirection>Both</AllowedDirection>
-      <PreviousBlockId>redBlock30</PreviousBlockId>
-      <NextBlockId>redBlock32</NextBlockId>
+      <PreviousBlockId>red30</PreviousBlockId>
+      <NextBlockId>red32</NextBlockId>
     </TrackBlock>
     <TrackBlock>
       <Name>red32</Name>
@@ -820,8 +820,8 @@
       <ControllerId>redController4</ControllerId>
       <SecondaryControllerId>redController3</SecondaryControllerId>
       <AllowedDirection>Both</AllowedDirection>
-      <PreviousBlockId>redBlock31</PreviousBlockId>
-      <NextBlockId>redBlock33</NextBlockId>
+      <PreviousBlockId>red31</PreviousBlockId>
+      <NextBlockId>red33</NextBlockId>
     </TrackBlock>
     <TrackBlock>
       <Name>red33</Name>
@@ -844,8 +844,8 @@
       <ControllerId>redController4</ControllerId>
       <SecondaryControllerId>redController5</SecondaryControllerId>
       <AllowedDirection>Both</AllowedDirection>
-      <PreviousBlockId>redBlock32</PreviousBlockId>
-      <NextBlockId>redBlock34</NextBlockId>
+      <PreviousBlockId>red32</PreviousBlockId>
+      <NextBlockId>red34</NextBlockId>
     </TrackBlock>
     <TrackBlock>
       <Name>red34</Name>
@@ -872,8 +872,8 @@
       <ControllerId>redController4</ControllerId>
       <SecondaryControllerId>redController5</SecondaryControllerId>
       <AllowedDirection>Both</AllowedDirection>
-      <PreviousBlockId>redBlock33</PreviousBlockId>
-      <NextBlockId>redBlock35</NextBlockId>
+      <PreviousBlockId>red33</PreviousBlockId>
+      <NextBlockId>red35</NextBlockId>
     </TrackBlock>
     <TrackBlock>
       <Name>red35</Name>
@@ -900,8 +900,8 @@
       <ControllerId>redController4</ControllerId>
       <SecondaryControllerId>redController5</SecondaryControllerId>
       <AllowedDirection>Both</AllowedDirection>
-      <PreviousBlockId>redBlock34</PreviousBlockId>
-      <NextBlockId>redBlock36</NextBlockId>
+      <PreviousBlockId>red34</PreviousBlockId>
+      <NextBlockId>red36</NextBlockId>
     </TrackBlock>
     <TrackBlock>
       <Name>red36</Name>
@@ -924,8 +924,8 @@
       <ControllerId>redController4</ControllerId>
       <SecondaryControllerId>redController5</SecondaryControllerId>
       <AllowedDirection>Both</AllowedDirection>
-      <PreviousBlockId>redBlock35</PreviousBlockId>
-      <NextBlockId>redBlock37</NextBlockId>
+      <PreviousBlockId>red35</PreviousBlockId>
+      <NextBlockId>red37</NextBlockId>
     </TrackBlock>
     <TrackBlock>
       <Name>red37</Name>
@@ -948,8 +948,8 @@
       <ControllerId>redController4</ControllerId>
       <SecondaryControllerId>redController5</SecondaryControllerId>
       <AllowedDirection>Both</AllowedDirection>
-      <PreviousBlockId>redBlock36</PreviousBlockId>
-      <NextBlockId>redBlock38</NextBlockId>
+      <PreviousBlockId>red36</PreviousBlockId>
+      <NextBlockId>red38</NextBlockId>
     </TrackBlock>
     <TrackBlock>
       <Name>red38</Name>
@@ -972,8 +972,8 @@
       <ControllerId>redController5</ControllerId>
       <SecondaryControllerId>redController4</SecondaryControllerId>
       <AllowedDirection>Both</AllowedDirection>
-      <PreviousBlockId>redBlock37</PreviousBlockId>
-      <NextBlockId>redBlock39</NextBlockId>
+      <PreviousBlockId>red37</PreviousBlockId>
+      <NextBlockId>red39</NextBlockId>
     </TrackBlock>
     <TrackBlock>
       <Name>red39</Name>
@@ -996,8 +996,8 @@
       <ControllerId>redController5</ControllerId>
       <SecondaryControllerId>redController6</SecondaryControllerId>
       <AllowedDirection>Both</AllowedDirection>
-      <PreviousBlockId>redBlock38</PreviousBlockId>
-      <NextBlockId>redBlock40</NextBlockId>
+      <PreviousBlockId>red38</PreviousBlockId>
+      <NextBlockId>red40</NextBlockId>
     </TrackBlock>
     <TrackBlock>
       <Name>red40</Name>
@@ -1020,8 +1020,8 @@
       <ControllerId>redController5</ControllerId>
       <SecondaryControllerId>redController6</SecondaryControllerId>
       <AllowedDirection>Both</AllowedDirection>
-      <PreviousBlockId>redBlock39</PreviousBlockId>
-      <NextBlockId>redBlock41</NextBlockId>
+      <PreviousBlockId>red39</PreviousBlockId>
+      <NextBlockId>red41</NextBlockId>
     </TrackBlock>
     <TrackBlock>
       <Name>red41</Name>
@@ -1044,8 +1044,8 @@
       <ControllerId>redController5</ControllerId>
       <SecondaryControllerId>redController6</SecondaryControllerId>
       <AllowedDirection>Both</AllowedDirection>
-      <PreviousBlockId>redBlock40</PreviousBlockId>
-      <NextBlockId>redBlock42</NextBlockId>
+      <PreviousBlockId>red40</PreviousBlockId>
+      <NextBlockId>red42</NextBlockId>
     </TrackBlock>
     <TrackBlock>
       <Name>red42</Name>
@@ -1068,8 +1068,8 @@
       <ControllerId>redController5</ControllerId>
       <SecondaryControllerId>redController6</SecondaryControllerId>
       <AllowedDirection>Both</AllowedDirection>
-      <PreviousBlockId>redBlock41</PreviousBlockId>
-      <NextBlockId>redBlock43</NextBlockId>
+      <PreviousBlockId>red41</PreviousBlockId>
+      <NextBlockId>red43</NextBlockId>
     </TrackBlock>
     <TrackBlock>
       <Name>red43</Name>
@@ -1096,8 +1096,8 @@
       <ControllerId>redController6</ControllerId>
       <SecondaryControllerId>redController5</SecondaryControllerId>
       <AllowedDirection>Both</AllowedDirection>
-      <PreviousBlockId>redBlock42</PreviousBlockId>
-      <NextBlockId>redBlock44</NextBlockId>
+      <PreviousBlockId>red42</PreviousBlockId>
+      <NextBlockId>red44</NextBlockId>
     </TrackBlock>
     <TrackBlock>
       <Name>red44</Name>
@@ -1124,8 +1124,8 @@
       <ControllerId>redController6</ControllerId>
       <SecondaryControllerId>redController7</SecondaryControllerId>
       <AllowedDirection>Both</AllowedDirection>
-      <PreviousBlockId>redBlock43</PreviousBlockId>
-      <NextBlockId>redBlock45</NextBlockId>
+      <PreviousBlockId>red43</PreviousBlockId>
+      <NextBlockId>red45</NextBlockId>
     </TrackBlock>
     <TrackBlock>
       <Name>red45</Name>
@@ -1148,8 +1148,8 @@
       <ControllerId>redController6</ControllerId>
       <SecondaryControllerId>redController7</SecondaryControllerId>
       <AllowedDirection>Both</AllowedDirection>
-      <PreviousBlockId>redBlock44</PreviousBlockId>
-      <NextBlockId>redBlock46</NextBlockId>
+      <PreviousBlockId>red44</PreviousBlockId>
+      <NextBlockId>red46</NextBlockId>
     </TrackBlock>
     <TrackBlock>
       <Name>red46</Name>
@@ -1172,8 +1172,8 @@
       <ControllerId>redController6</ControllerId>
       <SecondaryControllerId>redController7</SecondaryControllerId>
       <AllowedDirection>Both</AllowedDirection>
-      <PreviousBlockId>redBlock45</PreviousBlockId>
-      <NextBlockId>redBlock47</NextBlockId>
+      <PreviousBlockId>red45</PreviousBlockId>
+      <NextBlockId>red47</NextBlockId>
     </TrackBlock>
     <TrackBlock>
       <Name>red47</Name>
@@ -1196,8 +1196,8 @@
       <ControllerId>redController6</ControllerId>
       <SecondaryControllerId>redController7</SecondaryControllerId>
       <AllowedDirection>Both</AllowedDirection>
-      <PreviousBlockId>redBlock46</PreviousBlockId>
-      <NextBlockId>redBlock48</NextBlockId>
+      <PreviousBlockId>red46</PreviousBlockId>
+      <NextBlockId>red48</NextBlockId>
     </TrackBlock>
     <TrackBlock>
       <Name>red48</Name>
@@ -1224,8 +1224,8 @@
       <ControllerId>redController6</ControllerId>
       <SecondaryControllerId>redController7</SecondaryControllerId>
       <AllowedDirection>Both</AllowedDirection>
-      <PreviousBlockId>redBlock47</PreviousBlockId>
-      <NextBlockId>redBlock49</NextBlockId>
+      <PreviousBlockId>red47</PreviousBlockId>
+      <NextBlockId>red49</NextBlockId>
     </TrackBlock>
     <TrackBlock>
       <Name>red49</Name>
@@ -1252,8 +1252,8 @@
       <ControllerId>redController6</ControllerId>
       <SecondaryControllerId>redController7</SecondaryControllerId>
       <AllowedDirection>Both</AllowedDirection>
-      <PreviousBlockId>redBlock48</PreviousBlockId>
-      <NextBlockId>redBlock50</NextBlockId>
+      <PreviousBlockId>red48</PreviousBlockId>
+      <NextBlockId>red50</NextBlockId>
     </TrackBlock>
     <TrackBlock>
       <Name>red50</Name>
@@ -1276,8 +1276,8 @@
       <ControllerId>redController6</ControllerId>
       <SecondaryControllerId>redController7</SecondaryControllerId>
       <AllowedDirection>Both</AllowedDirection>
-      <PreviousBlockId>redBlock49</PreviousBlockId>
-      <NextBlockId>redBlock51</NextBlockId>
+      <PreviousBlockId>red49</PreviousBlockId>
+      <NextBlockId>red51</NextBlockId>
     </TrackBlock>
     <TrackBlock>
       <Name>red51</Name>
@@ -1300,8 +1300,8 @@
       <ControllerId>redController6</ControllerId>
       <SecondaryControllerId>redController7</SecondaryControllerId>
       <AllowedDirection>Both</AllowedDirection>
-      <PreviousBlockId>redBlock50</PreviousBlockId>
-      <NextBlockId>redBlock52</NextBlockId>
+      <PreviousBlockId>red50</PreviousBlockId>
+      <NextBlockId>red52</NextBlockId>
     </TrackBlock>
     <TrackBlock>
       <Name>red52</Name>
@@ -1323,8 +1323,8 @@
       <HasSwitch>true</HasSwitch>
       <ControllerId>redController7</ControllerId>
       <AllowedDirection>Both</AllowedDirection>
-      <PreviousBlockId>redBlock51</PreviousBlockId>
-      <NextBlockId>redBlock53</NextBlockId>
+      <PreviousBlockId>red51</PreviousBlockId>
+      <NextBlockId>red53</NextBlockId>
     </TrackBlock>
     <TrackBlock>
       <Name>red53</Name>
@@ -1346,8 +1346,8 @@
       <HasSwitch>false</HasSwitch>
       <ControllerId>redController7</ControllerId>
       <AllowedDirection>Both</AllowedDirection>
-      <PreviousBlockId>redBlock52</PreviousBlockId>
-      <NextBlockId>redBlock54</NextBlockId>
+      <PreviousBlockId>red52</PreviousBlockId>
+      <NextBlockId>red54</NextBlockId>
     </TrackBlock>
     <TrackBlock>
       <Name>red54</Name>
@@ -1369,8 +1369,8 @@
       <HasSwitch>false</HasSwitch>
       <ControllerId>redController7</ControllerId>
       <AllowedDirection>Both</AllowedDirection>
-      <PreviousBlockId>redBlock53</PreviousBlockId>
-      <NextBlockId>redBlock55</NextBlockId>
+      <PreviousBlockId>red53</PreviousBlockId>
+      <NextBlockId>red55</NextBlockId>
     </TrackBlock>
     <TrackBlock>
       <Name>red55</Name>
@@ -1392,8 +1392,8 @@
       <HasSwitch>false</HasSwitch>
       <ControllerId>redController7</ControllerId>
       <AllowedDirection>Both</AllowedDirection>
-      <PreviousBlockId>redBlock54</PreviousBlockId>
-      <NextBlockId>redBlock56</NextBlockId>
+      <PreviousBlockId>red54</PreviousBlockId>
+      <NextBlockId>red56</NextBlockId>
     </TrackBlock>
     <TrackBlock>
       <Name>red56</Name>
@@ -1415,8 +1415,8 @@
       <HasSwitch>false</HasSwitch>
       <ControllerId>redController7</ControllerId>
       <AllowedDirection>Both</AllowedDirection>
-      <PreviousBlockId>redBlock55</PreviousBlockId>
-      <NextBlockId>redBlock57</NextBlockId>
+      <PreviousBlockId>red55</PreviousBlockId>
+      <NextBlockId>red57</NextBlockId>
     </TrackBlock>
     <TrackBlock>
       <Name>red57</Name>
@@ -1438,8 +1438,8 @@
       <HasSwitch>false</HasSwitch>
       <ControllerId>redController7</ControllerId>
       <AllowedDirection>Both</AllowedDirection>
-      <PreviousBlockId>redBlock56</PreviousBlockId>
-      <NextBlockId>redBlock58</NextBlockId>
+      <PreviousBlockId>red56</PreviousBlockId>
+      <NextBlockId>red58</NextBlockId>
     </TrackBlock>
     <TrackBlock>
       <Name>red58</Name>
@@ -1461,8 +1461,8 @@
       <HasSwitch>false</HasSwitch>
       <ControllerId>redController7</ControllerId>
       <AllowedDirection>Both</AllowedDirection>
-      <PreviousBlockId>redBlock57</PreviousBlockId>
-      <NextBlockId>redBlock59</NextBlockId>
+      <PreviousBlockId>red57</PreviousBlockId>
+      <NextBlockId>red59</NextBlockId>
     </TrackBlock>
     <TrackBlock>
       <Name>red59</Name>
@@ -1488,8 +1488,8 @@
       <HasSwitch>false</HasSwitch>
       <ControllerId>redController7</ControllerId>
       <AllowedDirection>Both</AllowedDirection>
-      <PreviousBlockId>redBlock58</PreviousBlockId>
-      <NextBlockId>redBlock60</NextBlockId>
+      <PreviousBlockId>red58</PreviousBlockId>
+      <NextBlockId>red60</NextBlockId>
     </TrackBlock>
     <TrackBlock>
       <Name>red60</Name>
@@ -1515,8 +1515,8 @@
       <HasSwitch>false</HasSwitch>
       <ControllerId>redController7</ControllerId>
       <AllowedDirection>Both</AllowedDirection>
-      <PreviousBlockId>redBlock59</PreviousBlockId>
-      <NextBlockId>redBlock61</NextBlockId>
+      <PreviousBlockId>red59</PreviousBlockId>
+      <NextBlockId>red61</NextBlockId>
     </TrackBlock>
     <TrackBlock>
       <Name>red61</Name>
@@ -1538,8 +1538,8 @@
       <HasSwitch>false</HasSwitch>
       <ControllerId>redController7</ControllerId>
       <AllowedDirection>Both</AllowedDirection>
-      <PreviousBlockId>redBlock60</PreviousBlockId>
-      <NextBlockId>redBlock62</NextBlockId>
+      <PreviousBlockId>red60</PreviousBlockId>
+      <NextBlockId>red62</NextBlockId>
     </TrackBlock>
     <TrackBlock>
       <Name>red62</Name>
@@ -1561,8 +1561,8 @@
       <HasSwitch>false</HasSwitch>
       <ControllerId>redController7</ControllerId>
       <AllowedDirection>Both</AllowedDirection>
-      <PreviousBlockId>redBlock61</PreviousBlockId>
-      <NextBlockId>redBlock63</NextBlockId>
+      <PreviousBlockId>red61</PreviousBlockId>
+      <NextBlockId>red63</NextBlockId>
     </TrackBlock>
     <TrackBlock>
       <Name>red63</Name>
@@ -1584,8 +1584,8 @@
       <HasSwitch>false</HasSwitch>
       <ControllerId>redController7</ControllerId>
       <AllowedDirection>Both</AllowedDirection>
-      <PreviousBlockId>redBlock61</PreviousBlockId>
-      <NextBlockId>redBlock63</NextBlockId>
+      <PreviousBlockId>red61</PreviousBlockId>
+      <NextBlockId>red63</NextBlockId>
     </TrackBlock>
     <TrackBlock>
       <Name>red64</Name>
@@ -1607,8 +1607,8 @@
       <HasSwitch>false</HasSwitch>
       <ControllerId>redController7</ControllerId>
       <AllowedDirection>Both</AllowedDirection>
-      <PreviousBlockId>redBlock62</PreviousBlockId>
-      <NextBlockId>redBlock64</NextBlockId>
+      <PreviousBlockId>red62</PreviousBlockId>
+      <NextBlockId>red64</NextBlockId>
     </TrackBlock>
     <TrackBlock>
       <Name>red65</Name>
@@ -1630,8 +1630,8 @@
       <HasSwitch>true</HasSwitch>
       <ControllerId>redController7</ControllerId>
       <AllowedDirection>Both</AllowedDirection>
-      <PreviousBlockId>redBlock62</PreviousBlockId>
-      <NextBlockId>redBlock64</NextBlockId>
+      <PreviousBlockId>red62</PreviousBlockId>
+      <NextBlockId>red64</NextBlockId>
     </TrackBlock>
     <TrackBlock>
       <Name>red67</Name>
@@ -1654,8 +1654,8 @@
       <ControllerId>redController5</ControllerId>
       <SecondaryControllerId>redController6</SecondaryControllerId>
       <AllowedDirection>Both</AllowedDirection>
-      <PreviousBlockId>redBlock43</PreviousBlockId>
-      <NextBlockId>redBlock68</NextBlockId>
+      <PreviousBlockId>red43</PreviousBlockId>
+      <NextBlockId>red68</NextBlockId>
     </TrackBlock>
     <TrackBlock>
       <Name>red68</Name>
@@ -1678,8 +1678,8 @@
       <ControllerId>redController5</ControllerId>
       <SecondaryControllerId>redController6</SecondaryControllerId>
       <AllowedDirection>Both</AllowedDirection>
-      <PreviousBlockId>redBlock67</PreviousBlockId>
-      <NextBlockId>redBlock69</NextBlockId>
+      <PreviousBlockId>red67</PreviousBlockId>
+      <NextBlockId>red69</NextBlockId>
     </TrackBlock>
     <TrackBlock>
       <Name>red69</Name>
@@ -1702,8 +1702,8 @@
       <ControllerId>redController5</ControllerId>
       <SecondaryControllerId>redController6</SecondaryControllerId>
       <AllowedDirection>Both</AllowedDirection>
-      <PreviousBlockId>redBlock68</PreviousBlockId>
-      <NextBlockId>redBlock70</NextBlockId>
+      <PreviousBlockId>red68</PreviousBlockId>
+      <NextBlockId>red70</NextBlockId>
     </TrackBlock>
     <TrackBlock>
       <Name>red70</Name>
@@ -1726,8 +1726,8 @@
       <ControllerId>redController5</ControllerId>
       <SecondaryControllerId>redController6</SecondaryControllerId>
       <AllowedDirection>Both</AllowedDirection>
-      <PreviousBlockId>redBlock69</PreviousBlockId>
-      <NextBlockId>redBlock71</NextBlockId>
+      <PreviousBlockId>red69</PreviousBlockId>
+      <NextBlockId>red71</NextBlockId>
     </TrackBlock>
     <TrackBlock>
       <Name>red71</Name>
@@ -1750,8 +1750,8 @@
       <ControllerId>redController5</ControllerId>
       <SecondaryControllerId>redController6</SecondaryControllerId>
       <AllowedDirection>Both</AllowedDirection>
-      <PreviousBlockId>redBlock70</PreviousBlockId>
-      <NextBlockId>redBlock38</NextBlockId>
+      <PreviousBlockId>red70</PreviousBlockId>
+      <NextBlockId>red38</NextBlockId>
     </TrackBlock>
     <TrackBlock>
       <Name>red72</Name>
@@ -1774,8 +1774,8 @@
       <ControllerId>redController3</ControllerId>
       <SecondaryControllerId>redController4</SecondaryControllerId>
       <AllowedDirection>Both</AllowedDirection>
-      <PreviousBlockId>redBlock32</PreviousBlockId>
-      <NextBlockId>redBlock73</NextBlockId>
+      <PreviousBlockId>red32</PreviousBlockId>
+      <NextBlockId>red73</NextBlockId>
     </TrackBlock>
     <TrackBlock>
       <Name>red73</Name>
@@ -1798,8 +1798,8 @@
       <ControllerId>redController3</ControllerId>
       <SecondaryControllerId>redController4</SecondaryControllerId>
       <AllowedDirection>Both</AllowedDirection>
-      <PreviousBlockId>redBlock72</PreviousBlockId>
-      <NextBlockId>redBlock74</NextBlockId>
+      <PreviousBlockId>red72</PreviousBlockId>
+      <NextBlockId>red74</NextBlockId>
     </TrackBlock>
     <TrackBlock>
       <Name>red74</Name>
@@ -1822,8 +1822,8 @@
       <ControllerId>redController3</ControllerId>
       <SecondaryControllerId>redController4</SecondaryControllerId>
       <AllowedDirection>Both</AllowedDirection>
-      <PreviousBlockId>redBlock73</PreviousBlockId>
-      <NextBlockId>redBlock75</NextBlockId>
+      <PreviousBlockId>red73</PreviousBlockId>
+      <NextBlockId>red75</NextBlockId>
     </TrackBlock>
     <TrackBlock>
       <Name>red75</Name>
@@ -1846,8 +1846,8 @@
       <ControllerId>redController3</ControllerId>
       <SecondaryControllerId>redController4</SecondaryControllerId>
       <AllowedDirection>Both</AllowedDirection>
-      <PreviousBlockId>redBlock74</PreviousBlockId>
-      <NextBlockId>redBlock76</NextBlockId>
+      <PreviousBlockId>red74</PreviousBlockId>
+      <NextBlockId>red76</NextBlockId>
     </TrackBlock>
     <TrackBlock>
       <Name>red76</Name>
@@ -1870,8 +1870,8 @@
       <ControllerId>redController3</ControllerId>
       <SecondaryControllerId>redController4</SecondaryControllerId>
       <AllowedDirection>Both</AllowedDirection>
-      <PreviousBlockId>redBlock75</PreviousBlockId>
-      <NextBlockId>redBlock27</NextBlockId>
+      <PreviousBlockId>red75</PreviousBlockId>
+      <NextBlockId>red27</NextBlockId>
     </TrackBlock>
   </BlockList>
   <SwitchList>
