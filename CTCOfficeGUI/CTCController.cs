@@ -593,10 +593,23 @@ namespace CTCOfficeGUI
         {
             lock (m_subscriberList)
             {
+                List<TrackBlock> updatedBlocks = new List<TrackBlock>();
+
+                if (m_controllerList != null)
+                {
+                    foreach (ITrackController controller in m_controllerList)
+                    {
+                        Dictionary<string, TrackBlock> blocks = controller.GetUpdatedTrackStatus();
+                        if (blocks != null)
+                        {
+                            updatedBlocks.AddRange(blocks.Values.ToList<TrackBlock>());
+                        }
+                    }
+                }
+
                 foreach (UpdateDisplay updateDelegate in m_subscriberList)
                 {
-                    updateDelegate(null, null);
-                    //updateDelegate(GetBlockList(), GetTrainList());
+                    updateDelegate(updatedBlocks, m_trainList);
                 }
             }
         }

@@ -422,6 +422,8 @@ namespace CTCOfficeGUI
             Graphics g = e.Graphics;
 
             //Set the color
+            m_currentColor = GetDrawColor();
+
             Pen pen = new Pen(m_currentColor, LineThickness);
             
             g.DrawLine(pen, m_scaledStart, m_scaledEnd); //Draw line
