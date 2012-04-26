@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <TrackLayout xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <LastUpdated>2012-04-25T22:19:50.4114815-04:00</LastUpdated>
+  <LastUpdated>2012-04-25T22:35:59.2254797-04:00</LastUpdated>
   <BlockList>
     <TrackBlock>
       <Name>red1</Name>
@@ -146,7 +146,10 @@
       <Length>75</Length>
       <Orientation>EastWest</Orientation>
       <RailroadCrossing>false</RailroadCrossing>
-      <Transponder />
+      <Transponder>
+        <StationName>Shadyside</StationName>
+        <DistanceToStation>1</DistanceToStation>
+      </Transponder>
       <StartPoint>
         <X>210</X>
         <Y>-210</Y>
@@ -170,7 +173,10 @@
       <Length>75</Length>
       <Orientation>EastWest</Orientation>
       <RailroadCrossing>false</RailroadCrossing>
-      <Transponder />
+      <Transponder>
+        <StationName>Shadyside</StationName>
+        <DistanceToStation>0</DistanceToStation>
+      </Transponder>
       <StartPoint>
         <X>285</X>
         <Y>-210</Y>
@@ -218,7 +224,10 @@
       <Length>150</Length>
       <Orientation>NorthWestSouthEast</Orientation>
       <RailroadCrossing>false</RailroadCrossing>
-      <Transponder />
+      <Transponder>
+        <StationName>REDYARD</StationName>
+        <DistanceToStation>0</DistanceToStation>
+      </Transponder>
       <StartPoint>
         <X>466</X>
         <Y>-104</Y>
@@ -380,7 +389,10 @@
       <Length>60</Length>
       <Orientation>EastWest</Orientation>
       <RailroadCrossing>false</RailroadCrossing>
-      <Transponder />
+      <Transponder>
+        <StationName>Herron Ave</StationName>
+        <DistanceToStation>1</DistanceToStation>
+      </Transponder>
       <StartPoint>
         <X>225</X>
         <Y>24</Y>
@@ -404,7 +416,10 @@
       <Length>50</Length>
       <Orientation>EastWest</Orientation>
       <RailroadCrossing>false</RailroadCrossing>
-      <Transponder />
+      <Transponder>
+        <StationName>Herron Ave</StationName>
+        <DistanceToStation>0</DistanceToStation>
+      </Transponder>
       <StartPoint>
         <X>175</X>
         <Y>24</Y>
@@ -497,7 +512,10 @@
       <Length>200</Length>
       <Orientation>EastWest</Orientation>
       <RailroadCrossing>false</RailroadCrossing>
-      <Transponder />
+      <Transponder>
+        <StationName>Swissville</StationName>
+        <DistanceToStation>1</DistanceToStation>
+      </Transponder>
       <StartPoint>
         <X>-1025</X>
         <Y>24</Y>
@@ -590,7 +608,10 @@
       <Length>50</Length>
       <Orientation>NorthSouth</Orientation>
       <RailroadCrossing>false</RailroadCrossing>
-      <Transponder />
+      <Transponder>
+        <StationName>Penn</StationName>
+        <DistanceToStation>1</DistanceToStation>
+      </Transponder>
       <StartPoint>
         <X>-1235</X>
         <Y>284</Y>
@@ -614,7 +635,10 @@
       <Length>50</Length>
       <Orientation>NorthSouth</Orientation>
       <RailroadCrossing>false</RailroadCrossing>
-      <Transponder />
+      <Transponder>
+        <StationName>Penn</StationName>
+        <DistanceToStation>0</DistanceToStation>
+      </Transponder>
       <StartPoint>
         <X>-1235</X>
         <Y>334</Y>
@@ -822,7 +846,10 @@
       <Length>50</Length>
       <Orientation>NorthSouth</Orientation>
       <RailroadCrossing>false</RailroadCrossing>
-      <Transponder />
+      <Transponder>
+        <StationName>Steel Plaza</StationName>
+        <DistanceToStation>1</DistanceToStation>
+      </Transponder>
       <StartPoint>
         <X>-1235</X>
         <Y>804</Y>
@@ -846,7 +873,10 @@
       <Length>50</Length>
       <Orientation>NorthSouth</Orientation>
       <RailroadCrossing>false</RailroadCrossing>
-      <Transponder />
+      <Transponder>
+        <StationName>Steel Plaza</StationName>
+        <DistanceToStation>0</DistanceToStation>
+      </Transponder>
       <StartPoint>
         <X>-1235</X>
         <Y>854</Y>
@@ -1031,7 +1061,10 @@
       <Length>50</Length>
       <Orientation>NorthSouth</Orientation>
       <RailroadCrossing>false</RailroadCrossing>
-      <Transponder />
+      <Transponder>
+        <StationName>First Ave</StationName>
+        <DistanceToStation>1</DistanceToStation>
+      </Transponder>
       <StartPoint>
         <X>-1235</X>
         <Y>1274</Y>
@@ -1055,7 +1088,10 @@
       <Length>50</Length>
       <Orientation>NorthSouth</Orientation>
       <RailroadCrossing>false</RailroadCrossing>
-      <Transponder />
+      <Transponder>
+        <StationName>First Ave</StationName>
+        <DistanceToStation>0</DistanceToStation>
+      </Transponder>
       <StartPoint>
         <X>-1235</X>
         <Y>1324</Y>
@@ -1148,7 +1184,10 @@
       <Length>75</Length>
       <Orientation>EastWest</Orientation>
       <RailroadCrossing>false</RailroadCrossing>
-      <Transponder />
+      <Transponder>
+        <StationName>Station Square</StationName>
+        <DistanceToStation>1</DistanceToStation>
+      </Transponder>
       <StartPoint>
         <X>-1416</X>
         <Y>1480</Y>
@@ -1172,7 +1211,10 @@
       <Length>50</Length>
       <Orientation>EastWest</Orientation>
       <RailroadCrossing>false</RailroadCrossing>
-      <Transponder />
+      <Transponder>
+        <StationName>Station Square</StationName>
+        <DistanceToStation>0</DistanceToStation>
+      </Transponder>
       <StartPoint>
         <X>-1466</X>
         <Y>1480</Y>
@@ -1396,7 +1438,10 @@
       <Length>75</Length>
       <Orientation>SouthWestNorthEast</Orientation>
       <RailroadCrossing>false</RailroadCrossing>
-      <Transponder />
+      <Transponder>
+        <StationName>South Hills Junction</StationName>
+        <DistanceToStation>1</DistanceToStation>
+      </Transponder>
       <StartPoint>
         <X>-1799</X>
         <Y>1190</Y>
@@ -1419,7 +1464,10 @@
       <Length>75</Length>
       <Orientation>EastWest</Orientation>
       <RailroadCrossing>false</RailroadCrossing>
-      <Transponder />
+      <Transponder>
+        <StationName>South Hills Junction</StationName>
+        <DistanceToStation>0</DistanceToStation>
+      </Transponder>
       <StartPoint>
         <X>-1746</X>
         <Y>1137</Y>

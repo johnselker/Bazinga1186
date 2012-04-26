@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Runtime.Serialization;
+using System.Xml;
+using System.Xml.Serialization;
 
 namespace CommonLib
 {
@@ -12,6 +15,8 @@ namespace CommonLib
     /// A transponder indicates the presence of an upcoming station
     /// </summary>
     //--------------------------------------------------------------------------------------
+    [Serializable]
+    [XmlType(TypeName = "Transponder")]
     public class Transponder
     {
         #region Private Data
@@ -29,9 +34,11 @@ namespace CommonLib
         /// Name of the upcoming station
         /// </summary>
         //--------------------------------------------------------------------------------------
+        [XmlElement(ElementName = "StationName")]
         public String StationName
         {
-            get { return m_stationName; }
+            get;
+            set;
         }
 
         // ACCESSOR: DistanceToStation
@@ -40,9 +47,11 @@ namespace CommonLib
         /// Distance to the upcoming station
         /// </summary>
         //--------------------------------------------------------------------------------------
+        [XmlElement(ElementName = "DistanceToStation")]
         public int DistanceToStation
         {
-            get { return m_stationDistance; }
+            get;
+            set;
         }
 
         #endregion
@@ -65,8 +74,8 @@ namespace CommonLib
         //--------------------------------------------------------------------------------------
         public Transponder(string stationName, int distance)
         {
-            m_stationName = stationName;
-            m_stationDistance = distance;
+            StationName = stationName;
+            DistanceToStation = distance;
         }
 
         #endregion
