@@ -223,6 +223,9 @@ namespace CommonLib
             m_trunk = trunk;
             m_branch1 = branch1;
             m_branch2 = branch2;
+            TrunkId = m_branch1.Name;
+            BranchClosedId = m_branch1.Name;
+            BranchClosedId = m_branch2.Name;
 
             // initial state
             Branch = branch1;
@@ -232,29 +235,7 @@ namespace CommonLib
             m_state = TrackSwitchState.Closed;
         }
 
-        // METHOD: TrackSwitch
-        //--------------------------------------------------------------------------------------
-        /// <summary>
-        /// Secondary constructor with initial state
-        /// </summary>
-        /// 
-        /// <param name="name">Track switch name</param>
-        /// <param name="controllerID">ID of the TrackController assigned to the switch</param>
-        /// <param name="trunkID">ID of the trunk block connecting to the switch</param>
-        /// <param name="branchClosedID">ID of the branch blocks connecting to the switch when closed</param>
-        /// <param name="branchOpenID">ID of the branch blocks connecting to the switch when open</param>
-        //--------------------------------------------------------------------------------------
-        public TrackSwitch(string name, string controllerID, string trunkID, string branchClosedID, string branchOpenID)
-        {
-            Name = name;
-            ControllerId = controllerID;
-            TrunkId = trunkID;
-            BranchClosedId = branchClosedID;
-            BranchOpenId = branchOpenID;
-
-            m_state = TrackSwitchState.Closed;
-        }
-
+        
         #endregion
 
         #region Public Methods
