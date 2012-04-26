@@ -64,6 +64,10 @@
       <Project>{3A314C23-4C0E-42C7-97E6-D5A014D09DE9}</Project>
       <Name>CTCOfficeGUI</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\TrackControlLib-Sean\TrackControlLib-Sean.csproj">
+      <Project>{3F3F705C-5298-4DF6-AC70-AD493D314D04}</Project>
+      <Name>TrackControlLib-Sean</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\TrainControlLib\TrainControlLib.csproj">
       <Project>{A22B83AF-C52B-4CBB-AB3B-4DDF897905FA}</Project>
       <Name>TrainControlLib</Name>

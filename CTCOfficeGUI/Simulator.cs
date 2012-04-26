@@ -131,7 +131,7 @@ namespace CTCOfficeGUI
                     m_log.LogInfoFormat("Setting signal pickup failure of train {0}", failure);
                     train.SetSignalPickupFailure(failure);
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
                     m_log.LogError("Error in setting signal pickup failure");
                 }
@@ -152,7 +152,7 @@ namespace CTCOfficeGUI
                     m_log.LogInfoFormat("Setting brake failure of train {0}", failure);
                     train.SetBrakeFailure(failure);
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
                     m_log.LogError("Error in setting signal pickup failure");
                 }
@@ -173,7 +173,7 @@ namespace CTCOfficeGUI
                     m_log.LogInfoFormat("Setting engine failure of train {0}", failure);
                     train.SetEngineFailure(failure);
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
                     m_log.LogError("Error in setting signal pickup failure");
                 }

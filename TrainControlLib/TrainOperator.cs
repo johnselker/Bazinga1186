@@ -61,14 +61,14 @@ namespace TrainControllerLib
 
         private void createTrain_Click(object sender, EventArgs e)
         {
-            startingBlock = new TrackBlock("Block1", TrackOrientation.EastWest, new Point(0, 0), 1650, 0, 0, false, false, 70, TrackAllowedDirection.Both, null, "controller1", "controller2", "Block0", "Block2");
-            startingBlock.NextBlock = new TrackBlock("Block2", TrackOrientation.EastWest, new Point(1650, 0), 50, 0, 0, true, false, 70, TrackAllowedDirection.Both, null, "controller1", "controller2", "Block1", "Block3");
+            startingBlock = new TrackBlock("Block1", TrackOrientation.EastWest, new Point(0, 0), 1650, 0, 0, false, false, 70, TrackAllowedDirection.Both, false, "controller1", "controller2", "Block0", "Block2");
+            startingBlock.NextBlock = new TrackBlock("Block2", TrackOrientation.EastWest, new Point(1650, 0), 50, 0, 0, true, false, 70, TrackAllowedDirection.Both, false, "controller1", "controller2", "Block1", "Block3");
             startingBlock.Authority = new BlockAuthority(70, 3);
             startingBlock.NextBlock.Authority = new BlockAuthority(70, 2);
-            startingBlock.NextBlock.NextBlock = new TrackBlock("Block3", TrackOrientation.EastWest, new Point(1700, 0), 1000, 0, 0, true, false, 70, TrackAllowedDirection.Both, null, "controller1", "controller2", "Block2", "Block4");
-            startingBlock.NextBlock.NextBlock.NextBlock = new TrackBlock("Block4", TrackOrientation.EastWest, new Point(2700, 0), 100, 0, 0, false, false, 70, TrackAllowedDirection.Both, null, "controller1", "controller2", "Block3", "Block5");
-            startingBlock.NextBlock.NextBlock.NextBlock.NextBlock = new TrackBlock("Block5", TrackOrientation.EastWest, new Point(2800, 0), 100, 0, 0, false, false, 70, TrackAllowedDirection.Both, null, "controller1", "controller2", "Block4", "Block6");
-            startingBlock.NextBlock.NextBlock.NextBlock.NextBlock.NextBlock = new TrackBlock("Block6", TrackOrientation.EastWest, new Point(2800, 0), 100, 0, 0, false, false, 70, TrackAllowedDirection.Both, null, "controller1", "controller2", "Block5", "Block7");
+            startingBlock.NextBlock.NextBlock = new TrackBlock("Block3", TrackOrientation.EastWest, new Point(1700, 0), 1000, 0, 0, true, false, 70, TrackAllowedDirection.Both, false, "controller1", "controller2", "Block2", "Block4");
+            startingBlock.NextBlock.NextBlock.NextBlock = new TrackBlock("Block4", TrackOrientation.EastWest, new Point(2700, 0), 100, 0, 0, false, false, 70, TrackAllowedDirection.Both, false, "controller1", "controller2", "Block3", "Block5");
+            startingBlock.NextBlock.NextBlock.NextBlock.NextBlock = new TrackBlock("Block5", TrackOrientation.EastWest, new Point(2800, 0), 100, 0, 0, false, false, 70, TrackAllowedDirection.Both, false, "controller1", "controller2", "Block4", "Block6");
+            startingBlock.NextBlock.NextBlock.NextBlock.NextBlock.NextBlock = new TrackBlock("Block6", TrackOrientation.EastWest, new Point(2800, 0), 100, 0, 0, false, false, 70, TrackAllowedDirection.Both, false, "controller1", "controller2", "Block5", "Block7");
             //startingBlock.NextBlock.NextBlock = startingBlock;
             startingBlock.NextBlock.NextBlock.Authority = new BlockAuthority(70, 1);
             startingBlock.NextBlock.NextBlock.NextBlock.Authority = new BlockAuthority(40, 0);

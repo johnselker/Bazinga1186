@@ -243,8 +243,8 @@ namespace CommonLib
         /// Id of the switch connecting to this block
         /// </summary>
         //--------------------------------------------------------------------------------------
-        [XmlElement(ElementName = "SwitchId")]
-        public string SwitchId
+        [XmlElement(ElementName = "HasSwitch")]
+        public bool HasSwitch
         {
             get;
             set;
@@ -339,19 +339,6 @@ namespace CommonLib
             get { return Transponder != null; }
         }
 
-        // ACCESSOR: HasSwitch
-        //--------------------------------------------------------------------------------------
-        /// <summary>
-        /// Shortcut to determine if the block has a switch
-        /// </summary>
-        //--------------------------------------------------------------------------------------
-        [XmlIgnore]
-        public Boolean HasSwitch
-        {
-            get;
-            set;
-        }
-
         // ACCESSOR: Status
         //--------------------------------------------------------------------------------------
         /// <summary>
@@ -401,7 +388,7 @@ namespace CommonLib
         //--------------------------------------------------------------------------------------
         public TrackBlock(string name, TrackOrientation orientation, Point startPoint, double length, double endElevation,
                             double grade, bool tunnel, bool railroadCrossing, int staticSpeedLimit,
-                            TrackAllowedDirection direction, string switchID, string controllerID,
+                            TrackAllowedDirection direction, bool hasSwitch, string controllerID,
                             string secondaryControllerID, string prevBlockID, string nextBlockID)
         {
             Name = name;
@@ -416,7 +403,7 @@ namespace CommonLib
             CalculateEndPoint();
             EndElevationMeters = endElevation;
             AllowedDirection = direction;
-            SwitchId = switchID;
+            HasSwitch = hasSwitch;
             ControllerId = controllerID;
             SecondaryControllerId = secondaryControllerID;
             // Set default static max speed to physical limit
