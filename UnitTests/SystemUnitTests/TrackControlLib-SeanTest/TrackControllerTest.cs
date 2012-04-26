@@ -141,6 +141,7 @@ namespace TrackControlLib_SeanTest
 			TrackBlock b1 = new TrackBlock("track1", TrackOrientation.EastWest, new Point(), 0.0, 0.0, 0.0, false, false, 0, TrackAllowedDirection.Both, false, "controller", "", "", "");
 			TrackBlock b2 = new TrackBlock("track2", TrackOrientation.EastWest, new Point(), 0.0, 0.0, 0.0, false, false, 0, TrackAllowedDirection.Both, false, "controller", "", "", "");
 			TrackBlock b3 = new TrackBlock("track3", TrackOrientation.EastWest, new Point(), 0.0, 0.0, 0.0, false, false, 0, TrackAllowedDirection.Both, false, "controller", "", "", "");
+			
 			b1.Orientation = TrackOrientation.EastWest;
 			b1.Status.TrainDirection = Direction.East;
 			b1.Status.TrainPresent = true;
@@ -158,6 +159,39 @@ namespace TrackControlLib_SeanTest
             bool actual;
             actual = target.IsTrainApproaching(dest);
             Assert.IsTrue(actual);
+
+			b1.Orientation = TrackOrientation.EastWest;
+			b1.Status.TrainDirection = Direction.West;
+			b1.Status.TrainPresent = true;
+			b1.PreviousBlock = b2;
+			b2.Orientation = TrackOrientation.EastWest;
+			b2.Status.TrainDirection = Direction.West;
+			b2.PreviousBlock = b3;
+			b3.Orientation = TrackOrientation.EastWest;
+			b3.Status.TrainDirection = Direction.West;
+			b3.PreviousBlock = dest;
+			target.AddTrackBlock(b1);
+			target.AddTrackBlock(b2);
+			target.AddTrackBlock(b3);
+			target.AddTrackBlock(dest);
+			actual = target.IsTrainApproaching(dest);
+			Assert.IsTrue(actual);
+
+			b1.Orientation = TrackOrientation.EastWest;
+			b1.Status.TrainDirection = Direction.West;
+			b1.PreviousBlock = b2;
+			b2.Orientation = TrackOrientation.EastWest;
+			b2.Status.TrainDirection = Direction.West;
+			b2.PreviousBlock = b3;
+			b3.Orientation = TrackOrientation.EastWest;
+			b3.Status.TrainDirection = Direction.West;
+			b3.PreviousBlock = dest;
+			target.AddTrackBlock(b1);
+			target.AddTrackBlock(b2);
+			target.AddTrackBlock(b3);
+			target.AddTrackBlock(dest);
+			actual = target.IsTrainApproaching(dest);
+			Assert.IsFalse(actual);
         }
 
         /// <summary>
