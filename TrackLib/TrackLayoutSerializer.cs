@@ -250,7 +250,6 @@ namespace TrackLib
             redTrack.Add(redBlock12);
             TrackBlock redBlock13 = new TrackBlock("red13", TrackOrientation.EastWest, new Point(Convert.ToInt32(redBlock12.StartPoint.X - 68.4), redBlock12.StartPoint.Y), 68.4, 2.69, -1,
                                         false, false, 40, TrackAllowedDirection.Both, null, "redController1", "redController2", "red12", "red14");
-            redTrack.Add(redBlock12);
             redTrack.Add(redBlock13);
             TrackBlock redBlock14 = new TrackBlock("red14", TrackOrientation.EastWest, new Point(redBlock13.StartPoint.X - 60, redBlock13.StartPoint.Y), 60, 2.09, -1, false, false, 40, TrackAllowedDirection.Both, null, "redController1", "redController2", "red13", "red15");
             redTrack.Add(redBlock14);

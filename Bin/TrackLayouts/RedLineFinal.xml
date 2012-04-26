@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <TrackLayout xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <LastUpdated>2012-04-25T22:35:59.2254797-04:00</LastUpdated>
+  <LastUpdated>2012-04-25T22:45:12.0594785-04:00</LastUpdated>
   <BlockList>
     <TrackBlock>
       <Name>red1</Name>
@@ -289,29 +289,6 @@
       <AllowedDirection>Both</AllowedDirection>
       <PreviousBlockId>red9</PreviousBlockId>
       <NextBlockId>red11</NextBlockId>
-    </TrackBlock>
-    <TrackBlock>
-      <Name>red12</Name>
-      <HasTunnel>false</HasTunnel>
-      <StaticSpeedLimit>40</StaticSpeedLimit>
-      <Length>75</Length>
-      <Orientation>SouthWestNorthEast</Orientation>
-      <RailroadCrossing>false</RailroadCrossing>
-      <StartPoint>
-        <X>413</X>
-        <Y>24</Y>
-      </StartPoint>
-      <EndPoint>
-        <X>466</X>
-        <Y>-29</Y>
-      </EndPoint>
-      <EndElevation>3.38</EndElevation>
-      <Grade>-0.5</Grade>
-      <ControllerId>redController1</ControllerId>
-      <SecondaryControllerId>redController2</SecondaryControllerId>
-      <AllowedDirection>Both</AllowedDirection>
-      <PreviousBlockId>red11</PreviousBlockId>
-      <NextBlockId>red13</NextBlockId>
     </TrackBlock>
     <TrackBlock>
       <Name>red12</Name>
