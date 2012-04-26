@@ -70,10 +70,11 @@ namespace CommonLibTests
         [TestMethod()]
         public void TransponderConstructorTest()
         {
-            string stationName = string.Empty; // TODO: Initialize to an appropriate value
-            int distance = 0; // TODO: Initialize to an appropriate value
+            string stationName = "TestStation"; // TODO: Initialize to an appropriate value
+            int distance = 1; // TODO: Initialize to an appropriate value
             Transponder target = new Transponder(stationName, distance);
-            Assert.Inconclusive("TODO: Implement code to verify target");
+            Assert.AreEqual(stationName, target.StationName);
+            Assert.AreEqual(distance, target.DistanceToStation);
         }
 
         /// <summary>
@@ -82,12 +83,12 @@ namespace CommonLibTests
         [TestMethod()]
         public void DistanceToStationTest()
         {
-            string stationName = string.Empty; // TODO: Initialize to an appropriate value
-            int distance = 0; // TODO: Initialize to an appropriate value
+            string stationName = ""; // TODO: Initialize to an appropriate value
+            int distance = 2; // TODO: Initialize to an appropriate value
             Transponder target = new Transponder(stationName, distance); // TODO: Initialize to an appropriate value
             int actual;
             actual = target.DistanceToStation;
-            Assert.Inconclusive("Verify the correctness of this test method.");
+            Assert.AreEqual(distance, actual);
         }
 
         /// <summary>
@@ -96,12 +97,12 @@ namespace CommonLibTests
         [TestMethod()]
         public void StationNameTest()
         {
-            string stationName = string.Empty; // TODO: Initialize to an appropriate value
+            string stationName = "NameTest"; // TODO: Initialize to an appropriate value
             int distance = 0; // TODO: Initialize to an appropriate value
             Transponder target = new Transponder(stationName, distance); // TODO: Initialize to an appropriate value
             string actual;
             actual = target.StationName;
-            Assert.Inconclusive("Verify the correctness of this test method.");
+            Assert.AreEqual(stationName, actual);
         }
     }
 }
