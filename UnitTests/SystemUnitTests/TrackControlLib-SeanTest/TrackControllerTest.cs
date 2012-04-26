@@ -3,6 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using CommonLib;
 using System.Collections.Generic;
+using System.Drawing;
 
 namespace TrackControlLib_SeanTest
 {
@@ -136,12 +137,27 @@ namespace TrackControlLib_SeanTest
         public void IsTrainApproachingTest()
         {
             TrackController_Accessor target = new TrackController_Accessor(); // TODO: Initialize to an appropriate value
-            TrackBlock dest = null; // TODO: Initialize to an appropriate value
-            bool expected = false; // TODO: Initialize to an appropriate value
+			TrackBlock dest = new TrackBlock("dest", TrackOrientation.EastWest, new Point(), 0.0, 0.0, 0.0, false, false, 0, TrackAllowedDirection.Both, true, "controller", "", "", "");
+			TrackBlock b1 = new TrackBlock("track1", TrackOrientation.EastWest, new Point(), 0.0, 0.0, 0.0, false, false, 0, TrackAllowedDirection.Both, false, "controller", "", "", "");
+			TrackBlock b2 = new TrackBlock("track2", TrackOrientation.EastWest, new Point(), 0.0, 0.0, 0.0, false, false, 0, TrackAllowedDirection.Both, false, "controller", "", "", "");
+			TrackBlock b3 = new TrackBlock("track3", TrackOrientation.EastWest, new Point(), 0.0, 0.0, 0.0, false, false, 0, TrackAllowedDirection.Both, false, "controller", "", "", "");
+			b1.Orientation = TrackOrientation.EastWest;
+			b1.Status.TrainDirection = Direction.East;
+			b1.Status.TrainPresent = true;
+			b1.NextBlock = b2;
+			b2.Orientation = TrackOrientation.EastWest;
+			b2.Status.TrainDirection = Direction.East;
+			b2.NextBlock = b3;
+			b3.Orientation = TrackOrientation.EastWest;
+			b3.Status.TrainDirection = Direction.East;
+			b3.NextBlock = dest;
+			target.AddTrackBlock(b1);
+			target.AddTrackBlock(b2);
+			target.AddTrackBlock(b3);
+			target.AddTrackBlock(dest);
             bool actual;
             actual = target.IsTrainApproaching(dest);
-            Assert.AreEqual(expected, actual);
-            Assert.Inconclusive("Verify the correctness of this test method.");
+            Assert.IsTrue(actual);
         }
 
         /// <summary>
@@ -177,29 +193,18 @@ namespace TrackControlLib_SeanTest
         /// <summary>
         ///A test for SuggestAuthority
         ///</summary>
-        [TestMethod()]
-        public void SuggestAuthorityTest()
-        {
-            TrackController target = new TrackController(); // TODO: Initialize to an appropriate value
-            string trackId = string.Empty; // TODO: Initialize to an appropriate value
-            BlockAuthority auth = null; // TODO: Initialize to an appropriate value
-            bool expected = false; // TODO: Initialize to an appropriate value
-            bool actual;
-            actual = target.SuggestAuthority(trackId, auth);
-            Assert.AreEqual(expected, actual);
-            Assert.Inconclusive("Verify the correctness of this test method.");
-        }
-
-        /// <summary>
-        ///A test for Update
-        ///</summary>
-        [TestMethod()]
-        public void UpdateTest()
-        {
-            TrackController target = new TrackController(); // TODO: Initialize to an appropriate value
-            target.Update();
-            Assert.Inconclusive("A method that does not return a value cannot be verified.");
-        }
+		[TestMethod()]
+		public void SuggestAuthorityTest()
+		{
+			TrackController target = new TrackController(); // TODO: Initialize to an appropriate value
+			string trackId = string.Empty; // TODO: Initialize to an appropriate value
+			BlockAuthority auth = null; // TODO: Initialize to an appropriate value
+			bool expected = false; // TODO: Initialize to an appropriate value
+			bool actual;
+			actual = target.SuggestAuthority(trackId, auth);
+			Assert.AreEqual(expected, actual);
+			Assert.Inconclusive("Verify the correctness of this test method.");
+		}
 
         /// <summary>
         ///A test for UpdateAuthoritySignal
@@ -214,5 +219,72 @@ namespace TrackControlLib_SeanTest
             target.UpdateAuthoritySignal(block, authority);
             Assert.Inconclusive("A method that does not return a value cannot be verified.");
         }
+
+		/// <summary>
+		///A test for UpdateAuthority
+		///</summary>
+		[TestMethod()]
+		[DeploymentItem("TrackControlLib.dll")]
+		public void UpdateAuthorityTest()
+		{
+			TrackController_Accessor target = new TrackController_Accessor(); // TODO: Initialize to an appropriate value
+			List<TrackBlock> blocks = null; // TODO: Initialize to an appropriate value
+			target.UpdateAuthority(blocks);
+			Assert.Inconclusive("A method that does not return a value cannot be verified.");
+		}
+
+		/// <summary>
+		///A test for UpdateSwitch
+		///</summary>
+		[TestMethod()]
+		[DeploymentItem("TrackControlLib.dll")]
+		public void UpdateSwitchTest()
+		{
+			TrackController_Accessor target = new TrackController_Accessor(); // TODO: Initialize to an appropriate value
+			target.UpdateSwitch();
+			Assert.Inconclusive("A method that does not return a value cannot be verified.");
+		}
+
+		/// <summary>
+		///A test for CheckFailModes
+		///</summary>
+		[TestMethod()]
+		[DeploymentItem("TrackControlLib.dll")]
+		public void CheckFailModesTest()
+		{
+			TrackController_Accessor target = new TrackController_Accessor(); // TODO: Initialize to an appropriate value
+			target.CheckFailModes();
+			Assert.Inconclusive("A method that does not return a value cannot be verified.");
+		}
+
+		/// <summary>
+		///A test for IsTrainApproaching
+		///</summary>
+		[TestMethod()]
+		[DeploymentItem("TrackControlLib.dll")]
+		public void IsTrainApproachingTest1()
+		{
+			TrackController_Accessor target = new TrackController_Accessor(); // TODO: Initialize to an appropriate value
+			TrackBlock dest = null; // TODO: Initialize to an appropriate value
+			bool expected = false; // TODO: Initialize to an appropriate value
+			bool actual;
+			actual = target.IsTrainApproaching(dest);
+			Assert.AreEqual(expected, actual);
+			Assert.Inconclusive("Verify the correctness of this test method.");
+		}
+
+		/// <summary>
+		///A test for UpdateAuthoritySignal
+		///</summary>
+		[TestMethod()]
+		[DeploymentItem("TrackControlLib.dll")]
+		public void UpdateAuthoritySignalTest1()
+		{
+			TrackController_Accessor target = new TrackController_Accessor(); // TODO: Initialize to an appropriate value
+			TrackBlock block = null; // TODO: Initialize to an appropriate value
+			int authority = 0; // TODO: Initialize to an appropriate value
+			target.UpdateAuthoritySignal(block, authority);
+			Assert.Inconclusive("A method that does not return a value cannot be verified.");
+		}
     }
 }

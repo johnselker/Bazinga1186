@@ -145,7 +145,7 @@ namespace CommonLib
         /// </summary>
         //--------------------------------------------------------------------------------------
         [XmlIgnore]
-        public TrackBlock Branch
+        public TrackBlock BranchOpen
         {
             get;
             set;
@@ -158,7 +158,7 @@ namespace CommonLib
         /// </summary>
         //--------------------------------------------------------------------------------------
         [XmlIgnore]
-        public TrackBlock Trunk1
+        public TrackBlock BranchClosed
         {
             get;
             set;
@@ -171,7 +171,7 @@ namespace CommonLib
         /// </summary>
         //--------------------------------------------------------------------------------------
         [XmlIgnore]
-        public TrackBlock Trunk2
+        public TrackBlock Trunk
         {
             get;
             set;
@@ -211,22 +211,19 @@ namespace CommonLib
         /// The TrackBlock that you pass as branch2 should be connected to Trunk2
         /// </remarks>
         //--------------------------------------------------------------------------------------
-        public TrackSwitch(string name, string controllerID, TrackBlock trunk, TrackBlock branch1, TrackBlock branch2)
+        public TrackSwitch(string name, string controllerID, TrackBlock trunk, TrackBlock branchClosed, TrackBlock branchOpen)
         {
             Name = name;
             ControllerId = controllerID;
 
-            m_trunk = trunk;
-            m_branch1 = branch1;
-            m_branch2 = branch2;
             TrunkId = m_branch1.Name;
             BranchClosedId = m_branch1.Name;
             BranchOpenId = m_branch2.Name;
 
             // initial state
-            Branch = branch1;
-            Trunk1 = trunk;
-            Trunk2 = null;
+            BranchClosed = branchClosed;
+			BranchOpen = branchOpen;
+            Trunk = trunk;
 
             m_state = TrackSwitchState.Closed;
         }
@@ -244,20 +241,41 @@ namespace CommonLib
         //--------------------------------------------------------------------------------------
         public void Switch()
         {
-            if (Branch == m_branch1)
-            {
-                Branch = m_branch2;
-                Trunk1 = null;
-                Trunk2 = m_trunk;
-                m_state = TrackSwitchState.Open;
-            }
-            else
-            {
-                Branch = m_branch1;
-                Trunk1 = m_trunk;
-                Trunk2 = null;
-                m_state = TrackSwitchState.Closed;
-            }
+			// if closed, open
+			if (m_state == TrackSwitchState.Closed)
+			{
+				m_state = TrackSwitchState.Open;
+
+				if (BranchOpen.NextBlock == null)
+				{
+					BranchOpen.NextBlock = Trunk;
+					Trunk.PreviousBlock = BranchOpen;
+					BranchClosed.NextBlock = null;
+				}
+				else
+				{
+					BranchOpen.PreviousBlock = Trunk;
+					Trunk.NextBlock = BranchOpen;
+					BranchClosed.PreviousBlock = null;
+				}
+			}
+			else
+			{
+				m_state = TrackSwitchState.Closed;
+
+				if (BranchClosed.NextBlock == null)
+				{
+					BranchClosed.NextBlock = Trunk;
+					Trunk.PreviousBlock = BranchClosed;
+					BranchOpen.NextBlock = null;
+				}
+				else
+				{
+					BranchClosed.PreviousBlock = Trunk;
+					Trunk.NextBlock = BranchClosed;
+					BranchOpen.PreviousBlock = null;
+				}
+			}
         }
 
         #endregion
