@@ -83,7 +83,7 @@ namespace CTCUnitTests
         [TestCleanup()]
         public void MyTestCleanup()
         {
-            m_ctcAccessor.m_blockList.Clear();
+            m_ctcAccessor.m_trackTable.Clear();
             m_ctcAccessor.m_controllerList.Clear();
             m_ctcAccessor.m_layoutSize = Size.Empty;
             m_ctcAccessor.m_layoutStartPoint = Point.Empty;
@@ -99,7 +99,7 @@ namespace CTCUnitTests
         [TestMethod()]
         public void GetTrackControllerTest1()
         {
-            TrackBlock block = m_ctcAccessor.m_blockList[0];
+            TrackBlock block = m_ctcAccessor.GetBlockList()[0];
             ITrackController expected = m_ctcAccessor.m_trackTable[block]; 
             ITrackController actual;
             actual = m_ctcAccessor.GetTrackController(block);
@@ -112,7 +112,7 @@ namespace CTCUnitTests
         [TestMethod()]
         public void GetTrackControllerTest2()
         {
-            TrackBlock block = m_ctcAccessor.m_blockList[2];
+            TrackBlock block = m_ctcAccessor.GetBlockList()[2];
             ITrackController expected = m_ctcAccessor.m_trackTable[block];
             ITrackController actual;
             actual = m_ctcAccessor.GetTrackController(block);
@@ -211,8 +211,8 @@ namespace CTCUnitTests
         [TestMethod()]
         public void CloseTrackBlockTest()
         {
-            TrackBlock block = m_ctcAccessor.m_blockList[0]; 
-            bool expected = false; // true; //This is failing for some reason
+            TrackBlock block = m_ctcAccessor.GetBlockList()[2];
+            bool expected = true; 
             bool actual = m_ctcAccessor.CloseTrackBlock(block);
             Assert.AreEqual(expected, actual);
         }
@@ -263,7 +263,7 @@ namespace CTCUnitTests
             trackRegion.Add(redBlock4);
             m_ctcAccessor.BuildLayout(trackRegion, new List<TrackSwitch>());
 
-            Assert.IsNotNull(m_ctcAccessor.m_blockList);
+            Assert.IsNotNull(m_ctcAccessor.m_blockTable);
             Assert.IsTrue(m_ctcAccessor.m_trackTable.ContainsKey(redBlock1));
             Assert.IsTrue(m_ctcAccessor.m_trackTable.ContainsKey(redBlock2));
             Assert.IsTrue(m_ctcAccessor.m_trackTable.ContainsKey(redBlock3));
@@ -343,7 +343,7 @@ namespace CTCUnitTests
         [TestMethod()]
         public void LoadTrackLayoutTest_null()
         {
-            m_ctcAccessor.m_blockList.Clear();
+            m_ctcAccessor.m_blockTable.Clear();
             string filename = string.Empty;
             List<TrackBlock> expected = null;
             List<TrackBlock> actual = m_ctcAccessor.LoadTrackLayout(filename);
@@ -356,8 +356,8 @@ namespace CTCUnitTests
         [TestMethod()]
         public void OpenTrackBlockTest()
         {
-            TrackBlock block = m_ctcAccessor.m_blockList[0];
-            bool expected = true;
+            TrackBlock block = m_ctcAccessor.GetBlockList()[0];
+            bool expected = false; //Block is already open so it returns false
             bool actual = m_ctcAccessor.OpenTrackBlock(block);
             Assert.AreEqual(expected, actual);
         }
@@ -433,7 +433,7 @@ namespace CTCUnitTests
         [TestMethod()]
         public void SetAuthorityTest()
         {
-            TrackBlock block = m_ctcAccessor.m_blockList[0];
+            TrackBlock block = m_ctcAccessor.GetBlockList()[0];
             string value = "0";
             bool expected = true; 
             bool actual;
@@ -447,7 +447,7 @@ namespace CTCUnitTests
         [TestMethod()]
         public void SetAuthorityTest_badString()
         {
-            TrackBlock block = m_ctcAccessor.m_blockList[0];
+            TrackBlock block = m_ctcAccessor.GetBlockList()[0];
             string value = "abcd";
             bool expected = false;
             bool actual;
@@ -461,7 +461,7 @@ namespace CTCUnitTests
         [TestMethod()]
         public void SetAuthorityTest_nullString()
         {
-            TrackBlock block = m_ctcAccessor.m_blockList[0];
+            TrackBlock block = m_ctcAccessor.GetBlockList()[0];
             string value = null;
             bool expected = false;
             bool actual;
@@ -503,7 +503,7 @@ namespace CTCUnitTests
         [TestMethod()]
         public void SetSpeedLimitTest()
         {
-            TrackBlock block = m_ctcAccessor.m_blockList[0];
+            TrackBlock block = m_ctcAccessor.GetBlockList()[0];
             string value = "0";
             bool expected = true;
             bool actual;
@@ -517,7 +517,7 @@ namespace CTCUnitTests
         [TestMethod()]
         public void SetSpeedLimitTest_badString()
         {
-            TrackBlock block = m_ctcAccessor.m_blockList[0];
+            TrackBlock block = m_ctcAccessor.GetBlockList()[0];
             string value = "abcd";
             bool expected = false;
             bool actual;
@@ -531,7 +531,7 @@ namespace CTCUnitTests
         [TestMethod()]
         public void SetSpeedLimitTest_nullString()
         {
-            TrackBlock block = m_ctcAccessor.m_blockList[0];
+            TrackBlock block = m_ctcAccessor.GetBlockList()[0];
             string value = null;
             bool expected = false;
             bool actual;

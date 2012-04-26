@@ -305,20 +305,20 @@ namespace CommonLibTests
         }
 
         /// <summary>
-        ///A test for NextBockId
+        ///A test for NextBlockId
         ///</summary>
         [TestMethod()]
-        public void NextBockIdTest()
+        public void NextBlockIdTest()
         {
             TrackBlock target = new TrackBlock(); // TODO: Initialize to an appropriate value
             string expected = "NextBlock"; // TODO: Initialize to an appropriate value
-            target.NextBockId = expected;
+            target.NextBlockId = expected;
             string actual;
-            target.NextBockId = expected;
-            actual = target.NextBockId;
+            target.NextBlockId = expected;
+            actual = target.NextBlockId;
             Assert.AreEqual(expected, actual);
-            target.NextBockId = null;
-            Assert.IsNull(target.NextBockId);
+            target.NextBlockId = null;
+            Assert.IsNull(target.NextBlockId);
         }
 
         /// <summary>
@@ -355,20 +355,20 @@ namespace CommonLibTests
         }
 
         /// <summary>
-        ///A test for PreviousBockId
+        ///A test for PreviousBlockId
         ///</summary>
         [TestMethod()]
-        public void PreviousBockIdTest()
+        public void PreviousBlockIdTest()
         {
             TrackBlock target = new TrackBlock(); // TODO: Initialize to an appropriate value
             string expected = "prevTest"; // TODO: Initialize to an appropriate value
-            target.PreviousBockId = expected;
+            target.PreviousBlockId = expected;
             string actual;
-            target.PreviousBockId = expected;
-            actual = target.PreviousBockId;
+            target.PreviousBlockId = expected;
+            actual = target.PreviousBlockId;
             Assert.AreEqual(expected, actual);
-            target.PreviousBockId = null;
-            Assert.IsNull(target.PreviousBockId);
+            target.PreviousBlockId = null;
+            Assert.IsNull(target.PreviousBlockId);
         }
 
         /// <summary>
