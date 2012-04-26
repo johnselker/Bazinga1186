@@ -99,7 +99,7 @@
             this.chkRunSimulation.TabIndex = 2;
             this.chkRunSimulation.Text = "Run";
             this.chkRunSimulation.UseVisualStyleBackColor = true;
-            this.chkRunSimulation.Click += new System.EventHandler(this.OnCircuitFailureClicked);
+            this.chkRunSimulation.Click += new System.EventHandler(this.OnRunSimulationClicked);
             // 
             // SimulatorWindow
             // 
