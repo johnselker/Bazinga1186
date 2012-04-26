@@ -243,7 +243,6 @@ namespace TrackLib
             redTrack.Add(redBlock9);
             redTrack.Add(YARD);
             redTrack.Add(redBlock10);
-            switchList.Add(redBlock10.Switch);
             
             redTrack.Add(redBlock11);
             TrackBlock redBlock12 = new TrackBlock("red12", TrackOrientation.SouthWestNorthEast, new Point(redBlock11.StartPoint.X - Convert.ToInt32(Math.Sqrt((redBlock11.LengthMeters * redBlock11.LengthMeters) / 2)), redBlock11.StartPoint.Y + Convert.ToInt32(Math.Sqrt((redBlock11.LengthMeters * redBlock11.LengthMeters) / 2))), 75, 3.38, -0.5,
@@ -422,20 +421,43 @@ namespace TrackLib
             // End Branch 2
 
             // Switch List
-            redBlock10.Switch = new TrackSwitch("Switch1", "redController1", redBlock10, redBlock11, YARD);
-            redBlock18.Switch = new TrackSwitch("Switch2", "redController2", redBlock18, redBlock17, redBlock1);
-            redBlock28.Switch = new TrackSwitch("Switch3", "redController3", redBlock28, redBlock29, redBlock76);
-            redBlock33.Switch = new TrackSwitch("Switch4", "redController4", redBlock33, redBlock32, redBlock72);
-            redBlock39.Switch = new TrackSwitch("Switch5", "redController5", redBlock39, redBlock40, redBlock71);
-            redBlock43.Switch = new TrackSwitch("Switch6", "redController6", redBlock43, redBlock44, redBlock67);
-            redBlock51.Switch = new TrackSwitch("Switch7", "redController7", redBlock51, redBlock52, redBlock65);
-            switchList.Add(redBlock10.Switch);
-            switchList.Add(redBlock18.Switch);
-            switchList.Add(redBlock28.Switch);
-            switchList.Add(redBlock33.Switch);
-            switchList.Add(redBlock39.Switch);
-            switchList.Add(redBlock43.Switch);
-            switchList.Add(redBlock52.Switch);
+            TrackSwitch Switch1 = new TrackSwitch("Switch1", "redController1", redBlock10, redBlock11, YARD);
+            TrackSwitch Switch2 = new TrackSwitch("Switch2", "redController2", redBlock18, redBlock17, redBlock1);
+            TrackSwitch Switch3 = new TrackSwitch("Switch3", "redController3", redBlock28, redBlock29, redBlock76);
+            TrackSwitch Switch4 = new TrackSwitch("Switch4", "redController4", redBlock33, redBlock32, redBlock72);
+            TrackSwitch Switch5 = new TrackSwitch("Switch5", "redController5", redBlock39, redBlock40, redBlock71);
+            TrackSwitch Switch6 = new TrackSwitch("Switch6", "redController6", redBlock43, redBlock44, redBlock67);
+            TrackSwitch Switch7 = new TrackSwitch("Switch7", "redController7", redBlock51, redBlock52, redBlock65);
+            // Set Has Switch
+            redBlock10.HasSwitch = true;
+            redBlock11.HasSwitch = true;
+            YARD.HasSwitch = true;
+            redBlock18.HasSwitch = true;
+            redBlock17.HasSwitch = true;
+            redBlock1.HasSwitch = true;
+            redBlock28.HasSwitch = true;
+            redBlock29.HasSwitch = true;
+            redBlock76.HasSwitch = true;
+            redBlock33.HasSwitch = true;
+            redBlock32.HasSwitch = true;
+            redBlock72.HasSwitch = true;
+            redBlock39.HasSwitch = true;
+            redBlock40.HasSwitch = true;
+            redBlock71.HasSwitch = true;
+            redBlock43.HasSwitch = true;
+            redBlock44.HasSwitch = true;
+            redBlock67.HasSwitch = true;
+            redBlock51.HasSwitch = true;
+            redBlock52.HasSwitch = true;
+            redBlock65.HasSwitch = true;
+
+            switchList.Add(Switch1);
+            switchList.Add(Switch2);
+            switchList.Add(Switch3);
+            switchList.Add(Switch4);
+            switchList.Add(Switch5);
+            switchList.Add(Switch6);
+            switchList.Add(Switch7);
             // End Switches
             this.m_switchList = switchList;
             this.m_blockList = redTrack;

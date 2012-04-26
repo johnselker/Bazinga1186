@@ -144,7 +144,7 @@ namespace CommonLib
         /// The branch currently connected to the trunk of the switch
         /// </summary>
         //--------------------------------------------------------------------------------------
-        [XmlElement(ElementName = "Branch")]
+        [XmlIgnore]
         public TrackBlock Branch
         {
             get;
@@ -157,7 +157,7 @@ namespace CommonLib
         /// The trunk connected to the first branch of the switch
         /// </summary>
         //--------------------------------------------------------------------------------------
-        [XmlElement(ElementName = "Trunk1")]
+        [XmlIgnore]
         public TrackBlock Trunk1
         {
             get;
@@ -170,7 +170,7 @@ namespace CommonLib
         /// The trunck connected to the second branch of the switch
         /// </summary>
         //--------------------------------------------------------------------------------------
-        [XmlElement(ElementName = "Trunk2")]
+        [XmlIgnore]
         public TrackBlock Trunk2
         {
             get;

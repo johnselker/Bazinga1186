@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <TrackLayout xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <LastUpdated>2012-04-25T21:58:29.9670857-04:00</LastUpdated>
+  <LastUpdated>2012-04-25T22:19:50.4114815-04:00</LastUpdated>
   <BlockList>
     <TrackBlock>
       <Name>red1</Name>
@@ -252,7 +252,6 @@
       </EndPoint>
       <EndElevation>4.13</EndElevation>
       <Grade>0</Grade>
-      <SwitchId>Switch1</SwitchId>
       <ControllerId>redController1</ControllerId>
       <SecondaryControllerId>redController2</SecondaryControllerId>
       <AllowedDirection>Both</AllowedDirection>
@@ -462,7 +461,6 @@
       </EndPoint>
       <EndElevation>0</EndElevation>
       <Grade>-0.06025</Grade>
-      <SwitchId>Switch2</SwitchId>
       <ControllerId>redController2</ControllerId>
       <SecondaryControllerId>redController1</SecondaryControllerId>
       <AllowedDirection>Both</AllowedDirection>
@@ -696,7 +694,6 @@
       </EndPoint>
       <EndElevation>0</EndElevation>
       <Grade>0</Grade>
-      <SwitchId>Switch3</SwitchId>
       <ControllerId>redController3</ControllerId>
       <SecondaryControllerId>redController4</SecondaryControllerId>
       <AllowedDirection>Both</AllowedDirection>
@@ -812,7 +809,6 @@
       </EndPoint>
       <EndElevation>0</EndElevation>
       <Grade>0</Grade>
-      <SwitchId>Switch4</SwitchId>
       <ControllerId>redController4</ControllerId>
       <SecondaryControllerId>redController5</SecondaryControllerId>
       <AllowedDirection>Both</AllowedDirection>
@@ -953,7 +949,6 @@
       </EndPoint>
       <EndElevation>0</EndElevation>
       <Grade>0</Grade>
-      <SwitchId>Switch5</SwitchId>
       <ControllerId>redController5</ControllerId>
       <SecondaryControllerId>redController6</SecondaryControllerId>
       <AllowedDirection>Both</AllowedDirection>
@@ -1047,7 +1042,6 @@
       </EndPoint>
       <EndElevation>0</EndElevation>
       <Grade>0</Grade>
-      <SwitchId>Switch6</SwitchId>
       <ControllerId>redController6</ControllerId>
       <SecondaryControllerId>redController5</SecondaryControllerId>
       <AllowedDirection>Both</AllowedDirection>
@@ -1235,7 +1229,6 @@
       </EndPoint>
       <EndElevation>0</EndElevation>
       <Grade>0</Grade>
-      <SwitchId>Switch7</SwitchId>
       <ControllerId>redController6</ControllerId>
       <SecondaryControllerId>redController7</SecondaryControllerId>
       <AllowedDirection>Both</AllowedDirection>
@@ -1784,327 +1777,54 @@
     </TrackBlock>
   </BlockList>
   <SwitchList>
-    <TrackSwitch xsi:nil="true" />
     <TrackSwitch>
       <Name>Switch1</Name>
       <ControllerId>redController1</ControllerId>
       <TrunkId>red11</TrunkId>
-      <BranchClosedId>REDYARD</BranchClosedId>
-      <Branch>
-        <Name>red11</Name>
-        <HasTunnel>false</HasTunnel>
-        <StaticSpeedLimit>40</StaticSpeedLimit>
-        <Length>75</Length>
-        <Orientation>NorthSouth</Orientation>
-        <RailroadCrossing>false</RailroadCrossing>
-        <StartPoint>
-          <X>466</X>
-          <Y>-29</Y>
-        </StartPoint>
-        <EndPoint>
-          <X>466</X>
-          <Y>-104</Y>
-        </EndPoint>
-        <EndElevation>3.75</EndElevation>
-        <Grade>-0.5</Grade>
-        <ControllerId>redController1</ControllerId>
-        <SecondaryControllerId>redController2</SecondaryControllerId>
-        <AllowedDirection>Both</AllowedDirection>
-        <PreviousBlockId>red9</PreviousBlockId>
-        <NextBlockId>red11</NextBlockId>
-      </Branch>
-      <Trunk1>
-        <Name>red10</Name>
-        <HasTunnel>false</HasTunnel>
-        <StaticSpeedLimit>40</StaticSpeedLimit>
-        <Length>75</Length>
-        <Orientation>NorthWestSouthEast</Orientation>
-        <RailroadCrossing>false</RailroadCrossing>
-        <StartPoint>
-          <X>413</X>
-          <Y>-157</Y>
-        </StartPoint>
-        <EndPoint>
-          <X>466</X>
-          <Y>-104</Y>
-        </EndPoint>
-        <EndElevation>4.13</EndElevation>
-        <Grade>0</Grade>
-        <SwitchId>Switch1</SwitchId>
-        <ControllerId>redController1</ControllerId>
-        <SecondaryControllerId>redController2</SecondaryControllerId>
-        <AllowedDirection>Both</AllowedDirection>
-        <PreviousBlockId>red8</PreviousBlockId>
-        <NextBlockId>red10</NextBlockId>
-      </Trunk1>
+      <BranchClosedId>red11</BranchClosedId>
+      <BranchOpenId>REDYARD</BranchOpenId>
     </TrackSwitch>
     <TrackSwitch>
       <Name>Switch2</Name>
       <ControllerId>redController2</ControllerId>
       <TrunkId>red17</TrunkId>
-      <BranchClosedId>red1</BranchClosedId>
-      <Branch>
-        <Name>red17</Name>
-        <HasTunnel>false</HasTunnel>
-        <StaticSpeedLimit>55</StaticSpeedLimit>
-        <Length>200</Length>
-        <Orientation>EastWest</Orientation>
-        <RailroadCrossing>false</RailroadCrossing>
-        <StartPoint>
-          <X>-25</X>
-          <Y>24</Y>
-        </StartPoint>
-        <EndPoint>
-          <X>175</X>
-          <Y>24</Y>
-        </EndPoint>
-        <EndElevation>0.24</EndElevation>
-        <Grade>-0.5</Grade>
-        <ControllerId>redController1</ControllerId>
-        <SecondaryControllerId>redController2</SecondaryControllerId>
-        <AllowedDirection>Both</AllowedDirection>
-        <PreviousBlockId>red16</PreviousBlockId>
-        <NextBlockId>red18</NextBlockId>
-      </Branch>
-      <Trunk1>
-        <Name>red18</Name>
-        <HasTunnel>false</HasTunnel>
-        <StaticSpeedLimit>70</StaticSpeedLimit>
-        <Length>400</Length>
-        <Orientation>EastWest</Orientation>
-        <RailroadCrossing>false</RailroadCrossing>
-        <StartPoint>
-          <X>-425</X>
-          <Y>24</Y>
-        </StartPoint>
-        <EndPoint>
-          <X>-25</X>
-          <Y>24</Y>
-        </EndPoint>
-        <EndElevation>0</EndElevation>
-        <Grade>-0.06025</Grade>
-        <SwitchId>Switch2</SwitchId>
-        <ControllerId>redController2</ControllerId>
-        <SecondaryControllerId>redController1</SecondaryControllerId>
-        <AllowedDirection>Both</AllowedDirection>
-        <PreviousBlockId>red17</PreviousBlockId>
-        <NextBlockId>red19</NextBlockId>
-      </Trunk1>
+      <BranchClosedId>red17</BranchClosedId>
+      <BranchOpenId>red1</BranchOpenId>
     </TrackSwitch>
     <TrackSwitch>
       <Name>Switch3</Name>
       <ControllerId>redController3</ControllerId>
       <TrunkId>red29</TrunkId>
-      <BranchClosedId>red76</BranchClosedId>
-      <Branch>
-        <Name>red29</Name>
-        <HasTunnel>true</HasTunnel>
-        <StaticSpeedLimit>70</StaticSpeedLimit>
-        <Length>60</Length>
-        <Orientation>NorthSouth</Orientation>
-        <RailroadCrossing>false</RailroadCrossing>
-        <StartPoint>
-          <X>-1235</X>
-          <Y>544</Y>
-        </StartPoint>
-        <EndPoint>
-          <X>-1235</X>
-          <Y>484</Y>
-        </EndPoint>
-        <EndElevation>0</EndElevation>
-        <Grade>0</Grade>
-        <ControllerId>redController3</ControllerId>
-        <SecondaryControllerId>redController4</SecondaryControllerId>
-        <AllowedDirection>Both</AllowedDirection>
-        <PreviousBlockId>redBlock28</PreviousBlockId>
-        <NextBlockId>redBlock30</NextBlockId>
-      </Branch>
-      <Trunk1>
-        <Name>red28</Name>
-        <HasTunnel>true</HasTunnel>
-        <StaticSpeedLimit>70</StaticSpeedLimit>
-        <Length>50</Length>
-        <Orientation>NorthSouth</Orientation>
-        <RailroadCrossing>false</RailroadCrossing>
-        <StartPoint>
-          <X>-1235</X>
-          <Y>484</Y>
-        </StartPoint>
-        <EndPoint>
-          <X>-1235</X>
-          <Y>434</Y>
-        </EndPoint>
-        <EndElevation>0</EndElevation>
-        <Grade>0</Grade>
-        <SwitchId>Switch3</SwitchId>
-        <ControllerId>redController3</ControllerId>
-        <SecondaryControllerId>redController4</SecondaryControllerId>
-        <AllowedDirection>Both</AllowedDirection>
-        <PreviousBlockId>redBlock27</PreviousBlockId>
-        <NextBlockId>redBlock29</NextBlockId>
-      </Trunk1>
+      <BranchClosedId>red29</BranchClosedId>
+      <BranchOpenId>red76</BranchOpenId>
     </TrackSwitch>
     <TrackSwitch>
       <Name>Switch4</Name>
       <ControllerId>redController4</ControllerId>
       <TrunkId>red32</TrunkId>
-      <BranchClosedId>red72</BranchClosedId>
-      <Branch>
-        <Name>red32</Name>
-        <HasTunnel>true</HasTunnel>
-        <StaticSpeedLimit>70</StaticSpeedLimit>
-        <Length>50</Length>
-        <Orientation>NorthSouth</Orientation>
-        <RailroadCrossing>false</RailroadCrossing>
-        <StartPoint>
-          <X>-1235</X>
-          <Y>704</Y>
-        </StartPoint>
-        <EndPoint>
-          <X>-1235</X>
-          <Y>654</Y>
-        </EndPoint>
-        <EndElevation>0</EndElevation>
-        <Grade>0</Grade>
-        <ControllerId>redController4</ControllerId>
-        <SecondaryControllerId>redController3</SecondaryControllerId>
-        <AllowedDirection>Both</AllowedDirection>
-        <PreviousBlockId>redBlock31</PreviousBlockId>
-        <NextBlockId>redBlock33</NextBlockId>
-      </Branch>
-      <Trunk1>
-        <Name>red33</Name>
-        <HasTunnel>true</HasTunnel>
-        <StaticSpeedLimit>70</StaticSpeedLimit>
-        <Length>50</Length>
-        <Orientation>NorthSouth</Orientation>
-        <RailroadCrossing>false</RailroadCrossing>
-        <StartPoint>
-          <X>-1235</X>
-          <Y>754</Y>
-        </StartPoint>
-        <EndPoint>
-          <X>-1235</X>
-          <Y>704</Y>
-        </EndPoint>
-        <EndElevation>0</EndElevation>
-        <Grade>0</Grade>
-        <SwitchId>Switch4</SwitchId>
-        <ControllerId>redController4</ControllerId>
-        <SecondaryControllerId>redController5</SecondaryControllerId>
-        <AllowedDirection>Both</AllowedDirection>
-        <PreviousBlockId>redBlock32</PreviousBlockId>
-        <NextBlockId>redBlock34</NextBlockId>
-      </Trunk1>
+      <BranchClosedId>red32</BranchClosedId>
+      <BranchOpenId>red72</BranchOpenId>
     </TrackSwitch>
     <TrackSwitch>
       <Name>Switch5</Name>
       <ControllerId>redController5</ControllerId>
       <TrunkId>red40</TrunkId>
-      <BranchClosedId>red71</BranchClosedId>
-      <Branch>
-        <Name>red40</Name>
-        <HasTunnel>true</HasTunnel>
-        <StaticSpeedLimit>70</StaticSpeedLimit>
-        <Length>60</Length>
-        <Orientation>NorthSouth</Orientation>
-        <RailroadCrossing>false</RailroadCrossing>
-        <StartPoint>
-          <X>-1235</X>
-          <Y>1114</Y>
-        </StartPoint>
-        <EndPoint>
-          <X>-1235</X>
-          <Y>1054</Y>
-        </EndPoint>
-        <EndElevation>0</EndElevation>
-        <Grade>0</Grade>
-        <ControllerId>redController5</ControllerId>
-        <SecondaryControllerId>redController6</SecondaryControllerId>
-        <AllowedDirection>Both</AllowedDirection>
-        <PreviousBlockId>redBlock39</PreviousBlockId>
-        <NextBlockId>redBlock41</NextBlockId>
-      </Branch>
-      <Trunk1>
-        <Name>red39</Name>
-        <HasTunnel>true</HasTunnel>
-        <StaticSpeedLimit>70</StaticSpeedLimit>
-        <Length>50</Length>
-        <Orientation>NorthSouth</Orientation>
-        <RailroadCrossing>false</RailroadCrossing>
-        <StartPoint>
-          <X>-1235</X>
-          <Y>1054</Y>
-        </StartPoint>
-        <EndPoint>
-          <X>-1235</X>
-          <Y>1004</Y>
-        </EndPoint>
-        <EndElevation>0</EndElevation>
-        <Grade>0</Grade>
-        <SwitchId>Switch5</SwitchId>
-        <ControllerId>redController5</ControllerId>
-        <SecondaryControllerId>redController6</SecondaryControllerId>
-        <AllowedDirection>Both</AllowedDirection>
-        <PreviousBlockId>redBlock38</PreviousBlockId>
-        <NextBlockId>redBlock40</NextBlockId>
-      </Trunk1>
+      <BranchClosedId>red40</BranchClosedId>
+      <BranchOpenId>red71</BranchOpenId>
     </TrackSwitch>
     <TrackSwitch>
       <Name>Switch6</Name>
       <ControllerId>redController6</ControllerId>
       <TrunkId>red44</TrunkId>
-      <BranchClosedId>red67</BranchClosedId>
-      <Branch>
-        <Name>red44</Name>
-        <HasTunnel>true</HasTunnel>
-        <StaticSpeedLimit>70</StaticSpeedLimit>
-        <Length>50</Length>
-        <Orientation>NorthSouth</Orientation>
-        <RailroadCrossing>false</RailroadCrossing>
-        <Transponder />
-        <StartPoint>
-          <X>-1235</X>
-          <Y>1324</Y>
-        </StartPoint>
-        <EndPoint>
-          <X>-1235</X>
-          <Y>1274</Y>
-        </EndPoint>
-        <EndElevation>0</EndElevation>
-        <Grade>0</Grade>
-        <ControllerId>redController6</ControllerId>
-        <SecondaryControllerId>redController7</SecondaryControllerId>
-        <AllowedDirection>Both</AllowedDirection>
-        <PreviousBlockId>redBlock43</PreviousBlockId>
-        <NextBlockId>redBlock45</NextBlockId>
-      </Branch>
-      <Trunk1>
-        <Name>red43</Name>
-        <HasTunnel>true</HasTunnel>
-        <StaticSpeedLimit>70</StaticSpeedLimit>
-        <Length>50</Length>
-        <Orientation>NorthSouth</Orientation>
-        <RailroadCrossing>false</RailroadCrossing>
-        <Transponder />
-        <StartPoint>
-          <X>-1235</X>
-          <Y>1274</Y>
-        </StartPoint>
-        <EndPoint>
-          <X>-1235</X>
-          <Y>1224</Y>
-        </EndPoint>
-        <EndElevation>0</EndElevation>
-        <Grade>0</Grade>
-        <SwitchId>Switch6</SwitchId>
-        <ControllerId>redController6</ControllerId>
-        <SecondaryControllerId>redController5</SecondaryControllerId>
-        <AllowedDirection>Both</AllowedDirection>
-        <PreviousBlockId>redBlock42</PreviousBlockId>
-        <NextBlockId>redBlock44</NextBlockId>
-      </Trunk1>
+      <BranchClosedId>red44</BranchClosedId>
+      <BranchOpenId>red67</BranchOpenId>
     </TrackSwitch>
-    <TrackSwitch xsi:nil="true" />
+    <TrackSwitch>
+      <Name>Switch7</Name>
+      <ControllerId>redController7</ControllerId>
+      <TrunkId>red52</TrunkId>
+      <BranchClosedId>red52</BranchClosedId>
+      <BranchOpenId>red65</BranchOpenId>
+    </TrackSwitch>
   </SwitchList>
 </TrackLayout>

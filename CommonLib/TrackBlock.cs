@@ -27,7 +27,7 @@ namespace CommonLib
 
         private BlockAuthority m_authority = new BlockAuthority(0, 0);
         private TrackStatus m_status = new TrackStatus();
-        private TrackSwitch m_switch = null;
+  
 
         #endregion
 
@@ -289,29 +289,7 @@ namespace CommonLib
             set;
         }
 
-        // ACCESSOR: Switch
-        //--------------------------------------------------------------------------------------
-        /// <summary>
-        /// Switch object
-        /// </summary>
-        //--------------------------------------------------------------------------------------
-        [XmlIgnore]
-        public TrackSwitch Switch
-        {
-            get { return m_switch; }
-            set
-            {
-                m_switch = value;
-                if (m_switch != null)
-                {
-                    SwitchId = m_switch.Name;
-                }
-                else
-                {
-                    SwitchId = string.Empty;
-                }
-            }
-        }
+        
 
         // ACCESSOR: PreviousBlockId
         //--------------------------------------------------------------------------------------
@@ -370,7 +348,8 @@ namespace CommonLib
         [XmlIgnore]
         public Boolean HasSwitch
         {
-            get { return m_switch != null; }
+            get;
+            set;
         }
 
         // ACCESSOR: Status
