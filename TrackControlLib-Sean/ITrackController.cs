@@ -15,7 +15,7 @@ namespace TrackControlLib
 			bool SuggestAuthority(string trackId, BlockAuthority auth);
 			bool CloseTrack(string trackId);
 			bool OpenTrack(string trackId);
-			Dictionary<string, TrackStatus> GetUpdatedTrackStatus();
+			Dictionary<string, TrackBlock> GetUpdatedTrackStatus();
 			void Update();
 		}
 	}
