@@ -462,8 +462,11 @@ namespace TrainControllerLib
             m_myTrain.SetDoors(TrainState.Door.Closed);
 
             // Announce the next stop
-            m_nextStationInfo = Schedule.Dequeue();
-            m_myTrain.SetAnnouncement(m_nextStationInfo.StationName);
+            if (Schedule != null && Schedule.Count > 0)
+            {
+                m_nextStationInfo = Schedule.Dequeue();
+                m_myTrain.SetAnnouncement(m_nextStationInfo.StationName);
+            }
 
             // Notify train to leave the station
             m_atStation = false;

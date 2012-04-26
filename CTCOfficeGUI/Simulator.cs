@@ -88,9 +88,19 @@ namespace CTCOfficeGUI
         public void StartSimulation()
         {
             m_running = true;
-            m_simulationTimer.Start();
             m_lastUpdateTime = DateTime.Now;
             m_trackControllerList = m_ctcController.GetTrackControllerList();
+
+            //Initialize the track controllers 
+            if (m_trackControllerList != null)
+            {
+                foreach (ITrackController controller in m_trackControllerList)
+                {
+                    controller.Update();
+                }
+            }
+
+            m_simulationTimer.Start();
         }
 
         /// <summary>

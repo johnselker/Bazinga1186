@@ -601,7 +601,6 @@ namespace CTCOfficeGUI
                         {
                             trackControllers[s.ControllerId].SetSwitch(s);
 
-
                             //Assign the blocks to the switch
                             s.Trunk = m_blockTable[s.TrunkId];
                             s.BranchClosed = m_blockTable[s.BranchClosedId];
