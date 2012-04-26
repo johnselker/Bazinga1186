@@ -11,7 +11,6 @@ namespace TrackControlLib
 		public interface ITrackController
 		{
 			bool AddTrackBlock(TrackBlock block);
-			bool SetAdjTrackController(TrackController controller);
 			bool SetSwitch(TrackSwitch s);
 			bool SuggestAuthority(string trackId, BlockAuthority auth);
 			bool CloseTrack(string trackId);
