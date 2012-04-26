@@ -59,7 +59,7 @@
             this.createTrain.TabIndex = 0;
             this.createTrain.Text = "Start";
             this.createTrain.UseVisualStyleBackColor = true;
-            this.createTrain.Click += new System.EventHandler(this.createTrain_Click);
+            this.createTrain.Click += new System.EventHandler(this.CreateTrain_Click);
             // 
             // currentSpeed
             // 
@@ -77,7 +77,7 @@
             this.enterSpeed.TabIndex = 2;
             this.enterSpeed.Text = "Enter Speed";
             this.enterSpeed.UseVisualStyleBackColor = true;
-            this.enterSpeed.Click += new System.EventHandler(this.enterSpeed_Click);
+            this.enterSpeed.Click += new System.EventHandler(this.EnterSpeed_Click);
             // 
             // manualSpeed
             // 
@@ -197,7 +197,7 @@
             this.brakeFailure.TabIndex = 17;
             this.brakeFailure.Text = "Brake Failure";
             this.brakeFailure.UseVisualStyleBackColor = true;
-            this.brakeFailure.Click += new System.EventHandler(this.brakeFailure_Click);
+            this.brakeFailure.Click += new System.EventHandler(this.BrakeFailure_Click);
             // 
             // powerFailure
             // 
@@ -207,7 +207,7 @@
             this.powerFailure.TabIndex = 18;
             this.powerFailure.Text = "Track Power Failure";
             this.powerFailure.UseVisualStyleBackColor = true;
-            this.powerFailure.Click += new System.EventHandler(this.powerFailure_Click);
+            this.powerFailure.Click += new System.EventHandler(this.PowerFailure_Click);
             // 
             // circuitFailure
             // 
@@ -217,7 +217,7 @@
             this.circuitFailure.TabIndex = 19;
             this.circuitFailure.Text = "Track Circuit Failure";
             this.circuitFailure.UseVisualStyleBackColor = true;
-            this.circuitFailure.Click += new System.EventHandler(this.circuitFailure_Click);
+            this.circuitFailure.Click += new System.EventHandler(this.CircuitFailure_Click);
             // 
             // engineFailure
             // 
@@ -227,7 +227,7 @@
             this.engineFailure.TabIndex = 16;
             this.engineFailure.Text = "Engine Failure";
             this.engineFailure.UseVisualStyleBackColor = true;
-            this.engineFailure.Click += new System.EventHandler(this.engineFailure_Click);
+            this.engineFailure.Click += new System.EventHandler(this.EngineFailure_Click);
             // 
             // emergencyBrake
             // 
@@ -237,7 +237,7 @@
             this.emergencyBrake.TabIndex = 20;
             this.emergencyBrake.Text = "Emergency Brake";
             this.emergencyBrake.UseVisualStyleBackColor = true;
-            this.emergencyBrake.Click += new System.EventHandler(this.emergencyBrake_Click);
+            this.emergencyBrake.Click += new System.EventHandler(this.EmergencyBrake_Click);
             // 
             // TrainOperator
             // 
