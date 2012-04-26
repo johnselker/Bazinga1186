@@ -14,10 +14,9 @@ namespace ClassStubs
         public void Update(double dt)
         { }
 
-        public void SetSchedule(Queue<ScheduleInfo> routeInfo)
-        { }
-
         public void Dispose()
         { }
+
+        public Queue<ScheduleInfo> Schedule { get; set; }
     }
 }

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <TrackLayout xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <LastUpdated>2012-04-25T22:51:19.3414779-04:00</LastUpdated>
+  <LastUpdated>2012-04-26T01:47:43.0465051-04:00</LastUpdated>
   <BlockList>
     <TrackBlock>
       <Name>red1</Name>
@@ -19,6 +19,7 @@
       </EndPoint>
       <EndElevation>0.25</EndElevation>
       <Grade>0.5</Grade>
+      <HasSwitch>true</HasSwitch>
       <ControllerId>redController1</ControllerId>
       <SecondaryControllerId>redController2</SecondaryControllerId>
       <AllowedDirection>Both</AllowedDirection>
@@ -41,6 +42,7 @@
       </EndPoint>
       <EndElevation>0.75</EndElevation>
       <Grade>1</Grade>
+      <HasSwitch>false</HasSwitch>
       <ControllerId>redController1</ControllerId>
       <SecondaryControllerId>redController2</SecondaryControllerId>
       <AllowedDirection>Both</AllowedDirection>
@@ -64,6 +66,7 @@
       </EndPoint>
       <EndElevation>1.5</EndElevation>
       <Grade>1.5</Grade>
+      <HasSwitch>false</HasSwitch>
       <ControllerId>redController1</ControllerId>
       <SecondaryControllerId>redController2</SecondaryControllerId>
       <AllowedDirection>Both</AllowedDirection>
@@ -87,6 +90,7 @@
       </EndPoint>
       <EndElevation>2.5</EndElevation>
       <Grade>2</Grade>
+      <HasSwitch>false</HasSwitch>
       <ControllerId>redController1</ControllerId>
       <SecondaryControllerId>redController2</SecondaryControllerId>
       <AllowedDirection>Both</AllowedDirection>
@@ -110,6 +114,7 @@
       </EndPoint>
       <EndElevation>3.25</EndElevation>
       <Grade>1.5</Grade>
+      <HasSwitch>false</HasSwitch>
       <ControllerId>redController1</ControllerId>
       <SecondaryControllerId>redController2</SecondaryControllerId>
       <AllowedDirection>Both</AllowedDirection>
@@ -133,6 +138,7 @@
       </EndPoint>
       <EndElevation>3.75</EndElevation>
       <Grade>1</Grade>
+      <HasSwitch>false</HasSwitch>
       <ControllerId>redController1</ControllerId>
       <SecondaryControllerId>redController2</SecondaryControllerId>
       <AllowedDirection>Both</AllowedDirection>
@@ -160,6 +166,7 @@
       </EndPoint>
       <EndElevation>4.13</EndElevation>
       <Grade>0.5</Grade>
+      <HasSwitch>false</HasSwitch>
       <ControllerId>redController1</ControllerId>
       <SecondaryControllerId>redController2</SecondaryControllerId>
       <AllowedDirection>Both</AllowedDirection>
@@ -187,6 +194,7 @@
       </EndPoint>
       <EndElevation>4.13</EndElevation>
       <Grade>0</Grade>
+      <HasSwitch>false</HasSwitch>
       <ControllerId>redController1</ControllerId>
       <SecondaryControllerId>redController2</SecondaryControllerId>
       <AllowedDirection>Both</AllowedDirection>
@@ -210,7 +218,7 @@
       </EndPoint>
       <EndElevation>4.13</EndElevation>
       <Grade>0</Grade>
-      <SwitchId>Yard Switch</SwitchId>
+      <HasSwitch>false</HasSwitch>
       <ControllerId>redController1</ControllerId>
       <SecondaryControllerId>redController2</SecondaryControllerId>
       <AllowedDirection>Both</AllowedDirection>
@@ -238,7 +246,7 @@
       </EndPoint>
       <EndElevation>0</EndElevation>
       <Grade>0</Grade>
-      <SwitchId>Switch1</SwitchId>
+      <HasSwitch>true</HasSwitch>
       <ControllerId>redController1</ControllerId>
       <AllowedDirection>Both</AllowedDirection>
       <PreviousBlockId>red9</PreviousBlockId>
@@ -260,6 +268,7 @@
       </EndPoint>
       <EndElevation>4.13</EndElevation>
       <Grade>0</Grade>
+      <HasSwitch>true</HasSwitch>
       <ControllerId>redController1</ControllerId>
       <SecondaryControllerId>redController2</SecondaryControllerId>
       <AllowedDirection>Both</AllowedDirection>
@@ -283,6 +292,7 @@
       </EndPoint>
       <EndElevation>3.75</EndElevation>
       <Grade>-0.5</Grade>
+      <HasSwitch>true</HasSwitch>
       <ControllerId>redController1</ControllerId>
       <SecondaryControllerId>redController2</SecondaryControllerId>
       <AllowedDirection>Both</AllowedDirection>
@@ -306,6 +316,7 @@
       </EndPoint>
       <EndElevation>3.38</EndElevation>
       <Grade>-0.5</Grade>
+      <HasSwitch>false</HasSwitch>
       <ControllerId>redController1</ControllerId>
       <SecondaryControllerId>redController2</SecondaryControllerId>
       <AllowedDirection>Both</AllowedDirection>
@@ -329,6 +340,7 @@
       </EndPoint>
       <EndElevation>2.69</EndElevation>
       <Grade>-1</Grade>
+      <HasSwitch>false</HasSwitch>
       <ControllerId>redController1</ControllerId>
       <SecondaryControllerId>redController2</SecondaryControllerId>
       <AllowedDirection>Both</AllowedDirection>
@@ -352,6 +364,7 @@
       </EndPoint>
       <EndElevation>2.09</EndElevation>
       <Grade>-1</Grade>
+      <HasSwitch>false</HasSwitch>
       <ControllerId>redController1</ControllerId>
       <SecondaryControllerId>redController2</SecondaryControllerId>
       <AllowedDirection>Both</AllowedDirection>
@@ -379,6 +392,7 @@
       </EndPoint>
       <EndElevation>1.49</EndElevation>
       <Grade>-1</Grade>
+      <HasSwitch>false</HasSwitch>
       <ControllerId>redController2</ControllerId>
       <SecondaryControllerId>redController1</SecondaryControllerId>
       <AllowedDirection>Both</AllowedDirection>
@@ -406,6 +420,7 @@
       </EndPoint>
       <EndElevation>1.24</EndElevation>
       <Grade>-0.5</Grade>
+      <HasSwitch>false</HasSwitch>
       <ControllerId>redController1</ControllerId>
       <SecondaryControllerId>redController2</SecondaryControllerId>
       <AllowedDirection>Both</AllowedDirection>
@@ -429,6 +444,7 @@
       </EndPoint>
       <EndElevation>0.24</EndElevation>
       <Grade>-0.5</Grade>
+      <HasSwitch>true</HasSwitch>
       <ControllerId>redController1</ControllerId>
       <SecondaryControllerId>redController2</SecondaryControllerId>
       <AllowedDirection>Both</AllowedDirection>
@@ -452,6 +468,7 @@
       </EndPoint>
       <EndElevation>0</EndElevation>
       <Grade>-0.06025</Grade>
+      <HasSwitch>true</HasSwitch>
       <ControllerId>redController2</ControllerId>
       <SecondaryControllerId>redController1</SecondaryControllerId>
       <AllowedDirection>Both</AllowedDirection>
@@ -475,6 +492,7 @@
       </EndPoint>
       <EndElevation>0</EndElevation>
       <Grade>0</Grade>
+      <HasSwitch>false</HasSwitch>
       <ControllerId>redController3</ControllerId>
       <SecondaryControllerId>redController2</SecondaryControllerId>
       <AllowedDirection>Both</AllowedDirection>
@@ -502,6 +520,7 @@
       </EndPoint>
       <EndElevation>0</EndElevation>
       <Grade>0</Grade>
+      <HasSwitch>false</HasSwitch>
       <ControllerId>redController3</ControllerId>
       <SecondaryControllerId>redController2</SecondaryControllerId>
       <AllowedDirection>Both</AllowedDirection>
@@ -525,6 +544,7 @@
       </EndPoint>
       <EndElevation>0</EndElevation>
       <Grade>0</Grade>
+      <HasSwitch>false</HasSwitch>
       <ControllerId>redController3</ControllerId>
       <SecondaryControllerId>redController2</SecondaryControllerId>
       <AllowedDirection>Both</AllowedDirection>
@@ -548,6 +568,7 @@
       </EndPoint>
       <EndElevation>0</EndElevation>
       <Grade>0</Grade>
+      <HasSwitch>false</HasSwitch>
       <ControllerId>redController3</ControllerId>
       <SecondaryControllerId>redController2</SecondaryControllerId>
       <AllowedDirection>Both</AllowedDirection>
@@ -571,6 +592,7 @@
       </EndPoint>
       <EndElevation>0</EndElevation>
       <Grade>0</Grade>
+      <HasSwitch>false</HasSwitch>
       <ControllerId>redController3</ControllerId>
       <SecondaryControllerId>redController2</SecondaryControllerId>
       <AllowedDirection>Both</AllowedDirection>
@@ -598,6 +620,7 @@
       </EndPoint>
       <EndElevation>0</EndElevation>
       <Grade>0</Grade>
+      <HasSwitch>false</HasSwitch>
       <ControllerId>redController3</ControllerId>
       <SecondaryControllerId>redController2</SecondaryControllerId>
       <AllowedDirection>Both</AllowedDirection>
@@ -625,6 +648,7 @@
       </EndPoint>
       <EndElevation>0</EndElevation>
       <Grade>0</Grade>
+      <HasSwitch>false</HasSwitch>
       <ControllerId>redController3</ControllerId>
       <SecondaryControllerId>redController2</SecondaryControllerId>
       <AllowedDirection>Both</AllowedDirection>
@@ -648,6 +672,7 @@
       </EndPoint>
       <EndElevation>0</EndElevation>
       <Grade>0</Grade>
+      <HasSwitch>false</HasSwitch>
       <ControllerId>redController3</ControllerId>
       <SecondaryControllerId>redController4</SecondaryControllerId>
       <AllowedDirection>Both</AllowedDirection>
@@ -671,6 +696,7 @@
       </EndPoint>
       <EndElevation>0</EndElevation>
       <Grade>0</Grade>
+      <HasSwitch>false</HasSwitch>
       <ControllerId>redController3</ControllerId>
       <SecondaryControllerId>redController4</SecondaryControllerId>
       <AllowedDirection>Both</AllowedDirection>
@@ -694,6 +720,7 @@
       </EndPoint>
       <EndElevation>0</EndElevation>
       <Grade>0</Grade>
+      <HasSwitch>true</HasSwitch>
       <ControllerId>redController3</ControllerId>
       <SecondaryControllerId>redController4</SecondaryControllerId>
       <AllowedDirection>Both</AllowedDirection>
@@ -717,6 +744,7 @@
       </EndPoint>
       <EndElevation>0</EndElevation>
       <Grade>0</Grade>
+      <HasSwitch>true</HasSwitch>
       <ControllerId>redController3</ControllerId>
       <SecondaryControllerId>redController4</SecondaryControllerId>
       <AllowedDirection>Both</AllowedDirection>
@@ -740,6 +768,7 @@
       </EndPoint>
       <EndElevation>0</EndElevation>
       <Grade>0</Grade>
+      <HasSwitch>false</HasSwitch>
       <ControllerId>redController3</ControllerId>
       <SecondaryControllerId>redController4</SecondaryControllerId>
       <AllowedDirection>Both</AllowedDirection>
@@ -763,6 +792,7 @@
       </EndPoint>
       <EndElevation>0</EndElevation>
       <Grade>0</Grade>
+      <HasSwitch>false</HasSwitch>
       <ControllerId>redController3</ControllerId>
       <SecondaryControllerId>redController4</SecondaryControllerId>
       <AllowedDirection>Both</AllowedDirection>
@@ -786,6 +816,7 @@
       </EndPoint>
       <EndElevation>0</EndElevation>
       <Grade>0</Grade>
+      <HasSwitch>true</HasSwitch>
       <ControllerId>redController4</ControllerId>
       <SecondaryControllerId>redController3</SecondaryControllerId>
       <AllowedDirection>Both</AllowedDirection>
@@ -809,6 +840,7 @@
       </EndPoint>
       <EndElevation>0</EndElevation>
       <Grade>0</Grade>
+      <HasSwitch>true</HasSwitch>
       <ControllerId>redController4</ControllerId>
       <SecondaryControllerId>redController5</SecondaryControllerId>
       <AllowedDirection>Both</AllowedDirection>
@@ -836,6 +868,7 @@
       </EndPoint>
       <EndElevation>0</EndElevation>
       <Grade>0</Grade>
+      <HasSwitch>false</HasSwitch>
       <ControllerId>redController4</ControllerId>
       <SecondaryControllerId>redController5</SecondaryControllerId>
       <AllowedDirection>Both</AllowedDirection>
@@ -863,6 +896,7 @@
       </EndPoint>
       <EndElevation>0</EndElevation>
       <Grade>0</Grade>
+      <HasSwitch>false</HasSwitch>
       <ControllerId>redController4</ControllerId>
       <SecondaryControllerId>redController5</SecondaryControllerId>
       <AllowedDirection>Both</AllowedDirection>
@@ -886,6 +920,7 @@
       </EndPoint>
       <EndElevation>0</EndElevation>
       <Grade>0</Grade>
+      <HasSwitch>false</HasSwitch>
       <ControllerId>redController4</ControllerId>
       <SecondaryControllerId>redController5</SecondaryControllerId>
       <AllowedDirection>Both</AllowedDirection>
@@ -909,6 +944,7 @@
       </EndPoint>
       <EndElevation>0</EndElevation>
       <Grade>0</Grade>
+      <HasSwitch>false</HasSwitch>
       <ControllerId>redController4</ControllerId>
       <SecondaryControllerId>redController5</SecondaryControllerId>
       <AllowedDirection>Both</AllowedDirection>
@@ -932,6 +968,7 @@
       </EndPoint>
       <EndElevation>0</EndElevation>
       <Grade>0</Grade>
+      <HasSwitch>false</HasSwitch>
       <ControllerId>redController5</ControllerId>
       <SecondaryControllerId>redController4</SecondaryControllerId>
       <AllowedDirection>Both</AllowedDirection>
@@ -955,6 +992,7 @@
       </EndPoint>
       <EndElevation>0</EndElevation>
       <Grade>0</Grade>
+      <HasSwitch>true</HasSwitch>
       <ControllerId>redController5</ControllerId>
       <SecondaryControllerId>redController6</SecondaryControllerId>
       <AllowedDirection>Both</AllowedDirection>
@@ -978,6 +1016,7 @@
       </EndPoint>
       <EndElevation>0</EndElevation>
       <Grade>0</Grade>
+      <HasSwitch>true</HasSwitch>
       <ControllerId>redController5</ControllerId>
       <SecondaryControllerId>redController6</SecondaryControllerId>
       <AllowedDirection>Both</AllowedDirection>
@@ -1001,6 +1040,7 @@
       </EndPoint>
       <EndElevation>0</EndElevation>
       <Grade>0</Grade>
+      <HasSwitch>false</HasSwitch>
       <ControllerId>redController5</ControllerId>
       <SecondaryControllerId>redController6</SecondaryControllerId>
       <AllowedDirection>Both</AllowedDirection>
@@ -1024,6 +1064,7 @@
       </EndPoint>
       <EndElevation>0</EndElevation>
       <Grade>0</Grade>
+      <HasSwitch>false</HasSwitch>
       <ControllerId>redController5</ControllerId>
       <SecondaryControllerId>redController6</SecondaryControllerId>
       <AllowedDirection>Both</AllowedDirection>
@@ -1051,6 +1092,7 @@
       </EndPoint>
       <EndElevation>0</EndElevation>
       <Grade>0</Grade>
+      <HasSwitch>true</HasSwitch>
       <ControllerId>redController6</ControllerId>
       <SecondaryControllerId>redController5</SecondaryControllerId>
       <AllowedDirection>Both</AllowedDirection>
@@ -1078,6 +1120,7 @@
       </EndPoint>
       <EndElevation>0</EndElevation>
       <Grade>0</Grade>
+      <HasSwitch>true</HasSwitch>
       <ControllerId>redController6</ControllerId>
       <SecondaryControllerId>redController7</SecondaryControllerId>
       <AllowedDirection>Both</AllowedDirection>
@@ -1101,6 +1144,7 @@
       </EndPoint>
       <EndElevation>0</EndElevation>
       <Grade>0</Grade>
+      <HasSwitch>false</HasSwitch>
       <ControllerId>redController6</ControllerId>
       <SecondaryControllerId>redController7</SecondaryControllerId>
       <AllowedDirection>Both</AllowedDirection>
@@ -1124,6 +1168,7 @@
       </EndPoint>
       <EndElevation>0</EndElevation>
       <Grade>0</Grade>
+      <HasSwitch>false</HasSwitch>
       <ControllerId>redController6</ControllerId>
       <SecondaryControllerId>redController7</SecondaryControllerId>
       <AllowedDirection>Both</AllowedDirection>
@@ -1147,6 +1192,7 @@
       </EndPoint>
       <EndElevation>0</EndElevation>
       <Grade>0</Grade>
+      <HasSwitch>false</HasSwitch>
       <ControllerId>redController6</ControllerId>
       <SecondaryControllerId>redController7</SecondaryControllerId>
       <AllowedDirection>Both</AllowedDirection>
@@ -1174,6 +1220,7 @@
       </EndPoint>
       <EndElevation>0</EndElevation>
       <Grade>0</Grade>
+      <HasSwitch>false</HasSwitch>
       <ControllerId>redController6</ControllerId>
       <SecondaryControllerId>redController7</SecondaryControllerId>
       <AllowedDirection>Both</AllowedDirection>
@@ -1201,6 +1248,7 @@
       </EndPoint>
       <EndElevation>0</EndElevation>
       <Grade>0</Grade>
+      <HasSwitch>false</HasSwitch>
       <ControllerId>redController6</ControllerId>
       <SecondaryControllerId>redController7</SecondaryControllerId>
       <AllowedDirection>Both</AllowedDirection>
@@ -1224,6 +1272,7 @@
       </EndPoint>
       <EndElevation>0</EndElevation>
       <Grade>0</Grade>
+      <HasSwitch>false</HasSwitch>
       <ControllerId>redController6</ControllerId>
       <SecondaryControllerId>redController7</SecondaryControllerId>
       <AllowedDirection>Both</AllowedDirection>
@@ -1247,6 +1296,7 @@
       </EndPoint>
       <EndElevation>0</EndElevation>
       <Grade>0</Grade>
+      <HasSwitch>true</HasSwitch>
       <ControllerId>redController6</ControllerId>
       <SecondaryControllerId>redController7</SecondaryControllerId>
       <AllowedDirection>Both</AllowedDirection>
@@ -1270,6 +1320,7 @@
       </EndPoint>
       <EndElevation>0</EndElevation>
       <Grade>0</Grade>
+      <HasSwitch>true</HasSwitch>
       <ControllerId>redController7</ControllerId>
       <AllowedDirection>Both</AllowedDirection>
       <PreviousBlockId>redBlock51</PreviousBlockId>
@@ -1292,6 +1343,7 @@
       </EndPoint>
       <EndElevation>0</EndElevation>
       <Grade>0</Grade>
+      <HasSwitch>false</HasSwitch>
       <ControllerId>redController7</ControllerId>
       <AllowedDirection>Both</AllowedDirection>
       <PreviousBlockId>redBlock52</PreviousBlockId>
@@ -1314,6 +1366,7 @@
       </EndPoint>
       <EndElevation>0</EndElevation>
       <Grade>0</Grade>
+      <HasSwitch>false</HasSwitch>
       <ControllerId>redController7</ControllerId>
       <AllowedDirection>Both</AllowedDirection>
       <PreviousBlockId>redBlock53</PreviousBlockId>
@@ -1336,6 +1389,7 @@
       </EndPoint>
       <EndElevation>0.38</EndElevation>
       <Grade>0.5</Grade>
+      <HasSwitch>false</HasSwitch>
       <ControllerId>redController7</ControllerId>
       <AllowedDirection>Both</AllowedDirection>
       <PreviousBlockId>redBlock54</PreviousBlockId>
@@ -1358,6 +1412,7 @@
       </EndPoint>
       <EndElevation>0.75</EndElevation>
       <Grade>0.5</Grade>
+      <HasSwitch>false</HasSwitch>
       <ControllerId>redController7</ControllerId>
       <AllowedDirection>Both</AllowedDirection>
       <PreviousBlockId>redBlock55</PreviousBlockId>
@@ -1380,6 +1435,7 @@
       </EndPoint>
       <EndElevation>1.13</EndElevation>
       <Grade>0.5</Grade>
+      <HasSwitch>false</HasSwitch>
       <ControllerId>redController7</ControllerId>
       <AllowedDirection>Both</AllowedDirection>
       <PreviousBlockId>redBlock56</PreviousBlockId>
@@ -1402,6 +1458,7 @@
       </EndPoint>
       <EndElevation>1.88</EndElevation>
       <Grade>1</Grade>
+      <HasSwitch>false</HasSwitch>
       <ControllerId>redController7</ControllerId>
       <AllowedDirection>Both</AllowedDirection>
       <PreviousBlockId>redBlock57</PreviousBlockId>
@@ -1428,6 +1485,7 @@
       </EndPoint>
       <EndElevation>2.25</EndElevation>
       <Grade>0.5</Grade>
+      <HasSwitch>false</HasSwitch>
       <ControllerId>redController7</ControllerId>
       <AllowedDirection>Both</AllowedDirection>
       <PreviousBlockId>redBlock58</PreviousBlockId>
@@ -1454,6 +1512,7 @@
       </EndPoint>
       <EndElevation>2.25</EndElevation>
       <Grade>0.5</Grade>
+      <HasSwitch>false</HasSwitch>
       <ControllerId>redController7</ControllerId>
       <AllowedDirection>Both</AllowedDirection>
       <PreviousBlockId>redBlock59</PreviousBlockId>
@@ -1476,6 +1535,7 @@
       </EndPoint>
       <EndElevation>1.88</EndElevation>
       <Grade>-0.5</Grade>
+      <HasSwitch>false</HasSwitch>
       <ControllerId>redController7</ControllerId>
       <AllowedDirection>Both</AllowedDirection>
       <PreviousBlockId>redBlock60</PreviousBlockId>
@@ -1498,6 +1558,7 @@
       </EndPoint>
       <EndElevation>1.13</EndElevation>
       <Grade>-1</Grade>
+      <HasSwitch>false</HasSwitch>
       <ControllerId>redController7</ControllerId>
       <AllowedDirection>Both</AllowedDirection>
       <PreviousBlockId>redBlock61</PreviousBlockId>
@@ -1520,6 +1581,7 @@
       </EndPoint>
       <EndElevation>0.38</EndElevation>
       <Grade>-1</Grade>
+      <HasSwitch>false</HasSwitch>
       <ControllerId>redController7</ControllerId>
       <AllowedDirection>Both</AllowedDirection>
       <PreviousBlockId>redBlock61</PreviousBlockId>
@@ -1542,6 +1604,7 @@
       </EndPoint>
       <EndElevation>0</EndElevation>
       <Grade>-0.5</Grade>
+      <HasSwitch>false</HasSwitch>
       <ControllerId>redController7</ControllerId>
       <AllowedDirection>Both</AllowedDirection>
       <PreviousBlockId>redBlock62</PreviousBlockId>
@@ -1564,6 +1627,7 @@
       </EndPoint>
       <EndElevation>0</EndElevation>
       <Grade>0</Grade>
+      <HasSwitch>true</HasSwitch>
       <ControllerId>redController7</ControllerId>
       <AllowedDirection>Both</AllowedDirection>
       <PreviousBlockId>redBlock62</PreviousBlockId>
@@ -1586,6 +1650,7 @@
       </EndPoint>
       <EndElevation>0</EndElevation>
       <Grade>0</Grade>
+      <HasSwitch>true</HasSwitch>
       <ControllerId>redController5</ControllerId>
       <SecondaryControllerId>redController6</SecondaryControllerId>
       <AllowedDirection>Both</AllowedDirection>
@@ -1609,6 +1674,7 @@
       </EndPoint>
       <EndElevation>0</EndElevation>
       <Grade>0</Grade>
+      <HasSwitch>false</HasSwitch>
       <ControllerId>redController5</ControllerId>
       <SecondaryControllerId>redController6</SecondaryControllerId>
       <AllowedDirection>Both</AllowedDirection>
@@ -1632,6 +1698,7 @@
       </EndPoint>
       <EndElevation>0</EndElevation>
       <Grade>0</Grade>
+      <HasSwitch>false</HasSwitch>
       <ControllerId>redController5</ControllerId>
       <SecondaryControllerId>redController6</SecondaryControllerId>
       <AllowedDirection>Both</AllowedDirection>
@@ -1655,6 +1722,7 @@
       </EndPoint>
       <EndElevation>0</EndElevation>
       <Grade>0</Grade>
+      <HasSwitch>false</HasSwitch>
       <ControllerId>redController5</ControllerId>
       <SecondaryControllerId>redController6</SecondaryControllerId>
       <AllowedDirection>Both</AllowedDirection>
@@ -1678,6 +1746,7 @@
       </EndPoint>
       <EndElevation>0</EndElevation>
       <Grade>0</Grade>
+      <HasSwitch>true</HasSwitch>
       <ControllerId>redController5</ControllerId>
       <SecondaryControllerId>redController6</SecondaryControllerId>
       <AllowedDirection>Both</AllowedDirection>
@@ -1701,6 +1770,7 @@
       </EndPoint>
       <EndElevation>0</EndElevation>
       <Grade>0</Grade>
+      <HasSwitch>true</HasSwitch>
       <ControllerId>redController3</ControllerId>
       <SecondaryControllerId>redController4</SecondaryControllerId>
       <AllowedDirection>Both</AllowedDirection>
@@ -1724,6 +1794,7 @@
       </EndPoint>
       <EndElevation>0</EndElevation>
       <Grade>0</Grade>
+      <HasSwitch>false</HasSwitch>
       <ControllerId>redController3</ControllerId>
       <SecondaryControllerId>redController4</SecondaryControllerId>
       <AllowedDirection>Both</AllowedDirection>
@@ -1747,6 +1818,7 @@
       </EndPoint>
       <EndElevation>0</EndElevation>
       <Grade>0</Grade>
+      <HasSwitch>false</HasSwitch>
       <ControllerId>redController3</ControllerId>
       <SecondaryControllerId>redController4</SecondaryControllerId>
       <AllowedDirection>Both</AllowedDirection>
@@ -1770,6 +1842,7 @@
       </EndPoint>
       <EndElevation>0</EndElevation>
       <Grade>0</Grade>
+      <HasSwitch>false</HasSwitch>
       <ControllerId>redController3</ControllerId>
       <SecondaryControllerId>redController4</SecondaryControllerId>
       <AllowedDirection>Both</AllowedDirection>
@@ -1793,6 +1866,7 @@
       </EndPoint>
       <EndElevation>0</EndElevation>
       <Grade>0</Grade>
+      <HasSwitch>true</HasSwitch>
       <ControllerId>redController3</ControllerId>
       <SecondaryControllerId>redController4</SecondaryControllerId>
       <AllowedDirection>Both</AllowedDirection>

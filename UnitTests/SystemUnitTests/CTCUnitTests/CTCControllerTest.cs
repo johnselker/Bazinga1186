@@ -65,18 +65,18 @@ namespace CTCUnitTests
 
             List<TrackBlock> trackRegion = new List<TrackBlock>();
             TrackBlock redBlock1 = new TrackBlock("red1", TrackOrientation.EastWest, new Point(0, 0), 50.0, 0.25, 0.5,
-                                        false, false, 40, TrackAllowedDirection.Both, null, "redController1", null, null, "red2");
+                                        false, false, 40, TrackAllowedDirection.Both, false, "redController1", null, null, "red2");
             trackRegion.Add(redBlock1);
             TrackBlock redBlock2 = new TrackBlock("red2", TrackOrientation.SouthWestNorthEast, redBlock1.EndPoint, 50.0, 0.75, 1,
-                                         false, false, 40, TrackAllowedDirection.Both, null, "redController1", "redController2", "red1", "red3");
+                                         false, false, 40, TrackAllowedDirection.Both, false, "redController1", "redController2", "red1", "red3");
             trackRegion.Add(redBlock2);
             TrackBlock redBlock3 = new TrackBlock("red3", TrackOrientation.NorthSouth, redBlock2.EndPoint, 50.0, 1.50, 1.5,
-                                         false, false, 40, TrackAllowedDirection.Both, null, "redController2", "redController1", "red2", "red4");
+                                         false, false, 40, TrackAllowedDirection.Both, false, "redController2", "redController1", "red2", "red4");
             trackRegion.Add(redBlock3);
             TrackBlock redBlock4 = new TrackBlock("red4", TrackOrientation.SouthWestNorthEast, redBlock3.EndPoint, 50.0, 2.5, 2,
-                                         false, false, 40, TrackAllowedDirection.Both, null, "redController2", null, "red3", "red5");
+                                         false, false, 40, TrackAllowedDirection.Both, false, "redController2", null, "red3", "red5");
             trackRegion.Add(redBlock4);
-            m_ctcAccessor.BuildLayout(trackRegion);
+            m_ctcAccessor.BuildLayout(trackRegion, new List<TrackSwitch>()); // update this for switches
         }
         
         //Use TestCleanup to run code after each test has run
@@ -250,18 +250,18 @@ namespace CTCUnitTests
         {
             List<TrackBlock> trackRegion = new List<TrackBlock>();
             TrackBlock redBlock1 = new TrackBlock("red1", TrackOrientation.EastWest, new Point(0, 0), 50.0, 0.25, 0.5,
-                                        false, false, 40, TrackAllowedDirection.Both, null, "redController1", null, null, "red2");
+                                        false, false, 40, TrackAllowedDirection.Both, false, "redController1", null, null, "red2");
             trackRegion.Add(redBlock1);
             TrackBlock redBlock2 = new TrackBlock("red2", TrackOrientation.SouthWestNorthEast, redBlock1.EndPoint, 50.0, 0.75, 1,
-                                         false, false, 40, TrackAllowedDirection.Both, null, "redController1", "redcontroller2", "red1", "red3");
+                                         false, false, 40, TrackAllowedDirection.Both, false, "redController1", "redcontroller2", "red1", "red3");
             trackRegion.Add(redBlock2);
             TrackBlock redBlock3 = new TrackBlock("red3", TrackOrientation.NorthSouth, redBlock2.EndPoint, 50.0, 1.50, 1.5,
-                                         false, false, 40, TrackAllowedDirection.Both, null, "redController2", "redcontroller1", "red2", "red4");
+                                         false, false, 40, TrackAllowedDirection.Both, false, "redController2", "redcontroller1", "red2", "red4");
             trackRegion.Add(redBlock3);
             TrackBlock redBlock4 = new TrackBlock("red4", TrackOrientation.SouthWestNorthEast, redBlock3.EndPoint, 50.0, 2.5, 2,
-                                         false, false, 40, TrackAllowedDirection.Both, null, "redController2", null, "red3", "red5");
+                                         false, false, 40, TrackAllowedDirection.Both, false, "redController2", null, "red3", "red5");
             trackRegion.Add(redBlock4);
-            m_ctcAccessor.BuildLayout(trackRegion);
+            m_ctcAccessor.BuildLayout(trackRegion, new List<TrackSwitch>());
 
             Assert.IsNotNull(m_ctcAccessor.m_blockList);
             Assert.IsTrue(m_ctcAccessor.m_trackTable.ContainsKey(redBlock1));

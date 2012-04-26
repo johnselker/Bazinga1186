@@ -230,12 +230,14 @@ namespace CTCOfficeGUI
         public List<TrackBlock> LoadTrackLayout(string filename)
         {
             List<TrackBlock> blocks = null;
+            List<TrackSwitch> switches = null;
             try
             {
                 TrackLayoutSerializer layoutSerializer = new TrackLayoutSerializer(filename);
                 layoutSerializer.Restore();
                 blocks = layoutSerializer.BlockList;
-                if (BuildLayout(blocks))
+                switches = layoutSerializer.SwitchList;
+                if (BuildLayout(blocks, switches))
                 {
                     m_updateTimer.Start();
                     m_log.LogInfo("Successfully loaded track layout. Starting update timer");
@@ -465,7 +467,7 @@ namespace CTCOfficeGUI
         /// <param name="blocks">List of track blocks in the layout</param>
         /// 
         /// <returns>bool Sucess</returns>
-        private bool BuildLayout(List<TrackBlock> blocks)
+        private bool BuildLayout(List<TrackBlock> blocks, List<TrackSwitch> switches)
         {
             if (blocks == null)
             {
@@ -566,6 +568,18 @@ namespace CTCOfficeGUI
                 if (b.EndPoint.Y > maxY)
                 {
                     maxY = b.EndPoint.Y;
+                }
+            }
+
+            foreach (TrackSwitch s in switches)
+            {
+                if (trackControllers.ContainsKey(s.ControllerId))
+                {
+                    trackControllers[s.ControllerId].SetSwitch(s);
+                }
+                else
+                {
+                    m_log.LogError("Switch Track Controller Id was invalid. Skipping.");
                 }
             }
 
