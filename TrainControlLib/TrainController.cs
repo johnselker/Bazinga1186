@@ -245,7 +245,7 @@ namespace TrainControllerLib
             // If the Track Block has a power failure or a track circuit failure,
             // the train will not be able to pick up the track signal, thus there is a signal pickup failure
             // and the setpoint must be set to zero to engage the brake.
-            if (m_currentState.CurrentBlock.Status.PowerFail|| m_currentState.CurrentBlock.Status.CircuitFail)
+            if (m_currentState.CurrentBlock.Status.PowerFail || m_currentState.CurrentBlock.Status.CircuitFail)
             {
                 m_setPoint = 0;
             }
@@ -268,7 +268,8 @@ namespace TrainControllerLib
         //--------------------------------------------------------------------------------------
         private void DetermineSetPoint()
         {
-            // The setPoint should be set to the lower of the two speed limits
+            // If a manual speed command has been given and does not exceed the speed limit, make the manual speed the setpoint
+            // Else, the setpoint should be set to the speed limit
             if (ManualMode && ManualSpeed >= 0)
             {
                 if (ManualSpeed < m_currentBlock.Authority.SpeedLimitKPH)
@@ -285,13 +286,17 @@ namespace TrainControllerLib
                 m_setPoint = m_currentBlock.Authority.SpeedLimitKPH / 3.6;
             }
 
+            // The setpoint should never be negative
             if (m_setPoint < 0)
             {
                 m_setPoint = 0;
             }
 
-            // If the authority is equal to zero, the train cannot pass into the next block,
-            // so the setPoint must be set to zero to engage the brake.
+            // If the authority is negative, the train has exceeded its authority and must apply the emergency brake
+            // If the authority is zero, the train cannot pass into the next block
+            // So, when the train reaches its stopping distance, the setPoint must be set to zero to engage the brake.
+            // If the authority is zero and the train is stopped, the train should stay stopped, so the setpoint should be zero
+            // If the next block has a lower speed limit, the setpoint must be reduced 
             if (m_currentBlock.Authority.Authority < 0)
             {
                 EmergencyBrake = true;
@@ -305,6 +310,7 @@ namespace TrainControllerLib
 				m_setPoint = m_currentBlock.GetNextBlock(m_currentState.Direction).Authority.SpeedLimitKPH / 3.6;
             }
 
+            // If the train is approaching a station and is reaches the safe stopping distance, the setpoint should be zet to zero
             if (m_approachingStation)
             {
 				if (m_currentBlock.HasTransponder && m_currentBlock.Transponder.DistanceToStation == 1 && CalculateStoppingDistance(0) >= m_currentBlock.LengthMeters + m_currentBlock.GetNextBlock(m_currentState.Direction).LengthMeters * 0.5 - m_currentState.BlockProgress)

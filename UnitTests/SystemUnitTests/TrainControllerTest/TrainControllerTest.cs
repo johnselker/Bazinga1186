@@ -267,7 +267,7 @@ namespace TrainControllerTest
 
             target.m_powerCommand = 0;
             target.m_samplePeriod = 0.001;
-            target.m_lastSample = 1999.999; 
+            target.m_lastSample = 1999.999;
             target.m_currentSample = 0.001;
             target.m_lastIntegral = 1;
 
@@ -295,6 +295,15 @@ namespace TrainControllerTest
             target.m_setPoint = 0;
             target.ManualMode = true;
             target.ManualSpeed = -1;
+            target.m_currentState.Speed = 1;
+            target.m_currentBlock.Authority.SpeedLimitKPH = 36;
+            target.DetermineSetPoint();
+            Assert.AreEqual(0.0, target.m_setPoint);
+
+            target.m_setPoint = 0;
+            target.ManualMode = true;
+            target.ManualSpeed = -1;
+            target.m_currentState.Speed = 10;
             target.m_currentBlock.Authority.SpeedLimitKPH = 36;
             target.DetermineSetPoint();
             Assert.AreEqual(10.0, target.m_setPoint);
@@ -324,11 +333,12 @@ namespace TrainControllerTest
             target.m_currentBlock.Authority.Authority = -36;
             target.m_currentBlock.Authority.SpeedLimitKPH = 36;
             target.DetermineSetPoint();
-            Assert.AreEqual(0.0, target.m_setPoint);
+            Assert.AreEqual(10.0, target.m_setPoint);
+            Assert.IsTrue(target.EmergencyBrake);
 
+            target.EmergencyBrake = false;
             target.m_setPoint = 20.0;
             target.ManualMode = false;
-            //target.m_stoppingTheTrain = true;
             target.m_currentBlock.Authority.Authority = 36;
             target.m_currentBlock.Authority.SpeedLimitKPH = 36;
             target.DetermineSetPoint();
@@ -338,18 +348,6 @@ namespace TrainControllerTest
             target.ManualMode = false;
             target.m_currentBlock.Authority.Authority = 36;
             target.m_currentBlock.Authority.SpeedLimitKPH = 36;
-            //target.m_stoppingTheTrain = true;
-            target.m_currentState.Speed = 1;
-            target.m_currentBlock.LengthMeters = 0;
-            target.m_currentState.BlockProgress = 100;
-            target.DetermineSetPoint();
-            Assert.AreEqual(0.0, target.m_setPoint);
-
-            target.m_setPoint = 20.0;
-            target.ManualMode = false;
-            target.m_currentBlock.Authority.Authority = 36;
-            target.m_currentBlock.Authority.SpeedLimitKPH = 36;
-            //target.m_stoppingTheTrain = false;
             target.m_currentState.Speed = 1;
             target.m_currentBlock.LengthMeters = 0;
             target.m_currentState.BlockProgress = 100;
@@ -360,7 +358,16 @@ namespace TrainControllerTest
             target.ManualMode = false;
             target.m_currentBlock.Authority.Authority = 36;
             target.m_currentBlock.Authority.SpeedLimitKPH = 36;
-            //target.m_stoppingTheTrain = true;
+            target.m_currentState.Speed = 1;
+            target.m_currentBlock.LengthMeters = 0;
+            target.m_currentState.BlockProgress = 100;
+            target.DetermineSetPoint();
+            Assert.AreEqual(10.0, target.m_setPoint);
+
+            target.m_setPoint = 20.0;
+            target.ManualMode = false;
+            target.m_currentBlock.Authority.Authority = 36;
+            target.m_currentBlock.Authority.SpeedLimitKPH = 36;
             target.m_currentState.Speed = 10;
             target.m_currentBlock.LengthMeters = 0;
             target.m_currentState.BlockProgress = 100;
@@ -371,7 +378,6 @@ namespace TrainControllerTest
             target.ManualMode = false;
             target.m_currentBlock.Authority.Authority = 0;
             target.m_currentBlock.Authority.SpeedLimitKPH = 36;
-            //target.m_stoppingTheTrain = false;
             target.m_currentState.Speed = 10;
             target.m_currentBlock.LengthMeters = 0;
             target.m_currentState.BlockProgress = 100;
@@ -383,7 +389,6 @@ namespace TrainControllerTest
             target.m_currentBlock.Authority.Authority = 36;
             target.m_currentBlock.Authority.SpeedLimitKPH = 36;
             target.m_currentBlock.NextBlock.Authority.SpeedLimitKPH = 18;
-            //target.m_stoppingTheTrain = false;
             target.m_currentState.Speed = 10;
             target.m_currentBlock.LengthMeters = 0;
             target.m_currentState.BlockProgress = 100;
@@ -395,7 +400,6 @@ namespace TrainControllerTest
             target.m_currentBlock.Authority.Authority = 36;
             target.m_currentBlock.Authority.SpeedLimitKPH = 36;
             target.m_currentBlock.NextBlock.Authority.SpeedLimitKPH = 36;
-            //target.m_stoppingTheTrain = false;
             target.m_currentState.Speed = 10;
             target.m_currentBlock.LengthMeters = 0;
             target.m_currentState.BlockProgress = 100;
@@ -410,7 +414,6 @@ namespace TrainControllerTest
             target.m_currentBlock.Authority.Authority = 36;
             target.m_currentBlock.Authority.SpeedLimitKPH = 36;
             target.m_currentBlock.NextBlock.Authority.SpeedLimitKPH = 36;
-            //target.m_stoppingTheTrain = false;
             target.m_currentState.Speed = 10;
             target.m_currentBlock.LengthMeters = 0;
             target.m_currentState.BlockProgress = 100;
@@ -426,7 +429,6 @@ namespace TrainControllerTest
             target.m_currentBlock.Authority.Authority = 36;
             target.m_currentBlock.Authority.SpeedLimitKPH = 36;
             target.m_currentBlock.NextBlock.Authority.SpeedLimitKPH = 36;
-            //target.m_stoppingTheTrain = false;
             target.m_currentState.Speed = 10;
             target.m_currentBlock.LengthMeters = 0;
             target.m_currentState.BlockProgress = 100;
@@ -442,7 +444,6 @@ namespace TrainControllerTest
             target.m_currentBlock.Authority.Authority = 36;
             target.m_currentBlock.Authority.SpeedLimitKPH = 36;
             target.m_currentBlock.NextBlock.Authority.SpeedLimitKPH = 36;
-            //target.m_stoppingTheTrain = false;
             target.m_currentState.Speed = 10;
             target.m_currentBlock.LengthMeters = 0;
             target.m_currentState.BlockProgress = 100;
@@ -520,12 +521,11 @@ namespace TrainControllerTest
 
             Queue<ScheduleInfo> routeInfo = new Queue<ScheduleInfo>();
             routeInfo.Enqueue(new ScheduleInfo("station123", 1));
-            target.m_routeInfo = routeInfo;
+            target.Schedule = routeInfo;
 
             target.LeaveStation();
 
             Assert.AreEqual(TrainState.Door.Closed, target.m_currentState.Doors);
-            Assert.IsFalse(target.m_doorsOpen);
             Assert.AreEqual("station123", target.m_nextStationInfo.StationName);
             Assert.AreEqual("station123", target.m_currentState.Announcement);
             Assert.IsFalse(target.m_atStation);
@@ -578,26 +578,6 @@ namespace TrainControllerTest
         }
 
         /// <summary>
-        ///A test for SetSchedule
-        ///</summary>
-        [TestMethod()]
-        public void SetScheduleTest()
-        {
-            TrackBlock startingBlock = new TrackBlock("Block1", TrackOrientation.EastWest, new Point(123, 456), 100, 50, 1, true, false, 70, TrackAllowedDirection.Both, false, "controller1", "controller2", "previousBlock", "nextBlock");
-            ITrain myTrain = new Train("train1", startingBlock, Direction.East);
-            TrainController myTrainController = new TrainController(myTrain);
-            PrivateObject param0 = new PrivateObject(myTrainController);
-            TrainController_Accessor target = new TrainController_Accessor(param0);
-
-            Queue<ScheduleInfo> routeInfo = new Queue<ScheduleInfo>();
-            routeInfo.Enqueue(new ScheduleInfo("station123", 1));
-
-            target.SetSchedule(routeInfo);
-
-            Assert.AreEqual(routeInfo, target.m_routeInfo);
-        }
-
-        /// <summary>
         ///A test for StationController
         ///</summary>
         [TestMethod()]
@@ -614,7 +594,7 @@ namespace TrainControllerTest
 
             Queue<ScheduleInfo> routeInfo = new Queue<ScheduleInfo>();
             routeInfo.Enqueue(new ScheduleInfo("station123", 1));
-            target.m_routeInfo = routeInfo;
+            target.Schedule = routeInfo;
 
             target.m_nextStationInfo = new ScheduleInfo("stationABC", 1);
 
@@ -624,7 +604,6 @@ namespace TrainControllerTest
             target.m_currentState.Speed = 10;
             target.m_atStation = false;
             target.m_timePassed = 1;
-            target.m_doorsOpen = false;
             target.m_currentState.Passengers = 0;
 
             target.StationController();
@@ -633,7 +612,6 @@ namespace TrainControllerTest
             Assert.IsFalse(target.m_approachingStation);
             Assert.IsFalse(target.m_atStation);
             Assert.AreEqual(1.0, target.m_timePassed);
-            Assert.IsFalse(target.m_doorsOpen);
             Assert.AreEqual("stationABC", target.m_nextStationInfo.StationName);
             Assert.AreEqual(0, target.m_currentState.Passengers);
 
@@ -645,7 +623,6 @@ namespace TrainControllerTest
             Assert.IsTrue(target.m_approachingStation);
             Assert.IsFalse(target.m_atStation);
             Assert.AreEqual(1.0, target.m_timePassed);
-            Assert.IsFalse(target.m_doorsOpen);
             Assert.AreEqual("stationABC", target.m_nextStationInfo.StationName);
             Assert.AreEqual(0, target.m_currentState.Passengers);
 
@@ -659,11 +636,11 @@ namespace TrainControllerTest
             Assert.IsFalse(target.m_approachingStation);
             Assert.IsTrue(target.m_atStation);
             Assert.AreEqual(1.0, target.m_timePassed);
-            Assert.IsTrue(target.m_doorsOpen);
             Assert.AreEqual("stationABC", target.m_nextStationInfo.StationName);
             Assert.IsTrue(target.m_currentState.Passengers >= 0);
 
             station = "";
+            target.m_arrivalTime = 0;
             target.m_timePassed = 60;
 
             target.StationController();
@@ -672,7 +649,6 @@ namespace TrainControllerTest
             Assert.IsFalse(target.m_approachingStation);
             Assert.IsFalse(target.m_atStation);
             Assert.AreEqual(0.0, target.m_timePassed);
-            Assert.IsFalse(target.m_doorsOpen);
             Assert.AreEqual("station123", target.m_nextStationInfo.StationName);
 
             target.m_currentBlock.Transponder = new Transponder("station456", 1);
@@ -712,7 +688,6 @@ namespace TrainControllerTest
             target.m_powerCommand = 200000;
             target.m_inTunnel = false;
             target.m_approachingStation = true;
-            target.m_doorsOpen = true;
 
             target.SystemController(0.001);
 
@@ -724,12 +699,11 @@ namespace TrainControllerTest
             Assert.AreEqual(200000, target.m_powerCommand);
             Assert.IsTrue(target.m_inTunnel);
             Assert.IsTrue(target.m_approachingStation);
-            Assert.IsTrue(target.m_doorsOpen);
 
             target.m_samplePeriod = 0;
             Queue<ScheduleInfo> routeInfo = new Queue<ScheduleInfo>();
             routeInfo.Enqueue(new ScheduleInfo("station123", 1));
-            target.m_routeInfo = routeInfo;
+            target.Schedule = routeInfo;
 
             target.SystemController(0.002);
 
@@ -741,7 +715,6 @@ namespace TrainControllerTest
             Assert.AreEqual(200000, target.m_powerCommand);
             Assert.IsTrue(target.m_inTunnel);
             Assert.IsTrue(target.m_approachingStation);
-            Assert.IsFalse(target.m_doorsOpen);
         }
 
         /// <summary>
@@ -783,21 +756,33 @@ namespace TrainControllerTest
             PrivateObject param0 = new PrivateObject(myTrainController);
             TrainController_Accessor target = new TrainController_Accessor(param0);
 
+            int lastCommand = 0;
+
             target.m_powerCommand = 200000;
             target.m_brakeFailure = true;
 
-            target.VelocityController();
+            lastCommand = target.VelocityController();
 
+            Assert.AreEqual(1, lastCommand);
             Assert.AreEqual(200000, target.m_powerCommand);
 
+            target.EmergencyBrake = true;
             target.m_brakeFailure = false;
+
+            lastCommand = target.VelocityController();
+
+            Assert.AreEqual(1, lastCommand);
+            Assert.AreEqual(200000, target.m_powerCommand);
+
+            target.EmergencyBrake = false;
             target.m_currentIntegral = 0;
             target.m_currentSample = 0;
             target.m_setPoint = 0;
             target.m_currentState.Speed = 0;
 
-            target.VelocityController();
+            lastCommand = target.VelocityController();
 
+            Assert.AreEqual(0, lastCommand);
             Assert.AreEqual(0.0, target.m_lastIntegral);
             Assert.AreEqual(0.0, target.m_lastSample);
             Assert.AreEqual(0.0, target.m_currentSample);
@@ -806,10 +791,18 @@ namespace TrainControllerTest
             target.m_powerCommand = 200000;
             target.m_currentState.Speed = 100;
 
-            target.VelocityController();
+            lastCommand = target.VelocityController();
 
+            Assert.AreEqual(2, lastCommand);
             Assert.AreEqual(-100.0, target.m_currentSample);
             Assert.AreEqual(200000, target.m_powerCommand);
+
+            target.m_setPoint = 15;
+            target.m_currentState.Speed = 0;
+            lastCommand = target.VelocityController();
+
+            Assert.AreEqual(3, lastCommand);
+            Assert.AreEqual(120000, target.m_powerCommand);
         }
 
         /// <summary>
@@ -923,7 +916,7 @@ namespace TrainControllerTest
 
             Queue<ScheduleInfo> routeInfo = new Queue<ScheduleInfo>();
             routeInfo.Enqueue(new ScheduleInfo("station123", 1));
-            target.m_routeInfo = routeInfo;
+            target.Schedule = routeInfo;
 
             int BRAKE = 2;
             int POWER = 3;
@@ -935,7 +928,7 @@ namespace TrainControllerTest
             Assert.AreEqual(POWER, target.m_lastCommand);
 
             target.m_setPoint = 50;
-            target.m_currentState.Speed = -25/3.6;
+            target.m_currentState.Speed = -25 / 3.6;
             target.SystemController(0.001);
             Assert.AreEqual(POWER, target.m_lastCommand);
 
@@ -945,17 +938,17 @@ namespace TrainControllerTest
             Assert.AreEqual(POWER, target.m_lastCommand);
 
             target.m_setPoint = 50;
-            target.m_currentState.Speed = 25/3.6;
+            target.m_currentState.Speed = 25 / 3.6;
             target.SystemController(0.001);
             Assert.AreEqual(POWER, target.m_lastCommand);
 
             target.m_setPoint = 50;
-            target.m_currentState.Speed = 50/3.6;
+            target.m_currentState.Speed = 50 / 3.6;
             target.SystemController(0.001);
             Assert.AreEqual(NONE, target.m_lastCommand);
 
             target.m_setPoint = 50;
-            target.m_currentState.Speed = 75/3.6;
+            target.m_currentState.Speed = 75 / 3.6;
             target.SystemController(0.001);
             Assert.AreEqual(BRAKE, target.m_lastCommand);
 
@@ -989,25 +982,33 @@ namespace TrainControllerTest
 
             Queue<ScheduleInfo> routeInfo = new Queue<ScheduleInfo>();
             routeInfo.Enqueue(new ScheduleInfo("station123", 1));
-            target.m_routeInfo = routeInfo;
+            target.Schedule = routeInfo;
 
+            target.EmergencyBrake = false;
             target.m_currentBlock.Authority = new BlockAuthority(50, Int32.MinValue);
             target.SystemController(0.001);
-            Assert.AreEqual(0.0, target.m_setPoint);
+            Assert.AreEqual(50 / 3.6, target.m_setPoint);
+            Assert.IsTrue(target.EmergencyBrake);
 
+            target.EmergencyBrake = false;
             target.m_currentBlock.Authority = new BlockAuthority(50, -5);
             target.SystemController(0.001);
-            Assert.AreEqual(0.0, target.m_setPoint);
+            Assert.AreEqual(50 / 3.6, target.m_setPoint);
+            Assert.IsTrue(target.EmergencyBrake);
 
+            target.EmergencyBrake = false;
             target.m_currentBlock.Authority = new BlockAuthority(50, -1);
             target.SystemController(0.001);
-            Assert.AreEqual(0.0, target.m_setPoint);
+            Assert.AreEqual(50 / 3.6, target.m_setPoint);
+            Assert.IsTrue(target.EmergencyBrake);
 
             // If the authority is zero but the train has more than enough stopping distance,
             // the setpoint should not be set to zero
+            target.EmergencyBrake = false;
+            target.m_currentState.Speed = 50 / 3.6;
             target.m_currentBlock.Authority = new BlockAuthority(50, 0);
             target.SystemController(0.001);
-            Assert.AreEqual(50.0/3.6, target.m_setPoint);
+            Assert.AreEqual(50.0 / 3.6, target.m_setPoint);
 
             // If the authority is zero and the train does not have enough stopping distance,
             // the setpoint should be set to zero
@@ -1016,17 +1017,26 @@ namespace TrainControllerTest
             target.SystemController(0.001);
             Assert.AreEqual(0.0, target.m_setPoint);
 
+            // If the authority is zero and the train has stopped,
+            // the setpoint should be set to zero
+            target.EmergencyBrake = false;
+            target.m_currentState.Speed = 0;
+            target.m_currentBlock.LengthMeters = 1000;
+            target.m_currentBlock.Authority = new BlockAuthority(50, 0);
+            target.SystemController(0.001);
+            Assert.AreEqual(0, target.m_setPoint);
+
             target.m_currentBlock.Authority = new BlockAuthority(50, 1);
             target.SystemController(0.001);
-            Assert.AreEqual(50.0/3.6, target.m_setPoint);
+            Assert.AreEqual(50.0 / 3.6, target.m_setPoint);
 
             target.m_currentBlock.Authority = new BlockAuthority(50, 5);
             target.SystemController(0.001);
-            Assert.AreEqual(50.0/3.6, target.m_setPoint);
+            Assert.AreEqual(50.0 / 3.6, target.m_setPoint);
 
             target.m_currentBlock.Authority = new BlockAuthority(50, Int32.MaxValue);
             target.SystemController(0.001);
-            Assert.AreEqual(50.0/3.6, target.m_setPoint);
+            Assert.AreEqual(50.0 / 3.6, target.m_setPoint);
         }
     }
 }
