@@ -201,7 +201,7 @@ namespace TrackLib
             //Region redRegion1 = new Region("redRegion1");
             List<TrackBlock> redTrack = new List<TrackBlock>();
             List<TrackSwitch> switchList = new List<TrackSwitch>();
-            TrackBlock redBlock1 = new TrackBlock("red1", TrackOrientation.SouthWestNorthEast, new Point(0, 0), 50.0, 0.25, 0.5,
+            TrackBlock redBlock1 = new TrackBlock("red1", TrackOrientation.SouthWestNorthEast, new Point(0,0), 50.0, 0.25, 0.5,
                                         false, false, 40, TrackAllowedDirection.Both, null, "redController1", "redController2", null, "red2");
             redTrack.Add(redBlock1);
             TrackBlock redBlock2 = new TrackBlock("red2", TrackOrientation.SouthWestNorthEast, redBlock1.EndPoint, 50.0, 0.75, 1,
