@@ -373,6 +373,7 @@ namespace CTCOfficeGUI
             if (!string.IsNullOrEmpty(value))
             {
                 Simulator.GetSimulator().SpawnNewTrain(m_selectedTrackBlock, value);
+                CloseOpenPopups();
             }
             else
             {

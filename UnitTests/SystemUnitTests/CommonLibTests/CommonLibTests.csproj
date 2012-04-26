@@ -58,7 +58,6 @@
     <Compile Include="LoggingToolTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TrackBlockTest.cs" />
-    <Compile Include="TrainTest.cs" />
     <Compile Include="TransponderTest.cs" />
   </ItemGroup>
   <ItemGroup>

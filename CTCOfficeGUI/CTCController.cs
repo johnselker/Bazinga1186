@@ -158,7 +158,7 @@ namespace CTCOfficeGUI
         /// <returns>Copy of the block list</returns>
         public List<TrackBlock> GetBlockList()
         {
-            return new List<TrackBlock>(m_blockList);
+            return m_blockTable.Values.ToList<TrackBlock>();
         }
 
         /// <summary>
@@ -487,13 +487,13 @@ namespace CTCOfficeGUI
             m_controllerList.Clear();
             m_trainList.Clear();
             m_trackTable.Clear();
-            m_blockList = new List<TrackBlock>();
+            m_blockTable.Clear();
 
             foreach (TrackBlock b in blocks)
             {
                 if (!string.IsNullOrEmpty(b.ControllerId))
                 {
-                    m_blockList.Add(b);
+                    m_blockTable[b.Name] = b;
                     if (!trackControllers.ContainsKey(b.ControllerId))
                     {
                         //Create a new track controller
@@ -571,15 +571,47 @@ namespace CTCOfficeGUI
                 }
             }
 
+            //Now go back and assign previous/next blocks
+            foreach (TrackBlock b in blocks)
+            {
+                if (!string.IsNullOrEmpty(b.PreviousBlockId))
+                {
+                    if (m_blockTable.ContainsKey(b.PreviousBlockId))
+                    {
+                        b.PreviousBlock = m_blockTable[b.PreviousBlockId];
+                    }
+                }
+                if (!string.IsNullOrEmpty(b.NextBlockId))
+                {
+                    if (m_blockTable.ContainsKey(b.NextBlockId))
+                    {
+                        b.NextBlock = m_blockTable[b.NextBlockId];
+                    }
+                }
+            }
+
+            //Now create the switches and assign them to track controllers
             foreach (TrackSwitch s in switches)
             {
-                if (trackControllers.ContainsKey(s.ControllerId))
+                if (m_blockTable.ContainsKey(s.BranchClosedId) && m_blockTable.ContainsKey(s.BranchOpenId) && m_blockTable.ContainsKey(s.TrunkId))
                 {
-                    trackControllers[s.ControllerId].SetSwitch(s);
+                    if (trackControllers.ContainsKey(s.ControllerId))
+                    {
+                        trackControllers[s.ControllerId].SetSwitch(s);
+
+                        //Assign the blocks to the switch
+                        s.Branch = m_blockTable[s.BranchClosedId];
+                        s.Trunk1 = m_blockTable[s.TrunkId];
+                        s.Trunk2 = null;
+                    }
+                    else
+                    {
+                        m_log.LogError("Switch Track Controller Id was invalid. Skipping.");
+                    }
                 }
                 else
                 {
-                    m_log.LogError("Switch Track Controller Id was invalid. Skipping.");
+                    m_log.LogError("Block Id not found. Skipping.");
                 }
             }
 
@@ -634,7 +666,7 @@ namespace CTCOfficeGUI
 
         private static CTCController m_singleton = null;
         private Dictionary<TrackBlock, ITrackController> m_trackTable = new Dictionary<TrackBlock, ITrackController>();
-        private List<TrackBlock> m_blockList;
+        private Dictionary<string, TrackBlock> m_blockTable = new Dictionary<string, TrackBlock>();
         private List<ITrackController> m_controllerList = new List<ITrackController>();
         private List<ITrain> m_trainList = new List<ITrain>();
         private LoggingTool m_log = new LoggingTool(MethodBase.GetCurrentMethod());
