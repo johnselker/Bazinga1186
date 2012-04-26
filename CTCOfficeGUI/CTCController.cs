@@ -591,27 +591,31 @@ namespace CTCOfficeGUI
             }
 
             //Now create the switches and assign them to track controllers
-            foreach (TrackSwitch s in switches)
+            if (switches != null)
             {
-                if (m_blockTable.ContainsKey(s.BranchClosedId) && m_blockTable.ContainsKey(s.BranchOpenId) && m_blockTable.ContainsKey(s.TrunkId))
+                foreach (TrackSwitch s in switches)
                 {
-                    if (trackControllers.ContainsKey(s.ControllerId))
+                    if (m_blockTable.ContainsKey(s.BranchClosedId) && m_blockTable.ContainsKey(s.BranchOpenId) && m_blockTable.ContainsKey(s.TrunkId))
                     {
-                        trackControllers[s.ControllerId].SetSwitch(s);
+                        if (trackControllers.ContainsKey(s.ControllerId))
+                        {
+                            trackControllers[s.ControllerId].SetSwitch(s);
 
-                        //Assign the blocks to the switch
-                        s.Branch = m_blockTable[s.BranchClosedId];
-                        s.Trunk1 = m_blockTable[s.TrunkId];
-                        s.Trunk2 = null;
+
+                            //Assign the blocks to the switch
+                            s.Trunk = m_blockTable[s.TrunkId];
+                            s.BranchClosed = m_blockTable[s.BranchClosedId];
+                            s.BranchOpen = m_blockTable[s.BranchOpenId];
+                        }
+                        else
+                        {
+                            m_log.LogError("Switch Track Controller Id was invalid. Skipping.");
+                        }
                     }
                     else
                     {
-                        m_log.LogError("Switch Track Controller Id was invalid. Skipping.");
+                        m_log.LogError("Block Id not found. Skipping.");
                     }
-                }
-                else
-                {
-                    m_log.LogError("Block Id not found. Skipping.");
                 }
             }
 

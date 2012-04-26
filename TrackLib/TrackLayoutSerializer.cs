@@ -167,6 +167,7 @@ namespace TrackLib
                 LastUpdated = restoreObject.LastUpdated;
 
                 m_blockList = restoreObject.BlockList;
+                m_switchList = restoreObject.SwitchList;
 
                 m_log.LogInfo("Track layout restore complete");
             }
