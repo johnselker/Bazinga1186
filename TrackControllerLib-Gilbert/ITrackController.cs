@@ -10,12 +10,13 @@ namespace TrackControlLib
     {
         public interface ITrackController
         {
-            bool AddTrackBlock(TrackBlock block, List<TrackBlock> adjBlocks);
-            bool setAuthority(string trackId, BlockAuthority auth);
-            bool closeTrack(string trackId);
-            bool openTrack(string trackId);
-            bool isTrackClosed(string trackId);
-            TrackStatus getTrackStatus(string trackId);
+            bool AddTrackBlock(TrackBlock block);
+            bool SetSwitch(TrackSwitch s);
+            bool SuggestAuthority(string trackId, BlockAuthority auth);
+            bool CloseTrack(string trackId);
+            bool OpenTrack(string trackId);
+            Dictionary<string, TrackBlock> GetUpdatedTrackStatus();
+            void Update();
         }
     }
 }

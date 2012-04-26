@@ -12,7 +12,14 @@ namespace TrackControllerLib
         public class TrackController : ITrackController
         {
             #region Private Data
+            private const int AUTH_YELLOW = 1;
+            private const int AUTH_GREEN = 2;
+            private const int AUTH_SUPERGREEN = 4;
+            private const int DEFAULT_AUTHORITY = 8;
+
             private Dictionary<string, TrackBlock> m_trackBlocks;
+            private Dictionary<string, TrackBlock> m_updatedBlocks;
+            private TrackSwitch m_switch;
             #endregion
 
             #region Public Methods
@@ -22,26 +29,35 @@ namespace TrackControllerLib
             public TrackController()
             {
                 m_trackBlocks = new Dictionary<string,TrackBlock>();
+                m_switch = null;
             }
 
             // METHOD: TrackController
             // - TrackController Constructor
-            public bool AddTrackBlock(TrackBlock block, List<TrackBlock> adjBlocks)
+            public bool AddTrackBlock(TrackBlock block)
             {
                 // Null Arguments
                 if (block == null)
-                    return false;
-                if (adjBlocks == null)
                     return false;
 
                 // TrackBlock Duplicated
                 if (m_trackBlocks.ContainsKey(block.Name))
                     return false;
 
+                block.Authority.SpeedLimitKPH = System.Convert.ToInt32(block.StaticSpeedLimit);
                 m_trackBlocks.Add(block.Name, block);
 
-                // TODO: Add code for adjecent blocks
+                return true;
+            }
 
+            // METHOD: SetSwitch
+            // - Set m_switch
+            public bool SetSwitch(TrackSwitch s)
+            {
+                if (s == null)
+                    return false;
+
+                m_switch = s;
                 return true;
             }
 
@@ -56,7 +72,7 @@ namespace TrackControllerLib
 
             // METHOD: setAuthority
             // - Set track authority by trackId
-            public bool setAuthority(string trackId, BlockAuthority auth)
+            public bool SuggestAuthority(string trackId, BlockAuthority auth)
             {
                 if (checkTrackBlockExistence(trackId))
                 {
@@ -66,46 +82,39 @@ namespace TrackControllerLib
                 return false;
             }
 
-            // METHOD: closeTrack
+            // METHOD: CloseTrack
             // - Close track by trackId
-            public bool closeTrack(string trackId)
+            public bool CloseTrack(string trackId)
             {
                 if (checkTrackBlockExistence(trackId))
                 {
+                    m_trackBlocks[trackId].Authority.Authority = 0;
+                    m_trackBlocks[trackId].Authority.SpeedLimitKPH = 0;
+                    m_trackBlocks[trackId].Status.SignalState = TrackSignalState.Red;
                     m_trackBlocks[trackId].Status.IsOpen = false;
                     return true;
                 }
                 return false;
             }
 
-            // METHOD: openTrack
+            // METHOD: OpenTrack
             // - Open track by trackId
-            public bool openTrack(string trackId)
+            public bool OpenTrack(string trackId)
             {
-                if (checkTrackBlockExistence(trackId))
+                if (checkTrackBlockExistence(trackId) && !m_trackBlocks[trackId].Status.IsOpen)
                 {
+                    m_trackBlocks[trackId].Authority.SpeedLimitKPH = System.Convert.ToInt32(m_trackBlocks[trackId].StaticSpeedLimit);
                     m_trackBlocks[trackId].Status.IsOpen = true;
                     return true;
                 }
                 return false;
             }
 
-            // METHOD: isTrackClosed
-            // - Check track open status by trackId
-            public bool isTrackClosed(string trackId)
-            {
-                if (checkTrackBlockExistence(trackId))
-                    return !(m_trackBlocks[trackId].Status.IsOpen);
-                return true;
-            }
-
             // METHOD: getTrackStatus
             // - Retrieve track status by trackId
-            public TrackStatus getTrackStatus(string trackId)
+            public Dictionary<string, TrackBlock> GetUpdatedTrackStatus()
             {
-                if (checkTrackBlockExistence(trackId))
-                    return m_trackBlocks[trackId].Status;
-                return null;
+                return m_updatedBlocks;
             }
 
             #endregion
