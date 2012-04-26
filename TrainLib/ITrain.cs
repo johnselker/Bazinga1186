@@ -27,7 +27,6 @@ namespace TrainLib
 		void SetDoors(TrainState.Door doors);
 		void SetLights(TrainState.Light lights);
 		void SetAnnouncement(string announcement);
-		bool SetSlope(double slope);
 		bool SetFriction(double friction);
         void SetPower(double power, double deltaTime);
 		TrainState GetState();
