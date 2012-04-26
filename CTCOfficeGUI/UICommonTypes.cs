@@ -21,7 +21,6 @@ namespace CTCOfficeGUI
     /// </summary>
     public enum TrainCommands
     {
-        SuggestRoute,
-        SetSchedule
+        ViewSchedule
     }
 }

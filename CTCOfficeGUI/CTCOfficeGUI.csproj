@@ -14,6 +14,22 @@
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <PublishUrl>C:\Users\Jeremy\Desktop\TestDirection\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>2</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <PublishWizardCompleted>true</PublishWizardCompleted>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <PlatformTarget>x86</PlatformTarget>
@@ -33,6 +49,18 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestCertificateThumbprint>64973DC3EA4B38A1667FEBD72449C4F622E3C8C2</ManifestCertificateThumbprint>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestKeyFile>CTCOfficeGUI_TemporaryKey.pfx</ManifestKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <GenerateManifests>true</GenerateManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignManifests>true</SignManifests>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="log4net">
@@ -57,12 +85,18 @@
       <DependentUpon>CommandPanel.cs</DependentUpon>
     </Compile>
     <Compile Include="CTCController.cs" />
-    <Compile Include="DrawingUtils.cs" />
     <Compile Include="InfoPanel.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="InfoPanel.Designer.cs">
       <DependentUpon>InfoPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="LoginChecker.cs" />
+    <Compile Include="LoginWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LoginWindow.Designer.cs">
+      <DependentUpon>LoginWindow.cs</DependentUpon>
     </Compile>
     <Compile Include="MainScreen.cs">
       <SubType>Form</SubType>
@@ -78,6 +112,25 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SchedulingScreen.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SchedulingScreen.Designer.cs">
+      <DependentUpon>SchedulingScreen.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Simulator.cs" />
+    <Compile Include="SimulatorWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SimulatorWindow.Designer.cs">
+      <DependentUpon>SimulatorWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TableViewScreen.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TableViewScreen.Designer.cs">
+      <DependentUpon>TableViewScreen.cs</DependentUpon>
+    </Compile>
     <Compile Include="TextInputDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -109,6 +162,9 @@
     <EmbeddedResource Include="InfoPanel.resx">
       <DependentUpon>InfoPanel.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="LoginWindow.resx">
+      <DependentUpon>LoginWindow.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MainScreen.resx">
       <DependentUpon>MainScreen.cs</DependentUpon>
     </EmbeddedResource>
@@ -125,6 +181,15 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="SchedulingScreen.resx">
+      <DependentUpon>SchedulingScreen.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SimulatorWindow.resx">
+      <DependentUpon>SimulatorWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TableViewScreen.resx">
+      <DependentUpon>TableViewScreen.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="TextInputDialog.resx">
       <DependentUpon>TextInputDialog.cs</DependentUpon>
     </EmbeddedResource>
@@ -137,7 +202,10 @@
     <EmbeddedResource Include="TrainGraphic.resx">
       <DependentUpon>TrainGraphic.cs</DependentUpon>
     </EmbeddedResource>
-    <None Include="app.config" />
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="CTCOfficeGUI_TemporaryKey.pfx" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -153,13 +221,17 @@
       <Project>{F84DC4AD-4D0C-4F6F-9576-AF656EB63D77}</Project>
       <Name>CommonLib</Name>
     </ProjectReference>
-    <ProjectReference Include="..\TrackControlLib\TrackControlLib-Sean.csproj">
+    <ProjectReference Include="..\TrackControlLib-Sean\TrackControlLib-Sean.csproj">
       <Project>{3F3F705C-5298-4DF6-AC70-AD493D314D04}</Project>
-      <Name>TrackControlLib</Name>
+      <Name>TrackControlLib-Sean</Name>
     </ProjectReference>
     <ProjectReference Include="..\TrackLib\TrackLib.csproj">
       <Project>{9FD33000-B6F5-4F4E-9D70-C7F95569AF33}</Project>
       <Name>TrackLib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TrainControlLib\TrainControlLib.csproj">
+      <Project>{A22B83AF-C52B-4CBB-AB3B-4DDF897905FA}</Project>
+      <Name>TrainControlLib</Name>
     </ProjectReference>
     <ProjectReference Include="..\TrainLib\TrainLib.csproj">
       <Project>{69FA46C5-B2BD-45DA-A60A-022932F30C1E}</Project>
@@ -167,7 +239,35 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="train_icon_large.png" />
+    <None Include="Resources\train_icon_large.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tunnelIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\railroadCrossing.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.0">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

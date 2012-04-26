@@ -4,38 +4,58 @@ using System.Linq;
 using System.Text;
 using CommonLib;
 
-namespace Train
+namespace TrainLib
 {
-	public class TrainState
-	{
-		private const double PASSENGER_WEIGHT = 70;
-		private const int MAX_PASSENGERS = 222;
-		private const double CAR_MASS = 40900;
+    public class TrainState
+    {
+        private const double PASSENGER_WEIGHT = 70;
+        private const double CAR_MASS = 40900;
+        public const int MAX_PASSENGERS = 222;
 
-		public enum Light {Off, Low, High};
-		public enum Door {Closed, Open};
+		private int passengers;
 
-		public const double WIDTH = 2.65;
-		public const double HEIGHT = 3.42;
+        public enum Light { Off, Low, High };
+        public enum Door { Closed, Open };
 
-		public string TrainID {get; set;}
-		public double Speed {get; set;}
-		public int X {get; set;}
-		public int Y {get; set;}
-        public int Delta { get; set; }
-		public Direction Direction {get; set;}
-		public int Cars {get; set;}
-		public int Passengers {get; set;}
-		public int Crew {get; set;}
-		public Door Doors {get; set;}
-		public Light Lights {get; set;}
-		public double Temperature {get; set;}
-		public double Mass
+        public const double WIDTH = 2.65;
+        public const double HEIGHT = 3.42;
+
+        public TrackBlock CurrentBlock { get; set; }
+        public string TrainID { get; set; }
+        public double Speed { get; set; }
+        public double X { get; set; }
+        public double Y { get; set; }
+        public double BlockProgress { get; set; }
+        public Direction Direction { get; set; }
+        public int Cars { get; set; }
+        public int Passengers
 		{
 			get
 			{
-				return CAR_MASS * Cars + Passengers * PASSENGER_WEIGHT;
+				return passengers;
+			}
+			set
+			{
+				if (value > 0 && value <= MAX_PASSENGERS)
+				{
+					passengers = value;
+				}
 			}
 		}
-	}
+		public int Crew { get; set; }
+		public string Announcement { get; set; }
+        public Door Doors { get; set; }
+        public Light Lights { get; set; }
+		public double Temperature { get; set; }
+		public bool BrakeFailure { get; set; }
+		public bool EngineFailure { get; set; }
+		public bool SignalPickupFailure { get; set; }
+        public double Mass
+        {
+            get
+            {
+                return CAR_MASS * Cars + Passengers * PASSENGER_WEIGHT;
+            }
+        }
+    }
 }

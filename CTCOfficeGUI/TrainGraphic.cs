@@ -6,7 +6,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using Train;
+using TrainLib;
 
 namespace CTCOfficeGUI
 {
@@ -15,6 +15,12 @@ namespace CTCOfficeGUI
     /// </summary>
     public partial class TrainGraphic : UserControl
     {
+        #region Events
+
+        public event EventHandler TrainClicked;
+
+        #endregion
+
         #region Properties
 
         /// <summary>
@@ -82,10 +88,27 @@ namespace CTCOfficeGUI
 
         #endregion
 
-        #region
+        #region Event Handlers
+
+        /// <summary>
+        /// Catch and rethrow the click event (necessary for some reason)
+        /// </summary>
+        /// <param name="sender">Sender of the event</param>
+        /// <param name="e">Event arguments</param>
+        private void OnPictureBoxClicked(object sender, EventArgs e)
+        {
+            if (TrainClicked != null)
+            {
+                TrainClicked(this, e);
+            }
+        }
+
+        #endregion
+
+        #region Private Data
 
         private ITrain m_train = null;
-        private const int m_originalSize = 50;
+        private const int m_originalSize = 30;
 
         #endregion
     }

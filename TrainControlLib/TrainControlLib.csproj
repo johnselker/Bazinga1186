@@ -33,6 +33,8 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -41,8 +43,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class1.cs" />
+    <Compile Include="ITrainController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TrainController.cs" />
+    <Compile Include="TrainOperator.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TrainOperator.Designer.cs">
+      <DependentUpon>TrainOperator.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CommonLib\CommonLib.csproj">

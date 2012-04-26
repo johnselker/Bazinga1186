@@ -6,21 +6,31 @@ using System.Timers;
 using System.Drawing;
 using CommonLib;
 
-namespace Train
+namespace TrainLib
 {
+	public delegate void OnTrainEnteredNewBlock(TrackBlock previousBlock, TrackBlock newBlock);
 	public interface ITrain
 	{
 		double GetSpeed();
+		double GetAcceleration();
+		bool GetBrake();
+		bool GetEmergencyBrake();
+		double GetPower();
 		Direction GetDirection();
 		Point GetPosition();
-		bool SetEmergencyBrake(bool brake);
-		bool SetDoors(TrainState.Door doors);
-		bool SetLights(TrainState.Light lights);
-		bool SetAnnouncement(string announcement);
+		void Update(double deltaTime);
+        void SetBrake(bool brake, double deltaTime);
+		void SetBrakeFailure(bool failure);
+        void SetEmergencyBrake(bool brake, double deltaTime);
+		void SetEngineFailure(bool failure);
+		void SetSignalPickupFailure(bool failure);
+		void SetDoors(TrainState.Door doors);
+		void SetLights(TrainState.Light lights);
+		void SetAnnouncement(string announcement);
 		bool SetSlope(double slope);
 		bool SetFriction(double friction);
-		bool SetAcceleration(double acceleration);
-		bool SetPower(double power);
+        void SetPower(double power, double deltaTime);
 		TrainState GetState();
+		event OnTrainEnteredNewBlock TrainEnteredNewBlock;
 	}
 }

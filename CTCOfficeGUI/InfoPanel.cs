@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using CommonLib;
-using Train;
+using TrainLib;
 
 namespace CTCOfficeGUI
 {
@@ -57,6 +57,8 @@ namespace CTCOfficeGUI
             m_valueLabels.Add(lblValue12);
             m_valueLabels.Add(lblValue13);
             m_valueLabels.Add(lblValue14);
+
+            m_updateDelegate = new CTCController.UpdateDisplay(UpdateDisplay);
         }
 
         /// <summary>
@@ -143,22 +145,40 @@ namespace CTCOfficeGUI
         {
             if (block == null) return;
 
+            m_displayedBlock = block;
+            m_displayedTrain = null;
+
             Dictionary<string, string> info = new Dictionary<string, string>();
-            info.Add("Authority:", block.Authority.Authority.ToString());
-            info.Add("End Elevation:", block.EndElevationMeters.ToString() + " " + METERS);
-            info.Add("End Point:", block.EndPoint.X.ToString() + ", " + block.EndPoint.Y.ToString());
-
-            KeyValuePair<string, string> failure = GetBlockFailureStateString(block);
-            info.Add(failure.Key, failure.Value);
-
-            if (block.HasTransponder)
+            if (block.Authority != null)
             {
-                info.Add("Has Transponder:", "yes");
+                info.Add("Authority:", block.Authority.Authority.ToString());
+            }
+
+            if (block.Authority != null)
+            {
+                info.Add("CTC Speed Limit:", block.Authority.SpeedLimitKPH.ToString() + " " + KPH);
+            }
+
+            info.Add("Static Speed Limit:", block.StaticSpeedLimit.ToString() + " " + KPH);
+           
+            if (block.Status.TrainPresent)
+            {
+                info.Add("Train present:", "yes");
             }
             else
             {
-                info.Add("Has Transponder:", "no");
+                info.Add("Train present:", "no");
             }
+
+            info.Add("Signal:", block.Status.SignalState.ToString());
+
+            info.Add("Start Elevation:", block.StartElevationMeters.ToString() + " " + METERS);
+            
+            info.Add("End Elevation", block.EndElevationMeters.ToString() + " " + METERS);
+
+            info.Add("Grade", block.Grade.ToString() + "%");
+
+            info.Add("Length:", block.LengthMeters.ToString() + " " + METERS);
 
             if (block.HasTunnel)
             {
@@ -169,9 +189,6 @@ namespace CTCOfficeGUI
                 info.Add("Has Tunnel:", "no");
             }
 
-            info.Add("Length:", block.LengthMeters.ToString() + " " + METERS);
-            info.Add("Orientation:", block.Orientation.ToString());
-
             if (block.RailroadCrossing)
             {
                 info.Add("Has RR Crossing:", "yes");
@@ -181,29 +198,29 @@ namespace CTCOfficeGUI
                 info.Add("Has RR Crossing:", "no");
             }
 
-            info.Add("Signal:", block.Status.SignalState.ToString());
-            info.Add("Speed Limit:", block.Authority.SpeedLimitKPH.ToString() + " " + KPH);
-            info.Add("Start Elevation:", block.StartElevationMeters.ToString() + " " + METERS);
-            info.Add("Start Point:", block.StartPoint.X.ToString() + ", " + block.StartPoint.Y.ToString());
-            
-            if (block.Status.TrainPresent)
-            {
-                info.Add("Train present:", "yes");
-            }
-            else
-            {
-                info.Add("Train present:", "no");
-            }
-
             if (block.Transponder != null) //Could use block.HasTransponder property, but check for null to be on the safe side...
             {
-                info.Add("Transponder:", block.Transponder.StationName + "in " + block.Transponder.DistanceToStation.ToString() + "blocks");
+                if (block.Transponder.DistanceToStation != 0)
+                {
+                    info.Add("Transponder:", block.Transponder.StationName + "in " + block.Transponder.DistanceToStation.ToString() + " block(s)");
+                }
+                else
+                {
+                    info.Add("Transponder:", "At " + block.Transponder.StationName);
+                }
             }
             else
             {
                 info.Add("Transponder:", "none");
             }
 
+            KeyValuePair<string, string> failure = GetBlockFailureStateString(block);
+            info.Add(failure.Key, failure.Value);
+
+#if DEBUG
+            info.Add("Start Point", block.StartPoint.X + ", " + block.StartPoint.Y);
+            info.Add("End Point", block.EndPoint.X + ", " + block.EndPoint.Y);
+#endif
             SetInfo(block.Name, info);
         }
 
@@ -219,20 +236,67 @@ namespace CTCOfficeGUI
 
             if (state == null) return;
 
+            m_displayedBlock = null;
+            m_displayedTrain = train;
+
             Dictionary<string, string> info = new Dictionary<string, string>();
 
-            info.Add("Number of cars:", state.cars.ToString());
-            info.Add("Crew members:", state.crew.ToString());
-            info.Add("Direction:", state.direction.ToString());
-            info.Add("Door Status:", state.doors.ToString());
-            info.Add("Light Status:", state.lights.ToString());
-            info.Add("Mass:", state.mass.ToString());
-            info.Add("Passengers:", state.passengers.ToString());
-            info.Add("Speed:", state.speed.ToString() + " " + KPH);
-            info.Add("Temperature:", state.temperature.ToString());
-            info.Add("Position:", state.x.ToString() + ", " + state.y.ToString());
+            info.Add("Number of cars:", state.Cars.ToString());
+            info.Add("Crew members:", state.Crew.ToString());
+            info.Add("Direction:", state.Direction.ToString());
+            info.Add("Door Status:", state.Doors.ToString());
+            info.Add("Light Status:", state.Lights.ToString());
+            info.Add("Mass:", state.Mass.ToString());
+            info.Add("Passengers:", state.Passengers.ToString());
+            info.Add("Speed:", state.Speed.ToString() + " " + KPH);
+            info.Add("Temperature:", state.Temperature.ToString());
+            info.Add("Position:", state.X.ToString() + ", " + state.Y.ToString());
 
-            SetInfo(state.trainID.ToString(), info);
+            if (state.TrainID != null)
+            {
+                SetInfo(state.TrainID.ToString(), info);
+            }
+            else
+            {
+                SetInfo(UNKNOWN_TEXT, info);
+            }
+        }
+
+        /// <summary>
+        /// Displays info about the train yard
+        /// </summary>
+        /// <param name="b">Track block</param>
+        public void SetTrainYardInfo(TrackBlock b)
+        {
+            //Just show the block name
+            m_displayedTrain = null;
+            m_displayedBlock = b;
+            SetInfo(b.Name, null);
+        }
+
+        /// <summary>
+        /// Updates the display 
+        /// </summary>
+        /// <param name="blocks">List of track blocks</param>
+        /// <param name="trains">List of trains</param>
+        public void UpdateDisplay(List<TrackBlock> blocks, List<ITrain> trains)
+        {
+            if (InvokeRequired)
+            {
+                Invoke(m_updateDelegate, blocks, trains);
+            }
+            else
+            {
+                //No reason to check if the block or train is in the list, faster to just update anyway
+                if (m_displayedBlock != null)
+                {
+                    SetTrackBlockInfo(m_displayedBlock);
+                }
+                else if (m_displayedTrain != null)
+                {
+                    SetTrainInfo(m_displayedTrain);
+                }
+            }
         }
 
         #endregion
@@ -310,10 +374,13 @@ namespace CTCOfficeGUI
 
         private List<Label> m_fieldLabels = new List<Label>();
         private List<Label> m_valueLabels = new List<Label>();
+        private TrackBlock m_displayedBlock = null;
+        private ITrain m_displayedTrain = null;
         private const int NUM_LABELS = 15;
         private const string UNKNOWN_TEXT = "Unknown";
         private const string METERS = "m";
         private const string KPH = "km/h";
+        private CTCController.UpdateDisplay m_updateDelegate;
 
         #endregion
     }

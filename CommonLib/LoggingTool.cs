@@ -35,7 +35,7 @@ namespace CommonLib
                     Environment.CurrentDirectory = System.AppDomain.CurrentDomain.BaseDirectory;
 
                     //Now configure log4net from the app.config file (as renamed by compiler)...
-                    string configName = AppDomain.CurrentDomain.FriendlyName + ".config";
+                    string configName = "log4net.config";
                     FileInfo fi = new FileInfo(configName);
 
                     //AndWatch allows any edits to the .config file made while running to be automatically loaded 

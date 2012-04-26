@@ -8,7 +8,7 @@
     <ProjectGuid>{69FA46C5-B2BD-45DA-A60A-022932F30C1E}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Train</RootNamespace>
+    <RootNamespace>TrainLib</RootNamespace>
     <AssemblyName>Train</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -57,10 +57,6 @@
     <ProjectReference Include="..\CommonLib\CommonLib.csproj">
       <Project>{F84DC4AD-4D0C-4F6F-9576-AF656EB63D77}</Project>
       <Name>CommonLib</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\TrackLib\TrackLib.csproj">
-      <Project>{9FD33000-B6F5-4F4E-9D70-C7F95569AF33}</Project>
-      <Name>TrackLib</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

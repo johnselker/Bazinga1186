@@ -8,7 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.Reflection;
 using CommonLib;
-using Train;
+using TrainLib;
 
 namespace CTCOfficeGUI
 {
@@ -22,7 +22,16 @@ namespace CTCOfficeGUI
         public MainScreen()
         {
             InitializeComponent();
-            Initialize();
+
+            m_ctcController.Subscribe(trackDisplayPanel.UpdateDisplay);
+            m_ctcController.Subscribe(infoPanel.UpdateDisplay);
+
+#if !DEBUG
+            m_login = new LoginChecker();
+            m_login.ShowLogin(OnLoginSuccessful, OnExitClicked);
+#endif
+
+            m_simulatorWindow.Show();
         }
 
         #endregion
@@ -32,44 +41,26 @@ namespace CTCOfficeGUI
         /// <summary>
         /// Initializes the screen
         /// </summary>
-        private void Initialize()
+        /// <param name="filename">Filename of the track layout</param>
+        /// <returns>bool Success</returns>
+        private bool Initialize(string filename)
         {
-            List<TrackBlock> blocks = new List<TrackBlock>();
+            bool result = false;
 
-            TrackBlock test = new TrackBlock("A", TrackOrientation.EastWest, 100, false, false, TrackSignalState.Green, 
-                                                                        false, new BlockAuthority(50, 3), new Point(369, 260), 0, 0);
-            blocks.Add(test);
+            if (!string.IsNullOrEmpty(filename))
+            {
+                List<TrackBlock> blocks = m_ctcController.LoadTrackLayout(filename);
 
-            test = new TrackBlock("B", TrackOrientation.SouthWestNorthEast, 100, false, false, TrackSignalState.Yellow,
-                                                                        false, new BlockAuthority(50, 3), new Point(469, 260), 0, 0);
-            blocks.Add(test);
+                if (blocks != null)
+                {
+                    Point p = m_ctcController.GetLayoutPosition();
+                    Size s = m_ctcController.GetLayoutSize();
+                    trackDisplayPanel.SetTrackLayout(blocks, s, p);
+                    result = true;
+                }
+            }
 
-            test = new TrackBlock("C", TrackOrientation.NorthSouth, 100, false, false   , TrackSignalState.Red,
-                                                                        false, new BlockAuthority(50, 3), new Point(540, 189), 0, 0);
-            blocks.Add(test);
-
-            test = new TrackBlock("D", TrackOrientation.NorthWestSouthEast, 100, false, false, TrackSignalState.SuperGreen,
-                                                                        false, new BlockAuthority(50, 3), new Point(540, 189), 0, 0);
-            blocks.Add(test);
-
-            test = new TrackBlock("E", TrackOrientation.EastWest, 100, false, false, TrackSignalState.Green,
-                                                                        false, new BlockAuthority(50, 3), new Point(611, 260), 0, 0);
-            blocks.Add(test);
-
-            test = new TrackBlock("F", TrackOrientation.NorthWestSouthEast, 100, false, false, TrackSignalState.Green,
-                                                                        false, new BlockAuthority(50, 3), new Point(469, 260), 0, 0);
-            blocks.Add(test);
-
-            test = new TrackBlock("G", TrackOrientation.SouthWestNorthEast, 100, false, false, TrackSignalState.Green,
-                                                                        false, new BlockAuthority(50, 3), new Point(540, 331), 0, 0);
-            blocks.Add(test);
-
-            test = new TrackBlock("H", TrackOrientation.NorthSouth, 100, false, false, TrackSignalState.Green,
-                                                                        false, new BlockAuthority(50, 3), new Point(540, 431), 0, 0);
-            blocks.Add(test);
-
-            trackDisplayPanel.SetTrackLayout(blocks);
-            trackDisplayPanel.Invalidate();
+            return result;
         }
 
         /// <summary>
@@ -82,11 +73,8 @@ namespace CTCOfficeGUI
             {
                 switch ((TrainCommands)tag)
                 {
-                    case TrainCommands.SetSchedule:
-                        //Launch scheduler
-                        break;
-                    case TrainCommands.SuggestRoute:
-                        //Enter routing mode
+                    case TrainCommands.ViewSchedule:
+                        //Show scheduling screen
                         break;
                     default:
                         //Unreachable
@@ -122,6 +110,13 @@ namespace CTCOfficeGUI
                     default:
                         //Unreachable
                         break;
+                }
+            }
+            else if (tag.GetType() == typeof(string))
+            {
+                if ((string) tag == Constants.SPAWNTRAIN)
+                {
+                    ShowTextInputPopup("Enter train name", "Train1", OnTrainNameEntered);
                 }
             }
         }
@@ -172,6 +167,16 @@ namespace CTCOfficeGUI
         #region Event Handlers
 
         /// <summary>
+        /// Successfully logged in
+        /// </summary>
+        /// <param name="sender">Sender of the event</param>
+        /// <param name="e">Event arguments</param>
+        private void OnLoginSuccessful(object sender, EventArgs e)
+        {
+            m_login.CloseLogin();
+        }
+
+        /// <summary>
         /// Event handler for the track block clicked event
         /// </summary>
         /// <param name="b">Track block that was clicked</param>
@@ -180,8 +185,39 @@ namespace CTCOfficeGUI
             m_log.LogInfo("Track block was clicked");
             m_selectedTrain = null;
             m_selectedTrackBlock = b;
-            infoPanel.SetTrackBlockInfo(b);
-            commandPanel.ShowTrackBlockCommands(b);
+
+            if (m_simulatorWindow == null || m_simulatorWindow.IsDisposed || m_simulatorWindow.Disposing)
+            {
+                m_simulatorWindow = new SimulatorWindow(); //User may have closed the simulator
+                m_simulatorWindow.Show();
+            }
+
+            m_simulatorWindow.SetSelectedTrackBlock(m_selectedTrackBlock);
+
+            if (b != null)
+            {
+                bool trainYard = false;
+                if (b.HasTransponder)
+                {
+                    if (!string.IsNullOrEmpty(b.Transponder.StationName))
+                    {
+                        if (b.Transponder.StationName.Contains(Constants.TRAINYARD) && b.Transponder.DistanceToStation == 0)
+                        {
+                            //This is a train yard, handle it specially
+                            infoPanel.SetTrainYardInfo(b);
+                            commandPanel.ShowTrainYardCommands();
+                            trainYard = true;
+                        }
+                    }
+                }
+                
+                if (!trainYard)
+                {
+                    //Normal track block
+                    infoPanel.SetTrackBlockInfo(b);
+                    commandPanel.ShowTrackBlockCommands(b);
+                }
+            }
 
             CloseOpenPopups();
         }
@@ -255,6 +291,95 @@ namespace CTCOfficeGUI
             CloseOpenPopups();
         }
 
+        /// <summary>
+        /// User selected the load track layout menu item
+        /// </summary>
+        /// <param name="sender">Sender of the event</param>
+        /// <param name="e">Event arguments</param>
+        private void OnLoadTrackLayoutClicked(object sender, EventArgs e)
+        {
+            //Show file dialog to select the track layout
+            OpenFileDialog dialog = new OpenFileDialog();
+            dialog.InitialDirectory = System.IO.Directory.GetCurrentDirectory();
+            dialog.CheckFileExists = true;
+            dialog.CheckPathExists = true;
+            dialog.RestoreDirectory = true;
+            dialog.Multiselect = false;
+            dialog.Title = "Select Track Layout";
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+                string filename = dialog.FileName;
+                if (Initialize(filename))
+                {
+                    dialog.Dispose();
+                    dialog = null;
+                }
+                else
+                {
+                    ShowOKPopup("Error", "Could not load track layout", OnPopupAcknowledged);
+                }
+            }
+        }
+
+        /// <summary>
+        /// User selected the exit menu item
+        /// </summary>
+        /// <param name="sender">Sender of the event</param>
+        /// <param name="e">Event arguments</param>
+        private void OnExitClicked(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        /// <summary>
+        /// User selected the table view menu item
+        /// </summary>
+        /// <param name="sender">Sender of the event</param>
+        /// <param name="e">Event arguments</param>
+        private void OnTableViewClicked(object sender, EventArgs e)
+        {
+            if (m_tableViewWindow == null || m_tableViewWindow.IsDisposed || m_tableViewWindow.Disposing)
+            {
+                m_tableViewWindow = new TableViewScreen();
+            }
+
+            m_tableViewWindow.WindowState = FormWindowState.Normal;
+            m_tableViewWindow.Show();
+        }
+
+        /// <summary>
+        /// User selected the view simulator window menu item
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnViewSimulatorWindowClicked(object sender, EventArgs e)
+        {
+            if (m_simulatorWindow == null || m_simulatorWindow.IsDisposed || m_simulatorWindow.Disposing)
+            {
+                m_simulatorWindow = new SimulatorWindow();
+                m_simulatorWindow.SetSelectedTrackBlock(m_selectedTrackBlock);
+            }
+
+            m_simulatorWindow.WindowState = FormWindowState.Normal;
+            m_simulatorWindow.Show();
+        }
+
+        /// <summary>
+        /// Train name was entered for a new train
+        /// </summary>
+        /// <param name="value">Train name</param>
+        private void OnTrainNameEntered(string value)
+        {
+            if (!string.IsNullOrEmpty(value))
+            {
+                Simulator.GetSimulator().SpawnNewTrain(m_selectedTrackBlock, value);
+            }
+            else
+            {
+                ShowOKPopup("Error", "Train name cannot be empty", OnPopupAcknowledged);
+            }
+        }
+
         #endregion
 
         #region Private Data
@@ -264,6 +389,9 @@ namespace CTCOfficeGUI
         private ITrain m_selectedTrain = null;
         private List<Form> m_openPopups = new List<Form>();
         private CTCController m_ctcController = CTCController.GetCTCController();
+        private SimulatorWindow m_simulatorWindow = new SimulatorWindow();
+        private TableViewScreen m_tableViewWindow = new TableViewScreen();
+        private LoginChecker m_login;
 
         #endregion
     }

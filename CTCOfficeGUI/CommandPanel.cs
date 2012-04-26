@@ -75,13 +75,22 @@ namespace CTCOfficeGUI
         }
 
         /// <summary>
+        /// Displays commands for a train yard
+        /// </summary>
+        public void ShowTrainYardCommands()
+        {
+            Dictionary<object, string> commands = new Dictionary<object, string>();
+            commands.Add(Constants.SPAWNTRAIN, Constants.SPAWNTRAIN);
+            SetCommands(commands);
+        }
+
+        /// <summary>
         /// Displays commands for trains
         /// </summary>
         public void ShowTrainCommands()
         {
             Dictionary<object, string> commands = new Dictionary<object, string>();
-            commands.Add(TrainCommands.SuggestRoute, "Suggest Route");
-            commands.Add(TrainCommands.SetSchedule, "Set Schedule");
+            commands.Add(TrainCommands.ViewSchedule, "View Schedule");
 
             SetCommands(commands);
         }
@@ -147,7 +156,7 @@ namespace CTCOfficeGUI
         #region Event Handlers
 
         /// <summary>
-        /// Commad button was clicked
+        /// Command button was clicked
         /// </summary>
         /// <param name="sender">Sender of the event</param>
         /// <param name="e">Event arguments</param>

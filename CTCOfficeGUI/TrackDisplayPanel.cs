@@ -8,7 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.Reflection;
 using CommonLib;
-using Train;
+using TrainLib;
 
 namespace CTCOfficeGUI
 {
@@ -22,6 +22,8 @@ namespace CTCOfficeGUI
         private LoggingTool m_log = new LoggingTool(MethodBase.GetCurrentMethod());
         private TrackBlockGraphic m_selectedTrackBlock = null;
         private TrainGraphic m_selectedTrain = null;
+        private const int m_margin = 10;
+        private CTCController.UpdateDisplay m_updateDelegate;
 
         #endregion
 
@@ -55,31 +57,6 @@ namespace CTCOfficeGUI
 
         #endregion
 
-        #region Properties
-
-        /// <summary>
-        /// Factor by which to scale the graphics (scale of 1 = 1 pixel per km)
-        /// </summary>
-        public double ScaleFactor
-        {
-            get { return m_scale; }
-            set
-            {
-                if (value > 0)
-                {
-                    //Update the scaling factor
-                    m_scale = value;
-
-                    foreach (KeyValuePair<TrackBlock, TrackBlockGraphic> block in m_blockTable)
-                    {
-                        block.Value.SetScale(value);
-                    }
-                }
-            }
-        }
-
-        #endregion
-
         #region Constructors
 
         /// <summary>
@@ -88,15 +65,7 @@ namespace CTCOfficeGUI
         public TrackDisplayPanel()
         {
             InitializeComponent();
-        }
-
-        /// <summary>
-        /// Primary constructor for the track display panel
-        /// </summary>
-        public TrackDisplayPanel(List<TrackBlock> blocks)
-        {
-            InitializeComponent();
-            SetTrackLayout(blocks);
+            m_updateDelegate = new CTCController.UpdateDisplay(UpdateDisplay);
         }
 
         #endregion
@@ -107,7 +76,7 @@ namespace CTCOfficeGUI
         /// Draws the track layout
         /// </summary>
         /// <param name="blocks">List of track blocks in the layout</param>
-        public void SetTrackLayout(List<TrackBlock> blocks)
+        public void SetTrackLayout(List<TrackBlock> blocks, Size layoutSize, Point layoutPosition)
         {
             if (blocks != null)
             {
@@ -119,15 +88,16 @@ namespace CTCOfficeGUI
 
                 m_blockTable.Clear();
 
+                CalculateScale(layoutSize);
+
                 foreach (TrackBlock b in blocks)
                 {
                     //Create a new trackblock graphic
                     TrackBlockGraphic graphic = new TrackBlockGraphic(b, m_scale);
-                    graphic.Margin = new Padding(3);
 
-                    graphic.Location = CalculateBlockPosition(b);
+                    graphic.Location = CalculateBlockPosition(b, layoutPosition, graphic.ArrowLength);
 
-                    graphic.Click += OnBlockClicked;
+                    graphic.TrackBlockClicked += OnBlockClicked;
 
                     Controls.Add(graphic);
                     m_blockTable[b] = graphic;
@@ -136,61 +106,59 @@ namespace CTCOfficeGUI
         }
 
         /// <summary>
-        /// Adds a train to the layout
+        /// Updates the display 
         /// </summary>
-        /// <param name="train"></param>
-        public bool AddTrain(ITrain train)
-        {
-            bool result = false;
-            if (train != null)
-            {
-                if (!m_trainTable.ContainsKey(train))
-                {
-                    TrainGraphic graphic = new TrainGraphic(train);
-
-                    graphic.Margin = new Padding(3);
-
-                    graphic.Click += OnTrainGraphicClicked;
-
-                    Controls.Add(graphic);
-                    m_trainTable[train] = graphic;
-                    result = true;
-                }
-            }
-
-            return result;
-        }
-
-        /// <summary>
-        /// Redraws the track layout with the new state
-        /// </summary>
-        /// <param name="updatedBlocks">List of blocks that have changed state</param>
+        /// <param name="blocks">List of track blocks</param>
+        /// <param name="trains">List of trains</param>
         public void UpdateDisplay(List<TrackBlock> updatedBlocks, List<ITrain> trains)
         {
-            //Update the block layout
-            if (updatedBlocks != null)
+            if (InvokeRequired)
             {
-                foreach (TrackBlock b in updatedBlocks)
-                {
-                    if (m_blockTable.ContainsKey(b))
-                    {
-                        m_blockTable[b].Location = CalculateBlockPosition(b);
-                        m_blockTable[b].Invalidate();
-                    }
-                }
+                Invoke(m_updateDelegate, updatedBlocks, trains);
             }
-
-            //Update the train locations
-            if (trains != null)
+            else
             {
-                foreach (ITrain t in trains)
+                //Update the block layout
+                if (updatedBlocks != null)
                 {
-                    if (m_trainTable.ContainsKey(t))
+                    this.SuspendLayout();
+
+                    foreach (TrackBlock b in updatedBlocks)
                     {
-                        TrainGraphic g = m_trainTable[t];
-                        //m_trainTable[t].Left = t.Position.x - g.Width / 2;
-                        //m_trainTable[t].Top = t.Position.y - g.Height / 2;
+                        if (m_blockTable.ContainsKey(b))
+                        {
+                            m_blockTable[b].Invalidate();
+                        }
                     }
+
+                    //Upate the train locations
+                    foreach (ITrain train in trains)
+                    {
+                        if (m_trainTable.ContainsKey(train))
+                        {
+                            TrainGraphic graphic = m_trainTable[train];
+
+                            graphic.Left = System.Convert.ToInt32(train.GetPosition().X - graphic.Width / 2);
+                            graphic.Top = System.Convert.ToInt32(train.GetPosition().Y - graphic.Height / 2);
+                        }
+                        else
+                        {
+                            //New train, add it to the list
+                            TrainGraphic graphic = new TrainGraphic(train);
+
+                            graphic.Location = new Point(System.Convert.ToInt32(train.GetPosition().X - graphic.Width / 2),
+                                                         System.Convert.ToInt32(train.GetPosition().Y - graphic.Height / 2));
+
+                            graphic.TrainClicked += OnTrainGraphicClicked;
+                            graphic.Disposed += OnTrainDisposed;
+
+                            Controls.Add(graphic);
+                            graphic.BringToFront();
+                            m_trainTable[train] = graphic;
+                        }
+                    }
+
+                    this.ResumeLayout();
                 }
             }
         }
@@ -199,7 +167,6 @@ namespace CTCOfficeGUI
         /// Unselects the selected graphic, if there is one
         /// </summary>
         public void UnselectAll()
-
         {
             if (m_selectedTrackBlock != null)
             {
@@ -217,27 +184,51 @@ namespace CTCOfficeGUI
         /// Calculates the position of the graphic on the display panel
         /// </summary>
         /// <param name="block">Track block to display</param>
+        /// <param name="arrowLength">Length of arrow graphics for position adjustment</param>
         /// <returns>Point of the graphic on the display panel</returns>
-        private Point CalculateBlockPosition(TrackBlock block)
+        private Point CalculateBlockPosition(TrackBlock block, Point layoutPosition, int arrowLength)
         {
             if (block != null)
             {
                 switch (block.Orientation)
                 {
                     case TrackOrientation.EastWest:
+                        return new Point(System.Convert.ToInt32((block.StartPoint.X - layoutPosition.X) * m_scale),
+                                                     System.Convert.ToInt32((block.StartPoint.Y - layoutPosition.Y)  * m_scale - arrowLength));
                     case TrackOrientation.NorthWestSouthEast:
-                        return new Point(System.Convert.ToInt32(block.StartPoint.X * m_scale),
-                                                     System.Convert.ToInt32(block.StartPoint.Y * m_scale));
+                        return new Point(System.Convert.ToInt32((block.StartPoint.X - layoutPosition.X) * m_scale),
+                                                     System.Convert.ToInt32((block.StartPoint.Y - layoutPosition.Y) * m_scale));
                     case TrackOrientation.SouthWestNorthEast:
+                        return new Point(System.Convert.ToInt32((block.StartPoint.X - layoutPosition.X) * m_scale),
+                                                     System.Convert.ToInt32((block.EndPoint.Y - layoutPosition.Y) * m_scale));
                     case TrackOrientation.NorthSouth:
-                        return new Point(System.Convert.ToInt32(block.StartPoint.X * m_scale),
-                                                     System.Convert.ToInt32(block.EndPoint.Y * m_scale));
+                        return new Point(System.Convert.ToInt32((block.StartPoint.X - layoutPosition.X) * m_scale - arrowLength),
+                                                     System.Convert.ToInt32((block.EndPoint.Y - layoutPosition.Y) * m_scale));
                     default:
                         return new Point();
                 }
             }
 
             return new Point();
+        }
+
+        /// <summary>
+        /// Calculates the scaling factor for the layout
+        /// </summary>
+        /// <param name="layoutSize">Size of the layout</param>
+        private void CalculateScale(Size layoutSize)
+        {
+            //Layout is smaller than the panel, scale it up
+            if ((layoutSize.Width / (double)(this.Width - m_margin)) > (layoutSize.Height / (double)(this.Height - m_margin)))
+            {
+                //X is the limiting dimension, scale by it
+                m_scale = (this.Width - m_margin) / (double)layoutSize.Width;
+            }
+            else
+            {
+                //Y is the limiting dimension, scale by it
+                m_scale = (this.Height - m_margin) / (double)layoutSize.Height;
+            }
         }
 
         #endregion
@@ -306,7 +297,7 @@ namespace CTCOfficeGUI
 
                 blinkTimer.Start();
 
-                if (TrackBlockClicked != null)
+                if (TrainClicked != null)
                 {
                     TrainClicked(graphic.Train);
                 }
@@ -328,6 +319,39 @@ namespace CTCOfficeGUI
             if (m_selectedTrackBlock != null)
             {
                 m_selectedTrackBlock.Blink();
+            }
+            if (m_selectedTrain != null)
+            {
+                m_selectedTrain.Blink();
+            }
+        }
+
+        /// <summary>
+        /// A train was disposed. Remove the graphic
+        /// </summary>
+        /// <param name="sender">Sender of the event</param>
+        /// <param name="e">Event arguments</param>
+        private void OnTrainDisposed(object sender, EventArgs e)
+        {
+            try
+            {
+                ITrain train = (ITrain)sender;
+
+                if (m_trainTable.ContainsKey(train))
+                {
+                    //Remove the train graphic from the display
+                    if (m_selectedTrain == m_trainTable[train])
+                    {
+                        m_selectedTrain = null;
+                    }
+
+                    m_trainTable[train].Dispose();
+                    m_trainTable.Remove(train);
+                }
+            }
+            catch (InvalidCastException ex)
+            {
+                m_log.LogError("Received train disposing event but could not cast to train", ex);
             }
         }
 
