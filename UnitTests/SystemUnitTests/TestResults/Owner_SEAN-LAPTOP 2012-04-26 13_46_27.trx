@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<TestRun id="abbd3294-920c-4951-b645-96447331e3f0" name="Owner@SEAN-LAPTOP 2012-04-26 13:46:27" runUser="SEAN-LAPTOP\Owner" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <TestSettings name="Trace and Test Impact" id="07f97783-8352-4cb0-af33-95eb5b7d3c9c">
+    <Description>These are test settings for Trace and Test Impact.</Description>
+    <Deployment runDeploymentRoot="Owner_SEAN-LAPTOP 2012-04-26 13_46_27">
+      <DeploymentItem filename="C:\Users\Owner\Documents\Visual Studio 2010\Projects\Bazinga1186\Bin\CommonLib.dll" />
+      <DeploymentItem filename="C:\Users\Owner\Documents\Visual Studio 2010\Projects\Bazinga1186\Bin\TrackControlLib.dll" />
+    </Deployment>
+    <Execution>
+      <TestTypeSpecific />
+      <AgentRule name="Execution Agents">
+      </AgentRule>
+    </Execution>
+  </TestSettings>
+  <Times creation="2012-04-26T13:46:27.8088417-04:00" queuing="2012-04-26T13:46:28.6008502-04:00" start="2012-04-26T13:46:28.6308503-04:00" finish="2012-04-26T13:46:29.7348593-04:00" />
+  <ResultSummary outcome="Completed">
+    <Counters total="1" executed="1" passed="1" error="0" failed="0" timeout="0" aborted="0" inconclusive="0" passedButRunAborted="0" notRunnable="0" notExecuted="0" disconnected="0" warning="0" completed="0" inProgress="0" pending="0" />
+  </ResultSummary>
+  <TestDefinitions>
+    <UnitTest name="IsTrainApproachingTest" storage="c:\users\owner\documents\visual studio 2010\projects\bazinga1186\unittests\systemunittests\trackcontrollib-seantest\bin\debug\trackcontrollib-seantest.dll" id="95e57d13-4f00-6204-938e-3c79314f3cbe">
+      <DeploymentItems>
+        <DeploymentItem filename="TrackControlLib.dll" />
+      </DeploymentItems>
+      <Execution id="f9e6a706-4e1a-4c5c-b746-dca0a0f3b3cd" />
+      <TestMethod codeBase="C:/Users/Owner/Documents/Visual Studio 2010/Projects/Bazinga1186/UnitTests/SystemUnitTests/TrackControlLib-SeanTest/bin/Debug/TrackControlLib-SeanTest.DLL" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="TrackControlLib_SeanTest.TrackControllerTest, TrackControlLib-SeanTest, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="IsTrainApproachingTest" />
+    </UnitTest>
+  </TestDefinitions>
+  <TestLists>
+    <TestList name="Results Not in a List" id="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestList name="All Loaded Results" id="19431567-8539-422a-85d7-44ee4e166bda" />
+  </TestLists>
+  <TestEntries>
+    <TestEntry testId="95e57d13-4f00-6204-938e-3c79314f3cbe" executionId="f9e6a706-4e1a-4c5c-b746-dca0a0f3b3cd" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+  </TestEntries>
+  <Results>
+    <UnitTestResult executionId="f9e6a706-4e1a-4c5c-b746-dca0a0f3b3cd" testId="95e57d13-4f00-6204-938e-3c79314f3cbe" testName="IsTrainApproachingTest" computerName="SEAN-LAPTOP" duration="00:00:00.1160372" startTime="2012-04-26T13:46:28.6408503-04:00" endTime="2012-04-26T13:46:29.5328572-04:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="f9e6a706-4e1a-4c5c-b746-dca0a0f3b3cd">
+    </UnitTestResult>
+  </Results>
+</TestRun>
