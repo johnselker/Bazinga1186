@@ -61,7 +61,7 @@ namespace TrackLib
         /// Default Constructor needed for deserialization
         /// </summary>
         ///--------------------------------------------------------------------------------------
-        public TrackLayoutSerializer() { }
+        private TrackLayoutSerializer() { }
 
         // METHOD: TrackLayoutSerializer
         ///--------------------------------------------------------------------------------------
