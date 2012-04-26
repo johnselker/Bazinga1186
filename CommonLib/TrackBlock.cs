@@ -303,7 +303,7 @@ namespace CommonLib
         /// </remarks>
         //--------------------------------------------------------------------------------------
         [XmlElement(ElementName = "PreviousBlockId")]
-        public string PreviousBockId
+        public string PreviousBlockId
         {
             get;
             set;
@@ -321,7 +321,7 @@ namespace CommonLib
         /// </remarks>
         //--------------------------------------------------------------------------------------
         [XmlElement(ElementName = "NextBlockId")]
-        public string NextBockId
+        public string NextBlockId
         {
             get;
             set;
@@ -412,8 +412,8 @@ namespace CommonLib
             {
                 StartElevationMeters = EndElevationMeters - ((LengthMeters * grade) / 100);
             }
-            PreviousBockId = prevBlockID;
-            NextBockId = nextBlockID;
+            PreviousBlockId = prevBlockID;
+            NextBlockId = nextBlockID;
         }
 
         #endregion

@@ -67,9 +67,33 @@ namespace TrainLib
 
 			slope = Math.Atan(block.Grade / 100.0); // Store slope in radians
 			state.Direction = direction;
-			state.Cars = cars;
-			state.Crew = crew;
-			state.Passengers = passengers;
+			// Minimum of 1 car
+			if (cars < 1)
+			{
+				state.Cars = 1;
+			}
+			else
+			{
+				state.Cars = cars;
+			}
+			// Minimum of 0 crew members
+			if (crew < 0)
+			{
+				crew = 0;
+			}
+			else
+			{
+				state.Crew = crew;
+			}
+			// Minimum of 0 passengers
+			if (passengers < 0)
+			{
+				passengers = 0;
+			}
+			else
+			{
+				state.Passengers = passengers;
+			}
 			state.Doors = TrainState.Door.Open;
 			state.Lights = TrainState.Light.Off;
 			power = 0;
@@ -408,24 +432,6 @@ namespace TrainLib
 		public void SetAnnouncement(string announcement)
 		{
 			state.Announcement = announcement;
-		}
-
-		/// <summary>
-		/// Sets the slope of the current Track.
-		/// </summary>
-		/// <param name="slope">The slope of the Track in radians. Slopes greater than pi/2 or less than -pi/2 are invalid.</param>
-		/// <returns>Whether or not the slope was valid. Invalid slopes are ignored.</returns>
-		public bool SetSlope(double slope)
-		{
-			if (slope > Math.PI / 2 || slope < -Math.PI / 2)
-			{
-				return false;
-			}
-			else
-			{
-				this.slope = slope;
-				return true;
-			}
 		}
 
 		/// <summary>
