@@ -141,28 +141,15 @@ namespace TrackControlLib
 					// update switching
 					if (b.Status.TrainPresent)
 					{
-						
-
+						// we are on a switch that is already in the right direction,
+						if (b == m_switch.Branch || b == m_switch.Trunk1 || b == m_switch.Trunk2)
+						{
+							if (!IsTrainApproaching(b)) ;
+						}
 					}
 
 					// update track block authorites, speed and signals
 					// work backward from the end of a swicth, a broken track, or a train present
-					if (t == null || 
-						t.Status.TrainPresent ||
-						!t.Status.IsOpen)
-					{
-						int i;
-
-						// update the authorites
-						for (t = b, i = -1;
-							t != null && t.Status.IsOpen && 
-							m_trackBlocks.ContainsKey(t.Name);
-							++i, t = t.PreviousBlock)
-						{
-							UpdateAuthoritySignal(t, i);
-							if (t.Status.TrainPresent) break;
-						}
-					}
 				}
 			}
 
@@ -175,7 +162,7 @@ namespace TrackControlLib
 			private void UpdateAuthoritySignal(TrackBlock block, int authority)
 			{
 				if (block == null) throw new ArgumentNullException();
-				if (authority < 0) throw new ArgumentOutOfRangeException();
+				if (authority < -1) throw new ArgumentOutOfRangeException();
 
 				block.Authority.Authority = authority;
 
@@ -197,30 +184,8 @@ namespace TrackControlLib
 				}
 			}
 
-			private bool IsTrainApproaching(TrackController from)
+			private bool IsTrainApproaching(TrackBlock from)
 			{
-				if (from == null) throw new ArgumentNullException();
-
-				foreach (TrackBlock b in from.m_trackBlocks.Values)
-				{
-					if (b.Status.TrainPresent)
-					{
-						if (from.m_trackBlocks.ContainsKey(b.Name) &&
-							m_trackBlocks.ContainsKey(b.Name))
-						{
-							for (TrackBlock t = b.GetNextBlock(b.Status.TrainDirection);
-								t != null && t.Status.IsOpen;
-								t = t.GetNextBlock(b.Status.TrainDirection))
-							{
-								if (!from.m_trackBlocks.ContainsKey(t.Name) &&
-									m_trackBlocks.ContainsKey(t.Name))
-									return true;
-							}
-						}
-						else
-							return false;
-					}
-				}
 				return false;
 			}
 		}
