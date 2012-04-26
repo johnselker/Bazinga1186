@@ -231,11 +231,11 @@ namespace TrainLib
 				// Fire an event to alert the block
 				if (TrainEnteredNewBlock != null)
 				{
-					TrainEnteredNewBlock(state.CurrentBlock, state.CurrentBlock.NextBlock);
+					TrainEnteredNewBlock(state.CurrentBlock, state.CurrentBlock.GetNextBlock(state.Direction));
 				}
 				// Move train's presence to next block
 				state.CurrentBlock.Status.TrainPresent = false;
-				state.CurrentBlock = block.NextBlock;
+				state.CurrentBlock = block.GetNextBlock(state.Direction);
 				state.CurrentBlock.Status.TrainPresent = true;
 
 				// Set the train's direction according to new block

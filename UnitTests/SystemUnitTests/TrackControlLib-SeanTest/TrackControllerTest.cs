@@ -192,6 +192,22 @@ namespace TrackControlLib_SeanTest
 			target.AddTrackBlock(dest);
 			actual = target.IsTrainApproaching(dest);
 			Assert.IsFalse(actual);
+
+			b1.Orientation = TrackOrientation.NorthSouth;
+			b1.Status.TrainDirection = Direction.South;
+			b1.PreviousBlock = b2;
+			b2.Orientation = TrackOrientation.NorthSouth;
+			b2.Status.TrainDirection = Direction.South;
+			b2.PreviousBlock = b3;
+			b3.Orientation = TrackOrientation.NorthSouth;
+			b3.Status.TrainDirection = Direction.South;
+			b3.PreviousBlock = dest;
+			target.AddTrackBlock(b1);
+			target.AddTrackBlock(b2);
+			target.AddTrackBlock(b3);
+			target.AddTrackBlock(dest);
+			actual = target.IsTrainApproaching(dest);
+			Assert.IsFalse(actual);
         }
 
         /// <summary>

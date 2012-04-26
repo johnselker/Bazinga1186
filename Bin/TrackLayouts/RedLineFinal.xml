@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <TrackLayout xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <LastUpdated>2012-04-26T14:58:01.6591499-04:00</LastUpdated>
+  <LastUpdated>2012-04-26T15:21:18.88061-04:00</LastUpdated>
   <BlockList>
     <TrackBlock>
       <Name>red1</Name>
@@ -228,7 +228,7 @@
     <TrackBlock>
       <Name>REDYARD</Name>
       <HasTunnel>false</HasTunnel>
-      <StaticSpeedLimit>0</StaticSpeedLimit>
+      <StaticSpeedLimit>15</StaticSpeedLimit>
       <Length>150</Length>
       <Orientation>NorthWestSouthEast</Orientation>
       <RailroadCrossing>false</RailroadCrossing>
