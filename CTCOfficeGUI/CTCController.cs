@@ -448,7 +448,7 @@ namespace CTCOfficeGUI
         private CTCController()
         {
             m_updateTimer = new Timer();
-            m_updateTimer.Interval = 2000; //Update every 200 ms
+            m_updateTimer.Interval = 200; //Update every 200 ms
             m_updateTimer.Tick += OnUpdateTimerTick;
 
             CloseTrackBlock(null);
