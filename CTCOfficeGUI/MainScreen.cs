@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using System.Reflection;
 using CommonLib;
 using TrainLib;
+using TrainControllerLib;
 
 namespace CTCOfficeGUI
 {
@@ -186,6 +187,12 @@ namespace CTCOfficeGUI
             m_selectedTrain = null;
             m_selectedTrackBlock = b;
 
+            if (m_trainGUI != null)
+            {
+                m_trainGUI.Close();
+                m_trainGUI = null;
+            }
+
             if (m_simulatorWindow == null || m_simulatorWindow.IsDisposed || m_simulatorWindow.Disposing)
             {
                 m_simulatorWindow = new SimulatorWindow(); //User may have closed the simulator
@@ -233,6 +240,18 @@ namespace CTCOfficeGUI
             m_selectedTrain = train;
             infoPanel.SetTrainInfo(train);
             commandPanel.ShowTrainCommands();
+
+            if (m_trainGUI != null)
+            {
+                m_trainGUI.Close();
+            }
+            
+            TrainController trainController = Simulator.GetSimulator().GetTrainController(train);
+            if (trainController != null)
+            {
+                m_trainGUI = new TrainOperator(train, trainController);
+                m_trainGUI.Show();
+            }
 
             CloseOpenPopups();
         }
@@ -393,6 +412,7 @@ namespace CTCOfficeGUI
         private SimulatorWindow m_simulatorWindow = new SimulatorWindow();
         private TableViewScreen m_tableViewWindow = new TableViewScreen();
         private LoginChecker m_login;
+        private TrainOperator m_trainGUI;
 
         #endregion
     }

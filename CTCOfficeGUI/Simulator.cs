@@ -19,6 +19,7 @@ namespace CTCOfficeGUI
         private System.Timers.Timer m_simulationTimer = new System.Timers.Timer(1);
         private static Simulator m_singleton;
         private List<ITrainController> m_trainControllerList = new List<ITrainController>();
+        private Dictionary<ITrain, TrainController> m_trainControllerTable = new Dictionary<ITrain, TrainController>();
         private List<ITrackController> m_trackControllerList;
         private DateTime m_lastUpdateTime;
         private double m_simulationScale = 1;
@@ -55,6 +56,22 @@ namespace CTCOfficeGUI
             }
 
             return m_singleton;
+        }
+
+        /// <summary>
+        /// Gets a reference to the train controller of the train
+        /// </summary>
+        /// <param name="train"></param>
+        /// <returns></returns>
+        public TrainController GetTrainController(ITrain train)
+        {
+            TrainController controller = null;
+            if (m_trainControllerTable.ContainsKey(train))
+            {
+                controller = m_trainControllerTable[train];
+            }
+
+            return controller;
         }
 
         #region Simulation Methods
@@ -271,8 +288,9 @@ namespace CTCOfficeGUI
                             //Create the new train and train controller
                             ITrain train = new TrainLib.Train(name, initialBlock, m_startingDirections[start]);
                             train.TrainEnteredNewBlock += OnTrainEnteredNewBlock;
-                            ITrainController trainController = new TrainController(train);
+                            TrainController trainController = new TrainController(train);
                             m_trainControllerList.Add(trainController);
+                            m_trainControllerTable[train] = trainController;
                             CTCController.GetCTCController().AddTrainToList(train); 
 
                             //Set the train schedule

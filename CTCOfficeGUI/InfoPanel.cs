@@ -248,9 +248,9 @@ namespace CTCOfficeGUI
             info.Add("Light Status:", state.Lights.ToString());
             info.Add("Mass:", state.Mass.ToString());
             info.Add("Passengers:", state.Passengers.ToString());
-            info.Add("Speed:", state.Speed.ToString() + " " + KPH);
+            info.Add("Speed:", string.Format("{0:0.00} {1}", state.Speed.ToString(), KPH));
             info.Add("Temperature:", state.Temperature.ToString());
-            info.Add("Position:", state.X.ToString() + ", " + state.Y.ToString());
+            info.Add("Position:", string.Format("{0:0.00} , {1:0.00}", state.X.ToString(), state.Y.ToString()));
 
             if (state.TrainID != null)
             {

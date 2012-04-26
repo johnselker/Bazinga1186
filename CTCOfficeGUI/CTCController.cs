@@ -399,11 +399,11 @@ namespace CTCOfficeGUI
             {
                 ITrackController previousController = GetTrackController(previous);
                 ITrackController newController = GetTrackController(previous);
-                
+
+                previousController.Update();
+
                 if (previousController != null && newController != null)
                 {
-                    previousController.Update();
-
                     if (newController != previousController)
                     {
                         newController.Update();
