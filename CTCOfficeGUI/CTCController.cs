@@ -394,15 +394,25 @@ namespace CTCOfficeGUI
         /// <returns></returns>
         public bool UpdateTrackControllers(TrackBlock previous, TrackBlock current)
         {
+            //Initialize the track controllers 
+            if (m_controllerList != null)
+            {
+                foreach (ITrackController controller in m_controllerList)
+                {
+                    controller.Update();
+                }
+            }
+            return true;
+            /*
             bool result = false;
             if (previous != null && current != null)
             {
                 ITrackController previousController = GetTrackController(previous);
-                ITrackController newController = GetTrackController(previous);
+                ITrackController newController = GetTrackController(current);
 
                 previousController.Update();
 
-                if (previousController != null && newController != null)
+                if (newController != null)
                 {
                     if (newController != previousController)
                     {
@@ -413,7 +423,7 @@ namespace CTCOfficeGUI
                 }
             }
 
-            return result;
+            return result;*/
         }
 
         /// <summary>
@@ -599,13 +609,12 @@ namespace CTCOfficeGUI
                     {
                         if (trackControllers.ContainsKey(s.ControllerId))
                         {
-                            trackControllers[s.ControllerId].SetSwitch(s);
-
                             //Assign the blocks to the switch
                             s.Trunk = m_blockTable[s.TrunkId];
                             s.BranchClosed = m_blockTable[s.BranchClosedId];
                             s.BranchOpen = m_blockTable[s.BranchOpenId];
 							s.State = TrackSwitchState.Closed;
+                            trackControllers[s.ControllerId].SetSwitch(s);
                         }
                         else
                         {

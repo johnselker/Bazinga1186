@@ -304,9 +304,13 @@ namespace TrainControllerLib
             {
                 m_setPoint = 0;
             }
-			else if (m_currentBlock.GetNextBlock(m_currentState.Direction).Authority.SpeedLimitKPH < m_currentBlock.Authority.SpeedLimitKPH && CalculateStoppingDistance(m_currentBlock.GetNextBlock(m_currentState.Direction).Authority.SpeedLimitKPH / 3.6) >= m_currentBlock.LengthMeters - m_currentState.BlockProgress)
+            else if (m_currentBlock.GetNextBlock(m_currentState.Direction) == null)
             {
-				m_setPoint = m_currentBlock.GetNextBlock(m_currentState.Direction).Authority.SpeedLimitKPH / 3.6;
+                m_setPoint = 0;
+            }
+            else if (m_currentBlock.GetNextBlock(m_currentState.Direction).Authority.SpeedLimitKPH < m_currentBlock.Authority.SpeedLimitKPH && CalculateStoppingDistance(m_currentBlock.GetNextBlock(m_currentState.Direction).Authority.SpeedLimitKPH / 3.6) >= m_currentBlock.LengthMeters - m_currentState.BlockProgress)
+            {
+                m_setPoint = m_currentBlock.GetNextBlock(m_currentState.Direction).Authority.SpeedLimitKPH / 3.6;
             }
 
             // If the train is approaching a station and is reaches the safe stopping distance, the setpoint should be zet to zero
